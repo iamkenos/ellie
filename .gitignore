@@ -1,0 +1,7 @@
+*.log
+*.conf.js
+!demo.conf.js
+
+demo/test/.reports
+build
+node_modules

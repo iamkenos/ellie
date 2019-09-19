@@ -1,0 +1,83 @@
+{
+  "name": "ellie",
+  "version": "1.0.0",
+  "license": "ISC",
+  "author": "iamkenos",
+  "description": "A web app testing framework build on top of WebDriverIO and Cucumber",
+  "main": "./build/index.js",
+  "bin": {
+    "ellie": "bin/ellie.js"
+  },
+  "homepage": "https://github.com/iamkenos/ellie#readme",
+  "repository": {
+    "type": "git",
+    "url": "git+ssh://git@github.com/iamkenos/ellie.git"
+  },
+  "bugs": {
+    "url": "https://github.com/iamkenos/ellie/issues"
+  },
+  "scripts": {
+    "start": "npm run build && node bin/ellie",
+    "prebuild": "rimraf build && npm run lint -- --fix",
+    "build": "tsc",
+    "postbuild": "npm run postbuild:templates && npm run postbuild:config && npm run postbuild:pretty",
+    "postbuild:templates": "copyfiles -u 1 \"./src/**/templates/**\" build",
+    "postbuild:config": "copyfiles \"./.prettierrc\" build/cli/templates",
+    "postbuild:pretty": "prettier --write \"./build/**/*.js\"",
+    "debug": "node --nolazy --inspect-brk=9229 ./bin/ellie.js --",
+    "demo:serve": "node ./node_modules/.bin/http-server -p22676 ./demo/app",
+    "demo:test": "./bin/ellie.js demo/test/demo.conf.js",
+    "demo:report": "allure generate demo/test/.reports/allure -o demo/test/.reports/allure/report",
+    "lint": "eslint ./",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "dependencies": {
+    "@babel/cli": "^7.5.5",
+    "@babel/core": "^7.5.5",
+    "@babel/preset-env": "^7.5.5",
+    "@babel/register": "^7.5.5",
+    "@wdio/allure-reporter": "^5.12.1",
+    "@wdio/cli": "^5.12.5",
+    "@wdio/cucumber-framework": "^5.12.3",
+    "@wdio/junit-reporter": "^5.12.3",
+    "@wdio/local-runner": "^5.12.5",
+    "@wdio/selenium-standalone-service": "^5.12.1",
+    "@wdio/spec-reporter": "^5.12.1",
+    "@wdio/sync": "^5.12.3",
+    "allure-commandline": "^2.9.0",
+    "chai": "^4.2.0",
+    "ejs": "^2.6.2",
+    "inquirer": "^7.0.0",
+    "prettier": "^1.18.2",
+    "rimraf": "^3.0.0",
+    "wdio-image-comparison-service": "^1.5.1",
+    "wdio-intercept-service": "^3.0.2",
+    "webdriverio": "^5.12.5",
+    "winston": "^3.2.1",
+    "yargs": "^14.0.0"
+  },
+  "devDependencies": {
+    "@types/chai": "^4.2.0",
+    "@types/cucumber": "^4.0.7",
+    "@types/ejs": "^2.6.3",
+    "@types/eslint": "^6.1.1",
+    "@types/glob": "^7.1.1",
+    "@types/inquirer": "^6.5.0",
+    "@types/prettier": "^1.18.2",
+    "@types/yargs": "^13.0.2",
+    "@typescript-eslint/eslint-plugin": "^2.0.0",
+    "@typescript-eslint/parser": "^2.0.0",
+    "copyfiles": "^2.1.1",
+    "eslint": "^6.2.0",
+    "eslint-config-standard": "^14.1.0",
+    "eslint-plugin-import": "^2.18.2",
+    "eslint-plugin-node": "^10.0.0",
+    "eslint-plugin-promise": "^4.2.1",
+    "eslint-plugin-standard": "^4.0.1",
+    "eslint-plugin-wdio": "^5.12.1",
+    "http-server": "^0.11.1",
+    "husky": "^3.0.4",
+    "lint-staged": "^9.2.5",
+    "typescript": "^3.5.3"
+  }
+}

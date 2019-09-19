@@ -1,0 +1,12 @@
+{
+  "cucumberautocomplete.steps": ["src/core/steps/definitions/*.ts", "demo/test/steps/**/*.js"],
+  "cucumberautocomplete.formatConfOverride": { "And": 3 },
+  "cucumberautocomplete.onTypeFormat": true,
+  "cucumberautocomplete.stepsInvariants": true,
+  "editor.formatOnSave": false,
+  "eslint.autoFixOnSave": true,
+  "eslint.validate": [{ "language": "javascript", "autoFix": true }, { "language": "typescript", "autoFix": true }],
+  "files.associations": { "*.ejs": "javascript" },
+  "typescript.validate.enable": true,
+  "[feature]": { "editor.formatOnSave": true, "editor.defaultFormatter": "alexkrechik.cucumberautocomplete" }
+}

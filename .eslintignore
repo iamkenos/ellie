@@ -1,3 +1,4 @@
 bin
 build
 src/types
+wdio.conf.js

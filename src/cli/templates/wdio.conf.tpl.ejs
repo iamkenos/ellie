@@ -123,6 +123,7 @@ exports.config = {
   // commands. Instead, they hook themselves up into the test process.
   services: [
     'selenium-standalone',
+    'intercept',
   ],
   // Framework you want to run your specs with.
   // The following are supported: Mocha, Jasmine, and Cucumber
@@ -138,14 +139,21 @@ exports.config = {
   // Test reporter for stdout.
   reporters: [
     'spec',
-    ['junit', { outputDir: '<%= answers.reportOutDir %>/junit' }],
+    [
+      'junit', 
+      { 
+        outputDir: '<%= answers.reportOutDir %>/junit',
+        outputFileFormat: (options) => `wdio-${options.cid}-junit-reporter.xml`
+      }
+    ],
     [
       'allure',
       {
         disableWebdriverStepsReporting: true,
         disableWebdriverScreenshotsReporting: false,
         useCucumberStepReporter: true,
-        outputDir: '<%= answers.reportOutDir %>/allure'
+        outputDir: '<%= answers.reportOutDir %>/allure',
+        outputFileFormat: (options) => `wdio-${options.cid}-allure-reporter.xml`
       }
     ]
   ],

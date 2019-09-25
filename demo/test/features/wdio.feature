@@ -12,6 +12,10 @@ Feature: WebDriverIO
   Scenario: Demo app
     Given I open the url of the page "Demo"
     Then I expect the window title to be that of the page "Demo"
+    But I have a very long text:
+      """
+      BABY GIRL
+      """
 # When I click the link "This link opens example.com in the same window"
 #   And I navigate to the previous page
 # Then I expect the window title to not be "Example Domain"

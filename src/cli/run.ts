@@ -3,7 +3,7 @@ import { join } from "path";
 import { Arguments } from "yargs";
 
 import * as logger from "../logger";
-import { OVERRIDE_OPTS } from "./config";
+import { OVERRIDE_OPTS, TLOU_QUOTES } from "./config";
 import { createLocalConfig, createWdioConfig } from "./setup";
 import { inspect } from "./utils";
 
@@ -21,6 +21,16 @@ export default (args: Arguments<any>): any => {
 
   const firstArg = args.argv._[0];
   const userConf = join(process.cwd(), firstArg);
+
+  // just because :P
+  if (firstArg === "babygirl") {
+    const toons = Object.keys(TLOU_QUOTES);
+    const toon = toons[Math.floor(Math.random() * toons.length)];
+    const quotes = TLOU_QUOTES[toon];
+    const quote = quotes[Math.floor(Math.random() * quotes.length)];
+    console.log(`\n${toon}: ${quote}\n`);
+    process.exit(0);
+  }
 
   // if the first argument is "config"
   // then run the config helper

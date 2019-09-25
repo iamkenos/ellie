@@ -36,6 +36,35 @@ export const DEFAULT = {
   custom: {}
 };
 
+export const TLOU_QUOTES = {
+  Ellie: [
+    "After all we've been through. Everything that I've done. It can't be for nothing.",
+    "Everyone I have cared for has either died, or left me. Everyone - fucking except for you!",
+    "I'm gonna find and I'm gonna kill every last one of them.",
+    "I'm just a girl, I'm not a threat.",
+    "So don't tell me I would be safer with somebody else, because the truth is, I would just be more scared.",
+    "Tell them that... Ellie is the little girl... that BROKE YOUR FUCKING FINGER!!!",
+    "To the edge of the universe and back. Endure and survive.",
+    "We're not murderers. We just survive.",
+    "Well, maybe in all that research they turned into fucking monkeys."
+  ],
+  Joel: [
+    "And just so we're clear about back there... It was either him or me.",
+    "Endure and survive.",
+    "I guess no matter how hard you try, you can't escape your past. Thank you.",
+    "I struggled for a long time with survivin'. And you - No matter what, you keep finding something to fight for.",
+    "Just one peaceful night... a clean conscience - all gone.",
+    "Listen to me - if I get in trouble down there, you make every shot count. Yeah?",
+    "What are you doin' kiddo?",
+    "You have no idea what loss is.",
+    "You really gonna go through with this?",
+    "You think i'd let you do this on your own?",
+    "You wanna know the best thing about my job? I don't gotta know why. Be honest with you, I could give two shits what you're up to.",
+    "You're right. You're not my daughter - and I sure as hell ain't your dad. And we are going our separate ways.",
+    "You're treading on some mighty thin ice here."
+  ]
+};
+
 export const CORE_STEP_DEFS = "../core/steps/definitions/**/*.js";
 
 export const PRETTIER_CONFIG = "/templates/.prettierrc";
@@ -203,6 +232,7 @@ Usage:
   ellie config                  Launches the configuration helper
   ellie [configFile]            Launches the WebdriverIO test runner
   ellie [configFile] [options]  Stdin overrides for certain config properties; See options list below
+  ellie babygirl                Endure and survive
 
 Complete list of properties:
 * Inquired when running the config helper

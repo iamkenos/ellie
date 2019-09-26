@@ -1,5 +1,6 @@
 import { Then } from "cucumber";
 
+import checkAjaxRequestsMatch from "../glue/check/checkAjaxRequestsMatch";
 import checkAttributeContains from "../glue/check/checkAttributeContains";
 import checkAttributeEquals from "../glue/check/checkAttributeEquals";
 import checkAttributeExists from "../glue/check/checkAttributeExists";
@@ -31,6 +32,11 @@ import checkValueEmpty from "../glue/check/checkValueEmpty";
 import checkValueEquals from "../glue/check/checkValueEquals";
 import checkWindowCountEquals from "../glue/check/checkWindowCountEquals";
 import checkWindowCountGreaterLess from "../glue/check/checkWindowCountGreaterLess";
+
+Then(
+  /^I expect the ajax requests to( not)? match the reference "([^"]*)?"$/,
+  checkAjaxRequestsMatch
+);
 
 Then(
   /^I expect the element "([^"]*)?" attribute "([^"]*)?" to( not)? contain "([^"]*)?"$/,

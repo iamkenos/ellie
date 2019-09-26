@@ -3,5 +3,6 @@
 !demo.conf.js
 
 demo/test/.reports
+demo/test/.comparable
 build
 node_modules

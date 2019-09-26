@@ -32,9 +32,9 @@ export default (args: Arguments<any>): any => {
     process.exit(0);
   }
 
-  // if the first argument is "config"
+  // if the first argument is "init"
   // then run the config helper
-  if (firstArg === "config") {
+  if (firstArg === "init") {
     return createLocalConfig();
   }
 

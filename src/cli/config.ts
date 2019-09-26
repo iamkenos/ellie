@@ -13,6 +13,12 @@ export const DEFAULT = {
       }
     }
   ],
+  comparableOptions: {
+    ajaxRequests: {
+      outputDir: ".comparable/ajax",
+      skipCompare: false
+    }
+  },
   locale: "default",
   logLevel: "info",
   maxInstances: 10,
@@ -118,6 +124,10 @@ const CONFIG_PROPS: IConfigProperty[] = [
     helptext: "W3C browser capabilities. See https://www.w3.org/TR/webdriver1/#capabilities"
   },
   {
+    name: "comparableOptions",
+    helptext: "Object containing properties of comparable files. See defaults for more info."
+  },
+  {
     name: "custom",
     helptext: "Object containing keys that you want to be accessible from the global browser scope"
   },
@@ -172,7 +182,7 @@ const CONFIG_PROPS: IConfigProperty[] = [
   },
   {
     name: "reportOutDir",
-    helptext: "Directory to store the reports, relative to the config file"
+    helptext: "Directory to store the reports in, relative to the config file"
   },
   {
     name: "specFileRetries",
@@ -229,10 +239,10 @@ export const QUESTIONNAIRE: IConfigProperty[] = CONFIG_PROPS
 
 export const USAGE = `
 Usage:
-  ellie config                  Launches the configuration helper
-  ellie [configFile]            Launches the WebdriverIO test runner
-  ellie [configFile] [options]  Stdin overrides for certain config properties; See options list below
-  ellie babygirl                Endure and survive
+  ellie init                   Launches the configuration helper
+  ellie [file]                 Launches the WebdriverIO test runner
+  ellie [file] [options]       Stdin overrides for certain config properties; See options list below
+  ellie babygirl               Endure and survive
 
 Complete list of properties:
 * Inquired when running the config helper

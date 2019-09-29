@@ -1,4 +1,5 @@
 import { AssertionError } from "chai";
+import { PreFilterFunction } from "deep-diff";
 
 import * as logger from "../../../logger";
 import {
@@ -9,6 +10,7 @@ import {
   CountEquals,
   CountGreaterThan,
   CountLessThan,
+  ImageMatch,
   TitleContains,
   TitleEquals,
   UrlContains,
@@ -16,7 +18,7 @@ import {
   UrlPathContains,
   UrlPathEquals
 } from "../conditions";
-import { IBrowserCondition } from "../../interfaces";
+import { IBrowserCondition, IImageCompareOptions } from "../../interfaces";
 import BrowserConditionsResult from "./browserConditionsResult";
 
 const WAIT_TIMEOUT: number = (browser as any).config.waitforTimeout;
@@ -36,8 +38,8 @@ export default class BrowserConditions {
     this.result = new BrowserConditionsResult();
   }
 
-  public ajaxRequestsMatch(filename: string, prefilter = undefined, reverse = false): BrowserConditions {
-    this.conditions.push(new AjaxRequestsMatch(filename, prefilter, reverse));
+  public ajaxRequestsMatch(filename: string, reverse = false, prefilter: PreFilterFunction): BrowserConditions {
+    this.conditions.push(new AjaxRequestsMatch(filename, reverse, prefilter));
     return this;
   }
 
@@ -68,6 +70,12 @@ export default class BrowserConditions {
 
   public countLessThan(expected: number, reverse = false): BrowserConditions {
     this.conditions.push(new CountLessThan(expected, reverse));
+    return this;
+  }
+
+  public imageMatch(
+    context: string, filename: string, reverse = false, options?: IImageCompareOptions): BrowserConditions {
+    this.conditions.push(new ImageMatch(context, filename, reverse, options));
     return this;
   }
 

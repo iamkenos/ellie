@@ -1,33 +1,33 @@
-import { PreFilterFunction } from "deep-diff";
-
 import * as logger from "../../../logger";
-import { IBrowserCondition, IExpectedConditionResult } from "../../interfaces";
-import { getJSONDiff } from "../../utils";
+import { ImageCompareContext } from "../../enums";
+import { IBrowserCondition, IExpectedConditionResult, IImageCompareOptions } from "../../interfaces";
+import { getImageDiff } from "../../utils";
 
-export default class AjaxRequestMatch implements IBrowserCondition {
+export default class ImageMatch implements IBrowserCondition {
   readonly name: string;
+
+  private readonly context: ImageCompareContext;
 
   private readonly filename: string;
 
   private readonly reverse: boolean;
 
-  private readonly prefilter: any;
+  private readonly options: IImageCompareOptions;
 
-  public constructor(filename: string, reverse: boolean, prefilter?: PreFilterFunction) {
+  public constructor(context: string, filename: string, reverse: boolean, options?: IImageCompareOptions) {
     this.name = logger.getCallerFunc(true);
+    this.context = ImageCompareContext[context.toUpperCase()];
     this.filename = filename;
     this.reverse = reverse;
-    this.prefilter = prefilter;
+    this.options = options;
   }
 
   public evaluate(): IExpectedConditionResult {
-    let actual: string;
+    let actual: any;
     let result: boolean;
 
     try {
-      browser.pause(1000);
-      actual = (browser as any).getRequests().map((i: any) => { delete i.response; return i; });
-      actual = getJSONDiff("ajaxRequests", this.filename, actual, this.prefilter);
+      actual = getImageDiff(this.filename, { context: this.context, options: this.options });
       result = this.reverse ? !!actual : !actual;
     } catch (e) {
       actual = e.message;

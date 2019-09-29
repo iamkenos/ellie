@@ -1,4 +1,4 @@
-Feature: Section 13 of the Demo App
+Feature: Section 13
 
   Background:
     Given I have a screen that is maximized
@@ -6,17 +6,17 @@ Feature: Section 13 of the Demo App
       And I expect the element "Demo=>Section 13" to exist
 
   Scenario: Set content to an input field
-    When I type "lipsum" on the field "Demo=>Test input"
-    Then I expect the field "Demo=>Test input" value to be "lipsum"
+    When I type "foo" on the field "Demo=>Test input"
+    Then I expect the field "Demo=>Test input" value to be "foo"
       And I expect the field "Demo=>Test input" value to not be empty
 
   Scenario: Append content to an input field
-    When I type "lorem" on the field "Demo=>Test input"
-      And I append " ipsum" on the field "Demo=>Test input"
-    Then I expect the field "Demo=>Test input" value to be "lorem ipsum"
+    When I type "foo" on the field "Demo=>Test input"
+      And I append "baz" on the field "Demo=>Test input"
+    Then I expect the field "Demo=>Test input" value to be "foobaz"
 
   Scenario: Clear the contents of an input field
-    When I type "lipsum" on the field "Demo=>Test input"
+    When I type "foo" on the field "Demo=>Test input"
       And I clear the field "Demo=>Test input"
     Then I expect the element "Demo=>Test input" value to be empty
 

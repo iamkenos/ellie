@@ -12,6 +12,7 @@ import checkCountEquals from "../glue/check/checkCountEquals";
 import checkCountGreaterLess from "../glue/check/checkCountGreaterLess";
 import checkDisplayed from "../glue/check/checkDisplayed";
 import checkDisplayedInViewport from "../glue/check/checkDisplayedInViewport";
+import checkElementImageMatch from "../glue/check/checkElementImageMatch";
 import checkEnabled from "../glue/check/checkEnabled";
 import checkExisting from "../glue/check/checkExisting";
 import checkFocused from "../glue/check/checkFocused";
@@ -32,6 +33,7 @@ import checkValueEmpty from "../glue/check/checkValueEmpty";
 import checkValueEquals from "../glue/check/checkValueEquals";
 import checkWindowCountEquals from "../glue/check/checkWindowCountEquals";
 import checkWindowCountGreaterLess from "../glue/check/checkWindowCountGreaterLess";
+import checkWindowImageMatch from "../glue/check/checkWindowImageMatch";
 
 Then(
   /^I expect the ajax requests to( not)? match the reference "([^"]*)?"$/,
@@ -91,6 +93,11 @@ Then(
 Then(
   /^I expect the element "([^"]*)?" to( not)? be displayed within the viewport$/,
   checkDisplayedInViewport
+);
+
+Then(
+  /^I expect the element "([^"]*)?" image to( not)? match the reference "([^"]*)?"$/,
+  checkElementImageMatch
 );
 
 Then(
@@ -191,4 +198,9 @@ Then(
 Then(
   /^I expect the (?:window|tab) count to( not)? be (greater|less) "([^"]*)?"$/,
   checkWindowCountGreaterLess
+);
+
+Then(
+  /^I expect the (viewport|page) image to( not)? match the reference "([^"]*)?"$/,
+  checkWindowImageMatch
 );

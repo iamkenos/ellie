@@ -1,6 +1,7 @@
 import { PreFilterFunction } from "deep-diff";
 
 import { WebElement } from "../elements";
+import { IImageCompareOptions } from "../interfaces";
 import BrowserConditions from "./evaluation/browserConditions";
 
 export default abstract class Driver {
@@ -89,6 +90,18 @@ export default abstract class Driver {
     browser.keys(keys);
   }
 
+  public static scrollTo(x: number, y: number): void {
+    browser.execute((x, y) => window.scrollTo(x, y), x, y);
+  }
+
+  public static scrollToTop(): void {
+    browser.execute((x, y) => window.scrollTo(x, y), 0, 0);
+  }
+
+  public static scrollToBottom(): void {
+    browser.execute("window.scrollTo(0, document.body.scrollHeight)");
+  }
+
   public static setCookie(cookieName: string, cookieValue: string): void {
     browser.setCookies({
       name: cookieName,
@@ -119,9 +132,9 @@ export default abstract class Driver {
     browser.url(url);
   }
 
-  public static checkAjaxRequestsMatchRef(filename: string, prefilter?: PreFilterFunction, reverse?: boolean): void {
+  public static checkAjaxRequestsMatchRef(filename: string, reverse?: boolean, prefilter?: PreFilterFunction): void {
     new BrowserConditions()
-      .ajaxRequestsMatch(filename, prefilter, reverse)
+      .ajaxRequestsMatch(filename, reverse, prefilter)
       .runStrict();
   }
 
@@ -158,6 +171,13 @@ export default abstract class Driver {
   public static checkCountLessThan(expected: number, reverse?: boolean): void {
     new BrowserConditions()
       .countLessThan(expected, reverse)
+      .runStrict();
+  }
+
+  public static checkImageMatchRef(
+    context: string, filename: string, reverse?: boolean, options?: IImageCompareOptions): void {
+    new BrowserConditions()
+      .imageMatch(context, filename, reverse, options)
       .runStrict();
   }
 

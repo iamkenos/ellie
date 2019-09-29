@@ -4,5 +4,5 @@ exports.config = {
   maxInstances: 10,
   specs: ['./features/**/*.feature'],
   pages: ['./pages/**/*.meta.js'],
-  waitforTimeout: 10000
+  waitforTimeout: 2000
 };

@@ -51,6 +51,11 @@ function detectDrop($el) {
 function handleFormSubmit(event) {
   event.preventDefault();
 
+  // eslint-disable-next-line no-undef
+  const xhr = new XMLHttpRequest();
+  xhr.open('GET', '/', true);
+  xhr.send();
+
   $(this)
     .find('.message')
     .removeClass('hidden');

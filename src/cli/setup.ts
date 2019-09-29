@@ -84,6 +84,7 @@ export function createWdioConfig(source: string, overrides: any): string {
     const answers = { ...DEFAULT, ...require(configFile).config, ...overrides };
     const parsedAnswers = {
       ...answers,
+      directory: configDir,
       comparableOptions: resolveComparableOutDirs(configDir, answers.comparableOptions),
       pages: resolveFiles(configDir, answers.pages),
       specs: resolveFiles(configDir, answers.specs),

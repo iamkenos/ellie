@@ -169,17 +169,17 @@ Then(
 );
 
 Then(
-  /^I expect the element "([^"]*)?" value to( not)? contain "([^"]*)?"$/,
+  /^I expect the (?:field|element) "([^"]*)?" value to( not)? contain "([^"]*)?"$/,
   checkValueContains
 );
 
 Then(
-  /^I expect the element "([^"]*)?" value to( not)? be empty$/,
+  /^I expect the (?:field|element) "([^"]*)?" value to( not)? be empty$/,
   checkValueEmpty
 );
 
 Then(
-  /^I expect the element "([^"]*)?" value to( not)? be "([^"]*)?"$/,
+  /^I expect the (?:field|element) "([^"]*)?" value to( not)? be "([^"]*)?"$/,
   checkValueEquals
 );
 

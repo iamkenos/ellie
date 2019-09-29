@@ -15,6 +15,7 @@ import {
   Enabled,
   Existing,
   Focused,
+  ImageMatch,
   Selected,
   SizeEquals,
   SizeHeightEquals,
@@ -27,7 +28,7 @@ import {
   ValueEmpty,
   ValueEquals
 } from "../conditions";
-import { IElementCondition } from "../../interfaces";
+import { IElementCondition, IImageCompareOptions } from "../../interfaces";
 import ElementConditionsResult from "./elementConditionsResult";
 
 const WAIT_TIMEOUT: number = (browser as any).config.waitforTimeout;
@@ -110,6 +111,11 @@ export default class ElementConditions {
 
   public focused(reverse = false): ElementConditions {
     this.conditions.push(new Focused(reverse));
+    return this;
+  }
+
+  public imageMatch(filename: string, reverse = false, options?: IImageCompareOptions): ElementConditions {
+    this.conditions.push(new ImageMatch(filename, reverse, options));
     return this;
   }
 

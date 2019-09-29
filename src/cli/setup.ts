@@ -18,7 +18,7 @@ import {
   WDIO_CONFIG_OUT,
   WDIO_CONFIG_TPL
 } from "./config";
-import { inspect, readFileSync, resolveFiles } from "./utils";
+import { inspect, readFileSync, resolveComparableOutDirs, resolveFiles } from "./utils";
 
 function createFromTemplate(answers: any, template: string, outFile: string): string {
   logger.trace("Creating from template...");
@@ -84,6 +84,7 @@ export function createWdioConfig(source: string, overrides: any): string {
     const answers = { ...DEFAULT, ...require(configFile).config, ...overrides };
     const parsedAnswers = {
       ...answers,
+      comparableOptions: resolveComparableOutDirs(configDir, answers.comparableOptions),
       pages: resolveFiles(configDir, answers.pages),
       specs: resolveFiles(configDir, answers.specs),
       steps: [...resolveFiles(__dirname, [CORE_STEP_DEFS]), ...resolveFiles(configDir, answers.steps, false)],

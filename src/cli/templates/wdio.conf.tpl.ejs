@@ -1,3 +1,4 @@
+const fse = require('fs-extra')
 const path = require('path');
 const rimraf = require('rimraf');
 const logger = require('ellie/build/logger');
@@ -123,6 +124,7 @@ exports.config = {
   // commands. Instead, they hook themselves up into the test process.
   services: [
     'selenium-standalone',
+    'intercept',
   ],
   // Framework you want to run your specs with.
   // The following are supported: Mocha, Jasmine, and Cucumber
@@ -138,14 +140,20 @@ exports.config = {
   // Test reporter for stdout.
   reporters: [
     'spec',
-    ['junit', { outputDir: '<%= answers.reportOutDir %>/junit' }],
+    [
+      'junit', 
+      { 
+        outputDir: '<%= answers.reportOutDir %>/junit',
+        outputFileFormat: (options) => `wdio-${options.cid}-junit-reporter.xml`
+      }
+    ],
     [
       'allure',
       {
         disableWebdriverStepsReporting: true,
         disableWebdriverScreenshotsReporting: false,
         useCucumberStepReporter: true,
-        outputDir: '<%= answers.reportOutDir %>/allure'
+        outputDir: '<%= answers.reportOutDir %>/allure',
       }
     ]
   ],
@@ -185,6 +193,7 @@ exports.config = {
   // ==============
   // Customizations
   // ==============
+  comparableOptions: <%- JSON.stringify(answers.comparableOptions) %>,
   custom: <%- JSON.stringify(answers.custom) %>,
   locale: '<%- answers.locale %>',
   pages: [<%- answers.pages.map(i => JSON.stringify(i)) %>],
@@ -203,6 +212,11 @@ exports.config = {
    */
   onPrepare: function (config, capabilities) {
     try {
+      Object.keys(config.comparableOptions).forEach(key => {
+        rimraf.sync(config.comparableOptions[key].actualDir);
+        rimraf.sync(config.comparableOptions[key].diffDir);
+        fse.mkdirsSync(config.comparableOptions[key].baselineDir)
+      })
       rimraf.sync('<%= answers.reportOutDir %>');
     } catch(e) {
       throw new Error(e);
@@ -226,6 +240,7 @@ exports.config = {
   before: function (capabilities, specs) {
     logger.setLevel('<%= answers.logLevel %>');
 
+    // Define global page meta
     global.pagemeta = {};
     browser.config.pages.forEach((file) => {
       global.pagemeta[`${path.basename(file).split('.')[0]}`] = require(file).default;

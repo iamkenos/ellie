@@ -1,3 +1,4 @@
+import AjaxRequestsMatch from "./ajaxRequestsMatch";
 import CookieContains from "./cookieContains";
 import CookieEquals from "./cookieEquals";
 import CookieExists from "./cookieExists";
@@ -12,6 +13,7 @@ import UrlPathContains from "./urlPathContains";
 import UrlPathEquals from "./urlPathEquals";
 
 export {
+  AjaxRequestsMatch,
   CookieContains,
   CookieEquals,
   CookieExists,

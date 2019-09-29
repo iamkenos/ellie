@@ -1,7 +1,8 @@
-import * as chai from "chai";
+import { AssertionError } from "chai";
 
 import * as logger from "../../../logger";
 import {
+  AjaxRequestsMatch,
   CookieContains,
   CookieEquals,
   CookieExists,
@@ -33,6 +34,11 @@ export default class BrowserConditions {
     this.conditions = [];
     this.name = name || logger.getCallerFunc();
     this.result = new BrowserConditionsResult();
+  }
+
+  public ajaxRequestsMatch(filename: string, prefilter = undefined, reverse = false): BrowserConditions {
+    this.conditions.push(new AjaxRequestsMatch(filename, prefilter, reverse));
+    return this;
   }
 
   public cookieContains(cookie: string, expected: string, reverse = false): BrowserConditions {
@@ -120,7 +126,7 @@ export default class BrowserConditions {
       );
       return this.result;
     } catch (e) {
-      throw new chai.AssertionError(this.result.getErrorMessage(this.name, this.conditions, timeout));
+      throw new AssertionError(this.result.getErrorMessage(this.name, this.conditions, timeout));
     }
   }
 }

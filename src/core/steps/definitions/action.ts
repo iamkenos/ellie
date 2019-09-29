@@ -7,6 +7,7 @@ import elemOptionSelect from "../glue/action/elemOptionSelect";
 import elemScrollTo from "../glue/action/elemScrollTo";
 import elemValueClear from "../glue/action/elemValueClear";
 import elemValueSet from "../glue/action/elemValueSet";
+import windowAjaxIntercept from "../glue/action/windowAjaxIntercept";
 import windowChildrenClose from "../glue/action/windowChildrenClose";
 import windowCookieDelete from "../glue/action/windowCookieDelete";
 import windowCookiesDelete from "../glue/action/windowCookiesDelete";
@@ -57,6 +58,11 @@ When(
 When(
   /^I (type|append) "([^"]*)?" on the (?:field|element) "([^"]*)?"$/,
   elemValueSet
+);
+
+When(
+  /^I start to intercept ajax requests$/,
+  windowAjaxIntercept
 );
 
 When(

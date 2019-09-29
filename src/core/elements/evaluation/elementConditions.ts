@@ -1,4 +1,4 @@
-import * as chai from "chai";
+import { AssertionError } from "chai";
 
 import * as logger from "../../../logger";
 import {
@@ -193,7 +193,7 @@ export default class ElementConditions {
       );
       return this.result;
     } catch (e) {
-      throw new chai.AssertionError(this.result.getErrorMessage(this.name, this.conditions, timeout));
+      throw new AssertionError(this.result.getErrorMessage(this.name, this.conditions, timeout));
     }
   }
 }

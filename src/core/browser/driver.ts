@@ -1,3 +1,5 @@
+import { PreFilterFunction } from "deep-diff";
+
 import BrowserConditions from "./evaluation/browserConditions";
 
 export default abstract class Driver {
@@ -54,6 +56,10 @@ export default abstract class Driver {
     browser.deleteCookies();
   }
 
+  public static interceptAjaxRequests(): void {
+    (browser as any).setupInterceptor();
+  }
+
   public static maximizeWindow(): void {
     browser.maximizeWindow();
   }
@@ -102,6 +108,12 @@ export default abstract class Driver {
 
   public static url(url: string): void {
     browser.url(url);
+  }
+
+  public static checkAjaxRequestsMatchRef(filename: string, prefilter?: PreFilterFunction, reverse?: boolean): void {
+    new BrowserConditions()
+      .ajaxRequestsMatch(filename, prefilter, reverse)
+      .runStrict();
   }
 
   public static checkCookieContains(cookie: string, expected: string, reverse?: boolean): void {

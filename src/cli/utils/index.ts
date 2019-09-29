@@ -13,6 +13,24 @@ export function readFileSync(path: string): string {
   return fs.readFileSync(path, "utf8");
 }
 
+export function resolveComparableOutDirs(directory: string, comparableOptions: any): any {
+  const options = Object.entries(comparableOptions)
+    .reduce((i, j): object => (
+      {
+        ...i,
+        [j[0]]: {
+          ...j[1],
+          outputDir: path.join(directory, (j[1] as any).outputDir),
+          baselineDir: path.join(directory, (j[1] as any).outputDir, "baseline"),
+          actualDir: path.join(directory, (j[1] as any).outputDir, "actual"),
+          diffDir: path.join(directory, (j[1] as any).outputDir, "diff")
+        }
+      }
+    ), {});
+
+  return options;
+}
+
 export function resolveFiles(baseDir: string, fileGlob: string[], isStrict = true): string[] {
   const resolved: string[] = [];
 

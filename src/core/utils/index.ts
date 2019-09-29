@@ -1,4 +1,10 @@
+import * as fs from "fs-extra";
+import * as path from "path";
+import { diff, PreFilterFunction } from "deep-diff";
+import allure from "@wdio/allure-reporter";
+
 import * as logger from "../../logger";
+import { readFileSync } from "../../cli/utils";
 
 export function getAbsoluteXPathScript(): string {
   return `function absoluteXPath(element) {
@@ -94,4 +100,27 @@ export function getPageElement(key: string): string {
   const element = matches[3];
 
   return page ? getPageProperty(page, "locators", element) : key;
+}
+
+export function compareJSON(type: string, filename: string, comparable: any, prefilter?: PreFilterFunction): boolean {
+  const comparableOptions = (browser as any).config.comparableOptions[type];
+  const actFile = path.join(comparableOptions.actualDir, filename) + ".json";
+  const expFile = path.join(comparableOptions.baselineDir, filename) + ".json";
+  const difFile = path.join(comparableOptions.diffDir, filename) + ".json";
+
+  fs.outputFileSync(actFile, JSON.stringify(comparable, null, 2));
+  allure.addAttachment("Actual:", readFileSync(actFile));
+
+  if (!comparableOptions.skipCompare) {
+    if (!fs.existsSync(expFile)) { throw new Error(`Baseline JSON file "${expFile}" not found`); }
+    allure.addAttachment("Expected:", readFileSync(expFile));
+
+    const differences = diff(JSON.parse(readFileSync(expFile)), comparable, prefilter);
+    if (differences) {
+      fs.outputFileSync(difFile, JSON.stringify(differences, null, 2));
+      allure.addAttachment("Differences:", readFileSync(difFile));
+      return false;
+    }
+  }
+  return true;
 }

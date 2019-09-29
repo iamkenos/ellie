@@ -2,6 +2,7 @@ import { Given, When } from "cucumber";
 
 import elemClick from "../glue/action/elemClick";
 import elemDragAndDrop from "../glue/action/elemDragAndDrop";
+import elemFileUpload from "../glue/action/elemFileUpload";
 import elemMoveTo from "../glue/action/elemMoveTo";
 import elemOptionSelect from "../glue/action/elemOptionSelect";
 import elemScrollTo from "../glue/action/elemScrollTo";
@@ -33,6 +34,11 @@ When(
 When(
   /^I drag the element "([^"]*)?" to the element "([^"]*)?"$/,
   elemDragAndDrop
+);
+
+When(
+  /^I upload the file "([^"]*)?" to the (?:field|element) "([^"]*)?"$/,
+  elemFileUpload
 );
 
 When(

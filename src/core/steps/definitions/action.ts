@@ -1,4 +1,4 @@
-import { Given, When } from "cucumber";
+import { When } from "cucumber";
 
 import elemClick from "../glue/action/elemClick";
 import elemDragAndDrop from "../glue/action/elemDragAndDrop";
@@ -24,6 +24,7 @@ import windowPause from "../glue/action/windowPause";
 import windowRefresh from "../glue/action/windowRefresh";
 import windowSizeMaximize from "../glue/action/windowSizeMaximize";
 import windowSizeSet from "../glue/action/windowSizeSet";
+import windowSwitchFrame from "../glue/action/windowSwitchFrame";
 import windowUrlSet from "../glue/action/windowUrlSet";
 
 When(
@@ -92,7 +93,7 @@ When(
 );
 
 When(
-  /^I press the key "([^"]*)?"$/,
+  /^I press the "([^"]*)?" key$/,
   windowKeyPress
 );
 
@@ -136,17 +137,22 @@ When(
   windowRefresh
 );
 
-Given(
+When(
   /^I have a screen that is maximized$/,
   windowSizeMaximize
 );
 
-Given(
+When(
   /^I have a screen that is ([\d]+) by ([\d]+) pixels$/,
   windowSizeSet
 );
 
-Given(
+When(
+  /^I focus on the (?:iframe "([^"]*)?"|parent context)/,
+  windowSwitchFrame
+);
+
+When(
   /^I open the url (?:"([^"]*)?"|of the page "([^"]*)?")$/,
   windowUrlSet
 );

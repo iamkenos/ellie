@@ -1,5 +1,6 @@
 import { PreFilterFunction } from "deep-diff";
 
+import { WebElement } from "../elements";
 import BrowserConditions from "./evaluation/browserConditions";
 
 export default abstract class Driver {
@@ -104,6 +105,14 @@ export default abstract class Driver {
 
   public static sendAlertText(text: string): void {
     browser.sendAlertText(text);
+  }
+
+  public static switchToFrame(element: WebElement): void {
+    browser.switchToFrame(element.existing$());
+  }
+
+  public static switchToParentFrame(): void {
+    browser.switchToParentFrame();
   }
 
   public static url(url: string): void {

@@ -14,7 +14,13 @@ export default {
 
       // Section 15
       'Section 15': '//h3[text()="SECTION 15"]',
-      'Create button': '#waitForCreateBtn'
+      'Create button': '#waitForCreateBtn',
+
+      // Section 16
+      'Section 16': '//h3[text()="SECTION 16"]',
+      'Key bind': '#testKeyResponse',
+      'Sample Iframe': '//iframe',
+      'Iframe input': '#iframeInput'
     }
   }
 };

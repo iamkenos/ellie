@@ -1,4 +1,4 @@
-Feature: Section 16 of the Demo App
+Feature: Section 16
 
   Background:
     Given I have a screen that is maximized
@@ -13,8 +13,8 @@ Feature: Section 16 of the Demo App
 
   Scenario: Set content to an input field inside an iframe
     When I focus on the iframe "Demo=>Sample Iframe"
-      And I type "lipsum" on the field "Demo=>Iframe input"
-    Then I expect the field "Demo=>Iframe input" value to be "lipsum"
+      And I type "foo" on the field "Demo=>Iframe input"
+    Then I expect the field "Demo=>Iframe input" value to be "foo"
       And I expect the element "Demo=>Section 16" to not exist
     But I focus on the parent context
     Then I expect the element "Demo=>Section 16" to exist

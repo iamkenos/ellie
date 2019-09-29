@@ -95,7 +95,7 @@ exports.config = {
   // - @wdio/cli, @wdio/config, @wdio/sync, @wdio/utils
   // Level of logging verbosity: trace | debug | info | warn | error | silent
   logLevels: {
-    webdriver: '<%= answers.logLevel %>',
+    webdriver: 'error',
   },
   //
   // If you only want to run your tests until a specific amount of tests have failed use
@@ -125,6 +125,16 @@ exports.config = {
   services: [
     'selenium-standalone',
     'intercept',
+    [
+      'image-comparison',
+      {
+        screenshotPath: <%- JSON.stringify(answers.comparableOptions.visualRegression.outputDir) %>,
+        baselineFolder: <%- JSON.stringify(answers.comparableOptions.visualRegression.baselineDir) %>,
+        actualFolder: <%- JSON.stringify(answers.comparableOptions.visualRegression.actualDir) %>,
+        diffFolder: <%- JSON.stringify(answers.comparableOptions.visualRegression.diffDir) %>,
+        formatImageName: "{platformName}/{tag}",
+      }
+    ]
   ],
   // Framework you want to run your specs with.
   // The following are supported: Mocha, Jasmine, and Cucumber

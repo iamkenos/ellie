@@ -3,6 +3,11 @@ export default {
     url: '/',
     title: 'DEMO APP',
     locators: {
+      // Section 1
+      'Section 1': '//h3[text()="SECTION 1"]',
+      'Draggable box': '#draggable',
+      'Drop zone': '#droppable',
+
       // Section 11
       'Section 11': '//h3[text()="SECTION 11"]',
       'Same window link': '//span[./a[@id="linkSameWindow"]]/a',

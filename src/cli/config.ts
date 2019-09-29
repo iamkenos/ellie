@@ -6,16 +6,20 @@ export const DEFAULT = {
   baseUrl: "http://localhost",
   capabilities: [
     {
-      maxInstances: 1,
+      maxInstances: 10,
       browserName: "chrome",
       "goog:chromeOptions": {
-        args: ["--disable-web-security", "--disable-gpu", "--headless"]
+        args: ["--disable-web-security", "--incognito", "--disable-gpu", "--headless"]
       }
     }
   ],
   comparableOptions: {
     ajaxRequests: {
       outputDir: ".comparable/ajax",
+      skipCompare: false
+    },
+    visualRegression: {
+      outputDir: ".comparable/image",
       skipCompare: false
     }
   },
@@ -27,7 +31,7 @@ export const DEFAULT = {
   specFileRetries: 0,
   specs: ["./features/**/*.feature"],
   steps: ["./steps/definitions/**/*.js"],
-  stepTimeout: 15000,
+  stepTimeout: 30000,
   waitforTimeout: 5000,
   hooks: {
     before: "",

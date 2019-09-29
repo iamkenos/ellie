@@ -21,7 +21,7 @@ export default class BrowserConditionsResult {
     const total = conditions.length;
 
     return `
-  Expected conditions not met after waiting for ${timeout}ms
+  Browser expected conditions not met after waiting for ${timeout}ms
   Expression: ${expression}
   Session: ${browser.sessionId}
   Evaluation Summary: ${success}/${total}

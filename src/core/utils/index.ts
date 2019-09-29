@@ -4,6 +4,8 @@ import { diff, PreFilterFunction } from "deep-diff";
 import allure from "@wdio/allure-reporter";
 
 import * as logger from "../../logger";
+import { ImageCompareContext } from "../enums";
+import { IImageCompare, IImageCompareResult, IImageSave } from "../interfaces";
 import { readFileSync } from "../../cli/utils";
 
 export function getAbsoluteXPathScript(): string {
@@ -102,7 +104,7 @@ export function getPageElement(key: string): string {
   return page ? getPageProperty(page, "locators", element) : key;
 }
 
-export function compareJSON(type: string, filename: string, comparable: any, prefilter?: PreFilterFunction): boolean {
+export function getJSONDiff(type: string, filename: string, comparable: any, prefilter?: PreFilterFunction): string {
   const comparableOptions = (browser as any).config.comparableOptions[type];
   const actFile = path.join(comparableOptions.actualDir, filename) + ".json";
   const expFile = path.join(comparableOptions.baselineDir, filename) + ".json";
@@ -112,15 +114,83 @@ export function compareJSON(type: string, filename: string, comparable: any, pre
   allure.addAttachment("Actual:", readFileSync(actFile));
 
   if (!comparableOptions.skipCompare) {
-    if (!fs.existsSync(expFile)) { throw new Error(`Baseline JSON file "${expFile}" not found`); }
+    if (!fs.existsSync(expFile)) { return `Baseline JSON file "${expFile}" not found`; }
     allure.addAttachment("Expected:", readFileSync(expFile));
 
     const differences = diff(JSON.parse(readFileSync(expFile)), JSON.parse(readFileSync(actFile)), prefilter);
     if (differences) {
-      fs.outputFileSync(difFile, JSON.stringify(differences, null, 2));
+      const diff = JSON.stringify(differences, null, 2);
+      fs.outputFileSync(difFile, diff);
       allure.addAttachment("Differences:", readFileSync(difFile));
-      return false;
+      return diff;
     }
   }
-  return true;
+  return undefined;
+}
+
+export function getImageFile(context: ImageCompareContext, filename: string, elem?: WebdriverIO.Element): IImageSave {
+  switch (context) {
+    case ImageCompareContext.VIEWPORT: {
+      return (browser as any).saveScreen(filename);
+    }
+    case ImageCompareContext.ELEMENT: {
+      return (browser as any).saveElement(elem, filename);
+    }
+    case ImageCompareContext.PAGE: {
+      return (browser as any).saveFullPageScreen(filename);
+    }
+  }
+}
+
+export function getImageDiff(filename: string, compare: IImageCompare): string {
+  let result: IImageCompareResult = {};
+
+  const imageName = (filename: string): string =>
+    `${browser.capabilities.browserName}_v${parseInt(browser.capabilities.version, 10)}/${filename}`;
+
+  const attachImage = (title: string, file: string): void =>
+    allure.addAttachment(title, Buffer.from(fs.readFileSync(file) as any, "base64"), "image/png");
+
+  const saved = getImageFile(compare.context, imageName(filename), compare.element);
+
+  const comparableOptions = (browser as any).config.comparableOptions.visualRegression;
+  const actFile = path.join(comparableOptions.actualDir, saved.fileName);
+  const expFile = path.join(comparableOptions.baselineDir, saved.fileName);
+  const difFile = path.join(comparableOptions.diffDir, saved.fileName);
+
+  compare.options = {
+    ...compare.options,
+    ...{
+      ignoreAntialiasing: true,
+      returnAllCompareData: true
+    }
+  };
+
+  attachImage("Actual:", actFile);
+
+  if (!comparableOptions.skipCompare) {
+    if (!fs.existsSync(expFile)) { return `Baseline image "${expFile}" not found`; }
+    attachImage("Expected:", expFile);
+
+    switch (compare.context) {
+      case ImageCompareContext.VIEWPORT: {
+        result = (browser as any).checkScreen(imageName(filename), compare.options);
+        break;
+      }
+      case ImageCompareContext.ELEMENT: {
+        result = (browser as any).checkElement(compare.element, imageName(filename), compare.options);
+        break;
+      }
+      case ImageCompareContext.PAGE: {
+        result = (browser as any).checkFullPageScreen(imageName(filename), compare.options);
+        break;
+      }
+    }
+
+    if (result.misMatchPercentage) {
+      attachImage("Differences:", difFile);
+      return `Image mismatch by ${result.misMatchPercentage}%`;
+    }
+  }
+  return undefined;
 }

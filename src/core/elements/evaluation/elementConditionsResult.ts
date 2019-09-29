@@ -24,7 +24,7 @@ export default class ElementConditionsResult {
     const total = conditions.length;
 
     return `
-  Expected conditions not met after waiting for ${timeout}ms
+  Element expected conditions not met after waiting for ${timeout}ms
   Expression: ${expression}
   Selector: ${this.selector}
   Evaluation Summary: ${success}/${total}

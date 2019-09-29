@@ -22,6 +22,8 @@ import windowOpen from "../glue/action/windowOpen";
 import windowPageNavigate from "../glue/action/windowPageNavigate";
 import windowPause from "../glue/action/windowPause";
 import windowRefresh from "../glue/action/windowRefresh";
+import windowScrollTo from "../glue/action/windowScrollTo";
+import windowScrollToCoordinates from "../glue/action/windowScrollToCoordinates";
 import windowSizeMaximize from "../glue/action/windowSizeMaximize";
 import windowSizeSet from "../glue/action/windowSizeSet";
 import windowSwitchFrame from "../glue/action/windowSwitchFrame";
@@ -135,6 +137,16 @@ When(
 When(
   /^I refesh the page$/,
   windowRefresh
+);
+
+When(
+  /^I scroll to the (top|bottom) of the page$/,
+  windowScrollTo
+);
+
+When(
+  /^I scroll to the coordinates (\d+).(\d+) of the page$/,
+  windowScrollToCoordinates
 );
 
 When(

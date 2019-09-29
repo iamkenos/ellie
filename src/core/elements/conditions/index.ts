@@ -11,6 +11,7 @@ import DisplayedInViewport from "./displayedInViewport";
 import Enabled from "./enabled";
 import Existing from "./existing";
 import Focused from "./focused";
+import ImageMatch from "./imageMatch";
 import Selected from "./selected";
 import SizeEquals from "./sizeEquals";
 import SizeHeightEquals from "./sizeHeightEquals";
@@ -37,6 +38,7 @@ export {
   Enabled,
   Existing,
   Focused,
+  ImageMatch,
   Selected,
   SizeEquals,
   SizeHeightEquals,

@@ -12,6 +12,11 @@ export default {
       'Test input': '#testInput',
       'Upload input': '#uploadInput',
 
+      // Section 14
+      'Section 14': '//h3[text()="SECTION 14"]',
+      'Form input': '#formInput',
+      'Submit button': '//button[text()="Submit"]',
+
       // Section 15
       'Section 15': '//h3[text()="SECTION 15"]',
       'Create button': '#waitForCreateBtn',

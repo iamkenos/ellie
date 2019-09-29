@@ -3,6 +3,7 @@
 !demo.conf.js
 
 demo/test/.reports
-demo/test/.comparable
+demo/test/.comparable/**/actual
+demo/test/.comparable/**/diff
 build
 node_modules

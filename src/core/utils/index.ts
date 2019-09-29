@@ -115,7 +115,7 @@ export function compareJSON(type: string, filename: string, comparable: any, pre
     if (!fs.existsSync(expFile)) { throw new Error(`Baseline JSON file "${expFile}" not found`); }
     allure.addAttachment("Expected:", readFileSync(expFile));
 
-    const differences = diff(JSON.parse(readFileSync(expFile)), comparable, prefilter);
+    const differences = diff(JSON.parse(readFileSync(expFile)), JSON.parse(readFileSync(actFile)), prefilter);
     if (differences) {
       fs.outputFileSync(difFile, JSON.stringify(differences, null, 2));
       allure.addAttachment("Differences:", readFileSync(difFile));

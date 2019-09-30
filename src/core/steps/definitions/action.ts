@@ -160,7 +160,7 @@ When(
 );
 
 When(
-  /^I focus on the (?:iframe "([^"]*)?"|parent context)/,
+  /^I focus on the (?:iframe "([^"]*)?"|parent context)$/,
   windowSwitchFrame
 );
 

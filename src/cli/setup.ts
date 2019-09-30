@@ -11,7 +11,6 @@ import {
   CONFIG_HELPER_SUCCESS_MESSAGE,
   CONFIG_INQUIRY,
   CORE_STEP_DEFS,
-  DEFAULT,
   LCL_CONFIG_OUT,
   LCL_CONFIG_TPL,
   PRETTIER_CONFIG,
@@ -21,7 +20,7 @@ import {
   WDIO_CONFIG_OUT,
   WDIO_CONFIG_TPL
 } from "./config";
-import { inspect, readFileSync, resolveComparableOutDirs, resolveFiles } from "./utils";
+import { buildConfig, inspect, readFileSync, resolveComparableOutDirs, resolveFiles } from "./utils";
 
 function createFromTemplate(answers: any, template: string, outFile: string): string {
   logger.trace("Creating from template...");
@@ -46,18 +45,10 @@ function createFromTemplate(answers: any, template: string, outFile: string): st
 
 export async function generateSamples(): Promise<any> {
   logger.debug("Started samples helper");
-  const outDir = (await inquirer.prompt(SAMPLES_INQUIRY) as any).outDir;
-  const arrSplit = new RegExp(/[ ,]+/);
-  const configOut = `${outDir}/${LCL_CONFIG_OUT}`;
 
-  // create answers object to be used in filling up the template
-  // ...DEFAULT - first, use the defaults as a base to include properties that are not inquired by the helper
-  const parsedAnswers = {
-    ...DEFAULT,
-    pages: DEFAULT.pages.toString().split(arrSplit),
-    specs: DEFAULT.specs.toString().split(arrSplit),
-    steps: DEFAULT.steps.toString().split(arrSplit)
-  };
+  const outDir = (await inquirer.prompt(SAMPLES_INQUIRY) as any).outDir;
+  const configOut = `${outDir}/${LCL_CONFIG_OUT}`;
+  const parsedAnswers = buildConfig();
 
   createFromTemplate(parsedAnswers, LCL_CONFIG_TPL, path.join(process.cwd(), configOut));
   fs.copySync(path.join(__dirname, SAMPLES_DIR), path.join(process.cwd(), outDir), { recursive: true });
@@ -71,18 +62,8 @@ export async function createLocalConfig(): Promise<any> {
     logger.debug("Started config helper");
     console.log(CONFIG_HELPER_INTRO.trim());
 
-    // create answers object to be used in filling up the template
-    // ...DEFAULT - first, use the defaults as a base to include properties that are not inquired by the helper
-    // ...answers - then take values from the provided config helper
-    const arrSplit = new RegExp(/[ ,]+/);
     const answers = await inquirer.prompt(CONFIG_INQUIRY);
-    const parsedAnswers = {
-      ...DEFAULT,
-      ...answers,
-      pages: answers.pages.toString().split(arrSplit),
-      specs: answers.specs.toString().split(arrSplit),
-      steps: answers.steps.toString().split(arrSplit)
-    };
+    const parsedAnswers = buildConfig(answers);
 
     logger.info("Creating local config...", LCL_CONFIG_OUT);
     createFromTemplate(parsedAnswers, LCL_CONFIG_TPL, path.join(process.cwd(), LCL_CONFIG_OUT));
@@ -102,11 +83,7 @@ export function createWdioConfig(source: string, overrides: any): string {
     const configFile = path.join(process.cwd(), source);
     const configDir = path.dirname(configFile);
 
-    // create answers object to be used in filling up the template
-    // ...DEFAULT - first, use the defaults as a base to include properties that are not supplied on the local config
-    // ...require(configFile).config - then take values from the provided config file and replace the defaults
-    // ...overrides - lastly, use overrides if it matches any of the cli options
-    const answers = { ...DEFAULT, ...require(configFile).config, ...overrides };
+    const answers = buildConfig(require(configFile).config, overrides);
     const parsedAnswers = {
       ...answers,
       directory: configDir,

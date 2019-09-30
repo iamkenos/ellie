@@ -5,6 +5,37 @@ import * as util from "util";
 
 import * as logger from "../../logger";
 
+import { DEFAULT } from "../config";
+
+export function buildConfig(...answers: any): any {
+  const arrSplit = new RegExp(/[ ,]+/);
+  let parsedAnswers = {
+    ...DEFAULT,
+    ...answers
+      .filter((i: object) => Object.entries(i).length !== 0 && i.constructor === Object)
+      .reduce((i: object, j: object): object => ({ ...j }), {})
+  };
+
+  parsedAnswers = {
+    ...parsedAnswers,
+    pages: parsedAnswers.pages.toString().split(arrSplit),
+    specs: parsedAnswers.specs.toString().split(arrSplit),
+    steps: parsedAnswers.steps.toString().split(arrSplit)
+  };
+
+  if (!Array.isArray(parsedAnswers.capabilities)) {
+    if (parsedAnswers.browserstack) {
+      parsedAnswers.capabilities = parsedAnswers.capabilities.browserstack;
+    } else {
+      parsedAnswers.capabilities = parsedAnswers.capabilities.standalone;
+      delete parsedAnswers.user;
+      delete parsedAnswers.key;
+    }
+  }
+
+  return parsedAnswers;
+}
+
 export function inspect(object: any): any {
   return util.inspect(object, false, null, true);
 }

@@ -146,12 +146,12 @@ Then(
 );
 
 Then(
-  /^I expect the window title to( not)? contain (?:"([^"]*)?"|that of the page "([^"]*)?")$/,
+  /^I expect the (?:window|page) title to( not)? contain (?:"([^"]*)?"|that of the page "([^"]*)?")$/,
   checkTitleContains
 );
 
 Then(
-  /^I expect the window title to( not)? be (?:"([^"]*)?"|that of the page "([^"]*)?")$/,
+  /^I expect the (?:window|page) title to( not)? be (?:"([^"]*)?"|that of the page "([^"]*)?")$/,
   checkTitleEquals
 );
 

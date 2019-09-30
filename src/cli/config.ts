@@ -83,6 +83,8 @@ export const LCL_CONFIG_TPL = "/templates/ellie.conf.tpl.ejs";
 
 export const LCL_CONFIG_OUT = "ellie.conf.js";
 
+export const SAMPLES_DIR = "/templates/samples";
+
 export const WDIO_CONFIG_TPL = "/templates/wdio.conf.tpl.ejs";
 
 export const WDIO_CONFIG_OUT = "wdio.conf.js";
@@ -94,6 +96,12 @@ Configuration Helper
 
 export const CONFIG_HELPER_SUCCESS_MESSAGE = `
 Configuration file was created successfully!
+To run your tests, execute:
+$ ellie ellie.conf.js
+`;
+
+export const SAMPLES_HELPER_SUCCESS_MESSAGE = `
+Sample files created successfully!
 To run your tests, execute:
 $ ellie ellie.conf.js
 `;
@@ -234,16 +242,26 @@ export const OVERRIDE_OPTS: IConfigProperty[] = CONFIG_PROPS
     name: i.name
   }));
 
-export const QUESTIONNAIRE: IConfigProperty[] = CONFIG_PROPS
+export const CONFIG_INQUIRY: IConfigProperty[] = CONFIG_PROPS
   .filter((i): boolean | undefined => i.inquiredOption && i.inquiredOption.enabled)
   .map((i): IConfigProperty => ({
     ...i.inquiredOption,
     name: i.name
   }));
 
+export const SAMPLES_INQUIRY: any[] = [
+  {
+    name: "outDir",
+    type: "input",
+    message: "Where do you want to store the output files?",
+    default: "./getstarted"
+  }
+];
+
 export const USAGE = `
 Usage:
   ellie init                   Launches the configuration helper
+  ellie getstarted             Generate sample files to get started with
   ellie [file]                 Launches the WebdriverIO test runner
   ellie [file] [options]       Stdin overrides for certain config properties; See options list below
   ellie babygirl               Endure and survive
@@ -256,7 +274,7 @@ ${
   // create an array of config property objects containing only the name and helptext properties
     .map((i): IConfigProperty => ({ name: i.name, helptext: i.helptext }))
   // create an array of config property strings marking those inquired with an '*'
-    .map((i): string => `  ${QUESTIONNAIRE
+    .map((i): string => `  ${CONFIG_INQUIRY
       .filter((j): boolean => i.name === j.name)
       .map((): string => "* ")}${i.name}\t  ${i.helptext}`)
   // transform the array into a big string, each element separated by a line break

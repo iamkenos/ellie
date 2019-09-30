@@ -4,7 +4,7 @@ import { Arguments } from "yargs";
 
 import * as logger from "../logger";
 import { OVERRIDE_OPTS, TLOU_QUOTES } from "./config";
-import { createLocalConfig, createWdioConfig } from "./setup";
+import { createLocalConfig, createWdioConfig, generateSamples } from "./setup";
 import { inspect } from "./utils";
 
 export default (args: Arguments<any>): any => {
@@ -36,6 +36,12 @@ export default (args: Arguments<any>): any => {
   // then run the config helper
   if (firstArg === "init") {
     return createLocalConfig();
+  }
+
+  // if the first argument is "getstarted"
+  // then run the samples helper
+  if (firstArg === "getstarted") {
+    return generateSamples();
   }
 
   // if the provided config file exists

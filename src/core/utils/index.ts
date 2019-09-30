@@ -6,7 +6,7 @@ import allure from "@wdio/allure-reporter";
 import * as logger from "../../logger";
 import { ImageCompareContext } from "../enums";
 import { IImageCompare, IImageCompareResult, IImageSave } from "../interfaces";
-import { readFileSync } from "../../cli/utils";
+import { inspect, readFileSync } from "../../cli/utils";
 
 export function getAbsoluteXPathScript(): string {
   return `function absoluteXPath(element) {
@@ -68,6 +68,18 @@ export function getAbsoluteXPathScript(): string {
 
 export function getIndexedSelector(selector: string, index: number): string {
   return `(${selector})[${index + 1}]`;
+}
+
+export function getPageObject(meta: any, locale: string): any {
+  const lang = locale || (browser as any).config.locale;
+  const object = meta[lang];
+
+  if (!object) {
+    throw new Error(`
+  Locale '${lang}' not found in page'
+  Page: ${inspect(meta)}`);
+  }
+  return object;
 }
 
 export function getPageProperty(page: string, ...propTree: string[]): string {

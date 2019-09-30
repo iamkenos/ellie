@@ -2,17 +2,39 @@ import { LEVELS } from "../logger/config";
 import { IConfigProperty } from "./interfaces";
 
 export const DEFAULT = {
+  user: "ellie",
+  key: "xxxxxxxxxxxxxxxx-xxxxxx-xxxxx-xxxxxxxxx",
   bail: 0,
   baseUrl: "http://localhost",
-  capabilities: [
-    {
-      maxInstances: 10,
-      browserName: "chrome",
-      "goog:chromeOptions": {
-        args: ["--disable-web-security", "--incognito", "--disable-gpu", "--headless"]
+  browserstack: false,
+  capabilities: {
+    standalone:
+    [
+      {
+        maxInstances: 10,
+        browserName: "chrome",
+        "goog:chromeOptions": {
+          args: ["--disable-web-security", "--incognito", "--disable-gpu", "--headless"]
+        }
       }
-    }
-  ],
+    ],
+    browserstack:
+    [
+      {
+        maxInstances: 10,
+        browserName: "chrome",
+        "bstack:options": {
+          os: "Windows",
+          osVersion: "10",
+          resolution: "1920x1080",
+          timezone: "Singapore"
+        },
+        "goog:chromeOptions": {
+          args: ["--disable-web-security", "--incognito"]
+        }
+      }
+    ]
+  },
   comparableOptions: {
     ajaxRequests: {
       outputDir: ".comparable/ajax",
@@ -132,6 +154,48 @@ const CONFIG_PROPS: IConfigProperty[] = [
     }
   },
   {
+    name: "browserstack",
+    helptext: "Whether to enable the BrowserStack service.",
+    inquiredOption: {
+      enabled: true,
+      type: "confirm",
+      message: "Do you want to run your tests in BrowserStack?",
+      default: DEFAULT.browserstack
+    }
+  },
+  {
+    name: "user",
+    helptext: "BrowserStack username",
+    overrideOption: {
+      enabled: true,
+      type: "string",
+      description: "BrowserStack username"
+    },
+    inquiredOption: {
+      enabled: true,
+      type: "password",
+      message: "What is your BrowserStack username?",
+      default: DEFAULT.user,
+      when: (answers): boolean => answers.browserstack === true
+    }
+  },
+  {
+    name: "key",
+    helptext: "BrowserStack access key",
+    overrideOption: {
+      enabled: true,
+      type: "string",
+      description: "BrowserStack access key"
+    },
+    inquiredOption: {
+      enabled: true,
+      type: "password",
+      message: "What is your BrowserStack access key?",
+      default: DEFAULT.key,
+      when: (answers): boolean => answers.browserstack === true
+    }
+  },
+  {
     name: "capabilities",
     helptext: "W3C browser capabilities. See https://www.w3.org/TR/webdriver1/#capabilities"
   },
@@ -179,7 +243,7 @@ const CONFIG_PROPS: IConfigProperty[] = [
       enabled: true,
       type: "input",
       message: "How many concurrent features would you like running during the test?",
-      default: DEFAULT.maxInstances.toString()
+      default: DEFAULT.maxInstances
     }
   },
   {

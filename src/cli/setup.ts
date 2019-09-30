@@ -1,6 +1,6 @@
 import * as ejs from "ejs";
 import * as prettier from "prettier";
-import * as fs from "fs";
+import * as fs from "fs-extra";
 import * as inquirer from "inquirer";
 import * as path from "path";
 
@@ -9,12 +9,15 @@ import * as logger from "../logger";
 import {
   CONFIG_HELPER_INTRO,
   CONFIG_HELPER_SUCCESS_MESSAGE,
+  CONFIG_INQUIRY,
   CORE_STEP_DEFS,
   DEFAULT,
   LCL_CONFIG_OUT,
   LCL_CONFIG_TPL,
   PRETTIER_CONFIG,
-  QUESTIONNAIRE,
+  SAMPLES_DIR,
+  SAMPLES_HELPER_SUCCESS_MESSAGE,
+  SAMPLES_INQUIRY,
   WDIO_CONFIG_OUT,
   WDIO_CONFIG_TPL
 } from "./config";
@@ -35,10 +38,32 @@ function createFromTemplate(answers: any, template: string, outFile: string): st
   }
 
   logger.trace("Writing to file %s", outFile);
-  fs.writeFileSync(outFile, prettier.format(renderedTpl, renderedFmt));
+  fs.outputFileSync(outFile, prettier.format(renderedTpl, renderedFmt));
 
   logger.trace("Finished!");
   return outFile;
+}
+
+export async function generateSamples(): Promise<any> {
+  logger.debug("Started samples helper");
+  const outDir = (await inquirer.prompt(SAMPLES_INQUIRY) as any).outDir;
+  const arrSplit = new RegExp(/[ ,]+/);
+  const configOut = `${outDir}/${LCL_CONFIG_OUT}`;
+
+  // create answers object to be used in filling up the template
+  // ...DEFAULT - first, use the defaults as a base to include properties that are not inquired by the helper
+  const parsedAnswers = {
+    ...DEFAULT,
+    pages: DEFAULT.pages.toString().split(arrSplit),
+    specs: DEFAULT.specs.toString().split(arrSplit),
+    steps: DEFAULT.steps.toString().split(arrSplit)
+  };
+
+  createFromTemplate(parsedAnswers, LCL_CONFIG_TPL, path.join(process.cwd(), configOut));
+  fs.copySync(path.join(__dirname, SAMPLES_DIR), path.join(process.cwd(), outDir), { recursive: true });
+  console.log(SAMPLES_HELPER_SUCCESS_MESSAGE.trim().replace(LCL_CONFIG_OUT, configOut));
+
+  process.exit(0);
 }
 
 export async function createLocalConfig(): Promise<any> {
@@ -50,7 +75,7 @@ export async function createLocalConfig(): Promise<any> {
     // ...DEFAULT - first, use the defaults as a base to include properties that are not inquired by the helper
     // ...answers - then take values from the provided config helper
     const arrSplit = new RegExp(/[ ,]+/);
-    const answers = await inquirer.prompt(QUESTIONNAIRE);
+    const answers = await inquirer.prompt(CONFIG_INQUIRY);
     const parsedAnswers = {
       ...DEFAULT,
       ...answers,

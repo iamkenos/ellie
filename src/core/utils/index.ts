@@ -157,9 +157,9 @@ export function getImageFile(context: ImageCompareContext, filename: string, ele
 export function getImageDiff(filename: string, compare: IImageCompare): string {
   let result: IImageCompareResult = {};
 
-  const imageName = (filename: string): string =>
-    `${browser.capabilities.browserName}_v${parseInt(browser.capabilities.version, 10)}/${filename}`;
-
+  const browserName = browser.capabilities.browserName;
+  const browserVersion = browser.capabilities.version || browser.capabilities.browserVersion;
+  const imageName = (filename: string): string => `${browserName}_v${parseInt(browserVersion, 10)}/${filename}`;
   const attachImage = (title: string, file: string): void =>
     allure.addAttachment(title, Buffer.from(fs.readFileSync(file) as any, "base64"), "image/png");
 

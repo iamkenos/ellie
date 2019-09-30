@@ -12,6 +12,23 @@ exports.config = {
   // WebdriverIO allows it to run your tests in arbitrary locations (e.g. locally or
   // on a remote machine).
   runner: 'local',
+  <% if(answers.browserstack) { %>
+  //
+  // =================
+  // Service Providers
+  // =================
+  // WebdriverIO supports Sauce Labs, Browserstack, and Testing Bot (other cloud providers
+  // should work too though). These services define specific user and key (or access key)
+  // values you need to put in here in order to connect to these services.
+  //
+  user: '<%= answers.user %>',
+  key: '<%= answers.key %>',
+  //
+  // If you run your tests on SauceLabs you can specify the region you want to run your tests
+  // in via the `region` property. Available short handles for regions are `us` (default) and `eu`.
+  // These regions are used for the Sauce Labs VM cloud and the Sauce Labs Real Device Cloud.
+  // If you don't provide the region it will default for the `us`
+  <% } else { %>
   //
   // =====================
   // Server Configurations
@@ -26,6 +43,7 @@ exports.config = {
   hostname: 'localhost',
   port: 4444,
   path: '/wd/hub',
+  <% } %>
   //
   // ==================
   // Specify Test Files
@@ -69,7 +87,12 @@ exports.config = {
     // grid with only 5 firefox instances available you can make sure that not more than
     // 5 instances get started at a time.
     <%- answers.capabilities.map(e => JSON.stringify(e)) %>
-
+    // Sample capability for firefox
+    // {
+    //   maxInstances: 10,
+    //   browserName: 'firefox',
+    //   'moz:firefoxOptions': { args: ['-headless'] } 
+    // }
     // If outputDir is provided WebdriverIO can capture driver session logs
     // it is possible to configure which logTypes to include/exclude.
     // excludeDriverLogs: ['*'], // pass '*' to exclude all driver session logs
@@ -123,8 +146,11 @@ exports.config = {
   // your test setup with almost no effort. Unlike plugins, they don't add new
   // commands. Instead, they hook themselves up into the test process.
   services: [
+    <% if (answers.browserstack === true) { %>
+    'browserstack',
+    <% } else { %>
     'selenium-standalone',
-    'intercept',
+    <% } %>'intercept',
     [
       'image-comparison',
       {
@@ -257,7 +283,7 @@ exports.config = {
       global.pagemeta[`${path.basename(file).split('.')[0]}`] = require(file).default;
     });
 
-    <%if (answers.hooks.before) { %>
+    <% if (answers.hooks.before) { %>
     const hook = require('<%= answers.hooks.before %>').default;
     hook(capabilities, specs);
     <% } %>
@@ -273,7 +299,7 @@ exports.config = {
    * Runs before a Cucumber feature
    */
   beforeFeature: function (uri, feature, scenarios) {
-    <%if (answers.hooks.beforeFeature) { %>
+    <% if (answers.hooks.beforeFeature) { %>
     const hook = require('<%= answers.hooks.beforeFeature %>').default;
     hook(uri, feature, scenarios);
     <% } %>
@@ -282,7 +308,7 @@ exports.config = {
    * Runs before a Cucumber scenario
    */
   beforeScenario: function (uri, feature, scenario, sourceLocation) {
-    <%if (answers.hooks.beforeScenario) { %>
+    <% if (answers.hooks.beforeScenario) { %>
     const hook = require('<%= answers.hooks.beforeScenario %>').default;
     hook(uri, feature, scenario, sourceLocation);
     <% } %>
@@ -291,7 +317,7 @@ exports.config = {
    * Runs before a Cucumber step
    */
   beforeStep: function (uri, feature) {
-    <%if (answers.hooks.beforeStep) { %>
+    <% if (answers.hooks.beforeStep) { %>
     const hook = require('<%= answers.hooks.beforeStep %>').default;
     hook(uri, feature);
     <% } %>
@@ -303,7 +329,7 @@ exports.config = {
     if (error !== undefined) {
       browser.takeScreenshot();
     }
-    <%if (answers.hooks.afterStep) { %>
+    <% if (answers.hooks.afterStep) { %>
     const hook = require('<%= answers.hooks.afterStep %>').default;
     hook(uri, feature, { error, result });
     <% } %>
@@ -312,7 +338,7 @@ exports.config = {
    * Runs after a Cucumber scenario
    */
   afterScenario: function (uri, feature, scenario, result, sourceLocation) {
-    <%if (answers.hooks.afterScenario) { %>
+    <% if (answers.hooks.afterScenario) { %>
     const hook = require('<%= answers.hooks.afterScenario %>').default;
     hook(uri, feature, scenario, result, sourceLocation);
     <% } %>
@@ -321,7 +347,7 @@ exports.config = {
    * Runs after a Cucumber feature
    */
   afterFeature: function (uri, feature, scenarios) {
-    <%if (answers.hooks.afterFeature) { %>
+    <% if (answers.hooks.afterFeature) { %>
     const hook = require('<%= answers.hooks.afterFeature %>').default;
     hook(uri, feature, scenarios);
     <% } %>
@@ -343,7 +369,7 @@ exports.config = {
    * @param {Array.<String>} specs List of spec file paths that ran
    */
   after: function (result, capabilities, specs) {
-    <%if (answers.hooks.after) { %>
+    <% if (answers.hooks.after) { %>
     const hook = require('<%= answers.hooks.after %>').default;
     hook(result, capabilities, specs);
     <% } %>

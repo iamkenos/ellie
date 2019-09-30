@@ -8,8 +8,9 @@ interface IInquiredOption {
   enabled: boolean;
   type: string;
   message: string;
-  default: string;
+  default: string | boolean | number;
   choices?: string[];
+  when?: (answers: any) => {};
 }
 
 export interface IConfigProperty {

@@ -1,17 +1,16 @@
 import { LEVELS } from "../logger/config";
 import { IConfigProperty } from "./interfaces";
 
-export const DEFAULT = {
+export const DEFAULTS = {
   user: "ellie",
   key: "xxxxxxxxxxxxxxxx-xxxxxx-xxxxx-xxxxxxxxx",
   bail: 0,
   baseUrl: "http://localhost",
-  browserstack: false,
   capabilities: {
-    standalone:
+    "selenium-standalone":
     [
       {
-        maxInstances: 10,
+        maxInstances: 5,
         browserName: "chrome",
         "goog:chromeOptions": {
           args: ["--disable-web-security", "--incognito", "--disable-gpu", "--headless"]
@@ -21,9 +20,11 @@ export const DEFAULT = {
     browserstack:
     [
       {
-        maxInstances: 10,
+        maxInstances: 5,
         browserName: "chrome",
         "bstack:options": {
+          projectName: "ellie",
+          buildName: "localbuild",
           os: "Windows",
           osVersion: "10",
           resolution: "1920x1080",
@@ -47,8 +48,10 @@ export const DEFAULT = {
   },
   locale: "default",
   logLevel: "info",
-  maxInstances: 10,
+  maxInstances: 5,
   pages: ["./pages/**/*.meta.js"],
+  runnerService: "selenium-standalone",
+  browserstackLocal: false,
   reportOutDir: ".reports",
   specFileRetries: 0,
   specs: ["./features/**/*.feature"],
@@ -97,19 +100,19 @@ export const TLOU_QUOTES = {
   ]
 };
 
-export const CORE_STEP_DEFS = "../core/steps/definitions/**/*.js";
+export const CORE_STEP_DEFS_GLOB = "../core/steps/definitions/**/*.js";
 
-export const PRETTIER_CONFIG = "/templates/.prettierrc";
+export const PRETTIER_SETTINGS_FILE = "/templates/.prettierrc";
 
-export const LCL_CONFIG_TPL = "/templates/ellie.conf.tpl.ejs";
+export const CONFIG_LOCAL_TPL_FILE = "/templates/ellie.conf.tpl.ejs";
 
-export const LCL_CONFIG_OUT = "ellie.conf.js";
+export const CONFIG_LOCAL_OUT_FILE = "ellie.conf.js";
+
+export const CONFIG_WDIO_TPL_FILE = "/templates/wdio.conf.tpl.ejs";
+
+export const CONFIG_WDIO_OUT_FILE = "wdio.conf.js";
 
 export const SAMPLES_DIR = "/templates/samples";
-
-export const WDIO_CONFIG_TPL = "/templates/wdio.conf.tpl.ejs";
-
-export const WDIO_CONFIG_OUT = "wdio.conf.js";
 
 export const CONFIG_HELPER_INTRO = `
 --------------------
@@ -119,16 +122,16 @@ Configuration Helper
 export const CONFIG_HELPER_SUCCESS_MESSAGE = `
 Configuration file was created successfully!
 To run your tests, execute:
-$ ellie ellie.conf.js
+$ ellie ${CONFIG_LOCAL_OUT_FILE}
 `;
 
 export const SAMPLES_HELPER_SUCCESS_MESSAGE = `
 Sample files created successfully!
 To run your tests, execute:
-$ ellie ellie.conf.js
+$ ellie ${CONFIG_LOCAL_OUT_FILE}
 `;
 
-const CONFIG_PROPS: IConfigProperty[] = [
+const CONFIG_PROPERTIES: IConfigProperty[] = [
   {
     name: "bail",
     helptext: "Threshold on the amount of tests allowed to fail before bailing out",
@@ -150,49 +153,7 @@ const CONFIG_PROPS: IConfigProperty[] = [
       enabled: true,
       type: "input",
       message: "What is the base url of your application?",
-      default: DEFAULT.baseUrl
-    }
-  },
-  {
-    name: "browserstack",
-    helptext: "Whether to enable the BrowserStack service.",
-    inquiredOption: {
-      enabled: true,
-      type: "confirm",
-      message: "Do you want to run your tests in BrowserStack?",
-      default: DEFAULT.browserstack
-    }
-  },
-  {
-    name: "user",
-    helptext: "BrowserStack username",
-    overrideOption: {
-      enabled: true,
-      type: "string",
-      description: "BrowserStack username"
-    },
-    inquiredOption: {
-      enabled: true,
-      type: "password",
-      message: "What is your BrowserStack username?",
-      default: DEFAULT.user,
-      when: (answers): boolean => answers.browserstack === true
-    }
-  },
-  {
-    name: "key",
-    helptext: "BrowserStack access key",
-    overrideOption: {
-      enabled: true,
-      type: "string",
-      description: "BrowserStack access key"
-    },
-    inquiredOption: {
-      enabled: true,
-      type: "password",
-      message: "What is your BrowserStack access key?",
-      default: DEFAULT.key,
-      when: (answers): boolean => answers.browserstack === true
+      default: DEFAULTS.baseUrl
     }
   },
   {
@@ -224,7 +185,7 @@ const CONFIG_PROPS: IConfigProperty[] = [
       type: "list",
       message: "What level of logging verbosity would you like?",
       choices: LEVELS.map((i): string => i.name),
-      default: DEFAULT.logLevel
+      default: DEFAULTS.logLevel
     }
   },
   {
@@ -243,7 +204,7 @@ const CONFIG_PROPS: IConfigProperty[] = [
       enabled: true,
       type: "input",
       message: "How many concurrent features would you like running during the test?",
-      default: DEFAULT.maxInstances
+      default: DEFAULTS.maxInstances
     }
   },
   {
@@ -253,7 +214,61 @@ const CONFIG_PROPS: IConfigProperty[] = [
       enabled: true,
       type: "input",
       message: "Where are your page meta located?",
-      default: DEFAULT.pages.join(",")
+      default: DEFAULTS.pages.join(",")
+    }
+  },
+  {
+    name: "runnerService",
+    helptext: "The WebDriverIO test runner service to use",
+    inquiredOption: {
+      enabled: true,
+      type: "list",
+      message: "Which test runner service would you like to use?",
+      choices: Object.keys(DEFAULTS.capabilities),
+      default: DEFAULTS.runnerService
+    }
+  },
+  {
+    name: "browserstackLocal",
+    helptext: "Enable if you want to use BrowserStack to test local URLs",
+    inquiredOption: {
+      enabled: true,
+      type: "confirm",
+      message: "Would you be testing local URLs in BrowserStack?",
+      default: DEFAULTS.browserstackLocal,
+      when: (answers): boolean => answers.runnerService === "browserstack"
+    }
+  },
+  {
+    name: "user",
+    helptext: "BrowserStack username",
+    overrideOption: {
+      enabled: true,
+      type: "string",
+      description: "BrowserStack username"
+    },
+    inquiredOption: {
+      enabled: true,
+      type: "password",
+      message: "What is your BrowserStack username?",
+      default: DEFAULTS.user,
+      when: (answers): boolean => answers.runnerService === "browserstack"
+    }
+  },
+  {
+    name: "key",
+    helptext: "BrowserStack access key",
+    overrideOption: {
+      enabled: true,
+      type: "string",
+      description: "BrowserStack access key"
+    },
+    inquiredOption: {
+      enabled: true,
+      type: "password",
+      message: "What is your BrowserStack access key?",
+      default: DEFAULTS.key,
+      when: (answers): boolean => answers.runnerService === "browserstack"
     }
   },
   {
@@ -276,7 +291,7 @@ const CONFIG_PROPS: IConfigProperty[] = [
       enabled: true,
       type: "input",
       message: "Where are your feature files located?",
-      default: DEFAULT.specs.join(",")
+      default: DEFAULTS.specs.join(",")
     }
   },
   {
@@ -286,7 +301,7 @@ const CONFIG_PROPS: IConfigProperty[] = [
       enabled: true,
       type: "input",
       message: "Where are your step definitions located?",
-      default: DEFAULT.steps.join(",")
+      default: DEFAULTS.steps.join(",")
     }
   },
   {
@@ -299,14 +314,14 @@ const CONFIG_PROPS: IConfigProperty[] = [
   }
 ];
 
-export const OVERRIDE_OPTS: IConfigProperty[] = CONFIG_PROPS
+export const CONFIG_OPTIONS: IConfigProperty[] = CONFIG_PROPERTIES
   .filter((i): boolean | undefined => i.overrideOption && i.overrideOption.enabled)
   .map((i): IConfigProperty => ({
     ...i.overrideOption,
     name: i.name
   }));
 
-export const CONFIG_INQUIRY: IConfigProperty[] = CONFIG_PROPS
+export const CONFIG_INQUIRY: IConfigProperty[] = CONFIG_PROPERTIES
   .filter((i): boolean | undefined => i.inquiredOption && i.inquiredOption.enabled)
   .map((i): IConfigProperty => ({
     ...i.inquiredOption,
@@ -325,7 +340,7 @@ export const SAMPLES_INQUIRY: any[] = [
 export const USAGE = `
 Usage:
   ellie init                   Launches the configuration helper
-  ellie getstarted             Generate sample files to get started with
+  ellie whistle                Generate sample files to get started with
   ellie [file]                 Launches the WebdriverIO test runner
   ellie [file] [options]       Stdin overrides for certain config properties; See options list below
   ellie babygirl               Endure and survive
@@ -334,7 +349,7 @@ Complete list of properties:
 * Inquired when running the config helper
 
 ${
-  CONFIG_PROPS
+  CONFIG_PROPERTIES
   // create an array of config property objects containing only the name and helptext properties
     .map((i): IConfigProperty => ({ name: i.name, helptext: i.helptext }))
   // create an array of config property strings marking those inquired with an '*'

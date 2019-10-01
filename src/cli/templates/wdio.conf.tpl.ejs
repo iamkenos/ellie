@@ -12,7 +12,7 @@ exports.config = {
   // WebdriverIO allows it to run your tests in arbitrary locations (e.g. locally or
   // on a remote machine).
   runner: 'local',
-  <% if(answers.browserstack) { %>
+  <% if(answers.runnerService === 'browserstack') { %>
   //
   // =================
   // Service Providers
@@ -23,6 +23,14 @@ exports.config = {
   //
   user: '<%= answers.user %>',
   key: '<%= answers.key %>',
+  <% if(answers.browserstackLocal) { %>
+  browserstackLocal: true,
+  browserstackLocalForcedStop: true,
+  browserstackOpts: {
+    key: '<%= answers.key %>',
+    onlyAutomate: true,
+  },
+  <% } %>
   //
   // If you run your tests on SauceLabs you can specify the region you want to run your tests
   // in via the `region` property. Available short handles for regions are `us` (default) and `eu`.
@@ -146,11 +154,8 @@ exports.config = {
   // your test setup with almost no effort. Unlike plugins, they don't add new
   // commands. Instead, they hook themselves up into the test process.
   services: [
-    <% if (answers.browserstack === true) { %>
-    'browserstack',
-    <% } else { %>
-    'selenium-standalone',
-    <% } %>'intercept',
+    '<%= answers.runnerService %>',
+    'intercept',
     [
       'image-comparison',
       {

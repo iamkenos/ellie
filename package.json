@@ -27,6 +27,7 @@
     "debug": "node --nolazy --inspect-brk=9229 ./bin/ellie.js --",
     "demo:serve": "node ./node_modules/.bin/http-server -p22676 ./demo/app",
     "demo:test": "./bin/ellie.js demo/test/demo.conf.js",
+    "demo:test:bs": "./bin/ellie.js demo/test/demo.bs.conf.js",
     "demo:report": "allure generate demo/test/.reports/allure -c -o demo/test/.reports/allure/report",
     "lint": "eslint ./",
     "test": "echo \"Error: no test specified\" && exit 1"

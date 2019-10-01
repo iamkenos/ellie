@@ -5,35 +5,22 @@ import * as util from "util";
 
 import * as logger from "../../logger";
 
-import { DEFAULT } from "../config";
+import { DEFAULTS } from "../config";
 
-export function buildConfig(...answers: any): any {
-  const arrSplit = new RegExp(/[ ,]+/);
-  let parsedAnswers = {
-    ...DEFAULT,
-    ...answers
-      .filter((i: object) => Object.entries(i).length !== 0 && i.constructor === Object)
-      .reduce((i: object, j: object): object => ({ ...j }), {})
-  };
+export function buildConfig(...config: any): typeof DEFAULTS {
+  // create a config object from all the user supplied info
+  const userConfig: typeof DEFAULTS = config
+    .filter((i: object) => Object.entries(i).length !== 0 && i.constructor === Object)
+    .reduce((i: object, j: object): object => ({ ...i, ...j }), {});
 
-  parsedAnswers = {
-    ...parsedAnswers,
-    pages: parsedAnswers.pages.toString().split(arrSplit),
-    specs: parsedAnswers.specs.toString().split(arrSplit),
-    steps: parsedAnswers.steps.toString().split(arrSplit)
-  };
+  // merge defaults and user supplied info for defaults to serve as fallback
+  const mergedConfig: typeof DEFAULTS = { ...DEFAULTS, ...userConfig };
+  // fallback for capabilities
+  mergedConfig.capabilities = userConfig.capabilities || DEFAULTS.capabilities[mergedConfig.runnerService];
+  // fallback for comparable options
+  mergedConfig.comparableOptions = { ...DEFAULTS.comparableOptions, ...userConfig.comparableOptions };
 
-  if (!Array.isArray(parsedAnswers.capabilities)) {
-    if (parsedAnswers.browserstack) {
-      parsedAnswers.capabilities = parsedAnswers.capabilities.browserstack;
-    } else {
-      parsedAnswers.capabilities = parsedAnswers.capabilities.standalone;
-      delete parsedAnswers.user;
-      delete parsedAnswers.key;
-    }
-  }
-
-  return parsedAnswers;
+  return mergedConfig;
 }
 
 export function inspect(object: any): any {
@@ -44,7 +31,7 @@ export function readFileSync(path: string): string {
   return fs.readFileSync(path, "utf8");
 }
 
-export function resolveComparableOutDirs(directory: string, comparableOptions: any): any {
+export function resolveComparableOutDirs(directory: string, comparableOptions: typeof DEFAULTS.comparableOptions): any {
   const options = Object.entries(comparableOptions)
     .reduce((i, j): object => (
       {
@@ -65,7 +52,7 @@ export function resolveComparableOutDirs(directory: string, comparableOptions: a
 export function resolveFiles(baseDir: string, fileGlob: string[], isStrict = true): string[] {
   const resolved: string[] = [];
 
-  fileGlob.forEach((i: string): void => {
+  fileGlob.filter(Boolean).forEach((i: string): void => {
     const filePath: string = path.resolve(baseDir, i);
     const files: string[] = glob.sync(filePath);
 
@@ -80,5 +67,6 @@ export function resolveFiles(baseDir: string, fileGlob: string[], isStrict = tru
     throw new Error("Unable to resolve any existing file from the given paths. See warnings.");
   }
 
-  return resolved;
+  // reduce to a unique set
+  return [...new Set(resolved)];
 }

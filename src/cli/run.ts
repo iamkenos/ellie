@@ -3,7 +3,7 @@ import { join } from "path";
 import { Arguments } from "yargs";
 
 import * as logger from "../logger";
-import { OVERRIDE_OPTS, TLOU_QUOTES } from "./config";
+import { CONFIG_OPTIONS, TLOU_QUOTES } from "./config";
 import { createLocalConfig, createWdioConfig, generateSamples } from "./setup";
 import { inspect } from "./utils";
 
@@ -12,7 +12,7 @@ export default (args: Arguments<any>): any => {
   args.argv._.length === 0 && args.showHelp() && process.exit(0);
 
   // build the cli overrides object
-  const overrides: any = OVERRIDE_OPTS
+  const overrides: any = CONFIG_OPTIONS
     .filter((i): boolean => args.argv[i.name])
     .reduce((i, j): object => ({ ...i, [j.name]: args.argv[j.name] }), {});
   logger.setLevel(overrides.logLevel);
@@ -20,7 +20,7 @@ export default (args: Arguments<any>): any => {
   logger.debug("Override options: \n%s", inspect(overrides));
 
   const firstArg = args.argv._[0];
-  const userConf = join(process.cwd(), firstArg);
+  const localConfigFile = join(process.cwd(), firstArg);
 
   // just because :P
   if (firstArg === "babygirl") {
@@ -38,22 +38,22 @@ export default (args: Arguments<any>): any => {
     return createLocalConfig();
   }
 
-  // if the first argument is "getstarted"
+  // if the first argument is "whistle"
   // then run the samples helper
-  if (firstArg === "getstarted") {
+  if (firstArg === "whistle") {
     return generateSamples();
   }
 
   // if the provided config file exists
   // then create the webdriverio config from it
-  if (existsSync(userConf)) {
+  if (existsSync(localConfigFile)) {
     return createWdioConfig(firstArg, overrides);
   }
 
   // if the provided config file doesn't exist
   // then run the config helper
-  if (!existsSync(userConf)) {
-    logger.warn("Config file '%s' not found", userConf);
+  if (!existsSync(localConfigFile)) {
+    logger.warn("Config file '%s' not found", localConfigFile);
     return createLocalConfig();
   }
 };

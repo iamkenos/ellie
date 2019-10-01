@@ -10,51 +10,63 @@ import {
   CONFIG_HELPER_INTRO,
   CONFIG_HELPER_SUCCESS_MESSAGE,
   CONFIG_INQUIRY,
-  CORE_STEP_DEFS,
-  LCL_CONFIG_OUT,
-  LCL_CONFIG_TPL,
-  PRETTIER_CONFIG,
+  CONFIG_LOCAL_OUT_FILE,
+  CONFIG_LOCAL_TPL_FILE,
+  CONFIG_WDIO_OUT_FILE,
+  CONFIG_WDIO_TPL_FILE,
+  CORE_STEP_DEFS_GLOB,
+  PRETTIER_SETTINGS_FILE,
   SAMPLES_DIR,
   SAMPLES_HELPER_SUCCESS_MESSAGE,
-  SAMPLES_INQUIRY,
-  WDIO_CONFIG_OUT,
-  WDIO_CONFIG_TPL
+  SAMPLES_INQUIRY
 } from "./config";
 import { buildConfig, inspect, readFileSync, resolveComparableOutDirs, resolveFiles } from "./utils";
 
-function createFromTemplate(answers: any, template: string, outFile: string): string {
-  logger.trace("Creating from template...");
+function createFromTemplate(source: any, templateFile: string, outputFile: string): string {
+  logger.info("Creating file... %s", outputFile);
 
-  const fmt = readFileSync(path.join(__dirname, PRETTIER_CONFIG));
+  const fmt = readFileSync(path.join(__dirname, PRETTIER_SETTINGS_FILE));
   const renderedFmt = { ...JSON.parse(fmt), parser: "babel" };
 
-  const tpl = readFileSync(path.join(__dirname, template));
-  const renderedTpl = ejs.render(tpl, { answers });
+  const tpl = readFileSync(path.join(__dirname, templateFile));
+  const renderedTpl = ejs.render(tpl, { answers: source });
 
-  if (fs.existsSync(outFile)) {
-    logger.trace("Deleting existing file %s", outFile);
-    fs.unlinkSync(outFile);
+  if (fs.existsSync(outputFile)) {
+    logger.trace("Deleting existing file %s", outputFile);
+    fs.unlinkSync(outputFile);
   }
 
-  logger.trace("Writing to file %s", outFile);
-  fs.outputFileSync(outFile, prettier.format(renderedTpl, renderedFmt));
+  logger.trace("Writing to file %s", outputFile);
+  fs.outputFileSync(outputFile, prettier.format(renderedTpl, renderedFmt));
 
   logger.trace("Finished!");
-  return outFile;
+  return outputFile;
 }
 
 export async function generateSamples(): Promise<any> {
-  logger.debug("Started samples helper");
+  try {
+    logger.debug("Started samples helper");
 
-  const outDir = (await inquirer.prompt(SAMPLES_INQUIRY) as any).outDir;
-  const configOut = `${outDir}/${LCL_CONFIG_OUT}`;
-  const parsedAnswers = buildConfig();
+    const answer = (await inquirer.prompt(SAMPLES_INQUIRY) as any).outDir;
+    const outputFile = path.join(process.cwd(), answer, CONFIG_LOCAL_OUT_FILE);
+    const config = buildConfig();
 
-  createFromTemplate(parsedAnswers, LCL_CONFIG_TPL, path.join(process.cwd(), configOut));
-  fs.copySync(path.join(__dirname, SAMPLES_DIR), path.join(process.cwd(), outDir), { recursive: true });
-  console.log(SAMPLES_HELPER_SUCCESS_MESSAGE.trim().replace(LCL_CONFIG_OUT, configOut));
+    createFromTemplate(config, CONFIG_LOCAL_TPL_FILE, outputFile);
 
-  process.exit(0);
+    fs.copySync(
+      path.join(__dirname, SAMPLES_DIR),
+      path.join(process.cwd(), answer),
+      { recursive: true }
+    );
+
+    console.log(SAMPLES_HELPER_SUCCESS_MESSAGE.trim()
+      .replace(CONFIG_LOCAL_OUT_FILE, path.join(answer, CONFIG_LOCAL_OUT_FILE)));
+
+    process.exit(0);
+  } catch (error) {
+    logger.error(error);
+    throw new Error(error);
+  }
 }
 
 export async function createLocalConfig(): Promise<any> {
@@ -63,10 +75,11 @@ export async function createLocalConfig(): Promise<any> {
     console.log(CONFIG_HELPER_INTRO.trim());
 
     const answers = await inquirer.prompt(CONFIG_INQUIRY);
-    const parsedAnswers = buildConfig(answers);
+    const outputFile = path.join(process.cwd(), CONFIG_LOCAL_OUT_FILE);
+    const config = buildConfig(answers);
 
-    logger.info("Creating local config...", LCL_CONFIG_OUT);
-    createFromTemplate(parsedAnswers, LCL_CONFIG_TPL, path.join(process.cwd(), LCL_CONFIG_OUT));
+    createFromTemplate(config, CONFIG_LOCAL_TPL_FILE, outputFile);
+
     console.log(CONFIG_HELPER_SUCCESS_MESSAGE.trim());
 
     process.exit(0);
@@ -76,32 +89,32 @@ export async function createLocalConfig(): Promise<any> {
   }
 }
 
-export function createWdioConfig(source: string, overrides: any): string {
+export function createWdioConfig(sourceFile: string, overrides: any): string {
   try {
-    logger.info("Creating wdio config from %s...", source);
+    logger.info("Creating wdio config from %s...", sourceFile);
 
-    const configFile = path.join(process.cwd(), source);
+    const configFile = path.join(process.cwd(), sourceFile);
     const configDir = path.dirname(configFile);
+    const outputFile = path.join(configDir, CONFIG_WDIO_OUT_FILE);
+    const config = buildConfig(require(configFile).config, overrides);
 
-    const answers = buildConfig(require(configFile).config, overrides);
-    const parsedAnswers = {
-      ...answers,
+    // final manipulation for webdriverio config properties
+    const parsed = {
+      ...config,
       directory: configDir,
-      comparableOptions: resolveComparableOutDirs(configDir, answers.comparableOptions),
-      pages: resolveFiles(configDir, answers.pages),
-      specs: resolveFiles(configDir, answers.specs),
-      steps: [...resolveFiles(__dirname, [CORE_STEP_DEFS]), ...resolveFiles(configDir, answers.steps, false)],
-      reportOutDir: path.join(configDir, answers.reportOutDir)
+      comparableOptions: resolveComparableOutDirs(configDir, config.comparableOptions),
+      pages: resolveFiles(configDir, config.pages, false),
+      specs: resolveFiles(configDir, config.specs),
+      steps: [...resolveFiles(__dirname, [CORE_STEP_DEFS_GLOB]), ...resolveFiles(configDir, config.steps, false)],
+      reportOutDir: path.join(configDir, config.reportOutDir)
     };
 
-    logger.setLevel(parsedAnswers.logLevel);
+    const wdioFile = createFromTemplate(parsed, CONFIG_WDIO_TPL_FILE, outputFile);
 
-    const file = createFromTemplate(parsedAnswers, WDIO_CONFIG_TPL, path.join(configDir, WDIO_CONFIG_OUT));
+    logger.trace("Raw config:\n%s", inspect(config));
+    logger.trace("Parsed config:\n%s", inspect(parsed));
 
-    logger.trace("Raw config:\n%s", inspect(answers));
-    logger.trace("Effective config:\n%s", inspect(require(file).config));
-
-    return file;
+    return wdioFile;
   } catch (error) {
     logger.error(error);
     throw new Error(error);

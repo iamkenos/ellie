@@ -1,11 +1,13 @@
 import * as fs from "fs-extra";
 import * as path from "path";
 import { diff, PreFilterFunction } from "deep-diff";
+import { sync } from "syncrequest";
+import { URL } from "url";
 import allure from "@wdio/allure-reporter";
 
 import * as logger from "../../logger";
 import { ImageCompareContext } from "../enums";
-import { IImageCompare, IImageCompareResult, IImageSave } from "../interfaces";
+import { IHttpRequest, IHttpResponse, IImageCompare, IImageCompareResult, IImageSave } from "../interfaces";
 import { inspect, readFileSync } from "../../cli/utils";
 
 export function getAbsoluteXPathScript(): string {
@@ -205,4 +207,26 @@ export function getImageDiff(filename: string, compare: IImageCompare): string {
     }
   }
   return undefined;
+}
+
+export function isJSON(str: string): boolean {
+  if (typeof str !== "string") return false;
+  try {
+    const result = JSON.parse(str);
+    return result instanceof Object || result instanceof Array;
+  } catch (e) {
+    return false;
+  }
+}
+
+export function sendSyncRequest(request: IHttpRequest): IHttpResponse {
+  request.options.url = new URL((request.options.url as string), (browser as any).config.baseUrl).href;
+
+  const rs = sync({ ...request.options });
+  if (rs.error) {
+    throw new Error(`Error encountered when sending the request: ${inspect(rs.error)}`);
+  }
+
+  allure.addAttachment("Request: ", JSON.stringify(rs.response.request, null, 2));
+  return rs;
 }

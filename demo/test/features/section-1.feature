@@ -25,3 +25,10 @@ Feature: Section 1
     When I scroll to the element "Demo=>Section 1"
     Then I expect the element "Demo=>Section 1" image to match the reference "section-1/element-01"
 
+  Scenario: Send a GET request to another page
+    Then I expect the response the following request to match the reference "section-1/users-01":
+      """
+      {
+        "url": "https://reqres.in/api/users"
+      }
+      """

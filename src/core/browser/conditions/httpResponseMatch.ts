@@ -1,11 +1,14 @@
 import { PreFilterFunction } from "deep-diff";
+import { Response } from "request";
 
 import * as logger from "../../../logger";
-import { IBrowserCondition, IExpectedConditionResult } from "../../interfaces";
-import { getJSONDiff } from "../../utils";
+import { IBrowserCondition, IExpectedConditionResult, IHttpRequest, IHttpResponse } from "../../interfaces";
+import { getJSONDiff, isJSON, sendSyncRequest } from "../../utils";
 
-export default class AjaxRequestMatch implements IBrowserCondition {
+export default class HttpResponseMatch implements IBrowserCondition {
   readonly name: string;
+
+  private readonly request: IHttpRequest;
 
   private readonly filename: string;
 
@@ -13,21 +16,30 @@ export default class AjaxRequestMatch implements IBrowserCondition {
 
   private readonly prefilter: any;
 
-  public constructor(filename: string, reverse: boolean, prefilter?: PreFilterFunction) {
+  public constructor(request: IHttpRequest, filename: string, reverse: boolean, prefilter?: PreFilterFunction) {
     this.name = logger.getCallerFunc(true);
+    this.request = request;
     this.filename = filename;
     this.reverse = reverse;
     this.prefilter = prefilter;
   }
 
   public evaluate(): IExpectedConditionResult {
+    let response: Response;
     let actual: string;
     let result: boolean;
 
     try {
-      browser.pause(1000);
-      actual = (browser as any).getRequests().map((i: any) => { delete i.response; return i; });
-      actual = getJSONDiff("ajaxRequests", this.filename, actual, this.prefilter);
+      response = sendSyncRequest(this.request).response;
+      actual = getJSONDiff(
+        "httpRequests",
+        this.filename,
+        {
+          statusCode: response.statusCode,
+          body: isJSON(response.body) ? JSON.parse(response.body) : response.body
+        },
+        this.prefilter
+      );
       result = this.reverse ? !!actual : !actual;
     } catch (e) {
       actual = e.message;

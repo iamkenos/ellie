@@ -225,8 +225,8 @@ exports.config = {
     strict: false,
     // <boolean> hide step definition snippets for pending steps
     snippets: true,
-    // <string[]> (expression) only execute the features or scenarios with tags matching the expression
-    tags: [],
+    // <string> (expression) only execute the features or scenarios with tags matching the expression
+    tagExpression: '<%= answers.tags %>',
     // <number> timeout for step definitions
     timeout: <%= answers.stepTimeout %>,
   },

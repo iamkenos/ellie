@@ -5,6 +5,7 @@ import CookieExists from "./cookieExists";
 import CountEquals from "./countEquals";
 import CountGreaterThan from "./countGreaterThan";
 import CountLessThan from "./countLessThan";
+import HttpResponseMatch from "./httpResponseMatch";
 import ImageMatch from "./imageMatch";
 import TitleContains from "./titleContains";
 import TitleEquals from "./titleEquals";
@@ -21,6 +22,7 @@ export {
   CountEquals,
   CountGreaterThan,
   CountLessThan,
+  HttpResponseMatch,
   ImageMatch,
   TitleContains,
   TitleEquals,

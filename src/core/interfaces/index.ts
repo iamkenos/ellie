@@ -1,3 +1,4 @@
+import { CoreOptions, Response, UrlOptions } from "request";
 import { ImageCompareContext } from "../enums";
 
 export interface IBrowserCondition {
@@ -7,6 +8,15 @@ export interface IBrowserCondition {
 export interface IElementCondition {
   name: string;
   evaluate(selector: string): IExpectedConditionResult;
+}
+
+export interface IHttpResponse {
+  error: any;
+  response: Response;
+}
+
+export interface IHttpRequest {
+  options: CoreOptions & UrlOptions;
 }
 
 export interface IExpectedConditionResult {

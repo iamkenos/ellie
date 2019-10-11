@@ -16,6 +16,7 @@ import checkElementImageMatch from "../glue/check/checkElementImageMatch";
 import checkEnabled from "../glue/check/checkEnabled";
 import checkExisting from "../glue/check/checkExisting";
 import checkFocused from "../glue/check/checkFocused";
+import checkHttpResponseMatch from "../glue/check/checkHttpResponseMatch";
 import checkSelected from "../glue/check/checkSelected";
 import checkSizeEquals from "../glue/check/checkSizeEquals";
 import checkSizeSideEquals from "../glue/check/checkSizeSideEquals";
@@ -113,6 +114,11 @@ Then(
 Then(
   /^I expect the element "([^"]*)?" to( not)? have focus$/,
   checkFocused
+);
+
+Then(
+  /^I expect the response the following request to( not)? match the reference "([^"]*)?":$/,
+  checkHttpResponseMatch
 );
 
 Then(

@@ -41,6 +41,10 @@ export const DEFAULTS = {
       outputDir: ".comparable/ajax",
       skipCompare: false
     },
+    httpRequests: {
+      outputDir: ".comparable/http",
+      skipCompare: false
+    },
     visualRegression: {
       outputDir: ".comparable/image",
       skipCompare: false
@@ -57,6 +61,7 @@ export const DEFAULTS = {
   specs: ["./features/**/*.feature"],
   steps: ["./steps/definitions/**/*.js"],
   stepTimeout: 30000,
+  tags: "",
   waitforTimeout: 5000,
   hooks: {
     before: "",
@@ -307,6 +312,10 @@ const CONFIG_PROPERTIES: IConfigProperty[] = [
   {
     name: "stepTimeout",
     helptext: "Default timeout for WebdriverIO to wait for a single test step to finish in milliseconds"
+  },
+  {
+    name: "tags",
+    helptext: "Only execute the features or scenarios with tags matching the expression"
   },
   {
     name: "waitforTimeout",

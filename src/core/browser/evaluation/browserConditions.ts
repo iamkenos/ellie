@@ -10,6 +10,7 @@ import {
   CountEquals,
   CountGreaterThan,
   CountLessThan,
+  HttpResponseMatch,
   ImageMatch,
   TitleContains,
   TitleEquals,
@@ -18,7 +19,7 @@ import {
   UrlPathContains,
   UrlPathEquals
 } from "../conditions";
-import { IBrowserCondition, IImageCompareOptions } from "../../interfaces";
+import { IBrowserCondition, IHttpRequest, IImageCompareOptions } from "../../interfaces";
 import BrowserConditionsResult from "./browserConditionsResult";
 
 const WAIT_TIMEOUT: number = (browser as any).config.waitforTimeout;
@@ -70,6 +71,12 @@ export default class BrowserConditions {
 
   public countLessThan(expected: number, reverse = false): BrowserConditions {
     this.conditions.push(new CountLessThan(expected, reverse));
+    return this;
+  }
+
+  public httpResponseMatch(
+    request: IHttpRequest, filename: string, reverse = false, prefilter: PreFilterFunction): BrowserConditions {
+    this.conditions.push(new HttpResponseMatch(request, filename, reverse, prefilter));
     return this;
   }
 

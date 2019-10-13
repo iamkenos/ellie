@@ -74,12 +74,12 @@ export function getIndexedSelector(selector: string, index: number): string {
 }
 
 export function getPageObject(meta: any, locale: string): any {
-  const lang = locale || (browser as any).config.locale;
-  const object = meta[lang];
+  const loc = locale || (browser as any).config.locale;
+  const object = meta[loc];
 
   if (!object) {
     throw new Error(`
-  Locale '${lang}' not found in page'
+  Locale '${loc}' not found in page'
   Page: ${inspect(meta)}`);
   }
   return object;

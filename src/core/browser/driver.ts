@@ -73,6 +73,11 @@ export default abstract class Driver {
     (browser as any).setupInterceptor();
   }
 
+  public static getAlertText(): string {
+    logger.info("Get alert text");
+    return browser.getAlertText();
+  }
+
   public static maximizeWindow(): void {
     logger.info("Maximize window");
     browser.maximizeWindow();
@@ -171,6 +176,27 @@ export default abstract class Driver {
       .runStrict();
   }
 
+  public static checkModalExisting(reverse?: boolean): void {
+    logger.info("Check modal existing");
+    new BrowserConditions()
+      .modalExists(reverse)
+      .runStrict();
+  }
+
+  public static checkModalTextContains(expected: string, reverse?: boolean): void {
+    logger.info("Check modal text contains: %s", expected);
+    new BrowserConditions()
+      .modalTextContains(expected, reverse)
+      .runStrict();
+  }
+
+  public static checkModalTextEquals(expected: string, reverse?: boolean): void {
+    logger.info("Check modal text equals: %s", expected);
+    new BrowserConditions()
+      .modalTextEquals(expected, reverse)
+      .runStrict();
+  }
+
   public static checkCookieContains(cookie: string, expected: string, reverse?: boolean): void {
     logger.info("Check cookie contains: %s", expected);
     new BrowserConditions()
@@ -210,6 +236,13 @@ export default abstract class Driver {
     logger.info("Check count less than: %s", expected);
     new BrowserConditions()
       .countLessThan(expected, reverse)
+      .runStrict();
+  }
+
+  public static checkCustomTruthy(truthy: Function, reverse?: boolean): void {
+    logger.info("Check custom truthy");
+    new BrowserConditions()
+      .customTruthy(truthy, reverse)
       .runStrict();
   }
 

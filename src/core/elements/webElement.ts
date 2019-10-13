@@ -164,7 +164,7 @@ export default class WebElement {
   }
 
   public checkCSSPropertyExists(cssProp: string, reverse?: boolean): void {
-    logger.info("CHeck CSS property existing %s: %s", this.selector, cssProp);
+    logger.info("Check CSS property existing %s: %s", this.selector, cssProp);
     new ElementConditions(this.existing$().selector)
       .cssPropertyExists(cssProp, reverse)
       .runStrict();
@@ -258,6 +258,14 @@ export default class WebElement {
       .isSuccess();
   }
 
+  public isValueEmpty(reverse?: boolean): boolean {
+    logger.info("Is value empty %s", this.selector);
+    return new ElementConditions(this.existing$().selector)
+      .valueEmpty(reverse)
+      .run()
+      .isSuccess();
+  }
+
   public isValueEquals(expected: string, reverse?: boolean): boolean {
     logger.info("Is value equals %s: %s", this.selector, expected);
     return new ElementConditions(this.existing$().selector)
@@ -270,6 +278,13 @@ export default class WebElement {
     logger.info("Check value contains %s: %s", this.selector, expected);
     new ElementConditions(this.existing$().selector)
       .valueContains(expected, reverse)
+      .runStrict();
+  }
+
+  public checkValueEmpty(reverse?: boolean): void {
+    logger.info("Check value empty %s", this.selector);
+    new ElementConditions(this.existing$().selector)
+      .valueEmpty(reverse)
       .runStrict();
   }
 
@@ -508,11 +523,7 @@ export default class WebElement {
 
   public selectByAttribute(attribute: string, value: string): void {
     logger.info("Select by attribute %s: %s - %s", this.selector, attribute, value);
-    new ElementConditions(this.existing$().selector)
-      .attributeExists(attribute)
-      .runStrict()
-      .getElement()
-      .selectByAttribute(attribute, value);
+    this.existing$().selectByAttribute(attribute, value);
   }
 
   public selectByIndex(index: number): void {

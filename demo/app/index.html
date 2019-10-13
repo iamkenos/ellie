@@ -43,12 +43,12 @@
 
       <h3>SECTION 2</h3>
       <hr />
-      <div id="hidden" class="hidden">I'm a hidden element</div>
       <div id="visible">I'm a visible element</div>
 
       <h3>SECTION 3</h3>
       <hr />
-      <div id="exisiting">I'm a existing element</div>
+      <div id="hidden" class="hidden">I'm a hidden element</div>
+      <div>Just above me is a hidden element</div>
 
       <h3>SECTION 4</h3>
       <hr />
@@ -70,7 +70,11 @@
       <div id="textComparison1">I'm the same as the first string</div>
       <div id="textComparison2">I'm the same as the second string</div>
       <div id="textComparison3">I'm the same as the first string</div>
-      <div id="textComparison4"></div>
+      <div id="textComparison4">
+        I have a text that
+        <br><br>spans across
+        <br><br><br>multiple lines.
+      </div>
       <div id="textComparison5"></div>
       <div id="textComparison6">I'm the same as the first string<span></span></div>
       <div id="textComparison7">
@@ -81,10 +85,18 @@
 
       <h3>SECTION 6</h3>
       <hr />
-      <div id="textDoesNotContainCucumber">This element contains strawberry</div>
-      <div id="textDoesContainCucumber">This element contains cucumber</div>
-      <div><input type="text" id="valueDoesNotContainCucumber" value="This input contains strawberry" size="30" /></div>
-      <div><input type="text" id="valueDoesContainCucumber" value="This input contains cucumber" size="30" /></div>
+      <div><input type="text" id="valueComparison1" value="This input contains strawberry" size="30" /></div>
+      <div><input type="text" id="valueComparison2" value="This input contains cucumber" size="30" /></div>
+      <div><input type="text" id="valueComparison3" value="" size="30" /></div>
+      <div><input type="text" id="valueComparison4" value="&euro; &copy; &gt;" size="30" /></div>
+      <div>
+        <textarea id="valueComparison5" rows="4" cols="50">
+I have a text that
+
+spans across
+
+
+multiple lines.</textarea></div>
 
       <h3>SECTION 7</h3>
       <hr />

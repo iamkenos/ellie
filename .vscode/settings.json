@@ -1,6 +1,6 @@
 {
-  "cucumberautocomplete.steps": ["src/core/steps/definitions/*.ts", "./**/definitions/*.js"],
-  "cucumberautocomplete.formatConfOverride": { "And": 3 },
+  "cucumberautocomplete.steps": ["src/core/steps/definitions/*.ts", "./**/definitions/**/*.js"],
+  "cucumberautocomplete.formatConfOverride": { "And": 3, "But": 3 },
   "cucumberautocomplete.onTypeFormat": true,
   "cucumberautocomplete.stepsInvariants": true,
   "editor.formatOnSave": true,

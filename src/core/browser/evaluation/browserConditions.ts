@@ -10,8 +10,12 @@ import {
   CountEquals,
   CountGreaterThan,
   CountLessThan,
+  CustomTruthy,
   HttpResponseMatch,
   ImageMatch,
+  ModalExists,
+  ModalTextContains,
+  ModalTextEquals,
   TitleContains,
   TitleEquals,
   UrlContains,
@@ -69,6 +73,11 @@ export default class BrowserConditions {
     return this;
   }
 
+  public customTruthy(truthy: Function, reverse = false): BrowserConditions {
+    this.conditions.push(new CustomTruthy(truthy, reverse));
+    return this;
+  }
+
   public countLessThan(expected: number, reverse = false): BrowserConditions {
     this.conditions.push(new CountLessThan(expected, reverse));
     return this;
@@ -83,6 +92,21 @@ export default class BrowserConditions {
   public imageMatch(
     context: string, filename: string, reverse = false, options?: IImageCompareOptions): BrowserConditions {
     this.conditions.push(new ImageMatch(context, filename, reverse, options));
+    return this;
+  }
+
+  public modalExists(reverse = false): BrowserConditions {
+    this.conditions.push(new ModalExists(reverse));
+    return this;
+  }
+
+  public modalTextContains(expected: string, reverse = false): BrowserConditions {
+    this.conditions.push(new ModalTextContains(expected, reverse));
+    return this;
+  }
+
+  public modalTextEquals(expected: string, reverse = false): BrowserConditions {
+    this.conditions.push(new ModalTextEquals(expected, reverse));
     return this;
   }
 

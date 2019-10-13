@@ -1,25 +1,25 @@
 import * as logger from "../../../logger";
-import { IElementCondition, IExpectedConditionResult } from "../../interfaces";
+import { IBrowserCondition, IExpectedConditionResult } from "../../interfaces";
 
-export default class TextEmpty implements IElementCondition {
+export default class ModalTextEquals implements IBrowserCondition {
   readonly name: string;
 
   private readonly expected: string;
 
   private readonly reverse: boolean;
 
-  public constructor(reverse: boolean) {
+  public constructor(expected: string, reverse: boolean) {
     this.name = logger.getCallerFunc(true);
-    this.expected = "";
+    this.expected = expected;
     this.reverse = reverse;
   }
 
-  public evaluate(selector: string): IExpectedConditionResult {
+  public evaluate(): IExpectedConditionResult {
     let actual: string;
     let result: boolean;
 
     try {
-      actual = $(selector).getText();
+      actual = browser.getAlertText();
       result = this.reverse ? actual !== this.expected : actual === this.expected;
     } catch (e) {
       actual = e.message;

@@ -50,7 +50,7 @@ When(
 );
 
 When(
-  /^I select the option with (?:(index|label|value) "([^"]*)?"|attribute "([^"]*)?" as "([^"]*)?") from the element "([^"]*)?"$/,
+  /^I select the option with (index|label|[^" ]*) "([^"]*)?" from the dropdown "([^"]*)?"$/,
   elemOptionSelect
 );
 

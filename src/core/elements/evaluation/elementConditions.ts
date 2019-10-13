@@ -21,6 +21,7 @@ import {
   SizeHeightEquals,
   SizeWidthEquals,
   TextContains,
+  TextContainsArray,
   TextEmpty,
   TextEquals,
   TextEqualsArray,
@@ -156,6 +157,11 @@ export default class ElementConditions {
 
   public textEqualsArray(expected: string[], reverse = false): ElementConditions {
     this.conditions.push(new TextEqualsArray(expected, reverse));
+    return this;
+  }
+
+  public textContainsArray(expected: string[], reverse = false): ElementConditions {
+    this.conditions.push(new TextContainsArray(expected, reverse));
     return this;
   }
 

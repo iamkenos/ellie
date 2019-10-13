@@ -5,8 +5,12 @@ import CookieExists from "./cookieExists";
 import CountEquals from "./countEquals";
 import CountGreaterThan from "./countGreaterThan";
 import CountLessThan from "./countLessThan";
+import CustomTruthy from "./customTruthy";
 import HttpResponseMatch from "./httpResponseMatch";
 import ImageMatch from "./imageMatch";
+import ModalExists from "./modalExists";
+import ModalTextContains from "./modalTextContains";
+import ModalTextEquals from "./modalTextEquals";
 import TitleContains from "./titleContains";
 import TitleEquals from "./titleEquals";
 import UrlContains from "./urlContains";
@@ -22,8 +26,12 @@ export {
   CountEquals,
   CountGreaterThan,
   CountLessThan,
+  CustomTruthy,
   HttpResponseMatch,
   ImageMatch,
+  ModalExists,
+  ModalTextContains,
+  ModalTextEquals,
   TitleContains,
   TitleEquals,
   UrlContains,

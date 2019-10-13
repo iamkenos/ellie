@@ -3,7 +3,7 @@ Feature: Section 13
   Background:
     Given I have a screen that is maximized
       And I open the url of the page "Demo"
-      And I expect the element "Demo=>Section 13" to exist
+      And I expect the section header "SECTION 13" to exist
 
   Scenario: Set content to an input field
     When I type "foo" on the field "Demo=>Test input"

@@ -8,10 +8,12 @@ import BrowserConditions from "./evaluation/browserConditions";
 
 export default abstract class Driver {
   public static acceptAlert(): void {
+    logger.info("Accept alert");
     browser.acceptAlert();
   }
 
   public static dismissAlert(): void {
+    logger.info("Dismiss alert");
     browser.dismissAlert();
   }
 
@@ -163,42 +165,49 @@ export default abstract class Driver {
   }
 
   public static checkAjaxRequestsMatchRef(filename: string, reverse?: boolean, prefilter?: PreFilterFunction): void {
+    logger.info("Check ajax requests match ref: %s", filename);
     new BrowserConditions()
       .ajaxRequestsMatch(filename, reverse, prefilter)
       .runStrict();
   }
 
   public static checkCookieContains(cookie: string, expected: string, reverse?: boolean): void {
+    logger.info("Check cookie contains: %s", expected);
     new BrowserConditions()
       .cookieContains(cookie, expected, reverse)
       .runStrict();
   }
 
   public static checkCookieEquals(cookie: string, expected: string, reverse?: boolean): void {
+    logger.info("Check cookie equals: %s - %s", cookie, expected);
     new BrowserConditions()
       .cookieEquals(cookie, expected, reverse)
       .runStrict();
   }
 
   public static checkCookieExists(cookie: string, reverse?: boolean): void {
+    logger.info("Check cookie exists: %s", cookie);
     new BrowserConditions()
       .cookieExists(cookie, reverse)
       .runStrict();
   }
 
   public static checkCountEquals(expected: number, reverse?: boolean): void {
+    logger.info("Check count equals: %s", expected);
     new BrowserConditions()
       .countEquals(expected, reverse)
       .runStrict();
   }
 
   public static checkCountGreaterThan(expected: number, reverse?: boolean): void {
+    logger.info("Check count greater than: %s", expected);
     new BrowserConditions()
       .countGreaterThan(expected, reverse)
       .runStrict();
   }
 
   public static checkCountLessThan(expected: number, reverse?: boolean): void {
+    logger.info("Check count less than: %s", expected);
     new BrowserConditions()
       .countLessThan(expected, reverse)
       .runStrict();
@@ -206,6 +215,7 @@ export default abstract class Driver {
 
   public static checkHttpResponseMatchRef(
     request: IHttpRequest, filename: string, reverse?: boolean, prefilter?: PreFilterFunction): void {
+    logger.info("Check http response match ref: %s", filename);
     new BrowserConditions()
       .httpResponseMatch(request, filename, reverse, prefilter)
       .runStrict();
@@ -213,42 +223,49 @@ export default abstract class Driver {
 
   public static checkImageMatchRef(
     context: string, filename: string, reverse?: boolean, options?: IImageCompareOptions): void {
+    logger.info("Check image match ref: %s", filename);
     new BrowserConditions()
       .imageMatch(context, filename, reverse, options)
       .runStrict();
   }
 
   public static checkTitleContains(expected: string, reverse?: boolean): void {
+    logger.info("Check title contains: %s", expected);
     new BrowserConditions()
       .titleContains(expected, reverse)
       .runStrict();
   }
 
   public static checkTitleEquals(expected: string, reverse?: boolean): void {
+    logger.info("Check title equals: %s", expected);
     new BrowserConditions()
       .titleEquals(expected, reverse)
       .runStrict();
   }
 
   public static checkUrlContains(expected: string, reverse?: boolean): void {
+    logger.info("Check url contains: %s", expected);
     new BrowserConditions()
       .urlContains(expected, reverse)
       .runStrict();
   }
 
   public static checkUrlEquals(expected: string, reverse?: boolean): void {
+    logger.info("Check url equals: %s", expected);
     new BrowserConditions()
       .urlEquals(expected, reverse)
       .runStrict();
   }
 
   public static checkUrlPathContains(expected: string, reverse?: boolean): void {
+    logger.info("Check url path contains: %s", expected);
     new BrowserConditions()
       .urlPathContains(expected, reverse)
       .runStrict();
   }
 
   public static checkUrlPathEquals(expected: string, reverse?: boolean): void {
+    logger.info("Check url path equals: %s", expected);
     new BrowserConditions()
       .urlPathEquals(expected, reverse)
       .runStrict();

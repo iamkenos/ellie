@@ -9,6 +9,7 @@ import * as logger from "../../logger";
 import { ImageCompareContext } from "../enums";
 import { IHttpRequest, IHttpResponse, IImageCompare, IImageCompareResult, IImageSave } from "../interfaces";
 import { inspect, readFileSync } from "../../cli/utils";
+import { DEFAULTS } from "../../cli/config";
 
 export function getAbsoluteXPathScript(): string {
   return `function absoluteXPath(element) {
@@ -84,21 +85,34 @@ export function getPageObject(meta: any, locale: string): any {
   return object;
 }
 
-export function getPageProperty(page: string, ...propTree: string[]): string {
-  const pagemeta = (global as any).pagemeta;
-  const localeTree = [(browser as any).config.locale, ...propTree];
-  const nestedProp = [page.charAt(0).toLowerCase() + page.slice(1), ...localeTree];
-  const value = nestedProp.reduce((i, j): object => (i && i[j] ? i[j] : null), pagemeta);
-  const propStr = localeTree.join(".");
+export function getPageProperty(page: string, ...propTree: string[]): any {
+  const pages: string[] = (browser as any).config.pages;
+  const pagesStr = `\n${pages.map((i: string) => `    ${i}`).join(",\n")}`;
+  const pageMeta = pages.find((pg: string) => path.basename(pg).split(".")[0].toLowerCase() === page.toLowerCase());
+  if (!pageMeta) { throw new Error(`\n  Unable to resolve "${page}" from any of the available pages: ${pagesStr}`); }
 
-  logger.trace("Searching for '%s' in page '%s'...", propStr, page);
+  const pageObject = require(pageMeta).default;
+  const pageLocale = (browser as any).config.locale;
+  const propFromLocale = (locale: string): any => {
+    const localeTree = [locale, ...propTree];
+    const localeTreeStr = localeTree.join(".");
+    logger.trace("Searching for '%s' in page '%s'...", localeTreeStr, pageMeta);
 
-  if (!value) {
-    throw new Error(`
-  Property '${propStr}' not found in page '${page}'
-  Pages: \n${(browser as any).config.pages.map((i: string) => `    ${i}`).join(",\n")}`);
+    const prop = localeTree.reduce((i, j): object => (i && i[j] ? i[j] : null), pageObject);
+    if (!prop) { throw new Error(`\n  Unable to find '${localeTreeStr}' in page '${pageMeta}'\n  Pages: ${pagesStr}`); }
+
+    return prop;
+  };
+
+  try {
+    return propFromLocale(pageLocale);
+  } catch (e) {
+    if (pageLocale !== DEFAULTS.locale) {
+      return propFromLocale(DEFAULTS.locale);
+    } else {
+      throw e;
+    }
   }
-  return value;
 }
 
 export function getPageUrl(key: string): string {

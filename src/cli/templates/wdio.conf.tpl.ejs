@@ -282,12 +282,6 @@ exports.config = {
   before: function (capabilities, specs) {
     logger.setLevel('<%= answers.logLevel %>');
 
-    // Define global page meta
-    global.pagemeta = {};
-    browser.config.pages.forEach((file) => {
-      global.pagemeta[`${path.basename(file).split('.')[0]}`] = require(file).default;
-    });
-
     <% if (answers.hooks.before) { %>
     const hook = require('<%= answers.hooks.before %>').default;
     hook(capabilities, specs);

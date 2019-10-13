@@ -3,7 +3,7 @@ Feature: Section 14
   Background:
     Given I have a screen that is maximized
       And I open the url of the page "Demo"
-      And I expect the element "Demo=>Section 14" to exist
+      And I expect the section header "SECTION 14" to exist
 
   Scenario: Submit a form
     When I start to intercept ajax requests

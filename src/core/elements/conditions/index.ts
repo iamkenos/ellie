@@ -17,6 +17,7 @@ import SizeEquals from "./sizeEquals";
 import SizeHeightEquals from "./sizeHeightEquals";
 import SizeWidthEquals from "./sizeWidthEquals";
 import TextContains from "./textContains";
+import TextContainsArray from "./textContainsArray";
 import TextEmpty from "./textEmpty";
 import TextEquals from "./textEquals";
 import TextEqualsArray from "./textEqualsArray";
@@ -44,6 +45,7 @@ export {
   SizeHeightEquals,
   SizeWidthEquals,
   TextContains,
+  TextContainsArray,
   TextEquals,
   TextEmpty,
   TextEqualsArray,

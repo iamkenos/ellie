@@ -1,5 +1,6 @@
 import { LEVELS, Stack } from "./config";
 import { getLogger, getLoggerStackIndex } from "./setup";
+import { normalizeFunctionName } from "./utils";
 
 function log(level: string, message: string, ...args: any[]): void {
   getLogger().log(level, `${Stack.getCallerFile(getLoggerStackIndex())}: ${message}`, ...args);
@@ -27,11 +28,7 @@ export function trace(message: string, ...args: any[]): void {
 
 export function getCallerFunc(normalize? : boolean): string {
   const caller = Stack.getCallerFunc(2);
-  return normalize ? caller
-    .replace(/([A-Z][a-z])/g, " $1")
-    .replace(/^./, (str: string) => str.toUpperCase())
-    .replace(/[()]/g, "")
-    : caller;
+  return normalize ? normalizeFunctionName(caller) : caller;
 }
 
 export function setLevel(level: string): void {

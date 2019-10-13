@@ -9,7 +9,7 @@ export default class Page {
 
   protected title: string;
 
-  protected elements: {
+  protected locators: {
     [key: string]: string;
   };
 
@@ -17,7 +17,7 @@ export default class Page {
     this.properties = getPageObject(meta, locale);
     this.url = this.properties.url;
     this.title = this.properties.title;
-    this.elements = this.properties.locators;
+    this.locators = this.properties.locators;
   }
 
   public navigate(): void {

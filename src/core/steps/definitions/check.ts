@@ -14,15 +14,21 @@ import checkDisplayed from "../glue/check/checkDisplayed";
 import checkDisplayedInViewport from "../glue/check/checkDisplayedInViewport";
 import checkElementImageMatch from "../glue/check/checkElementImageMatch";
 import checkEnabled from "../glue/check/checkEnabled";
-import checkExisting from "../glue/check/checkExisting";
+import checkExists from "../glue/check/checkExists";
 import checkFocused from "../glue/check/checkFocused";
 import checkHttpResponseMatch from "../glue/check/checkHttpResponseMatch";
+import checkModalExists from "../glue/check/checkModalExists";
+import checkModalTextContains from "../glue/check/checkModalTextContains";
+import checkModalTextEquals from "../glue/check/checkModalTextEquals";
+import checkOptionDdlSelected from "../glue/check/checkOptionDdlSelected";
 import checkSelected from "../glue/check/checkSelected";
 import checkSizeEquals from "../glue/check/checkSizeEquals";
 import checkSizeSideEquals from "../glue/check/checkSizeSideEquals";
 import checkTextContains from "../glue/check/checkTextContains";
+import checkTextContainsArray from "../glue/check/checkTextContainsArray";
 import checkTextEmpty from "../glue/check/checkTextEmpty";
 import checkTextEquals from "../glue/check/checkTextEquals";
+import checkTextEqualsArray from "../glue/check/checkTextEqualsArray";
 import checkTitleContains from "../glue/check/checkTitleContains";
 import checkTitleEquals from "../glue/check/checkTitleEquals";
 import checkUrlContains from "../glue/check/checkUrlContains";
@@ -108,7 +114,7 @@ Then(
 
 Then(
   /^I expect the element "([^"]*)?" to( not)? exist$/,
-  checkExisting
+  checkExists
 );
 
 Then(
@@ -122,7 +128,27 @@ Then(
 );
 
 Then(
-  /^I expect the (?:element|check box|toggle item|radio button) "([^"]*)?" to( not)? be (?:checked|selected)$/,
+  /^I expect (?:a|an) (?:alert|confirm box|prompt) to( not)? be opened$/,
+  checkModalExists
+);
+
+Then(
+  /^I expect the (?:alert|confirm box|prompt) text to( not)? contain "([^"]*)?"$/,
+  checkModalTextContains
+);
+
+Then(
+  /^I expect the (?:alert|confirm box|prompt) text to( not)? be "([^"]*)?"$/,
+  checkModalTextEquals
+);
+
+Then(
+  /^I expect the option with (index|index|[^" ]*) "([^"]*)?" from the dropdown "([^"]*)?" to( not)? be selected$/,
+  checkOptionDdlSelected
+);
+
+Then(
+  /^I expect the (?:element|option|check box|toggle item|radio button) "([^"]*)?" to( not)? be (?:checked|selected)$/,
   checkSelected
 );
 
@@ -142,6 +168,16 @@ Then(
 );
 
 Then(
+  /^I expect the element "([^"]*)?" text to( not)? contain:$/,
+  checkTextContains
+);
+
+Then(
+  /^I expect the elements "([^"]*)?" texts to( not)? contain:$/,
+  checkTextContainsArray
+);
+
+Then(
   /^I expect the element "([^"]*)?" text to( not)? be empty$/,
   checkTextEmpty
 );
@@ -149,6 +185,16 @@ Then(
 Then(
   /^I expect the element "([^"]*)?" text to( not)? be "([^"]*)?"$/,
   checkTextEquals
+);
+
+Then(
+  /^I expect the element "([^"]*)?" text to( not)? match:$/,
+  checkTextEquals
+);
+
+Then(
+  /^I expect the elements "([^"]*)?" texts to( not)? match:$/,
+  checkTextEqualsArray
 );
 
 Then(
@@ -187,12 +233,22 @@ Then(
 );
 
 Then(
+  /^I expect the (?:field|element) "([^"]*)?" value to( not)? contain:$/,
+  checkValueContains
+);
+
+Then(
   /^I expect the (?:field|element) "([^"]*)?" value to( not)? be empty$/,
   checkValueEmpty
 );
 
 Then(
   /^I expect the (?:field|element) "([^"]*)?" value to( not)? be "([^"]*)?"$/,
+  checkValueEquals
+);
+
+Then(
+  /^I expect the (?:field|element) "([^"]*)?" value to( not)? match:$/,
   checkValueEquals
 );
 

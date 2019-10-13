@@ -1,4 +1,3 @@
-import * as logger from "../../logger";
 import { getIndexedSelector } from "../utils";
 import ElementConditions from "./evaluation/elementConditions";
 import WebElement from "./webElement";
@@ -38,8 +37,15 @@ export default class WebElements {
   }
 
   public checkTextEqualsArray(expected: string[], reverse?: boolean): void {
-    new ElementConditions(new WebElement(this.selector).existing$().selector, logger.getCallerFunc())
+    new ElementConditions(new WebElement(this.selector).existing$().selector)
       .textEqualsArray(expected, reverse)
+      .runStrict()
+      .getElement();
+  }
+
+  public checkTextContainsArray(expected: string[], reverse?: boolean): void {
+    new ElementConditions(new WebElement(this.selector).existing$().selector)
+      .textContainsArray(expected, reverse)
       .runStrict()
       .getElement();
   }

@@ -1,4 +1,4 @@
-import { Page } from 'ellie/build/core';
+import { Page } from 'ellie';
 import webdriverIO from '../meta/webdriverIO.meta';
 
 export default class WebdriverIOPage extends Page {
@@ -7,14 +7,14 @@ export default class WebdriverIOPage extends Page {
   }
 
   get projectTitle() {
-    return this.getElement(this.elements['Project title']);
+    return this.getElement(this.locators['Project title']);
   }
 
   get getStarted() {
-    return this.getElement(this.elements['Button: Get Started']);
+    return this.getElement(this.locators['Button: Get Started']);
   }
 
   get navBar() {
-    return this.getElement(this.elements.navBar);
+    return this.getElement(this.locators.navBar);
   }
 }

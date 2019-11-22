@@ -99,7 +99,7 @@ exports.config = {
     // {
     //   maxInstances: 10,
     //   browserName: 'firefox',
-    //   'moz:firefoxOptions': { args: ['-headless'] } 
+    //   'moz:firefoxOptions': { args: ['-headless'] }
     // }
     // If outputDir is provided WebdriverIO can capture driver session logs
     // it is possible to configure which logTypes to include/exclude.
@@ -163,7 +163,7 @@ exports.config = {
         baselineFolder: <%- JSON.stringify(answers.comparableOptions.visualRegression.baselineDir) %>,
         actualFolder: <%- JSON.stringify(answers.comparableOptions.visualRegression.actualDir) %>,
         diffFolder: <%- JSON.stringify(answers.comparableOptions.visualRegression.diffDir) %>,
-        formatImageName: path.join("{platformName}","{tag}"),
+        formatImageName: "{tag}",
       }
     ]
   ],
@@ -182,8 +182,8 @@ exports.config = {
   reporters: [
     'spec',
     [
-      'junit', 
-      { 
+      'junit',
+      {
         outputDir: '<%= answers.reportOutDir %>/junit',
         outputFileFormat: (options) => `wdio-${options.cid}-junit-reporter.xml`
       }

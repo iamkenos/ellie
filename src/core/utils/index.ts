@@ -157,15 +157,24 @@ export function getJSONDiff(type: string, filename: string, comparable: any, pre
 }
 
 export function getImageFile(context: ImageCompareContext, filename: string, elem?: WebdriverIO.Element): IImageSave {
+  const platform = (browser.capabilities.platformName || browser.capabilities.platform).slice(0, 3).toLowerCase();
+  const brName = browser.capabilities.browserName.toLowerCase();
+  const brVersion = browser.capabilities.version || browser.capabilities.browserVersion;
+  const dvName = (browser.capabilities as any).deviceModel || browser.capabilities.deviceName;
+
+  // Assumes the browser is used in a device if browser version is undefined
+  const subDirectory = `${brName}_${brVersion ? `v${parseInt(brVersion, 10)}` : `${dvName.toLowerCase()}`}`;
+  const file = path.join(platform, subDirectory, filename);
+
   switch (context) {
     case ImageCompareContext.VIEWPORT: {
-      return (browser as any).saveScreen(filename);
+      return { parsedName: file, ...(browser as any).saveScreen(file) };
     }
     case ImageCompareContext.ELEMENT: {
-      return (browser as any).saveElement(elem, filename);
+      return { parsedName: file, ...(browser as any).saveElement(elem, file) };
     }
     case ImageCompareContext.PAGE: {
-      return (browser as any).saveFullPageScreen(filename);
+      return { parsedName: file, ...(browser as any).saveFullPageScreen(file) };
     }
   }
 }
@@ -173,19 +182,15 @@ export function getImageFile(context: ImageCompareContext, filename: string, ele
 export function getImageDiff(filename: string, compare: IImageCompare): string {
   let result: IImageCompareResult = {};
 
-  const browserName = browser.capabilities.browserName;
-  const browserVersion = browser.capabilities.version || browser.capabilities.browserVersion;
-  const imageName = (filename: string): string => `${browserName}_v${parseInt(browserVersion, 10)}/${filename}`;
-  const attachImage = (title: string, file: string): void =>
-    allure.addAttachment(title, Buffer.from(fs.readFileSync(file) as any, "base64"), "image/png");
-
-  const saved = getImageFile(compare.context, imageName(filename), compare.element);
-
+  const saved = getImageFile(compare.context, filename, compare.element);
   const comparableOptions = (browser as any).config.comparableOptions.visualRegression;
   const actFile = path.join(comparableOptions.actualDir, saved.fileName);
   const expFile = path.join(comparableOptions.baselineDir, saved.fileName);
   const difFile = path.join(comparableOptions.diffDir, saved.fileName);
+  const attachImage = (title: string, file: string): void =>
+    allure.addAttachment(title, Buffer.from(fs.readFileSync(file) as any, "base64"), "image/png");
 
+  // Always ignore anti-aliasing and return all compare data
   compare.options = {
     ...compare.options,
     ...{
@@ -202,15 +207,15 @@ export function getImageDiff(filename: string, compare: IImageCompare): string {
 
     switch (compare.context) {
       case ImageCompareContext.VIEWPORT: {
-        result = (browser as any).checkScreen(imageName(filename), compare.options);
+        result = (browser as any).checkScreen(saved.parsedName, compare.options);
         break;
       }
       case ImageCompareContext.ELEMENT: {
-        result = (browser as any).checkElement(compare.element, imageName(filename), compare.options);
+        result = (browser as any).checkElement(compare.element, saved.parsedName, compare.options);
         break;
       }
       case ImageCompareContext.PAGE: {
-        result = (browser as any).checkFullPageScreen(imageName(filename), compare.options);
+        result = (browser as any).checkFullPageScreen(saved.parsedName, compare.options);
         break;
       }
     }

@@ -55,6 +55,7 @@ export interface IImageCompare {
 }
 
 export interface IImageSave {
+  parsedName: string;
   fileName: string;
   path: string;
   devicePixelRatio: number;

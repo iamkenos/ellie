@@ -1,7 +1,7 @@
 import { LEVELS } from "../logger/config";
-import { IConfigProperty } from "./interfaces";
+import { IConfig, IConfigProperty } from "./interfaces";
 
-export const DEFAULTS = {
+export const DEFAULT: IConfig = {
   user: "ellie",
   key: "xxxxxxxxxxxxxxxx-xxxxxx-xxxxx-xxxxxxxxx",
   bail: 0,
@@ -107,17 +107,19 @@ export const TLOU_QUOTES = {
 
 export const CORE_STEP_DEFS_GLOB = "../core/steps/definitions/**/*.js";
 
-export const PRETTIER_SETTINGS_FILE = "/templates/.prettierrc";
+export const RESOURCES_DIR = "/resources";
 
-export const CONFIG_LOCAL_TPL_FILE = "/templates/ellie.conf.tpl.ejs";
+export const PRETTIER_SETTINGS_FILE = RESOURCES_DIR + "/.prettierrc";
+
+export const CONFIG_LOCAL_TPL_FILE = RESOURCES_DIR + "/ellie.conf.tpl.ejs";
 
 export const CONFIG_LOCAL_OUT_FILE = "ellie.conf.js";
 
-export const CONFIG_WDIO_TPL_FILE = "/templates/wdio.conf.tpl.ejs";
+export const CONFIG_WDIO_TPL_FILE = RESOURCES_DIR + "/wdio.conf.tpl.ejs";
 
 export const CONFIG_WDIO_OUT_FILE = "wdio.conf.js";
 
-export const SAMPLES_DIR = "/templates/samples";
+export const SAMPLES_DIR = "/samples";
 
 export const CONFIG_HELPER_INTRO = `
 --------------------
@@ -133,7 +135,7 @@ $ ellie ${CONFIG_LOCAL_OUT_FILE}
 export const SAMPLES_HELPER_SUCCESS_MESSAGE = `
 Sample files created successfully!
 To run your tests, execute:
-$ ellie ${CONFIG_LOCAL_OUT_FILE}
+$ ellie .${SAMPLES_DIR}/${CONFIG_LOCAL_OUT_FILE}
 `;
 
 const CONFIG_PROPERTIES: IConfigProperty[] = [
@@ -158,7 +160,7 @@ const CONFIG_PROPERTIES: IConfigProperty[] = [
       enabled: true,
       type: "input",
       message: "What is the base url of your application?",
-      default: DEFAULTS.baseUrl
+      default: DEFAULT.baseUrl
     }
   },
   {
@@ -190,7 +192,7 @@ const CONFIG_PROPERTIES: IConfigProperty[] = [
       type: "list",
       message: "What level of logging verbosity would you like?",
       choices: LEVELS.map((i): string => i.name),
-      default: DEFAULTS.logLevel
+      default: DEFAULT.logLevel
     }
   },
   {
@@ -209,7 +211,7 @@ const CONFIG_PROPERTIES: IConfigProperty[] = [
       enabled: true,
       type: "input",
       message: "How many concurrent features would you like running during the test?",
-      default: DEFAULTS.maxInstances
+      default: DEFAULT.maxInstances
     }
   },
   {
@@ -219,7 +221,7 @@ const CONFIG_PROPERTIES: IConfigProperty[] = [
       enabled: true,
       type: "input",
       message: "Where are your page meta located?",
-      default: DEFAULTS.pages.join(",")
+      default: DEFAULT.pages.join(",")
     }
   },
   {
@@ -229,8 +231,8 @@ const CONFIG_PROPERTIES: IConfigProperty[] = [
       enabled: true,
       type: "list",
       message: "Which test runner service would you like to use?",
-      choices: Object.keys(DEFAULTS.capabilities),
-      default: DEFAULTS.runnerService
+      choices: Object.keys(DEFAULT.capabilities),
+      default: DEFAULT.runnerService
     }
   },
   {
@@ -240,7 +242,7 @@ const CONFIG_PROPERTIES: IConfigProperty[] = [
       enabled: true,
       type: "confirm",
       message: "Would you be testing local URLs in BrowserStack?",
-      default: DEFAULTS.browserstackLocal,
+      default: DEFAULT.browserstackLocal,
       when: (answers): boolean => answers.runnerService === "browserstack"
     }
   },
@@ -256,7 +258,7 @@ const CONFIG_PROPERTIES: IConfigProperty[] = [
       enabled: true,
       type: "password",
       message: "What is your BrowserStack username?",
-      default: DEFAULTS.user,
+      default: DEFAULT.user,
       when: (answers): boolean => answers.runnerService === "browserstack"
     }
   },
@@ -272,7 +274,7 @@ const CONFIG_PROPERTIES: IConfigProperty[] = [
       enabled: true,
       type: "password",
       message: "What is your BrowserStack access key?",
-      default: DEFAULTS.key,
+      default: DEFAULT.key,
       when: (answers): boolean => answers.runnerService === "browserstack"
     }
   },
@@ -296,7 +298,7 @@ const CONFIG_PROPERTIES: IConfigProperty[] = [
       enabled: true,
       type: "input",
       message: "Where are your feature files located?",
-      default: DEFAULTS.specs.join(",")
+      default: DEFAULT.specs.join(",")
     }
   },
   {
@@ -306,7 +308,7 @@ const CONFIG_PROPERTIES: IConfigProperty[] = [
       enabled: true,
       type: "input",
       message: "Where are your step definitions located?",
-      default: DEFAULTS.steps.join(",")
+      default: DEFAULT.steps.join(",")
     }
   },
   {
@@ -337,22 +339,13 @@ export const CONFIG_INQUIRY: IConfigProperty[] = CONFIG_PROPERTIES
     name: i.name
   }));
 
-export const SAMPLES_INQUIRY: any[] = [
-  {
-    name: "outDir",
-    type: "input",
-    message: "Where do you want to store the output files?",
-    default: "./getstarted"
-  }
-];
-
 export const USAGE = `
 Usage:
   ellie init                   Launches the configuration helper
   ellie whistle                Generate sample files to get started with
+  ellie babygirl               Endure and survive
   ellie [file]                 Launches the WebdriverIO test runner
   ellie [file] [options]       Stdin overrides for certain config properties; See options list below
-  ellie babygirl               Endure and survive
 
 Complete list of properties:
 * Inquired when running the config helper

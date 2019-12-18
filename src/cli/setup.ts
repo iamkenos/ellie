@@ -16,9 +16,9 @@ import {
   CONFIG_WDIO_TPL_FILE,
   CORE_STEP_DEFS_GLOB,
   PRETTIER_SETTINGS_FILE,
+  RESOURCES_DIR,
   SAMPLES_DIR,
-  SAMPLES_HELPER_SUCCESS_MESSAGE,
-  SAMPLES_INQUIRY
+  SAMPLES_HELPER_SUCCESS_MESSAGE
 } from "./config";
 import { buildConfig, inspect, readFileSync, resolveComparableOutDirs, resolveFiles } from "./utils";
 
@@ -43,24 +43,15 @@ function createFromTemplate(source: any, templateFile: string, outputFile: strin
   return outputFile;
 }
 
-export async function generateSamples(): Promise<any> {
+export function generateSamples(): void {
   try {
     logger.debug("Started samples helper");
 
-    const answer = (await inquirer.prompt(SAMPLES_INQUIRY) as any).outDir;
-    const outputFile = path.join(process.cwd(), answer, CONFIG_LOCAL_OUT_FILE);
-    const config = buildConfig();
+    const source = path.join(__dirname, RESOURCES_DIR, SAMPLES_DIR);
+    const target = path.join(process.cwd(), SAMPLES_DIR);
 
-    createFromTemplate(config, CONFIG_LOCAL_TPL_FILE, outputFile);
-
-    fs.copySync(
-      path.join(__dirname, SAMPLES_DIR),
-      path.join(process.cwd(), answer),
-      { recursive: true }
-    );
-
-    console.log(SAMPLES_HELPER_SUCCESS_MESSAGE.trim()
-      .replace(CONFIG_LOCAL_OUT_FILE, path.join(answer, CONFIG_LOCAL_OUT_FILE)));
+    fs.copySync(source, target, { recursive: true });
+    console.log(SAMPLES_HELPER_SUCCESS_MESSAGE.trim());
 
     process.exit(0);
   } catch (error) {

@@ -180,7 +180,7 @@ export default class WebElement {
     return this.existing$().getLocation();
   }
 
-  public getProperty(property: string): string | object {
+  public getProperty(property: string): object | string | boolean | number {
     logger.info("Get property %s: %s", this.selector, property);
     return this.existing$().getProperty(property);
   }

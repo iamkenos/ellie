@@ -6,6 +6,7 @@
 > - [New Feature]
 > - [Bug Fix]
 > - [Documentation]
+> - [Dependency]
 > - [Internal]
 > - [Polish]
 

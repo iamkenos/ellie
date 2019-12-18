@@ -142,10 +142,6 @@ exports.config = {
   // Default timeout for all waitFor* commands.
   waitforTimeout: <%= answers.waitforTimeout %>,
   //
-  // Default timeout in milliseconds for request
-  // if Selenium Grid doesn't send response
-  connectionRetryTimeout: 90000,
-  //
   // Default request retries count
   connectionRetryCount: 3,
   //
@@ -271,8 +267,8 @@ exports.config = {
    * @param {Array.<Object>} capabilities list of capabilities details
    * @param {Array.<String>} specs List of spec file paths that are to be run
    */
-  beforeSession: function (config, capabilities, specs) {
-  },
+  // beforeSession: function (config, capabilities, specs) {
+  // },
   /**
    * Gets executed before test execution begins. At this point you can access to all global
    * variables like `browser`. It is the perfect place to define custom commands.
@@ -292,8 +288,8 @@ exports.config = {
    * @param {String} commandName hook command name
    * @param {Array} args arguments that command would receive
    */
-  beforeCommand: function (commandName, args) {
-  },
+  // beforeCommand: function (commandName, args) {
+  // },
   /**
    * Runs before a Cucumber feature
    */
@@ -315,22 +311,22 @@ exports.config = {
   /**
    * Runs before a Cucumber step
    */
-  beforeStep: function (uri, feature) {
+  beforeStep: function (uri, feature, stepData, context) {
     <% if (answers.hooks.beforeStep) { %>
     const hook = require('<%= answers.hooks.beforeStep %>').default;
-    hook(uri, feature);
+    hook(uri, feature, stepData, context);
     <% } %>
   },
   /**
    * Runs after a Cucumber step
    */
-  afterStep: function (uri, feature, { error, result }) {
+  afterStep: function (uri, feature, { error, result, duration, passed }, stepData, context) {
     if (error !== undefined) {
       browser.takeScreenshot();
     }
     <% if (answers.hooks.afterStep) { %>
     const hook = require('<%= answers.hooks.afterStep %>').default;
-    hook(uri, feature, { error, result });
+    hook(uri, feature, { error, result, duration, passed }, stepData, context);
     <% } %>
   },
   /**
@@ -358,8 +354,8 @@ exports.config = {
    * @param {Number} result 0 - command success, 1 - command error
    * @param {Object} error error object if any
    */
-  afterCommand: function (commandName, args, result, error) {
-  },
+  // afterCommand: function (commandName, args, result, error) {
+  // },
   /**
    * Gets executed after all tests are done. You still have access to all global variables from
    * the test.
@@ -379,8 +375,8 @@ exports.config = {
    * @param {Array.<Object>} capabilities list of capabilities details
    * @param {Array.<String>} specs List of spec file paths that ran
    */
-  afterSession: function (config, capabilities, specs) {
-  },
+  // afterSession: function (config, capabilities, specs) {
+  // },
   /**
    * Gets executed after all workers got shut down and the process is about to exit. An error
    * thrown in the onComplete hook will result in the test run failing.
@@ -389,13 +385,13 @@ exports.config = {
    * @param {Array.<Object>} capabilities list of capabilities details
    * @param {<Object>} results object containing test results
    */
-  onComplete: function(exitCode, config, capabilities, results) {
-  },
+  // onComplete: function(exitCode, config, capabilities, results) {
+  // },
   /**
   * Gets executed when a refresh happens.
   * @param {String} oldSessionId session ID of the old session
   * @param {String} newSessionId session ID of the new session
   */
-  onReload: function(oldSessionId, newSessionId) {
-  }
+  // onReload: function(oldSessionId, newSessionId) {
+  // }
 };

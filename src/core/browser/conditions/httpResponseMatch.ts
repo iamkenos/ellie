@@ -2,7 +2,7 @@ import { PreFilterFunction } from "deep-diff";
 import { Response } from "request";
 
 import * as logger from "../../../logger";
-import { IBrowserCondition, IExpectedConditionResult, IHttpRequest, IHttpResponse } from "../../interfaces";
+import { IBrowserCondition, IExpectedConditionResult, IHttpRequest } from "../../interfaces";
 import { getJSONDiff, isJSON, sendSyncRequest } from "../../utils";
 
 export default class HttpResponseMatch implements IBrowserCondition {

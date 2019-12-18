@@ -18,11 +18,11 @@ const TRANSPORTS = [
 ];
 
 export const LEVELS = [
-  { name: "error", level: 0, color: "red" },
-  { name: "warn", level: 1, color: "yellow" },
-  { name: "info", level: 2, color: "magenta" },
-  { name: "debug", level: 3, color: "green" },
-  { name: "trace", level: 4, color: "cyan" }
+  { name: "error", level: 0 },
+  { name: "warn", level: 1 },
+  { name: "info", level: 2 },
+  { name: "debug", level: 4 },
+  { name: "trace", level: 5 }
 ];
 
 export const LOGGER = {

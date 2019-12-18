@@ -9,7 +9,7 @@ import * as logger from "../../logger";
 import { ImageCompareContext } from "../enums";
 import { IHttpRequest, IHttpResponse, IImageCompare, IImageCompareResult, IImageSave } from "../interfaces";
 import { inspect, readFileSync } from "../../cli/utils";
-import { DEFAULTS } from "../../cli/config";
+import { DEFAULT } from "../../cli/config";
 
 export function getAbsoluteXPathScript(): string {
   return `function absoluteXPath(element) {
@@ -107,8 +107,8 @@ export function getPageProperty(page: string, ...propTree: string[]): any {
   try {
     return propFromLocale(pageLocale);
   } catch (e) {
-    if (pageLocale !== DEFAULTS.locale) {
-      return propFromLocale(DEFAULTS.locale);
+    if (pageLocale !== DEFAULT.locale) {
+      return propFromLocale(DEFAULT.locale);
     } else {
       throw e;
     }

@@ -1,16 +1,35 @@
+import { ChoiceCollection, Question, QuestionMap } from "inquirer";
+import { Options } from "yargs";
+
 interface IOverrideOption {
   enabled: boolean;
-  type: string;
-  description: string;
+  type: Options["type"];
+  description: Options["description"];
 }
 
-interface IInquiredOption {
+interface IInquiredOption extends Question {
   enabled: boolean;
-  type: string;
-  message: string;
-  default: string | boolean | number;
-  choices?: string[];
-  when?: (answers: any) => {};
+  type: keyof QuestionMap;
+  message: Question["message"];
+  default: Question["default"];
+  choices?: ChoiceCollection;
+  when?: (answers: any) => boolean | Promise<boolean>;
+}
+
+interface IComparable {
+  outputDir: string;
+  skipCompare: boolean;
+}
+
+interface IHooks {
+  before: string;
+  beforeFeature: string;
+  beforeScenario: string;
+  beforeStep: string;
+  afterStep: string;
+  afterScenario: string;
+  afterFeature: string;
+  after: string;
 }
 
 export interface IConfigProperty {
@@ -18,4 +37,32 @@ export interface IConfigProperty {
   helptext?: string;
   overrideOption?: IOverrideOption;
   inquiredOption?: IInquiredOption;
+}
+
+export interface IConfig {
+  user: string;
+  key: string;
+  bail: number;
+  baseUrl: string;
+  capabilities: object;
+  comparableOptions: {
+    ajaxRequests: IComparable;
+    httpRequests: IComparable;
+    visualRegression: IComparable;
+  };
+  locale: string;
+  logLevel: string;
+  maxInstances: number;
+  pages: string[];
+  runnerService: string;
+  browserstackLocal: boolean;
+  reportOutDir: string;
+  specFileRetries: number;
+  specs: string[];
+  steps: string[];
+  stepTimeout: number;
+  tags: string;
+  waitforTimeout: number;
+  hooks: IHooks;
+  custom: object;
 }

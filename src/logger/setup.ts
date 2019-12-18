@@ -8,7 +8,6 @@ let initialized = false;
 function init(): void {
   loggerStackIndex = 2;
   logger = winston.createLogger(LOGGER);
-  winston.addColors(LEVELS.reduce((i, j): object => ({ ...i, [j.name]: j.color }), {}));
 
   logger.log(LEVELS[4].name, INIT_MESSAGE);
 }

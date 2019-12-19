@@ -23,7 +23,7 @@ import {
 import { buildConfig, inspect, readFileSync, resolveComparableOutDirs, resolveFiles } from "./utils";
 
 function createFromTemplate(source: any, templateFile: string, outputFile: string): string {
-  logger.info("Creating file... %s", outputFile);
+  logger.trace("createFromTemplate() %s", outputFile);
 
   const fmt = readFileSync(path.join(__dirname, PRETTIER_SETTINGS_FILE));
   const renderedFmt = { ...JSON.parse(fmt), parser: "babel" };
@@ -32,20 +32,20 @@ function createFromTemplate(source: any, templateFile: string, outputFile: strin
   const renderedTpl = ejs.render(tpl, { answers: source });
 
   if (fs.existsSync(outputFile)) {
-    logger.trace("Deleting existing file %s", outputFile);
+    logger.debug("Deleting existing file %s", outputFile);
     fs.unlinkSync(outputFile);
   }
 
-  logger.trace("Writing to file %s", outputFile);
+  logger.debug("Writing to file %s", outputFile);
   fs.outputFileSync(outputFile, prettier.format(renderedTpl, renderedFmt));
 
-  logger.trace("Finished!");
+  logger.debug("Finished!");
   return outputFile;
 }
 
 export function generateSamples(): void {
   try {
-    logger.debug("Started samples helper");
+    logger.debug("generateSamples()");
 
     const source = path.join(__dirname, RESOURCES_DIR, SAMPLES_DIR);
     const target = path.join(process.cwd(), SAMPLES_DIR);
@@ -62,7 +62,7 @@ export function generateSamples(): void {
 
 export async function createLocalConfig(): Promise<any> {
   try {
-    logger.debug("Started config helper");
+    logger.debug("createLocalConfig()");
     console.log(CONFIG_HELPER_INTRO.trim());
 
     const answers = await inquirer.prompt(CONFIG_INQUIRY);
@@ -82,7 +82,7 @@ export async function createLocalConfig(): Promise<any> {
 
 export function createWdioConfig(sourceFile: string, overrides: any): string {
   try {
-    logger.info("Creating wdio config from %s...", sourceFile);
+    logger.debug("createWdioConfig() %s", sourceFile);
 
     const configFile = path.join(process.cwd(), sourceFile);
     const configDir = path.dirname(configFile);

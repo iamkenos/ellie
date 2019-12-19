@@ -12,7 +12,7 @@ Feature: WebDriverIO
   quickly with web application testing using cucumber and page object model
 
   Background:
-    Given I have a screen that is maximized
+    Given I have a screen that is 1600 by 1024 pixels
 
   Scenario: Cucumber boilerplate style
     This is an example of writing tests following the cucumber boilerplate fashion.

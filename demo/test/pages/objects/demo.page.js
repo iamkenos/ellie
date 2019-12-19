@@ -1,4 +1,4 @@
-import { Page } from 'ellie';
+import { Page } from '../../../../build';
 import demo from '../meta/demo.meta';
 
 export default class DemoPage extends Page {

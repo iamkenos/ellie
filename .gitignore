@@ -1,6 +1,7 @@
 *.log
 *.conf.js
 !demo.conf.js
+!src/cli/resources/samples/ellie.conf.js
 
 demo/test/.reports
 demo/test/.comparable/**/actual

@@ -13,7 +13,7 @@ export const DEFAULT: IConfig = {
         maxInstances: 5,
         browserName: "chrome",
         "goog:chromeOptions": {
-          args: ["--disable-web-security", "--incognito", "--disable-gpu", "--headless"]
+          args: ["--disable-web-security", "--incognito"]
         }
       }
     ],

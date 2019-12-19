@@ -1,7 +1,5 @@
 const fse = require('fs-extra');
-const path = require('path');
 const rimraf = require('rimraf');
-const logger = require('ellie/build/logger');
 
 exports.config = {
   //
@@ -276,8 +274,6 @@ exports.config = {
    * @param {Array.<String>} specs List of spec file paths that are to be run
    */
   before: function (capabilities, specs) {
-    logger.setLevel('<%= answers.logLevel %>');
-
     <% if (answers.hooks.before) { %>
     const hook = require('<%= answers.hooks.before %>').default;
     hook(capabilities, specs);

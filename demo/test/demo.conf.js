@@ -17,7 +17,7 @@ exports.config = {
     afterScenario: './.hooks/afterScenario'
   },
   logLevel: 'error',
-  maxInstances: 10,
+  maxInstances: 5,
   specs: ['./features/**/*.feature'],
   steps: ['./steps/definitions/**/*.js'],
   pages: ['./pages/**/*.meta.js'],

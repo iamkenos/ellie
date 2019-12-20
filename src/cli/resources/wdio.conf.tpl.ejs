@@ -1,5 +1,7 @@
 const fse = require('fs-extra');
 const rimraf = require('rimraf');
+const { table, getBorderCharacters } = require('table');
+const { addAttachment } = require('@wdio/allure-reporter').default;
 
 exports.config = {
   //
@@ -318,9 +320,24 @@ exports.config = {
    * Runs after a Cucumber step
    */
   afterStep: function (uri, feature, { error, result, duration, passed }, stepData, context) {
+    const stepArg = stepData.step.argument;
+    const data = [];
+
+    if(stepArg) {
+      if(stepArg.type === 'DataTable') {
+        stepArg.rows.forEach(row => {
+          data.push(row.cells.map(cell => cell.value));
+        });
+        addAttachment('DataTable', table(data, { border: getBorderCharacters('norc') }), 'text/plain');
+      } else if (stepArg.type === 'DocString') {
+        addAttachment('DocString', stepArg.content, 'text/plain');
+      }
+    }
+
     if (error !== undefined) {
       browser.takeScreenshot();
     }
+
     <% if (answers.hooks.afterStep) { %>
     const hook = require('<%= answers.hooks.afterStep %>').default;
     hook(uri, feature, { error, result, duration, passed }, stepData, context);

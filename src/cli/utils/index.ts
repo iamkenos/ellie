@@ -6,27 +6,6 @@ import * as util from "util";
 import * as logger from "../../logger";
 
 import { IConfig } from "../interfaces";
-import { DEFAULT } from "../config";
-
-export function buildConfig(...config: any): IConfig {
-  // create a config object from all the user supplied info
-  const userConfig: IConfig = config
-    .filter((i: object) => Object.entries(i).length !== 0 && i.constructor === Object)
-    .reduce((i: object, j: object): object => ({ ...i, ...j }), {});
-
-  // merge defaults and user supplied info for defaults to serve as fallback
-  const mergedConfig: IConfig = { ...DEFAULT, ...userConfig };
-  // for array type properties
-  mergedConfig.pages = typeof mergedConfig.pages === "string" ? [mergedConfig.pages] : mergedConfig.pages;
-  mergedConfig.specs = typeof mergedConfig.specs === "string" ? [mergedConfig.specs] : mergedConfig.specs;
-  mergedConfig.steps = typeof mergedConfig.steps === "string" ? [mergedConfig.steps] : mergedConfig.steps;
-  // fallback for capabilities
-  mergedConfig.capabilities = userConfig.capabilities || DEFAULT.capabilities[mergedConfig.runnerService];
-  // fallback for comparable options
-  mergedConfig.comparableOptions = { ...DEFAULT.comparableOptions, ...userConfig.comparableOptions };
-
-  return mergedConfig;
-}
 
 export function inspect(object: any): any {
   return util.inspect(object, false, null, true);
@@ -36,8 +15,8 @@ export function readFileSync(path: string): string {
   return fs.readFileSync(path, "utf8");
 }
 
-export function resolveComparableOutDirs(directory: string, comparableOptions: IConfig["comparableOptions"]): any {
-  const options = Object.entries(comparableOptions)
+export function resolveComparableOutDirs(directory: string, comparable: IConfig["comparable"]): any {
+  const options = Object.entries(comparable)
     .reduce((i, j): object => (
       {
         ...i,

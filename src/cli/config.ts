@@ -6,46 +6,25 @@ export const DEFAULT: IConfig = {
   key: "xxxxxxxxxxxxxxxx-xxxxxx-xxxxx-xxxxxxxxx",
   bail: 0,
   baseUrl: "http://localhost",
-  capabilities: {
-    "selenium-standalone":
-    [
-      {
-        maxInstances: 5,
-        browserName: "chrome",
-        "goog:chromeOptions": {
-          args: ["--disable-web-security", "--incognito"]
-        }
+  capabilities: [
+    {
+      maxInstances: 5,
+      browserName: "chrome",
+      "goog:chromeOptions": {
+        args: ["--disable-web-security", "--incognito"]
       }
-    ],
-    browserstack:
-    [
-      {
-        maxInstances: 5,
-        browserName: "chrome",
-        "bstack:options": {
-          projectName: "ellie",
-          buildName: "localbuild",
-          os: "Windows",
-          osVersion: "10",
-          resolution: "1920x1080",
-          timezone: "Singapore"
-        },
-        "goog:chromeOptions": {
-          args: ["--disable-web-security", "--incognito"]
-        }
-      }
-    ]
-  },
-  comparableOptions: {
-    ajaxRequests: {
+    }
+  ],
+  comparable: {
+    ajaxRequest: {
       outputDir: ".comparable/ajax",
       skipCompare: false
     },
-    httpRequests: {
+    httpResponse: {
       outputDir: ".comparable/http",
       skipCompare: false
     },
-    visualRegression: {
+    imageCompare: {
       outputDir: ".comparable/image",
       skipCompare: false
     }
@@ -54,7 +33,7 @@ export const DEFAULT: IConfig = {
   logLevel: "info",
   maxInstances: 5,
   pages: ["./pages/**/*.meta.js"],
-  runnerService: "selenium-standalone",
+  browserStackEnabled: false,
   browserstackLocal: false,
   reportOutDir: ".reports",
   specFileRetries: 0,
@@ -122,9 +101,9 @@ export const CONFIG_WDIO_OUT_FILE = "wdio.conf.js";
 export const SAMPLES_DIR = "/samples";
 
 export const CONFIG_HELPER_INTRO = `
---------------------
+----------------------------------
 Configuration Helper
---------------------`;
+----------------------------------`;
 
 export const CONFIG_HELPER_SUCCESS_MESSAGE = `
 Configuration file was created successfully!
@@ -168,7 +147,7 @@ const CONFIG_PROPERTIES: IConfigProperty[] = [
     helptext: "W3C browser capabilities. See https://www.w3.org/TR/webdriver1/#capabilities"
   },
   {
-    name: "comparableOptions",
+    name: "comparable",
     helptext: "Object containing properties of comparable files. See defaults for more info."
   },
   {
@@ -225,14 +204,13 @@ const CONFIG_PROPERTIES: IConfigProperty[] = [
     }
   },
   {
-    name: "runnerService",
-    helptext: "The WebDriverIO test runner service to use",
+    name: "browserStackEnabled",
+    helptext: "Whether to enable the use of BrowserStack",
     inquiredOption: {
       enabled: true,
-      type: "list",
-      message: "Which test runner service would you like to use?",
-      choices: Object.keys(DEFAULT.capabilities),
-      default: DEFAULT.runnerService
+      type: "confirm",
+      message: "Would you like to enable BrowserStack?",
+      default: DEFAULT.browserStackEnabled
     }
   },
   {
@@ -243,7 +221,7 @@ const CONFIG_PROPERTIES: IConfigProperty[] = [
       type: "confirm",
       message: "Would you be testing local URLs in BrowserStack?",
       default: DEFAULT.browserstackLocal,
-      when: (answers): boolean => answers.runnerService === "browserstack"
+      when: (answers: IConfig): boolean => answers.browserStackEnabled
     }
   },
   {
@@ -259,7 +237,7 @@ const CONFIG_PROPERTIES: IConfigProperty[] = [
       type: "password",
       message: "What is your BrowserStack username?",
       default: DEFAULT.user,
-      when: (answers): boolean => answers.runnerService === "browserstack"
+      when: (answers: IConfig): boolean => answers.browserStackEnabled
     }
   },
   {
@@ -275,7 +253,7 @@ const CONFIG_PROPERTIES: IConfigProperty[] = [
       type: "password",
       message: "What is your BrowserStack access key?",
       default: DEFAULT.key,
-      when: (answers): boolean => answers.runnerService === "browserstack"
+      when: (answers: IConfig): boolean => answers.browserStackEnabled
     }
   },
   {

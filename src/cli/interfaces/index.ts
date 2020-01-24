@@ -33,7 +33,7 @@ interface IHooks {
 }
 
 export interface IConfigProperty {
-  name: string;
+  name: keyof IConfig;
   helptext?: string;
   overrideOption?: IOverrideOption;
   inquiredOption?: IInquiredOption;
@@ -45,16 +45,16 @@ export interface IConfig {
   bail: number;
   baseUrl: string;
   capabilities: object;
-  comparableOptions: {
-    ajaxRequests: IComparable;
-    httpRequests: IComparable;
-    visualRegression: IComparable;
+  comparable: {
+    ajaxRequest: IComparable;
+    httpResponse: IComparable;
+    imageCompare: IComparable;
   };
   locale: string;
   logLevel: string;
   maxInstances: number;
   pages: string[];
-  runnerService: string;
+  browserStackEnabled: boolean;
   browserstackLocal: boolean;
   reportOutDir: string;
   specFileRetries: number;

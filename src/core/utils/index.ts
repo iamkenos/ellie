@@ -132,16 +132,16 @@ export function getPageElement(key: string): string {
   return page ? getPageProperty(page, "locators", element) : key;
 }
 
-export function getJSONDiff(type: string, filename: string, comparable: any, prefilter?: PreFilterFunction): string {
-  const comparableOptions = (browser as any).config.comparableOptions[type];
-  const actFile = path.join(comparableOptions.actualDir, filename) + ".json";
-  const expFile = path.join(comparableOptions.baselineDir, filename) + ".json";
-  const difFile = path.join(comparableOptions.diffDir, filename) + ".json";
+export function getJSONDiff(type: string, filename: string, toCompare: any, prefilter?: PreFilterFunction): string {
+  const comparable = (browser as any).config.comparable[type];
+  const actFile = path.join(comparable.actualDir, filename) + ".json";
+  const expFile = path.join(comparable.baselineDir, filename) + ".json";
+  const difFile = path.join(comparable.diffDir, filename) + ".json";
 
-  fs.outputFileSync(actFile, JSON.stringify(comparable, null, 2));
+  fs.outputFileSync(actFile, JSON.stringify(toCompare, null, 2));
   allure.addAttachment("Actual:", readFileSync(actFile));
 
-  if (!comparableOptions.skipCompare) {
+  if (~~comparable.skipCompare) {
     if (!fs.existsSync(expFile)) { return `Baseline JSON file "${expFile}" not found`; }
     allure.addAttachment("Expected:", readFileSync(expFile));
 
@@ -183,10 +183,10 @@ export function getImageDiff(filename: string, compare: IImageCompare): string {
   let result: IImageCompareResult = {};
 
   const saved = getImageFile(compare.context, filename, compare.element);
-  const comparableOptions = (browser as any).config.comparableOptions.visualRegression;
-  const actFile = path.join(comparableOptions.actualDir, saved.fileName);
-  const expFile = path.join(comparableOptions.baselineDir, saved.fileName);
-  const difFile = path.join(comparableOptions.diffDir, saved.fileName);
+  const comparable = (browser as any).config.comparable.visualRegression;
+  const actFile = path.join(comparable.actualDir, saved.fileName);
+  const expFile = path.join(comparable.baselineDir, saved.fileName);
+  const difFile = path.join(comparable.diffDir, saved.fileName);
   const attachImage = (title: string, file: string): void =>
     allure.addAttachment(title, Buffer.from(fs.readFileSync(file) as any, "base64"), "image/png");
 
@@ -201,7 +201,7 @@ export function getImageDiff(filename: string, compare: IImageCompare): string {
 
   attachImage("Actual:", actFile);
 
-  if (!comparableOptions.skipCompare) {
+  if (~~comparable.skipCompare) {
     if (!fs.existsSync(expFile)) { return `Baseline image "${expFile}" not found`; }
     attachImage("Expected:", expFile);
 

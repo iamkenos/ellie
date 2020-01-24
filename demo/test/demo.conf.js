@@ -7,10 +7,10 @@ exports.config = {
       'goog:chromeOptions': { args: ['--disable-web-security', '--incognito', '--headless'] }
     }
   ],
-  comparableOptions: {
-    ajaxRequests: { outputDir: '.comparable/ajax', skipCompare: false },
-    httpRequests: { outputDir: '.comparable/http', skipCompare: false },
-    visualRegression: { outputDir: '.comparable/image', skipCompare: false }
+  comparable: {
+    ajaxRequest: { outputDir: '.comparable/ajax', skipCompare: false },
+    httpResponse: { outputDir: '.comparable/http', skipCompare: false },
+    imageCompare: { outputDir: '.comparable/image', skipCompare: false }
   },
   hooks: {
     before: './.hooks/before',

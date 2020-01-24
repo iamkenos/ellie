@@ -12,7 +12,7 @@
       "port": 9229,
       "runtimeExecutable": "npm",
       "runtimeArgs": ["run-script", "debug"],
-      "args": ["--", "./demo/test/demo.conf.js"]
+      "args": ["--", "ellie.conf.js"]
     }
   ]
 }

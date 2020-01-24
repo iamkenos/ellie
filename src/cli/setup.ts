@@ -15,12 +15,13 @@ import {
   CONFIG_WDIO_OUT_FILE,
   CONFIG_WDIO_TPL_FILE,
   CORE_STEP_DEFS_GLOB,
+  DEFAULT,
   PRETTIER_SETTINGS_FILE,
   RESOURCES_DIR,
   SAMPLES_DIR,
   SAMPLES_HELPER_SUCCESS_MESSAGE
 } from "./config";
-import { buildConfig, inspect, readFileSync, resolveComparableOutDirs, resolveFiles } from "./utils";
+import { inspect, readFileSync, resolveComparableOutDirs, resolveFiles } from "./utils";
 
 function createFromTemplate(source: any, templateFile: string, outputFile: string): string {
   logger.trace("createFromTemplate() %s", outputFile);
@@ -65,9 +66,15 @@ export async function createLocalConfig(): Promise<any> {
     logger.debug("createLocalConfig()");
     console.log(CONFIG_HELPER_INTRO.trim());
 
-    const answers = await inquirer.prompt(CONFIG_INQUIRY);
+    const answers = await inquirer.prompt(CONFIG_INQUIRY).then(answers => {
+      if (answers.browserStackEnabled === false) { delete DEFAULT.user; delete DEFAULT.key; }
+      answers.pages = answers.pages.split(",");
+      answers.specs = answers.specs.split(",");
+      answers.steps = answers.steps.split(",");
+      return answers;
+    });
     const outputFile = path.join(process.cwd(), CONFIG_LOCAL_OUT_FILE);
-    const config = buildConfig(answers);
+    const config = { ...DEFAULT, ...answers };
 
     createFromTemplate(config, CONFIG_LOCAL_TPL_FILE, outputFile);
 
@@ -87,13 +94,13 @@ export function createWdioConfig(sourceFile: string, overrides: any): string {
     const configFile = path.join(process.cwd(), sourceFile);
     const configDir = path.dirname(configFile);
     const outputFile = path.join(configDir, CONFIG_WDIO_OUT_FILE);
-    const config = buildConfig(require(configFile).config, overrides);
+    const config = { ...DEFAULT, ...require(configFile).config, ...overrides };
 
     // final manipulation for webdriverio config properties
     const parsed = {
       ...config,
       directory: configDir,
-      comparableOptions: resolveComparableOutDirs(configDir, config.comparableOptions),
+      comparable: resolveComparableOutDirs(configDir, { ...DEFAULT.comparable, ...config.comparable }),
       pages: resolveFiles(configDir, config.pages, false),
       specs: resolveFiles(configDir, config.specs),
       steps: [...resolveFiles(__dirname, [CORE_STEP_DEFS_GLOB]), ...resolveFiles(configDir, config.steps, false)],

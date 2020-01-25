@@ -139,10 +139,11 @@ export function getJSONDiff(type: string, filename: string, toCompare: any, pref
   const difFile = path.join(comparable.diffDir, filename) + ".json";
 
   fs.outputFileSync(actFile, JSON.stringify(toCompare, null, 2));
-  allure.addAttachment("Actual:", readFileSync(actFile));
 
-  if (~~comparable.skipCompare) {
+  if (!~~comparable.skipCompare) {
     if (!fs.existsSync(expFile)) { return `Baseline JSON file "${expFile}" not found`; }
+
+    allure.addAttachment("Actual:", readFileSync(actFile));
     allure.addAttachment("Expected:", readFileSync(expFile));
 
     const differences = diff(JSON.parse(readFileSync(expFile)), JSON.parse(readFileSync(actFile)), prefilter);
@@ -153,6 +154,7 @@ export function getJSONDiff(type: string, filename: string, toCompare: any, pref
       return diff;
     }
   }
+
   return undefined;
 }
 
@@ -183,7 +185,7 @@ export function getImageDiff(filename: string, compare: IImageCompare): string {
   let result: IImageCompareResult = {};
 
   const saved = getImageFile(compare.context, filename, compare.element);
-  const comparable = (browser as any).config.comparable.visualRegression;
+  const comparable = (browser as any).config.comparable.imageCompare;
   const actFile = path.join(comparable.actualDir, saved.fileName);
   const expFile = path.join(comparable.baselineDir, saved.fileName);
   const difFile = path.join(comparable.diffDir, saved.fileName);
@@ -199,11 +201,8 @@ export function getImageDiff(filename: string, compare: IImageCompare): string {
     }
   };
 
-  attachImage("Actual:", actFile);
-
-  if (~~comparable.skipCompare) {
+  if (!~~comparable.skipCompare) {
     if (!fs.existsSync(expFile)) { return `Baseline image "${expFile}" not found`; }
-    attachImage("Expected:", expFile);
 
     switch (compare.context) {
       case ImageCompareContext.VIEWPORT: {
@@ -220,11 +219,15 @@ export function getImageDiff(filename: string, compare: IImageCompare): string {
       }
     }
 
+    attachImage("Actual:", actFile);
+    attachImage("Expected:", expFile);
+
     if (result.misMatchPercentage) {
       attachImage("Differences:", difFile);
       return `Image mismatch by ${result.misMatchPercentage}%`;
     }
   }
+
   return undefined;
 }
 

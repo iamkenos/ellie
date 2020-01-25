@@ -27,7 +27,7 @@ export default class AjaxRequestMatch implements IBrowserCondition {
     try {
       browser.pause(1000);
       actual = (browser as any).getRequests().map((i: any) => { delete i.response; return i; });
-      actual = getJSONDiff("ajaxRequests", this.filename, actual, this.prefilter);
+      actual = getJSONDiff("ajaxRequest", this.filename, actual, this.prefilter);
       result = this.reverse ? !!actual : !actual;
     } catch (e) {
       actual = e.message;

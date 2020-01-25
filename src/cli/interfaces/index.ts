@@ -54,7 +54,7 @@ export interface IConfig {
   logLevel: string;
   maxInstances: number;
   pages: string[];
-  browserStackEnabled: boolean;
+  browserstackEnabled: boolean;
   browserstackLocal: boolean;
   reportOutDir: string;
   specFileRetries: number;

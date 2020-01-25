@@ -32,7 +32,7 @@ export default class HttpResponseMatch implements IBrowserCondition {
     try {
       response = sendSyncRequest(this.request).response;
       actual = getJSONDiff(
-        "httpRequests",
+        "httpResponse",
         this.filename,
         {
           statusCode: response.statusCode,

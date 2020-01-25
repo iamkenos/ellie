@@ -7,6 +7,7 @@ import allure from "@wdio/allure-reporter";
 
 import * as logger from "../../logger";
 import { ImageCompareContext } from "../enums";
+import { IConfig } from "../../cli/interfaces";
 import { IHttpRequest, IHttpResponse, IImageCompare, IImageCompareResult, IImageSave } from "../interfaces";
 import { inspect, readFileSync } from "../../cli/utils";
 import { DEFAULT } from "../../cli/config";
@@ -132,7 +133,7 @@ export function getPageElement(key: string): string {
   return page ? getPageProperty(page, "locators", element) : key;
 }
 
-export function getJSONDiff(type: string, filename: string, toCompare: any, prefilter?: PreFilterFunction): string {
+export function getJSONDiff(type: keyof IConfig["comparable"], filename: string, toCompare: any, prefilter?: PreFilterFunction): string {
   const comparable = (browser as any).config.comparable[type];
   const actFile = path.join(comparable.actualDir, filename) + ".json";
   const expFile = path.join(comparable.baselineDir, filename) + ".json";

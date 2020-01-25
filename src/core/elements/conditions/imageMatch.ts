@@ -40,7 +40,7 @@ export default class ImageMatch implements IElementCondition {
   `
   Condition: ${this.reverse ? "Not " : ""}${this.name}
   Result: ${result ? "Success" : "Failed"}
-  Expected: ${this.reverse ? "No " : ""}Difference
+  Expected: ${this.reverse ? "Different" : "No Difference"}
   Actual: ${actual}
   `,
       isSuccess: result

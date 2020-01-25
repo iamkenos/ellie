@@ -67,7 +67,7 @@ export async function createLocalConfig(): Promise<any> {
     console.log(CONFIG_HELPER_INTRO.trim());
 
     const answers = await inquirer.prompt(CONFIG_INQUIRY).then(answers => {
-      if (answers.browserStackEnabled === false) { delete DEFAULT.user; delete DEFAULT.key; }
+      if (answers.browserstackEnabled === false) { delete DEFAULT.user; delete DEFAULT.key; }
       answers.pages = answers.pages.split(",");
       answers.specs = answers.specs.split(",");
       answers.steps = answers.steps.split(",");

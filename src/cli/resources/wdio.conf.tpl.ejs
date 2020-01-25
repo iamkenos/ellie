@@ -12,7 +12,7 @@ exports.config = {
   // WebdriverIO allows it to run your tests in arbitrary locations (e.g. locally or
   // on a remote machine).
   runner: 'local',
-  <% if(answers.browserStackEnabled) { %>
+  <% if(answers.browserstackEnabled) { %>
   //
   // =================
   // Service Providers
@@ -166,7 +166,7 @@ exports.config = {
   // your test setup with almost no effort. Unlike plugins, they don't add new
   // commands. Instead, they hook themselves up into the test process.
   services: [
-    '<%= answers.runnerService %>',
+    '<%= answers.browserstackEnabled ? 'browserstack' : 'selenium-standalone' %>',
     'intercept',
     [
       'image-comparison',
@@ -327,15 +327,6 @@ exports.config = {
    * Runs before a Cucumber step
    */
   beforeStep: function (uri, feature, stepData, context) {
-    <% if (answers.hooks.beforeStep) { %>
-    const hook = require('<%= answers.hooks.beforeStep %>').default;
-    hook(uri, feature, stepData, context);
-    <% } %>
-  },
-  /**
-   * Runs after a Cucumber step
-   */
-  afterStep: function (uri, feature, { error, result, duration, passed }, stepData, context) {
     const stepArg = stepData.step.argument;
     const data = [];
 
@@ -350,6 +341,15 @@ exports.config = {
       }
     }
 
+    <% if (answers.hooks.beforeStep) { %>
+    const hook = require('<%= answers.hooks.beforeStep %>').default;
+    hook(uri, feature, stepData, context);
+    <% } %>
+  },
+  /**
+   * Runs after a Cucumber step
+   */
+  afterStep: function (uri, feature, { error, result, duration, passed }, stepData, context) {
     if (error !== undefined) {
       browser.takeScreenshot();
     }

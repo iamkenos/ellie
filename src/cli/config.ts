@@ -33,7 +33,7 @@ export const DEFAULT: IConfig = {
   logLevel: "info",
   maxInstances: 5,
   pages: ["./pages/**/*.meta.js"],
-  browserStackEnabled: false,
+  browserstackEnabled: false,
   browserstackLocal: false,
   reportOutDir: ".reports",
   specFileRetries: 0,
@@ -204,13 +204,13 @@ const CONFIG_PROPERTIES: IConfigProperty[] = [
     }
   },
   {
-    name: "browserStackEnabled",
+    name: "browserstackEnabled",
     helptext: "Whether to enable the use of BrowserStack",
     inquiredOption: {
       enabled: true,
       type: "confirm",
       message: "Would you like to enable BrowserStack?",
-      default: DEFAULT.browserStackEnabled
+      default: DEFAULT.browserstackEnabled
     }
   },
   {
@@ -221,7 +221,7 @@ const CONFIG_PROPERTIES: IConfigProperty[] = [
       type: "confirm",
       message: "Would you be testing local URLs in BrowserStack?",
       default: DEFAULT.browserstackLocal,
-      when: (answers: IConfig): boolean => answers.browserStackEnabled
+      when: (answers: IConfig): boolean => answers.browserstackEnabled
     }
   },
   {
@@ -237,7 +237,7 @@ const CONFIG_PROPERTIES: IConfigProperty[] = [
       type: "password",
       message: "What is your BrowserStack username?",
       default: DEFAULT.user,
-      when: (answers: IConfig): boolean => answers.browserStackEnabled
+      when: (answers: IConfig): boolean => answers.browserstackEnabled
     }
   },
   {
@@ -253,7 +253,7 @@ const CONFIG_PROPERTIES: IConfigProperty[] = [
       type: "password",
       message: "What is your BrowserStack access key?",
       default: DEFAULT.key,
-      when: (answers: IConfig): boolean => answers.browserStackEnabled
+      when: (answers: IConfig): boolean => answers.browserstackEnabled
     }
   },
   {

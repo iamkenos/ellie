@@ -99,6 +99,8 @@ export const CONFIG_WDIO_TPL_FILE = RESOURCES_DIR + "/wdio.conf.tpl.ejs";
 
 export const CONFIG_WDIO_OUT_FILE = "wdio.conf.js";
 
+export const BABEL_SETTINGS_FILE = "/.babelrc";
+
 export const SAMPLES_DIR = "/samples";
 
 export const CONFIG_HELPER_INTRO = `
@@ -116,6 +118,11 @@ export const SAMPLES_HELPER_SUCCESS_MESSAGE = `
 Sample files created successfully!
 To run your tests, execute:
 $ ellie .${SAMPLES_DIR}/${CONFIG_LOCAL_OUT_FILE}
+`;
+
+export const SAMPLES_HELPER_BABELRC_EXISTS_MESSAGE = `
+You seem to have already created a .babelrc file.
+Consider replacing the contents with the following:
 `;
 
 const CONFIG_PROPERTIES: IConfigProperty[] = [

@@ -6,7 +6,7 @@
     "module": "commonjs",
     "moduleResolution": "node",
     "removeComments": false,
-    "target": "ES6",
+    "target": "ES5",
     "types": ["node", "@wdio/sync"]
   },
   "include": ["./src/**/*.ts", "./index.ts"]

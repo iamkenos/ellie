@@ -7,6 +7,7 @@ import * as path from "path";
 import logger from "../logger";
 import { LEVELS } from "../logger/config";
 import {
+  BABEL_SETTINGS_FILE,
   CONFIG_HELPER_INTRO,
   CONFIG_HELPER_SUCCESS_MESSAGE,
   CONFIG_INQUIRY,
@@ -19,6 +20,7 @@ import {
   PRETTIER_SETTINGS_FILE,
   RESOURCES_DIR,
   SAMPLES_DIR,
+  SAMPLES_HELPER_BABELRC_EXISTS_MESSAGE,
   SAMPLES_HELPER_SUCCESS_MESSAGE
 } from "./config";
 import { inspect, readFileSync, resolveComparableOutDirs, resolveFiles } from "./utils";
@@ -51,9 +53,16 @@ export function generateSamples(): void {
     const source = path.join(__dirname, RESOURCES_DIR, SAMPLES_DIR);
     const target = path.join(process.cwd(), SAMPLES_DIR);
 
-    fs.copySync(source, target, { recursive: true });
-    console.log(SAMPLES_HELPER_SUCCESS_MESSAGE.trim());
+    const bblSource = path.join(__dirname, RESOURCES_DIR, BABEL_SETTINGS_FILE);
+    const bblTarget = path.join(process.cwd(), BABEL_SETTINGS_FILE);
 
+    fs.copySync(source, target, { recursive: true });
+    if (fs.existsSync(bblTarget)) {
+      console.log(SAMPLES_HELPER_BABELRC_EXISTS_MESSAGE.trim());
+      console.log(readFileSync(bblSource));
+    } else fs.copySync(bblSource, bblTarget, { overwrite: false });
+
+    console.log(SAMPLES_HELPER_SUCCESS_MESSAGE.trim());
     process.exit(0);
   } catch (error) {
     logger.error(error);

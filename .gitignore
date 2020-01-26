@@ -1,5 +1,6 @@
 *.log
 *.conf.js
+*.tgz
 !demo.conf.js
 !src/cli/resources/samples/ellie.conf.js
 

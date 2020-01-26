@@ -51,6 +51,7 @@ export interface IConfig {
     httpResponse: IComparable;
     imageCompare: IComparable;
   };
+  debugEnabled: boolean;
   locale: string;
   logLevel: LogLevelDesc;
   maxInstances: number;

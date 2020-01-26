@@ -5,14 +5,14 @@
   "version": "0.2.0",
   "configurations": [
     {
-      "name": "NPM Debug",
+      "autoAttachChildProcesses": true,
+      "name": "ellie @ spec",
       "type": "node",
       "request": "launch",
       "console": "integratedTerminal",
-      "port": 9229,
-      "runtimeExecutable": "npm",
-      "runtimeArgs": ["run-script", "debug"],
-      "args": ["--", "ellie.conf.js"]
+      "cwd": "${workspaceFolder}",
+      "program": "${workspaceRoot}/bin/ellie.js",
+      "args": ["./demo/test/demo.conf.js", "--debugEnabled", "--specs", "${file}", "--logLevel", "debug"]
     }
   ]
 }

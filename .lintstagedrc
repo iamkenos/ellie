@@ -1,6 +1,5 @@
 {
   "{src,test}/**/*.ts": [
-    "eslint ./**/*.ts --fix",
-    "git add"
+    "eslint ./**/*.ts --fix"
   ]
 }

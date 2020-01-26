@@ -1,4 +1,4 @@
-import * as logger from "../../../logger";
+import logger from "../../../logger";
 import { IBrowserCondition, IExpectedConditionResult } from "../../interfaces";
 
 export default class ModalExists implements IBrowserCondition {
@@ -9,7 +9,7 @@ export default class ModalExists implements IBrowserCondition {
   private readonly reverse: boolean;
 
   public constructor(reverse: boolean) {
-    this.name = logger.getCallerFunc(true);
+    this.name = logger.getCaller(true);
     this.expected = null;
     this.reverse = reverse;
   }

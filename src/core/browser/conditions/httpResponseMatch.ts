@@ -1,7 +1,7 @@
 import { PreFilterFunction } from "deep-diff";
 import { Response } from "request";
 
-import * as logger from "../../../logger";
+import logger from "../../../logger";
 import { IBrowserCondition, IExpectedConditionResult, IHttpRequest } from "../../interfaces";
 import { getJSONDiff, isJSON, sendSyncRequest } from "../../utils";
 
@@ -17,7 +17,7 @@ export default class HttpResponseMatch implements IBrowserCondition {
   private readonly prefilter: any;
 
   public constructor(request: IHttpRequest, filename: string, reverse: boolean, prefilter?: PreFilterFunction) {
-    this.name = logger.getCallerFunc(true);
+    this.name = logger.getCaller(true);
     this.request = request;
     this.filename = filename;
     this.reverse = reverse;

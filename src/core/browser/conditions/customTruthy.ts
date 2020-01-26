@@ -1,4 +1,4 @@
-import * as logger from "../../../logger";
+import logger from "../../../logger";
 import { IBrowserCondition, IExpectedConditionResult } from "../../interfaces";
 import { normalizeFunctionName } from "../../../logger/utils";
 
@@ -10,7 +10,7 @@ export default class CustomTruthy implements IBrowserCondition {
   private readonly reverse: boolean;
 
   public constructor(truthy: Function, reverse: boolean) {
-    this.name = normalizeFunctionName(truthy.name) || logger.getCallerFunc(true);
+    this.name = normalizeFunctionName(truthy.name) || logger.getCaller(true);
     this.truthy = truthy;
     this.reverse = reverse;
   }

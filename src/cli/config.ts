@@ -1,4 +1,4 @@
-import { LEVELS } from "../logger/config";
+import { DEFAULT_LEVEL, LEVELS } from "../logger/config";
 import { IConfig, IConfigProperty } from "./interfaces";
 
 export const DEFAULT: IConfig = {
@@ -30,7 +30,7 @@ export const DEFAULT: IConfig = {
     }
   },
   locale: "default",
-  logLevel: "info",
+  logLevel: DEFAULT_LEVEL,
   maxInstances: 5,
   pages: ["./pages/**/*.meta.js"],
   browserstackEnabled: false,
@@ -170,7 +170,7 @@ const CONFIG_PROPERTIES: IConfigProperty[] = [
       enabled: true,
       type: "list",
       message: "What level of logging verbosity would you like?",
-      choices: LEVELS.map((i): string => i.name),
+      choices: LEVELS,
       default: DEFAULT.logLevel
     }
   },

@@ -16,7 +16,7 @@ exports.config = {
     before: './.hooks/before',
     afterScenario: './.hooks/afterScenario'
   },
-  logLevel: 'error',
+  logLevel: 'silent',
   maxInstances: 5,
   specs: ['./features/**/*.feature'],
   steps: ['./steps/definitions/**/*.js'],

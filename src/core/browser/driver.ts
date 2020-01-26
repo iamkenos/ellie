@@ -1,10 +1,10 @@
 import { PreFilterFunction } from "deep-diff";
 
-import * as logger from "../../logger";
+import logger from "../../logger";
+import BrowserConditions from "./evaluation/browserConditions";
 import { WebElement } from "../elements";
 import { IHttpRequest, IHttpResponse, IImageCompareOptions } from "../interfaces";
 import { sendSyncRequest } from "../utils";
-import BrowserConditions from "./evaluation/browserConditions";
 
 export default abstract class Driver {
   public static acceptAlert(): void {

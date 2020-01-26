@@ -4,8 +4,8 @@ import * as fs from "fs-extra";
 import * as inquirer from "inquirer";
 import * as path from "path";
 
-import * as logger from "../logger";
-
+import logger from "../logger";
+import { LEVELS } from "../logger/config";
 import {
   CONFIG_HELPER_INTRO,
   CONFIG_HELPER_SUCCESS_MESSAGE,
@@ -24,7 +24,7 @@ import {
 import { inspect, readFileSync, resolveComparableOutDirs, resolveFiles } from "./utils";
 
 function createFromTemplate(source: any, templateFile: string, outputFile: string): string {
-  logger.trace("createFromTemplate() %s", outputFile);
+  logger.debug("createFromTemplate() %s", outputFile);
 
   const fmt = readFileSync(path.join(__dirname, PRETTIER_SETTINGS_FILE));
   const renderedFmt = { ...JSON.parse(fmt), parser: "babel" };
@@ -96,6 +96,13 @@ export function createWdioConfig(sourceFile: string, overrides: any): string {
     const outputFile = path.join(configDir, CONFIG_WDIO_OUT_FILE);
     const config = { ...DEFAULT, ...require(configFile).config, ...overrides };
 
+    // soft check for logLevel to prevent wdio from dying
+    if (!LEVELS.includes(config.logLevel)) {
+      logger.warn("Logging level %s isn't supported. Use any one of %s", config.logLevel, LEVELS);
+      logger.info("Falling back to logging level [%s]...", DEFAULT.logLevel);
+      config.logLevel = DEFAULT.logLevel;
+    }
+
     // final manipulation for webdriverio config properties
     const parsed = {
       ...config,
@@ -109,8 +116,8 @@ export function createWdioConfig(sourceFile: string, overrides: any): string {
 
     const wdioFile = createFromTemplate(parsed, CONFIG_WDIO_TPL_FILE, outputFile);
 
-    logger.trace("Raw config:\n%s", inspect(config));
-    logger.trace("Parsed config:\n%s", inspect(parsed));
+    logger.debug("Raw config:\n%s", inspect(config));
+    logger.debug("Parsed config:\n%s", inspect(parsed));
 
     return wdioFile;
   } catch (error) {

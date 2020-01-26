@@ -1,4 +1,4 @@
-import * as logger from "../../../logger";
+import logger from "../../../logger";
 import { ImageCompareContext } from "../../enums";
 import { IBrowserCondition, IExpectedConditionResult, IImageCompareOptions } from "../../interfaces";
 import { getImageDiff } from "../../utils";
@@ -15,7 +15,7 @@ export default class ImageMatch implements IBrowserCondition {
   private readonly options: IImageCompareOptions;
 
   public constructor(context: string, filename: string, reverse: boolean, options?: IImageCompareOptions) {
-    this.name = logger.getCallerFunc(true);
+    this.name = logger.getCaller(true);
     this.context = ImageCompareContext[context.toUpperCase()];
     this.filename = filename;
     this.reverse = reverse;

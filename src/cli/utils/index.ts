@@ -3,8 +3,7 @@ import * as glob from "glob";
 import * as path from "path";
 import * as util from "util";
 
-import * as logger from "../../logger";
-
+import logger from "../../logger";
 import { IConfig } from "../interfaces";
 
 export function inspect(object: any): any {

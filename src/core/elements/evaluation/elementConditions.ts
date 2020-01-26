@@ -1,6 +1,7 @@
 import { AssertionError } from "chai";
 
-import * as logger from "../../../logger";
+import logger from "../../../logger";
+import ElementConditionsResult from "./elementConditionsResult";
 import {
   AttributeContains,
   AttributeEquals,
@@ -30,7 +31,6 @@ import {
   ValueEquals
 } from "../conditions";
 import { IElementCondition, IImageCompareOptions } from "../../interfaces";
-import ElementConditionsResult from "./elementConditionsResult";
 
 const WAIT_TIMEOUT: number = (browser as any).config.waitforTimeout;
 
@@ -45,7 +45,7 @@ export default class ElementConditions {
 
   public constructor(selector: string, name? : string) {
     this.conditions = [];
-    this.name = name || logger.getCallerFunc();
+    this.name = name || logger.getCaller();
     this.result = new ElementConditionsResult(selector);
     this.selector = selector;
   }
@@ -198,7 +198,7 @@ export default class ElementConditions {
             const evaluation = condition.evaluate(this.selector);
             this.result.setResult(evaluation.name, evaluation);
           });
-          this.result.isSuccess() || logger.trace("Retrying...");
+          this.result.isSuccess() || logger.debug("Retrying...");
           return this.result.isSuccess();
         },
         timeout

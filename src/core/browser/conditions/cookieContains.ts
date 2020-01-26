@@ -1,4 +1,4 @@
-import * as logger from "../../../logger";
+import logger from "../../../logger";
 import { IBrowserCondition, IExpectedConditionResult } from "../../interfaces";
 
 export default class CookieContains implements IBrowserCondition {
@@ -11,7 +11,7 @@ export default class CookieContains implements IBrowserCondition {
   private readonly reverse: boolean;
 
   public constructor(cookie: string, expected: string, reverse: boolean) {
-    this.name = logger.getCallerFunc(true);
+    this.name = logger.getCaller(true);
     this.cookie = cookie;
     this.expected = expected;
     this.reverse = reverse;

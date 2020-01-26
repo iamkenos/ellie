@@ -1,6 +1,6 @@
 import Launcher from "@wdio/cli";
 
-import * as logger from "../logger";
+import logger from "../logger";
 
 export default (wdioConfFile: string): void => {
   const wdio = new Launcher(wdioConfFile, {}, false);

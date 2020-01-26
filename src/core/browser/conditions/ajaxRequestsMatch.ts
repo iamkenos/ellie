@@ -1,6 +1,6 @@
 import { PreFilterFunction } from "deep-diff";
+import logger from "../../../logger";
 
-import * as logger from "../../../logger";
 import { IBrowserCondition, IExpectedConditionResult } from "../../interfaces";
 import { getJSONDiff } from "../../utils";
 
@@ -14,7 +14,7 @@ export default class AjaxRequestMatch implements IBrowserCondition {
   private readonly prefilter: any;
 
   public constructor(filename: string, reverse: boolean, prefilter?: PreFilterFunction) {
-    this.name = logger.getCallerFunc(true);
+    this.name = logger.getCaller(true);
     this.filename = filename;
     this.reverse = reverse;
     this.prefilter = prefilter;

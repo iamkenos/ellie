@@ -1,4 +1,4 @@
-import * as logger from "../../../logger";
+import logger from "../../../logger";
 import { IElementCondition, IExpectedConditionResult } from "../../interfaces";
 
 export default class AxisLocationEquals implements IElementCondition {
@@ -11,7 +11,7 @@ export default class AxisLocationEquals implements IElementCondition {
   private readonly reverse: boolean;
 
   public constructor(axis: WebdriverIO.LocationParam, expected: number, reverse: boolean) {
-    this.name = logger.getCallerFunc(true);
+    this.name = logger.getCaller(true);
     this.axis = axis;
     this.expected = expected;
     this.reverse = reverse;

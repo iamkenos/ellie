@@ -1,4 +1,4 @@
-import * as logger from "../../../logger";
+import logger from "../../../logger";
 import { IElementCondition, IExpectedConditionResult } from "../../interfaces";
 
 export default class SizeEquals implements IElementCondition {
@@ -9,7 +9,7 @@ export default class SizeEquals implements IElementCondition {
   private readonly reverse: boolean;
 
   public constructor(width: number, heigth: number, reverse: boolean) {
-    this.name = logger.getCallerFunc(true);
+    this.name = logger.getCaller(true);
     this.expected = `${width}px x ${heigth}px`;
     this.reverse = reverse;
   }

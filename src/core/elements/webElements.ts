@@ -1,6 +1,6 @@
-import { getIndexedSelector } from "../utils";
 import ElementConditions from "./evaluation/elementConditions";
 import WebElement from "./webElement";
+import { getIndexedSelector } from "../utils";
 
 export default class WebElements {
   public selector: string;

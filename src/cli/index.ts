@@ -1,8 +1,8 @@
 import yargs from "yargs";
 
-import { CONFIG_OPTIONS, USAGE } from "./config";
 import runCore from "../core/run";
 import runCLI from "./run";
+import { CONFIG_OPTIONS, USAGE } from "./config";
 
 export async function start(): Promise<any> {
   try {

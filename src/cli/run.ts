@@ -2,7 +2,7 @@ import { existsSync } from "fs";
 import { join } from "path";
 import { Arguments } from "yargs";
 
-import * as logger from "../logger";
+import logger from "../logger";
 import { CONFIG_OPTIONS, TLOU_QUOTES } from "./config";
 import { createLocalConfig, createWdioConfig, generateSamples } from "./setup";
 import { inspect } from "./utils";
@@ -16,7 +16,7 @@ export default (args: Arguments<any>): any => {
     .filter((i): boolean => args.argv[i.name])
     .reduce((i, j): object => ({ ...i, [j.name]: args.argv[j.name] }), {});
   logger.setLevel(overrides.logLevel);
-  logger.trace("Started with args: \n%s", inspect(args.argv));
+  logger.debug("Started with args: \n%s", inspect(args.argv));
   logger.debug("Override options: \n%s", inspect(overrides));
 
   const firstArg = args.argv._[0];

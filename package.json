@@ -24,7 +24,6 @@
     "postbuild:cp:resources": "copyfiles -u 1 \"./src/**/resources/**\" build",
     "postbuild:cp:prettierrc": "copyfiles \"./.prettierrc\" build/cli/resources",
     "postbuild:prettier": "prettier --write \"./build/**/*.js\"",
-    "debug": "node --nolazy --inspect-brk=9229 ./bin/ellie.js --",
     "demo:serve": "node ./node_modules/.bin/http-server -p8080 ./demo/app",
     "demo:test": "./bin/ellie.js demo/test/demo.conf.js",
     "demo:test:bs": "./bin/ellie.js demo/test/demo.bs.conf.js",

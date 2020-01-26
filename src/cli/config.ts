@@ -29,6 +29,7 @@ export const DEFAULT: IConfig = {
       skipCompare: false
     }
   },
+  debugEnabled: false,
   locale: "default",
   logLevel: DEFAULT_LEVEL,
   maxInstances: 5,
@@ -254,6 +255,15 @@ const CONFIG_PROPERTIES: IConfigProperty[] = [
       message: "What is your BrowserStack access key?",
       default: DEFAULT.key,
       when: (answers: IConfig): boolean => answers.browserstackEnabled
+    }
+  },
+  {
+    name: "debugEnabled",
+    helptext: "Whether to enable debug mode",
+    overrideOption: {
+      enabled: true,
+      type: "boolean",
+      description: "Run the tests in debug mode"
     }
   },
   {

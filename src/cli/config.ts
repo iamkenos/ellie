@@ -124,7 +124,7 @@ const CONFIG_PROPERTIES: IConfigProperty[] = [
     helptext: "Threshold on the amount of tests allowed to fail before bailing out",
     overrideOption: {
       enabled: true,
-      type: "string",
+      type: "number",
       description: "Fail fast after hitting a threshold of failing tests"
     }
   },

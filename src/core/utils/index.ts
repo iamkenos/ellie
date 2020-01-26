@@ -5,7 +5,7 @@ import { sync } from "syncrequest";
 import { URL } from "url";
 import allure from "@wdio/allure-reporter";
 
-import * as logger from "../../logger";
+import logger from "../../logger";
 import { ImageCompareContext } from "../enums";
 import { IConfig } from "../../cli/interfaces";
 import { IHttpRequest, IHttpResponse, IImageCompare, IImageCompareResult, IImageSave } from "../interfaces";
@@ -97,7 +97,7 @@ export function getPageProperty(page: string, ...propTree: string[]): any {
   const propFromLocale = (locale: string): any => {
     const localeTree = [locale, ...propTree];
     const localeTreeStr = localeTree.join(".");
-    logger.trace("Searching for '%s' in page '%s'...", localeTreeStr, pageMeta);
+    logger.debug("Searching for '%s' in page '%s'...", localeTreeStr, pageMeta);
 
     const prop = localeTree.reduce((i, j): object => (i && i[j] ? i[j] : null), pageObject);
     if (!prop) { throw new Error(`\n  Unable to find '${localeTreeStr}' in page '${pageMeta}'\n  Pages: ${pagesStr}`); }

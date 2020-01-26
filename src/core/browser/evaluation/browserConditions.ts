@@ -1,7 +1,8 @@
 import { AssertionError } from "chai";
 import { PreFilterFunction } from "deep-diff";
 
-import * as logger from "../../../logger";
+import BrowserConditionsResult from "./browserConditionsResult";
+import logger from "../../../logger";
 import {
   AjaxRequestsMatch,
   CookieContains,
@@ -24,7 +25,6 @@ import {
   UrlPathEquals
 } from "../conditions";
 import { IBrowserCondition, IHttpRequest, IImageCompareOptions } from "../../interfaces";
-import BrowserConditionsResult from "./browserConditionsResult";
 
 const WAIT_TIMEOUT: number = (browser as any).config.waitforTimeout;
 
@@ -39,7 +39,7 @@ export default class BrowserConditions {
 
   public constructor(name? : string) {
     this.conditions = [];
-    this.name = name || logger.getCallerFunc();
+    this.name = name || logger.getCaller();
     this.result = new BrowserConditionsResult();
   }
 
@@ -158,7 +158,7 @@ export default class BrowserConditions {
             const evaluation = condition.evaluate();
             this.result.setResult(evaluation.name, evaluation);
           });
-          this.result.isSuccess() || logger.trace("Retrying...");
+          this.result.isSuccess() || logger.debug("Retrying...");
           return this.result.isSuccess();
         },
         timeout

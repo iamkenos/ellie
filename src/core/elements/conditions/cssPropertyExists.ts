@@ -1,4 +1,4 @@
-import * as logger from "../../../logger";
+import logger from "../../../logger";
 import { IElementCondition, IExpectedConditionResult } from "../../interfaces";
 
 export default class CSSPropertyExists implements IElementCondition {
@@ -11,7 +11,7 @@ export default class CSSPropertyExists implements IElementCondition {
   private readonly reverse: boolean;
 
   public constructor(cssProperty: string, reverse: boolean) {
-    this.name = logger.getCallerFunc(true);
+    this.name = logger.getCaller(true);
     this.cssProperty = cssProperty;
     this.expected = !reverse;
     this.reverse = reverse;

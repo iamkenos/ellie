@@ -1,4 +1,4 @@
-import * as logger from '../../../build/logger';
+import { logger } from '../../../build';
 
 export default () => {
   logger.setLevel(browser.config.logLevel);

@@ -1,7 +1,7 @@
-import * as logger from "../../logger";
+import logger from "../../logger";
+import ElementConditions from "./evaluation/elementConditions";
 import { IImageCompareOptions } from "../interfaces";
 import { getAbsoluteXPathScript, getIndexedSelector } from "../utils";
-import ElementConditions from "./evaluation/elementConditions";
 
 export default class WebElement {
   public selector: string;
@@ -11,7 +11,7 @@ export default class WebElement {
   }
 
   public existing$(): WebdriverIO.Element {
-    return new ElementConditions(this.selector, logger.getCallerFunc())
+    return new ElementConditions(this.selector, logger.getCaller())
       .existing()
       .runStrict()
       .getElement();

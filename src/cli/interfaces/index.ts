@@ -1,3 +1,4 @@
+import { LogLevelDesc } from "loglevel";
 import { ChoiceCollection, Question, QuestionMap } from "inquirer";
 import { Options } from "yargs";
 
@@ -51,7 +52,7 @@ export interface IConfig {
     imageCompare: IComparable;
   };
   locale: string;
-  logLevel: string;
+  logLevel: LogLevelDesc;
   maxInstances: number;
   pages: string[];
   browserstackEnabled: boolean;

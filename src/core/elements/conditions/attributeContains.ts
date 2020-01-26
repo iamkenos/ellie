@@ -1,4 +1,4 @@
-import * as logger from "../../../logger";
+import logger from "../../../logger";
 import { IElementCondition, IExpectedConditionResult } from "../../interfaces";
 
 export default class AttributeContains implements IElementCondition {
@@ -11,7 +11,7 @@ export default class AttributeContains implements IElementCondition {
   private readonly reverse: boolean;
 
   public constructor(attribute: string, expected: string, reverse: boolean) {
-    this.name = logger.getCallerFunc(true);
+    this.name = logger.getCaller(true);
     this.attribute = attribute;
     this.expected = expected;
     this.reverse = reverse;

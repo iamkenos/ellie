@@ -2,7 +2,6 @@ exports.config = {
   baseUrl: 'http://localhost:8080',
   capabilities: [
     {
-      maxInstances: 5,
       browserName: 'chrome',
       'goog:chromeOptions': { args: ['--disable-web-security', '--incognito', '--headless'] }
     }
@@ -16,8 +15,7 @@ exports.config = {
     before: './.hooks/before',
     afterScenario: './.hooks/afterScenario'
   },
-  logLevel: 'silent',
-  maxInstances: 5,
+  logLevel: 'error',
   specs: ['./features/**/*.feature'],
   steps: ['./steps/definitions/**/*.js'],
   pages: ['./pages/**/*.meta.js'],

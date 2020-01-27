@@ -129,7 +129,7 @@ export default class WebElement {
   }
 
   public checkAttributeExists(attrName: string, reverse?: boolean): void {
-    logger.info("Is attribute exists %s: %s - %s", this.selector, attrName);
+    logger.info("Check attribute exists %s: %s", this.selector, attrName);
     new ElementConditions(this.existing$().selector)
       .attributeExists(attrName, reverse)
       .runStrict();

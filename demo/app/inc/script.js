@@ -1,3 +1,7 @@
+const HTML_DROPZONE_DEFAULT_TXT = 'draggableBoxDest';
+const HTML_DROPZONE_CHANGED_TXT = 'This text is changed by [draggableBox]...';
+const HTML_DEFAULT_PAGE = 'sections/01-mouseActions.html';
+
 function onClickToggleElement() {
   const $el = $(this);
   const $showTarget = $($el.data('show'));
@@ -42,19 +46,14 @@ function detectDrop($el) {
   const dropLeft = dropOffset.left;
 
   if (dragBottom > dropTop && dragTop < dropBottom && (dragRight > dropLeft && dragLeft < dropRight)) {
-    $dropZone.text('Dropped!');
+    $dropZone.text(HTML_DROPZONE_CHANGED_TXT);
   } else {
-    $dropZone.text('Dropzone');
+    $dropZone.text(HTML_DROPZONE_DEFAULT_TXT);
   }
 }
 
 function handleFormSubmit(event) {
   event.preventDefault();
-
-  // eslint-disable-next-line no-undef
-  const xhr = new XMLHttpRequest();
-  xhr.open('GET', '/', true);
-  xhr.send();
 
   $(this)
     .find('.message')
@@ -62,72 +61,121 @@ function handleFormSubmit(event) {
 }
 
 function handleDataAction(event) {
+  const $source = $(this);
   const $target = $($(this).data('target'));
   const data = $(this).data('action');
   const action = Object.keys(data)[0];
   const val = data[action];
-  const state = $(this).data('state') ? !$(this).data('state') : true;
+  const state = !~~$(this).data('state');
 
   event.preventDefault();
-
-  setTimeout(function delayedHandle() {
-    switch (action) {
-      case 'select': {
-        if (state === true) {
-          $target.val(val).change();
-        } else {
-          $target.val('1').change();
-        }
-
-        break;
-      }
-
-      case 'toggleClass': {
-        $target.toggleClass(val);
-        break;
-      }
-
-      case 'text': {
-        if (state) {
-          $target.text(val);
-        } else {
-          $target.text('');
-        }
-        break;
-      }
-
-      case 'value': {
-        if (state) {
-          $target.val(val);
-        } else {
-          $target.val('');
-        }
-        break;
-      }
-
-      case 'create': {
-        if (state) {
-          $(val).appendTo($target);
-        } else {
-          $target.empty();
-        }
-
-        break;
-      }
-
-      default: {
-        if (state) {
-          $target.prop(action, val === 'true');
-        } else {
-          $target.prop(action, val === 'false');
-        }
-
-        break;
-      }
-    }
-  }, 500);
-
+  setTimeout(delayedHandle(action, state, $source, $target, val), 500);
   $(this).data('state', state);
+}
+
+function handleDataActions(event) {
+  const $source = $(this);
+  const $target = $($(this).data('target'));
+  const data = $(this).data('actions');
+  const state = !~~$(this).data('state');
+
+  for (let i = 0; i < data.length; i++) {
+    const innerData = data[i];
+    const action = Object.keys(innerData)[0];
+    const val = innerData[action];
+
+    event.preventDefault();
+    setTimeout(delayedHandle(action, state, $source, $target, val), 500);
+    $(this).data('state', state);
+  }
+}
+
+function delayedHandle(action, state, $source, $target, val) {
+  switch (action) {
+    case 'select': {
+      if (state === true) {
+        $target.val(val).change();
+      } else {
+        $target.val('1').change();
+      }
+
+      break;
+    }
+
+    case 'toggleClass': {
+      $target.toggleClass(val);
+      break;
+    }
+
+    case 'text': {
+      if (state) {
+        $target.text(val);
+      } else {
+        $target.text('');
+      }
+      break;
+    }
+
+    case 'value': {
+      if (state) {
+        $target.val(val);
+      } else {
+        $target.val('');
+      }
+      break;
+    }
+
+    case 'create': {
+      if (state) {
+        $(val).appendTo($target);
+      } else {
+        $target.empty();
+      }
+      break;
+    }
+
+    case 'addClass': {
+      const dest = val.child ? $target.find(`> ${val.child}`) : $target;
+      const cls = val.value;
+
+      if (!dest.hasClass(cls)) {
+        dest.addClass(cls);
+      } else {
+        dest.removeClass(cls);
+      }
+
+      break;
+    }
+
+    case 'addAttr': {
+      const dest = val.child ? $target.find(`> ${val.child}`) : $target;
+      const attr = val.attr;
+      const value = val.value;
+
+      if (dest.attr(attr) !== value) {
+        dest.attr(attr, value);
+      } else {
+        dest.removeAttr(attr);
+      }
+      break;
+    }
+
+    case 'load': {
+      $source.parent().children().removeClass('active');
+      $source.addClass('active');
+      $target.load(val);
+      break;
+    }
+
+    default: {
+      if (state) {
+        $target.prop(action, val === 'true');
+      } else {
+        $target.prop(action, val === 'false');
+      }
+      break;
+    }
+  }
 }
 
 function handleMousedown(event) {
@@ -150,7 +198,6 @@ function handleMousedown(event) {
     detectDrop($(window.dragging.elem));
   }
 
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   function handleMouseup(event) {
     $('body')
       .off('mousemove', handleDragging)
@@ -190,15 +237,22 @@ function openPrompt(event) {
   $result.text(result);
 }
 
-// eslint-disable-next-line @typescript-eslint/no-unused-vars
 function toggleMoveToElement(event) {
   $(this).toggleClass('moveToClass');
 }
 
 $(function() {
-  $('.jsToggleElement').on('click', onClickToggleElement);
+  $(window).on('load', function() {
+    const action = 'load';
+    const state = true;
+    const $source = $('.topnav').find('>:first-child');
+    const $target = $('#loadedContent');
+    const val = HTML_DEFAULT_PAGE;
 
-  $.cookie('test', 'yumyum');
+    setTimeout(delayedHandle(action, state, $source, $target, val), 500);
+  });
+
+  $('.jsToggleElement').on('click', onClickToggleElement);
 
   $('#toggleMessage')
     .on('click', displayFirstMessage)
@@ -208,11 +262,13 @@ $(function() {
     .on('click', makeBgRed)
     .on('dblclick', makeBgBlue);
 
-  $('#draggable').on('mousedown', handleMousedown);
+  $('#draggableBox').on('mousedown', handleMousedown);
 
   $('#formSubmitTest').on('submit', handleFormSubmit);
 
   $('[data-action]').on('click', handleDataAction);
+
+  $('[data-actions]').on('click', handleDataActions);
 
   $('body').on('keydown', handleKeydown);
 

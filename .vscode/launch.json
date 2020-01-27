@@ -13,6 +13,21 @@
       "cwd": "${workspaceFolder}",
       "program": "${workspaceRoot}/bin/ellie.js",
       "args": ["./demo/test/demo.conf.js", "--debugEnabled", "--specs", "${file}", "--logLevel", "debug"]
+    },
+    {
+      "name": "ellie @ launch demo app",
+      "type": "chrome",
+      "request": "launch",
+      "file": "${workspaceRoot}/demo/app/index.html",
+      "runtimeArgs": ["--args", "--disable-web-security", "--incognito", "-–allow-file-access-from-files"]
+    },
+    {
+      "name": "ellie @ attach demo app",
+      "type": "chrome",
+      "request": "attach",
+      "port": 9222,
+      "url": "http://localhost:8080",
+      "webRoot": "${workspaceRoot}/demo/app"
     }
   ]
 }

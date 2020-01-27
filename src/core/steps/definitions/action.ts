@@ -8,6 +8,7 @@ import elemOptionSelect from "../glue/action/elemOptionSelect";
 import elemScrollTo from "../glue/action/elemScrollTo";
 import elemValueClear from "../glue/action/elemValueClear";
 import elemValueSet from "../glue/action/elemValueSet";
+import elemValueSetMultiLine from "../glue/action/elemValueSetMultiLine";
 import windowAjaxIntercept from "../glue/action/windowAjaxIntercept";
 import windowChildrenClose from "../glue/action/windowChildrenClose";
 import windowCookieDelete from "../glue/action/windowCookieDelete";
@@ -29,11 +30,13 @@ import windowSizeSet from "../glue/action/windowSizeSet";
 import windowSwitchFrame from "../glue/action/windowSwitchFrame";
 import windowUrlSet from "../glue/action/windowUrlSet";
 
+// ok
 When(
-  /^I (click|double click) the (link|button|element) "([^"]*)?"$/,
+  /^I (click|double click) the (link|button|element) "([^"]*)?"(?: again)?$/,
   elemClick
 );
 
+// ok
 When(
   /^I drag the element "([^"]*)?" to the element "([^"]*)?"$/,
   elemDragAndDrop
@@ -59,14 +62,22 @@ When(
   elemScrollTo
 );
 
+// ok
 When(
   /^I clear the (?:field|element) "([^"]*)?"$/,
   elemValueClear
 );
 
+// ok
 When(
   /^I (type|append) "([^"]*)?" on the (?:field|element) "([^"]*)?"$/,
   elemValueSet
+);
+
+// ok
+When(
+  /^I (type|append) a multi-line value on the (?:field|element) "([^"]*)?":$/,
+  elemValueSetMultiLine
 );
 
 When(
@@ -154,6 +165,7 @@ When(
   windowSizeMaximize
 );
 
+// ok
 When(
   /^I have a screen that is ([\d]+) by ([\d]+) pixels$/,
   windowSizeSet
@@ -164,6 +176,7 @@ When(
   windowSwitchFrame
 );
 
+// ok
 When(
   /^I open the url (?:"([^"]*)?"|of the page "([^"]*)?")$/,
   windowUrlSet

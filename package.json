@@ -19,7 +19,7 @@
   "scripts": {
     "start": "npm run build && node bin/ellie",
     "prebuild": "rimraf build && npm run lint -- --fix",
-    "build": "tsc --downlevelIteration",
+    "build": "tsc",
     "postbuild": "npm run postbuild:cp:resources && npm run postbuild:cp:prettierrc && npm run postbuild:cp:babelrc && npm run postbuild:prettier",
     "postbuild:cp:resources": "copyfiles -u 1 \"./src/**/resources/**\" build",
     "postbuild:cp:prettierrc": "copyfiles \"./.prettierrc\" build/cli/resources",

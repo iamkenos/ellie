@@ -1,23 +1,24 @@
 Feature: WebDriverIO
 
-  WebdriverIO (WDIO) is a webdriver test framework for Node.js.
-  It offers various features useful for testing web applications such as:
-  - webdriver commands for interacting with web elements
-  - visual regression
-  - intercepting ajax requests for validation
-  - integration with cloud services such as BrowserStack
-  - various reporter tools
-  - many more!
-  Ellie is an abstraction of the WDIO framework that aims to get you started
-  quickly with web application testing using cucumber and page object model
+  Next-gen WebDriver test framework for Node.js
+  WebdriverIO is:
+  - Extendable
+  Adding helper functions, or more complicated sets and combinations of existing commands is simple and really useful
+  - Compatible
+  WebdriverIO has 1st class support for the WebDriver specification as well as to Appium and allows to run tests on desktop and mobile
+  - Feature Rich
+  It implements all Webdriver protocol commands and provides useful integrations with other tools
+
+  ellie is an abstraction of WebdriverIO. It aims to get you started quickly on writing
+  browser and devices automated tests using cucumber and page object model
 
   Background:
     Given I have a screen that is 1600 by 1024 pixels
 
   Scenario: Cucumber boilerplate style
     This is an example of writing tests following the cucumber boilerplate fashion.
-    We would directly supply the element locators and page URLs using the built-in steps.
-    It works but the tests are hard to maintain since locator changes will be done all over the place.
+    Element locators and page URLs are directly supplied from the built-in steps.
+    It works but element locators will be harder to maintain as the number of tests grow.
 
     When I open the url "https://webdriver.io/"
     Then I expect the element ".projectTitle" text to be "WEBDRIVER I/O"
@@ -27,8 +28,8 @@ Feature: WebDriverIO
 
   Scenario: Page meta object model
     This is an example of writing tests using page object model.
-    Page URLs and locators are defined in a meta file e.g. webdrverIO.meta.js.
-    Using the built-in steps, we would supply 'Meta=>Element' instead element locators.
+    Element locators and page URLs are defined in a meta file e.g. webdrverIO.meta.js.
+    Parameters followng the format 'Meta=>Element' are supplied from the built-in steps.
 
     When I open the url of the page "WebdriverIO"
     Then I expect the element "WebdriverIO=>Project title" text to be "WEBDRIVER I/O"
@@ -39,7 +40,7 @@ Feature: WebDriverIO
   Scenario: Page class object model
     This is another example of writing tests using page object model.
     Unlike the previous example, this one makes use page object classes e.g. webdrverIO.page.js.
-    This approch is perfect if you need to implement custom and more complex steps
+    This approch is more suitable for implementing custom and complex steps.
 
     When I navigate on the WDIO page
     Then I expect the project title to be "WEBDRIVER I/O" on the WDIO page

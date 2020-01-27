@@ -1,10 +1,10 @@
-import { driver, Page, WebElement, WebElements } from "./core";
+import { BasePage, driver, WebElement, WebElements } from "./core";
 import logger from "./logger";
 
 export {
   driver,
   logger,
-  Page,
+  BasePage,
   WebElement,
   WebElements
 };

@@ -1,7 +1,7 @@
-import { Page } from 'ellie';
+import { BasePage } from 'ellie';
 import webdriverIO from '../meta/webdriverIO.meta';
 
-export default class WebdriverIOPage extends Page {
+export default class WebdriverIOPage extends BasePage {
   constructor() {
     super(webdriverIO);
   }

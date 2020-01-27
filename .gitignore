@@ -7,6 +7,5 @@
 demo/test/.reports
 demo/test/.comparable/**/actual
 demo/test/.comparable/**/diff
-getstarted
 build
 node_modules

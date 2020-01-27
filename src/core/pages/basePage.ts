@@ -2,7 +2,7 @@ import { driver } from "../browser";
 import { WebElement, WebElements } from "../elements";
 import { getPageObject } from "../utils";
 
-export default class Page {
+export default class BasePage {
   protected properties: any;
 
   protected url: string;

@@ -1,5 +1,5 @@
-import Page from "./page";
+import BasePage from "./basePage";
 
 export {
-  Page
+  BasePage
 };

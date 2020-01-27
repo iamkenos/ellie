@@ -1,5 +1,9 @@
 {
-  "cucumberautocomplete.steps": ["./build/core/steps/definitions/*.js", "./demo/test/steps/definitions/**/*.js"],
+  "cucumberautocomplete.steps": [
+    "./src/cli/resources/samples/steps/definitions/*.js",
+    "./build/core/steps/definitions/*.js",
+    "./demo/test/steps/definitions/**/*.js"
+  ],
   "cucumberautocomplete.formatConfOverride": { "And": 3, "But": 3 },
   "cucumberautocomplete.onTypeFormat": true,
   "cucumberautocomplete.stepsInvariants": true,

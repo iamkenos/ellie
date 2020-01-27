@@ -1,7 +1,7 @@
-import { Page } from '../../../../build';
+import { BasePage } from '../../../../build';
 import demo from '../meta/demo.meta';
 
-export default class DemoPage extends Page {
+export default class DemoPage extends BasePage {
   constructor() {
     super(demo);
   }

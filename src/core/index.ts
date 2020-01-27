@@ -1,10 +1,10 @@
 import { driver } from "./browser";
-import { Page } from "./pages";
+import { BasePage } from "./pages";
 import { WebElement, WebElements } from "./elements";
 
 export {
   driver,
-  Page,
+  BasePage,
   WebElement,
   WebElements
 };

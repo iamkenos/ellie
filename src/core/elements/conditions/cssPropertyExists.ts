@@ -36,8 +36,8 @@ export default class CSSPropertyExists implements IElementCondition {
   Condition: ${this.reverse ? "Not " : ""}${this.name}
   CSS Property: ${this.cssProperty}
   Result: ${result ? "Success" : "Failed"}
-  Expected: ${this.reverse ? !this.expected : this.expected}
-  Actual: ${this.reverse ? !actual : actual}
+  Expected: ${this.expected}
+  Actual: ${actual}
   `,
       isSuccess: result
     };

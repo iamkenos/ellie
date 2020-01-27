@@ -19,7 +19,7 @@ export default class Existing implements IElementCondition {
     let result: boolean;
 
     try {
-      actual = $(selector).isExisting();
+      actual = !!$(selector).isExisting();
       result = actual === this.expected;
     } catch (e) {
       actual = e.message;
@@ -32,8 +32,8 @@ export default class Existing implements IElementCondition {
   `
   Condition: ${this.reverse ? "Not " : ""}${this.name}
   Result: ${result ? "Success" : "Failed"}
-  Expected: ${this.reverse ? !this.expected : this.expected}
-  Actual: ${this.reverse ? !actual : actual}
+  Expected: ${this.expected}
+  Actual: ${actual}
   `,
       isSuccess: result
     };

@@ -47,21 +47,25 @@ Then(
   checkAjaxRequestsMatch
 );
 
+// ok
 Then(
-  /^I expect the element "([^"]*)?" attribute "([^"]*)?" to( not)? contain "([^"]*)?"$/,
+  /^I expect the (?:field|element) "([^"]*)?" attribute "([^"]*)?" to( not)? contain "([^"]*)?"$/,
   checkAttributeContains
 );
 
+// ok
 Then(
-  /^I expect the element "([^"]*)?" attribute "([^"]*)?" to( not)? be "([^"]*)?"$/,
+  /^I expect the (?:field|element) "([^"]*)?" attribute "([^"]*)?" to( not)? be "([^"]*)?"$/,
   checkAttributeEquals
 );
 
+// ok
 Then(
-  /^I expect the element "([^"]*)?" attribute "([^"]*)?" to( not)? exist$/,
+  /^I expect the (?:field|element) "([^"]*)?" attribute "([^"]*)?" to( not)? exist$/,
   checkAttributeExists
 );
 
+// ok
 Then(
   /^I expect the element "([^"]*)?" location at (x|y) axis to( not)? be ([\d+.?\d*]+)$/,
   checkAxisLocationEquals
@@ -162,6 +166,7 @@ Then(
   checkSizeSideEquals
 );
 
+// ok
 Then(
   /^I expect the element "([^"]*)?" text to( not)? contain "([^"]*)?"$/,
   checkTextContains
@@ -177,11 +182,13 @@ Then(
   checkTextContainsArray
 );
 
+// ok
 Then(
   /^I expect the element "([^"]*)?" text to( not)? be empty$/,
   checkTextEmpty
 );
 
+// ok
 Then(
   /^I expect the element "([^"]*)?" text to( not)? be "([^"]*)?"$/,
   checkTextEquals
@@ -197,11 +204,19 @@ Then(
   checkTextEqualsArray
 );
 
+// ok: I expect the page title to contain ""
+// ok: I expect the page title to contain that of the page ""
+// pending: I expect the page title to not contain ""
+// pending: I expect the page title to not contain that of the page ""
 Then(
   /^I expect the (?:window|page) title to( not)? contain (?:"([^"]*)?"|that of the page "([^"]*)?")$/,
   checkTitleContains
 );
 
+// ok: I expect the page title to be ""
+// ok: I expect the page title to be that of the page ""
+// pending: I expect the page title to not be ""
+// pending: I expect the page title to not be that of the page ""
 Then(
   /^I expect the (?:window|page) title to( not)? be (?:"([^"]*)?"|that of the page "([^"]*)?")$/,
   checkTitleEquals
@@ -227,26 +242,31 @@ Then(
   checkUrlPathContains
 );
 
+// ok
 Then(
   /^I expect the (?:field|element) "([^"]*)?" value to( not)? contain "([^"]*)?"$/,
   checkValueContains
 );
 
+// ok
 Then(
   /^I expect the (?:field|element) "([^"]*)?" value to( not)? contain:$/,
   checkValueContains
 );
 
+// ok
 Then(
   /^I expect the (?:field|element) "([^"]*)?" value to( not)? be empty$/,
   checkValueEmpty
 );
 
+// ok
 Then(
   /^I expect the (?:field|element) "([^"]*)?" value to( not)? be "([^"]*)?"$/,
   checkValueEquals
 );
 
+// ok
 Then(
   /^I expect the (?:field|element) "([^"]*)?" value to( not)? match:$/,
   checkValueEquals

@@ -11,6 +11,7 @@
   "editor.codeActionsOnSave": { "source.fixAll.eslint": true },
   "eslint.validate": ["javascript", "typescript"],
   "files.associations": { "*.ejs": "javascript" },
+  "[html]": { "editor.defaultFormatter": "vscode.html-language-features" },
   "[feature]": { "editor.defaultFormatter": "alexkrechik.cucumberautocomplete" },
   "[javascript]": { "editor.formatOnSave": false },
   "[typescript]": { "editor.formatOnSave": false }

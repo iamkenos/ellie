@@ -1,7 +1,3 @@
-const HTML_DROPZONE_DEFAULT_TXT = 'draggableBoxDest';
-const HTML_DROPZONE_CHANGED_TXT = 'This text is changed by [draggableBox]...';
-const HTML_DEFAULT_PAGE = 'sections/01-mouseActions.html';
-
 function onClickToggleElement() {
   const $el = $(this);
   const $showTarget = $($el.data('show'));
@@ -46,9 +42,9 @@ function detectDrop($el) {
   const dropLeft = dropOffset.left;
 
   if (dragBottom > dropTop && dragTop < dropBottom && (dragRight > dropLeft && dragLeft < dropRight)) {
-    $dropZone.text(HTML_DROPZONE_CHANGED_TXT);
+    $dropZone.text('This text is changed by [draggableBox]...');
   } else {
-    $dropZone.text(HTML_DROPZONE_DEFAULT_TXT);
+    $dropZone.text('draggableBoxDest');
   }
 }
 
@@ -163,7 +159,8 @@ function delayedHandle(action, state, $source, $target, val) {
     case 'load': {
       $source.parent().children().removeClass('active');
       $source.addClass('active');
-      $target.load(val);
+      $target.children().addClass('hidden');
+      $(val).removeClass('hidden');
       break;
     }
 
@@ -247,7 +244,7 @@ $(function() {
     const state = true;
     const $source = $('.topnav').find('>:first-child');
     const $target = $('#loadedContent');
-    const val = HTML_DEFAULT_PAGE;
+    const val = '#secMouseActions';
 
     setTimeout(delayedHandle(action, state, $source, $target, val), 500);
   });

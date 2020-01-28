@@ -29,18 +29,410 @@
         <img src="favicon.png">
       </a>
     </p>
+    <br />
 
     <div class="topnav">
-      <a data-target="#loadedContent" data-action='{"load": "sections/01-mouseActions.html"}'>I. Mouse Actions</a>
-      <a data-target="#loadedContent" data-action='{"load": "sections/02-formFields.html"}'>II. Form Fields</a>
-      <a data-target="#loadedContent" data-action='{"load": "old.html"}'>III. Alerts</a>
-      <a data-target="#loadedContent" data-action='{"load": "old.html"}'>IV. Contexts</a>
-      <a data-target="#loadedContent" data-action='{"load": "old.html"}'>V. Delays</a>
-      <a data-target="#loadedContent" data-action='{"load": "old.html"}'>VI. Images</a>
-      <a data-target="#loadedContent" data-action='{"load": "old.html"}'>VII. Requests</a>
+      <a data-target="#loadedContent" data-action='{"load": "#secMouseActions"}'>I. Mouse Actions</a>
+      <a data-target="#loadedContent" data-action='{"load": "#secFormFields"}'>II. Form Fields</a>
+      <a data-target="#loadedContent" data-action='{"load": "#secAlerts"}'>III. Alerts</a>
+      <a data-target="#loadedContent" data-action='{"load": "#secContexts"}'>IV. Contexts</a>
+      <a data-target="#loadedContent" data-action='{"load": "#secDelays"}'>V. Delays</a>
+      <a data-target="#loadedContent" data-action='{"load": "#secImages"}'>VI. Images</a>
+      <a data-target="#loadedContent" data-action='{"load": "#secRequests"}'>VII. Requests</a>
+      <a data-target="#loadedContent" data-action='{"load": "#secOld"}'>Old</a>
     </div>
 
-    <div id="loadedContent"></div>
+    <div id="loadedContent">
+      <div id="secMouseActions" class="hidden">
+        <h2>I. Mouse Actions</h2>
+        <hr />
+
+        <h3>Click</h3>
+        <dl>
+          <dt>
+            <button id="createElemBtn" class="btn default" data-target="#createElemWrapper" data-actions='[
+                    {"create": "<p>This element is created by [createElemBtn]...</p>"},
+                    {"addClass": { "child": "p", "value": "target" }},
+                    {"addAttr": { "child": "p", "attr": "id", "value": "createElemDest" }}]'>
+              createElemBtn
+            </button>
+          </dt>
+          <dd>- create a new element</dd>
+          <dd class="mono sub">Actions:</dd>
+          <dd class="mono success">I click the button "#createElemBtn"</dd>
+          <dd class="mono sub">Checks:</dd>
+          <dd class="mono success">I expect the element "#createElemDest" to exist</dd>
+          <dd class="mono success">I expect the element "#createElemDest" to not exist</dd>
+          <dd class="mono sub">Result:</dd>
+          <dd>
+            <span id="createElemWrapper"></span>
+          </dd>
+          <br />
+          <dt>
+            <button id="changeTxtBtn" class="btn default" data-target="#changeTxtDest"
+              data-action='{"text": "This text is changed by [changeTxtBtn]..."}'>
+              changeTxtBtn
+            </button>
+          </dt>
+          <dd>- change the text of an existing element</dd>
+          <dd class="mono sub">Actions:</dd>
+          <dd class="mono success">I click the button "#changeTxtBtn"</dd>
+          <dd class="mono sub">Checks:</dd>
+          <dd class="mono success">I expect the element "#changeTxtDest" text to contain "[changeTxtBtn]"</dd>
+          <dd class="mono success">I expect the element "#changeTxtDest" text to be "This text is changed by
+            [changeTxtBtn]..."</dd>
+          <dd class="mono success">I expect the element "#changeTxtDest" text to not be empty</dd>
+          <dd class="mono success">I expect the element "#changeTxtDest" text to not contain "[changeTxtBtn]"</dd>
+          <dd class="mono success">I expect the element "#changeTxtDest" text to not be "This text is changed by
+            [changeTxtBtn]..."</dd>
+          <dd class="mono success">I expect the element "#changeTxtDest" text to be empty</dd>
+          <dd class="mono sub">Result:</dd>
+          <dd>
+            <span id="changeTxtDest" class="target"></span>
+          </dd>
+          <br />
+          <dt>
+            <button id="changeValBtn" class="btn default" data-target="#changeValDest" data-actions='[
+                    {"value": "This value is changed by [changeValBtn]..."},
+                    {"addAttr": { "attr": "class", "value": "target" }}]'>
+              changeValBtn
+            </button>
+          </dt>
+          <dd>- change the value of an existing element</dd>
+          <dd class="mono sub">Actions:</dd>
+          <dd class="mono success">I click the button "#changeValBtn"</dd>
+          <dd class="mono sub">Checks:</dd>
+          <dd class="mono success">I expect the field "#changeValDest" value to contain "[changeValBtn]"</dd>
+          <dd class="mono success">I expect the field "#changeValDest" value to be "This value is changed by
+            [changeValBtn]..."</dd>
+          <dd class="mono success">I expect the field "#changeValDest" value to not be empty</dd>
+          <dd class="mono success">I expect the field "#changeValDest" attribute "class" to contain "tar"</dd>
+          <dd class="mono success">I expect the field "#changeValDest" attribute "class" to be "target"</dd>
+          <dd class="mono success">I expect the field "#changeValDest" attribute "class" to exist</dd>
+          <dd class="mono success">I expect the field "#changeValDest" attribute "class" to not contain "lipsum"</dd>
+          <dd class="mono success">I expect the field "#changeValDest" attribute "class" to not be "lipsum"</dd>
+          <dd class="mono success">I expect the field "#changeValDest" value to not contain "[changeValBtn]"</dd>
+          <dd class="mono success">I expect the field "#changeValDest" value to not be "This value is changed by
+            [changeValBtn]..."</dd>
+          <dd class="mono success">I expect the field "#changeValDest" value to be empty</dd>
+          <dd class="mono success">I expect the field "#changeValDest" attribute "class" to not exist</dd>
+          <dd>
+            <input id="changeValDest"></input>
+          </dd>
+        </dl>
+
+        <h3>Drag and Drop</h3>
+        <dl>
+          <dt>
+            <div class="relative">
+              <div id="draggableBox" data-dropzone="#draggableBoxDest" class="draggable">draggableBox</div>
+              <div id="draggableBoxDest" class="droppable">draggableBoxDest</div>
+            </div>
+          </dt>
+          <dd>- drag and drop an existing element</dd>
+          <dd class="mono sub">Actions:</dd>
+          <dd class="mono success">I drag the element "#draggableBox" to the element "#draggableBoxDest"</dd>
+          <dd class="mono sub">Checks:</dd>
+          <dd class="mono success">I expect the element "#draggableBoxDest" text to be "This text is changed by
+            [draggableBox]..."
+          </dd>
+          <dd class="mono success">I expect the element "#draggableBoxDest" location at x axis to be 1062.5</dd>
+          <dd class="mono success">I expect the element "#draggableBoxDest" location at x axis to not be 255.5</dd>
+          <dd class="mono success">I expect the element "#draggableBoxDest" location at y axis to be 1294</dd>
+          <dd class="mono success">I expect the element "#draggableBoxDest" location at y axis to not be 255.5</dd>
+        </dl>
+      </div>
+
+      <div id="secFormFields" class="hidden">
+        <h2>II. Form Fields</h2>
+        <hr />
+
+        <h3>Input</h3>
+        <dl>
+          <dt class="btn">fmInput</dt>
+          <dd>- change values of an input field</dd>
+          <dd class="mono sub">Actions:</dd>
+          <dd class="mono success">I type "This text is " on the field "#fmInput"</dd>
+          <dd class="mono success">I append "appended on [fmInput]..." on the field "#fmInput"</dd>
+          <dd class="mono success">I clear the field "#fmInput"</dd>
+          <dd class="mono sub">Checks:</dd>
+          <dd class="mono success">I expect the field "#fmInput" value to not contain "[fmInput]"</dd>
+          <dd class="mono success">I expect the field "#fmInput" value to be "This text is appended on [fmInput]..."
+          </dd>
+          <dd class="mono success">I expect the field "#fmInput" value to be empty</dd>
+          <dd class="mono sub">Result:</dd>
+          <dd>
+            <input id="fmInput" class="target"></input>
+          </dd>
+          <br />
+          <dt class="btn">fmTextarea</dt>
+          <dd>- change values of a textarea</dd>
+          <dd class="mono sub">Actions:</dd>
+          <dd class="mono success">
+            I type a multi-line value on the field "#fmTextarea":<br />
+            """<br />
+            This<br />
+            <br />
+            text is<br />
+            """
+          </dd>
+          <dd class="mono success">
+            I append a multi-line value on the field "#fmTextarea":<br />
+            """<br />
+            <br />
+            appended<br />
+            on [fmTextarea]...<br />
+            """
+          </dd>
+          <dd class="mono success">I clear the field "#fmTextarea"</dd>
+          <dd class="mono sub">Checks:</dd>
+          <dd class="mono success">I expect the field "#fmTextarea" value to not contain:<br />
+            """<br />
+            appended<br />
+            on [fmTextarea]...<br />
+            """
+          </dd>
+          <dd class="mono success">I expect the field "#fmTextarea" value to match:<br />
+            """<br />
+            This<br />
+            <br />
+            text is<br />
+            appended<br />
+            on [fmTextarea]...<br />
+            """
+          </dd>
+          <dd class="mono success">I expect the field "#fmTextarea" value to not contain:<br />
+            """<br />
+            on [fmTextarea]...<br />
+            """
+          </dd>
+          <dd class="mono success">I expect the field "#fmTextarea" value to not match:<br />
+            """<br />
+            This<br />
+            <br />
+            text is<br />
+            appended<br />
+            on [fmTextarea]...<br />
+            """
+          </dd>
+          <dd class="mono sub">Result:</dd>
+          <dd>
+            <textarea id="fmTextarea" class="target" rows="8" cols="60"></textarea>
+          </dd>
+        </dl>
+      </div>
+
+      <div id="secAlerts" class="hidden">
+        <h2>III. Alerts</h2>
+        <hr />
+      </div>
+      <div id="secContexts" class="hidden">
+        <h2>IV. Contexts</h2>
+        <hr />
+      </div>
+      <div id="secDelays" class="hidden">
+        <h2>V. Delays</h2>
+        <hr />
+      </div>
+      <div id="secImages" class="hidden">
+        <h2>VI. Images</h2>
+        <hr />
+      </div>
+      <div id="secRequests" class="hidden">
+        <h2>VII. Requests</h2>
+        <hr />
+      </div>
+      <div id="secOld" class="hidden">
+        <div class="container">
+          <h3>SECTION 1</h3>
+          <hr />
+          <div style="position: relative; height: 200px;">
+            <div id="draggable" data-dropzone="#droppable"
+              style="width:100px; height:100px; background-color:steelblue; border:2px solid black; line-height:100px; text-align:center; cursor:move; font-size:12px; position:absolute;z-index:2;">
+              Drag me!
+            </div>
+            <div id="droppable"
+              style="position:absolute;right:0; width:200px; height:200px; background-color:lightgrey; line-height:200px; text-align:center; cursor:move; font-size:12px">
+              Dropzone
+            </div>
+          </div>
+
+          <h3>SECTION 2</h3>
+          <hr />
+          <div id="visible">I'm a visible element</div>
+
+          <h3>SECTION 3</h3>
+          <hr />
+          <div id="hidden" class="hidden">I'm a hidden element</div>
+          <div>Just above me is a hidden element</div>
+
+          <h3>SECTION 4</h3>
+          <hr />
+          <div>
+            <button id="btnMakeVisible" class="btn jsToggleElement" data-show="#makeVisible" data-timeout="2000">
+              Show element
+            </button>
+          </div>
+          <div id="makeVisible" class="hidden">I'm only visible 2 seconds after the button was clicked</div>
+          <div>
+            <button id="btnMakeInvisible" class="btn jsToggleElement" data-hide="#makeInvisible" data-timeout="5000">
+              Hide element
+            </button>
+          </div>
+          <div id="makeInvisible">I'm only hidden 5 seconds after the button was clicked</div>
+
+          <h3>SECTION 5</h3>
+          <hr />
+          <div id="textComparison1">I'm the same as the first string</div>
+          <div id="textComparison2">I'm the same as the second string</div>
+          <div id="textComparison3">I'm the same as the first string</div>
+          <div id="textComparison4">
+            I have a text that
+            <br><br>spans across
+            <br><br><br>multiple lines.
+          </div>
+          <div id="textComparison5"></div>
+          <div id="textComparison6">I'm the same as the first string<span></span></div>
+          <div id="textComparison7">
+            <strong>I'm the same as the <em>first</em> string</strong>
+          </div>
+          <div id="textComparison8">I'm a string containing &euro; &copy; &gt;</div>
+          <div id="textComparison9">I'm a string containing &euro; &copy; &gt;</div>
+
+          <h3>SECTION 6</h3>
+          <hr />
+          <div><input type="text" id="valueComparison1" value="This input contains strawberry" size="30" /></div>
+          <div><input type="text" id="valueComparison2" value="This input contains cucumber" size="30" /></div>
+          <div><input type="text" id="valueComparison3" value="" size="30" /></div>
+          <div><input type="text" id="valueComparison4" value="&euro; &copy; &gt;" size="30" /></div>
+          <div>
+            <textarea id="valueComparison5" rows="4" cols="50">
+      I have a text that
+
+      spans across
+
+
+      multiple lines.</textarea></div>
+
+          <h3>SECTION 7</h3>
+          <hr />
+          <div id="attributeComparison" role="note">This element has a role attribute with the value "note"</div>
+          <div id="cssAttributeComparison" style="color:rgba(255,0,0,1); font-weight: 700">
+            This element has a color css attribute with the value "rgba(255,0,0,1)"
+          </div>
+
+          <h3>SECTION 8</h3>
+          <hr />
+          <input type="checkbox" id="checkbox" value="y" />
+          <input type="text" id="textinput" placeholder="Textinput" />
+
+          <h3>SECTION 9</h3>
+          <hr />
+          <div id="square100x100" style="width: 100px; height: 100px; background-color: black"></div>
+
+          <h3>SECTION 10</h3>
+          <hr />
+          <div id="classTest" class="class1 class2">I have cthe class class1 and class2 but not class3</div>
+
+          <h3>SECTION 11</h3>
+          <hr />
+          <div><a id="linkSameWindow" href="http://example.com/">This link opens example.com in the same window</a>
+          </div>
+          <div><a id="linkNewWindow" href="http://example.com/" target="_blank">This link opens example.com in a new
+              window</a></div>
+
+          <h3>SECTION 12</h3>
+          <hr />
+          <a href="https://example.com" id="testClick">Navigate to example.com</a>
+          <button id="toggleMessage">Open different alert based on click or double click</button>
+          <div id="message1" class="hidden">This is the first message</div>
+          <div id="message2" class="hidden">This is the second message</div>
+          <div id="toggleBackground">Change the background of this element based on click or double click</div>
+
+          <h3>SECTION 13</h3>
+          <hr />
+          <div><input type="text" size="30" value="" id="testInput" placeholder="Test input" autocomplete="off" /></div>
+          <div><input type="file" size="30" id="uploadInput" /></div>
+
+          <h3>SECTION 14</h3>
+          <hr />
+          <form id="formSubmitTest">
+            <div><input type="text" size="30" value="" id="formInput" autocomplete="off" /></div>
+            <div class="message hidden">Form is submitted!</div>
+            <button type="submit">Submit</button>
+          </form>
+
+          <h3>SECTION 15</h3>
+          <hr />
+          <div>
+            <button id="waitForCheckedBtn" data-target="#waitForCheckedElement" data-action='{"checked": "true"}'>
+              Check
+            </button>
+            <input type="checkbox" id="waitForCheckedElement" value="test" />
+          </div>
+          <div>
+            <button id="waitForEnabledBtn" data-target="#waitForEnabledElement" data-action='{"disabled": "false"}'>
+              Enable
+            </button>
+            <input type="input" id="waitForEnabledElement" value="test" disabled />
+          </div>
+          <div>
+            <button id="waitForSelectedBtn" data-target="#waitForSelectedElement" data-action='{"select": "2"}'>
+              Select
+            </button>
+            <select id="waitForSelectedElement">
+              <option value="1" selected>First option</option>
+              <option value="2">Second option</option>
+            </select>
+          </div>
+          <div>
+            <button id="waitForVisibleBtn" data-target="#waitForVisibleElement" data-action='{"toggleClass": "hidden"}'>
+              Visible
+            </button>
+            <span id="waitForVisibleElement" class="hidden">Here I am!</span>
+          </div>
+
+
+          <h3>SECTION 16</h3>
+          <hr />
+          <div id="testKeyResponse"></div>
+          <iframe src="iframe.html" style="border:none;"></iframe>
+
+          <h3>SECTION 17</h3>
+          <hr />
+          <div><button id="openAlert">Open an alert box</button></div>
+          <div><button id="openConfirm">Open an confirm box</button></div>
+          <div id="confirmResult"></div>
+          <div><button id="openPrompt">Open an prompt</button></div>
+          <div id="promptResult"></div>
+
+          <h3>SECTION 18</h3>
+          <hr />
+          <div>
+            <select id="selectElementTest">
+              <option name="firstOption" value="first">Option #1</option>
+              <option name="secondOption" value="second">Option #2</option>
+              <option name="thirdOption" value="third">Option #3</option>
+              <option name="fourthOption" value="fourth">Option #4</option>
+            </select>
+          </div>
+
+          <h3>SECTION 19</h3>
+          <hr />
+          <div>
+            <div id="moveTo">
+              Move to me please
+            </div>
+          </div>
+
+
+          <div class="spacer"></div>
+          <footer id="footer">
+            <div>The bottom of the page</div>
+          </footer>
+        </div>
+      </div>
+    </div>
 
     <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
     <script src="inc/jquery.min.js"></script>

@@ -20,34 +20,6 @@ function displaySecondMessage() {
   $('#message2').removeClass('hidden');
 }
 
-function makeBgRed() {
-  $(this).css('background-color', 'red');
-}
-
-function makeBgBlue() {
-  $(this).css('background-color', 'blue');
-}
-
-function detectDrop($el) {
-  const $dropZone = $($el.data('dropzone'));
-  const dragOffset = $el.offset();
-  const dropOffset = $dropZone.offset();
-  const dragTop = dragOffset.top;
-  const dragRight = dragOffset.left + $el.outerWidth();
-  const dragBottom = dragOffset.top + $el.outerHeight();
-  const dragLeft = dragOffset.left;
-  const dropTop = dropOffset.top;
-  const dropRight = dropOffset.left + $dropZone.outerWidth();
-  const dropBottom = dropOffset.top + $dropZone.outerHeight();
-  const dropLeft = dropOffset.left;
-
-  if (dragBottom > dropTop && dragTop < dropBottom && (dragRight > dropLeft && dragLeft < dropRight)) {
-    $dropZone.text('This text is changed by [draggableBox]...');
-  } else {
-    $dropZone.text('draggableBoxDest');
-  }
-}
-
 function handleFormSubmit(event) {
   event.preventDefault();
 
@@ -56,6 +28,39 @@ function handleFormSubmit(event) {
     .removeClass('hidden');
 }
 
+function handleKeydown(event) {
+  const $target = $('#testKeyResponse');
+
+  $target.text(event.keyCode);
+}
+
+function openAlert(event) {
+  event.preventDefault();
+
+  window.alert('I am a alert box!');
+}
+
+function openConfirm(event) {
+  const $result = $('#confirmResult');
+  event.preventDefault();
+
+  const result = window.confirm('I am a confirm box!');
+  $result.text(result);
+}
+
+function openPrompt(event) {
+  const $result = $('#promptResult');
+  event.preventDefault();
+
+  const result = window.prompt('I am a prompt!');
+  $result.text(result);
+}
+
+function toggleMoveToElement(event) {
+  $(this).toggleClass('moveToClass');
+}
+
+// fn final ----------------------------------------------------------------------------------------
 function handleDataAction(event) {
   const $source = $(this);
   const $target = $($(this).data('target'));
@@ -206,66 +211,72 @@ function handleMousedown(event) {
     .on('mousemove', handleDragging);
 }
 
-function handleKeydown(event) {
-  const $target = $('#testKeyResponse');
+function detectDrop($el) {
+  const $dropZone = $($el.data('dropzone'));
+  const dragOffset = $el.offset();
+  const dropOffset = $dropZone.offset();
+  const dragTop = dragOffset.top;
+  const dragRight = dragOffset.left + $el.outerWidth();
+  const dragBottom = dragOffset.top + $el.outerHeight();
+  const dragLeft = dragOffset.left;
+  const dropTop = dropOffset.top;
+  const dropRight = dropOffset.left + $dropZone.outerWidth();
+  const dropBottom = dropOffset.top + $dropZone.outerHeight();
+  const dropLeft = dropOffset.left;
 
-  $target.text(event.keyCode);
+  if (dragBottom > dropTop && dragTop < dropBottom && (dragRight > dropLeft && dragLeft < dropRight)) {
+    $dropZone.text('This text is changed by [draggableBox]...');
+  } else {
+    $dropZone.text('draggableBoxDest');
+  }
 }
 
-function openAlert(event) {
+function changeCssAndInnerHtml(event) {
+  const $source = $(this);
+  const $target = $($(this).data('target'));
+  const state = !~~$(this).data('state');
+
   event.preventDefault();
 
-  window.alert('I am a alert box!');
+  if (state) {
+    $target.addClass('btn');
+    $source.prop('disabled', true);
+    $target.css('display', 'inline-block');
+    $target.css('background-color', '#c89605');
+    $target.css('border-color', '#c89605');
+    $target.css('font-family', 'Courier New');
+    $target.html('Double click<br /><br />this element<br />to revert the changes of<br />[changeInnerHtmlBtn]...');
+  }
 }
 
-function openConfirm(event) {
-  const $result = $('#confirmResult');
+function revertCssAndInnerHtml(event) {
+  const $source = $(this);
+  const $target = $($(this).data('target'));
+  const state = !~~$(this).data('state');
+
   event.preventDefault();
 
-  const result = window.confirm('I am a confirm box!');
-  $result.text(result);
+  if (state) {
+    $target.prop('disabled', false);
+    $source.removeAttr('style', 'class');
+    $source.removeAttr('class');
+    $source.html('');
+  }
 }
 
-function openPrompt(event) {
-  const $result = $('#promptResult');
-  event.preventDefault();
-
-  const result = window.prompt('I am a prompt!');
-  $result.text(result);
-}
-
-function toggleMoveToElement(event) {
-  $(this).toggleClass('moveToClass');
-}
-
+// ################################################
+// ################################################
+// ################################################
+// ################################################
+// ################################################
+// ################################################
+// ################################################
 $(function() {
-  $(window).on('load', function() {
-    const action = 'load';
-    const state = true;
-    const $source = $('.topnav').find('>:first-child');
-    const $target = $('#loadedContent');
-    const val = '#secMouseActions';
-
-    setTimeout(delayedHandle(action, state, $source, $target, val), 500);
-  });
-
   $('.jsToggleElement').on('click', onClickToggleElement);
 
   $('#toggleMessage')
     .on('click', displayFirstMessage)
     .on('dblclick', displaySecondMessage);
-
-  $('#toggleBackground')
-    .on('click', makeBgRed)
-    .on('dblclick', makeBgBlue);
-
-  $('#draggableBox').on('mousedown', handleMousedown);
-
-  $('#formSubmitTest').on('submit', handleFormSubmit);
-
-  $('[data-action]').on('click', handleDataAction);
-
-  $('[data-actions]').on('click', handleDataActions);
 
   $('body').on('keydown', handleKeydown);
 
@@ -276,4 +287,31 @@ $(function() {
   $('#openPrompt').on('click', openPrompt);
 
   $('#moveTo').on('mouseenter mouseleave', toggleMoveToElement);
+
+  $('#formSubmitTest').on('submit', handleFormSubmit);
+
+  // jqeury final ----------------------------------------------------------------------------------------
+
+  // window
+  $(window).on('load', function() {
+    const action = 'load';
+    const state = true;
+    const $source = $('.topnav').find('>:first-child');
+    const $target = $('#loadedContent');
+    const val = '#secMouseActions';
+
+    setTimeout(delayedHandle(action, state, $source, $target, val), 500);
+  });
+
+  // elements
+  $('#draggableBox').on('mousedown', handleMousedown);
+
+  $('#changeInnerHtmlBtn').on('dblclick', changeCssAndInnerHtml);
+
+  $('#changeInnerHtmlDest').on('dblclick', revertCssAndInnerHtml);
+
+  // atrributes
+  $('[data-action]').on('click', handleDataAction);
+
+  $('[data-actions]').on('click', handleDataActions);
 });

@@ -1,4 +1,8 @@
 /* Start: Generic ------------------------------------------ */
+html {
+  overflow-y: scroll;
+}
+
 button:focus,
 input:focus,
 select:focus,

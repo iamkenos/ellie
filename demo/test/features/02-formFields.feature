@@ -21,7 +21,11 @@ Feature: II. Form Fields
 
       text is
       """
-    Then I expect the field "#fmInput" value to not contain "[fmInput]"
+    Then I expect the field "#fmTextarea" value to contain:
+      """
+
+      text is
+      """
       But I append a multi-line value on the field "#fmTextarea":
       """
 

@@ -172,6 +172,7 @@ Then(
   checkTextContains
 );
 
+// ok
 Then(
   /^I expect the element "([^"]*)?" text to( not)? contain:$/,
   checkTextContains
@@ -194,6 +195,7 @@ Then(
   checkTextEquals
 );
 
+// ok
 Then(
   /^I expect the element "([^"]*)?" text to( not)? match:$/,
   checkTextEquals

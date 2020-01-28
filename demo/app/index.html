@@ -1,7 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
 
-
 <head>
   <meta charset="utf-8" />
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
@@ -57,7 +56,7 @@
               createElemBtn
             </button>
           </dt>
-          <dd>- create a new element</dd>
+          <dd>- create a new element on click</dd>
           <dd class="mono sub">Actions:</dd>
           <dd class="mono success">I click the button "#createElemBtn"</dd>
           <dd class="mono sub">Checks:</dd>
@@ -74,17 +73,19 @@
               changeTxtBtn
             </button>
           </dt>
-          <dd>- change the text of an existing element</dd>
+          <dd>- change the text of an existing element on click</dd>
           <dd class="mono sub">Actions:</dd>
           <dd class="mono success">I click the button "#changeTxtBtn"</dd>
           <dd class="mono sub">Checks:</dd>
           <dd class="mono success">I expect the element "#changeTxtDest" text to contain "[changeTxtBtn]"</dd>
-          <dd class="mono success">I expect the element "#changeTxtDest" text to be "This text is changed by
-            [changeTxtBtn]..."</dd>
+          <dd class="mono success">
+            I expect the element "#changeTxtDest" text to be "This text is changed by [changeTxtBtn]..."
+          </dd>
           <dd class="mono success">I expect the element "#changeTxtDest" text to not be empty</dd>
           <dd class="mono success">I expect the element "#changeTxtDest" text to not contain "[changeTxtBtn]"</dd>
-          <dd class="mono success">I expect the element "#changeTxtDest" text to not be "This text is changed by
-            [changeTxtBtn]..."</dd>
+          <dd class="mono success">
+            I expect the element "#changeTxtDest" text to not be "This text is changed by [changeTxtBtn]..."
+          </dd>
           <dd class="mono success">I expect the element "#changeTxtDest" text to be empty</dd>
           <dd class="mono sub">Result:</dd>
           <dd>
@@ -98,13 +99,14 @@
               changeValBtn
             </button>
           </dt>
-          <dd>- change the value of an existing element</dd>
+          <dd>- change the value of an existing element on click</dd>
           <dd class="mono sub">Actions:</dd>
           <dd class="mono success">I click the button "#changeValBtn"</dd>
           <dd class="mono sub">Checks:</dd>
           <dd class="mono success">I expect the field "#changeValDest" value to contain "[changeValBtn]"</dd>
-          <dd class="mono success">I expect the field "#changeValDest" value to be "This value is changed by
-            [changeValBtn]..."</dd>
+          <dd class="mono success">
+            I expect the field "#changeValDest" value to be "This value is changed by [changeValBtn]..."
+          </dd>
           <dd class="mono success">I expect the field "#changeValDest" value to not be empty</dd>
           <dd class="mono success">I expect the field "#changeValDest" attribute "class" to contain "tar"</dd>
           <dd class="mono success">I expect the field "#changeValDest" attribute "class" to be "target"</dd>
@@ -112,12 +114,67 @@
           <dd class="mono success">I expect the field "#changeValDest" attribute "class" to not contain "lipsum"</dd>
           <dd class="mono success">I expect the field "#changeValDest" attribute "class" to not be "lipsum"</dd>
           <dd class="mono success">I expect the field "#changeValDest" value to not contain "[changeValBtn]"</dd>
-          <dd class="mono success">I expect the field "#changeValDest" value to not be "This value is changed by
-            [changeValBtn]..."</dd>
+          <dd class="mono success">
+            I expect the field "#changeValDest" value to not be "This value is changed by [changeValBtn]..."
+          </dd>
           <dd class="mono success">I expect the field "#changeValDest" value to be empty</dd>
           <dd class="mono success">I expect the field "#changeValDest" attribute "class" to not exist</dd>
           <dd>
             <input id="changeValDest"></input>
+          </dd>
+        </dl>
+
+        <h3>Double Click</h3>
+        <dl>
+          <dt>
+            <button id="changeInnerHtmlBtn" class="btn default" data-target="#changeInnerHtmlDest">
+              changeInnerHtmlBtn
+            </button>
+          </dt>
+          <dd>- change the inner html of an existing element on double click</dd>
+          <dd class="mono sub">Actions:</dd>
+          <dd class="mono success">I double click the button "#changeInnerHtmlBtn"</dd>
+          <dd class="mono success">I double click the element "#changeInnerHtmlDest"</dd>
+          <dd class="mono sub">Checks:</dd>
+          <dd class="mono success">I expect the element "#changeInnerHtmlBtn" to not be enabled</dd>
+          <dd class="mono success">
+            I expect the field "#fmTextarea" value to contain:<br />
+            """<br />
+            this element<br />
+            to revert the changes of<br />
+            """
+          </dd>
+          <dd class="mono success">
+            I expect the field "#fmTextarea" value to match:<br />
+            """<br />
+            Double click<br />
+            <br />
+            this element<br />
+            to revert the changes of<br />
+            [changeInnerHtmlBtn]...<br />
+            """
+          </dd>
+          <dd class="mono success">I expect the element "#changeInnerHtmlBtn" to be enabled</dd>
+          <dd class="mono success">
+            I expect the field "#fmTextarea" value to not contain:<br />
+            """<br />
+            this element<br />
+            to revert the changes of<br />
+            """
+          </dd>
+          <dd class="mono success">
+            I expect the field "#fmTextarea" value to not match:<br />
+            """<br />
+            Double click<br />
+            <br />
+            this element<br />
+            to revert the changes of<br />
+            [changeInnerHtmlBtn]...<br />
+            """
+          </dd>
+          <dd class="mono sub">Result:</dd>
+          <dd>
+            <span id="changeInnerHtmlDest" data-target="#changeInnerHtmlBtn"></span>
           </dd>
         </dl>
 
@@ -138,7 +195,7 @@
           </dd>
           <dd class="mono success">I expect the element "#draggableBoxDest" location at x axis to be 1062.5</dd>
           <dd class="mono success">I expect the element "#draggableBoxDest" location at x axis to not be 255.5</dd>
-          <dd class="mono success">I expect the element "#draggableBoxDest" location at y axis to be 1294</dd>
+          <dd class="mono success">I expect the element "#draggableBoxDest" location at y axis to be 2126</dd>
           <dd class="mono success">I expect the element "#draggableBoxDest" location at y axis to not be 255.5</dd>
         </dl>
       </div>
@@ -186,10 +243,10 @@
           </dd>
           <dd class="mono success">I clear the field "#fmTextarea"</dd>
           <dd class="mono sub">Checks:</dd>
-          <dd class="mono success">I expect the field "#fmTextarea" value to not contain:<br />
+          <dd class="mono success">I expect the field "#fmTextarea" value to contain:<br />
             """<br />
-            appended<br />
-            on [fmTextarea]...<br />
+            <br />
+            text is<br />
             """
           </dd>
           <dd class="mono success">I expect the field "#fmTextarea" value to match:<br />
@@ -259,8 +316,7 @@
 
           <h3>SECTION 2</h3>
           <hr />
-          <div id="visible">I'm a visible element</div>
-
+          <div id="visible">I' m a visible element</div>
           <h3>SECTION 3</h3>
           <hr />
           <div id="hidden" class="hidden">I'm a hidden element</div>
@@ -351,7 +407,8 @@
 
           <h3>SECTION 13</h3>
           <hr />
-          <div><input type="text" size="30" value="" id="testInput" placeholder="Test input" autocomplete="off" /></div>
+          <div><input type="text" size="30" value="" id="testInput" placeholder="Test input" autocomplete="off" />
+          </div>
           <div><input type="file" size="30" id="uploadInput" /></div>
 
           <h3>SECTION 14</h3>

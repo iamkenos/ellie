@@ -6,7 +6,7 @@ Feature: I. Mouse Actions
       And I click the "I. Mouse Actions" navigation item
       And I expect the section header "I. Mouse Actions" to exist
 
-  Scenario: Create new element
+  Scenario: Create new element on button click
     When I click the button "#createElemBtn"
     Then I expect the element "#createElemDest" to exist
       But I click the button "#createElemBtn" again
@@ -14,7 +14,7 @@ Feature: I. Mouse Actions
       And I expect the page title to be "Demo Page"
       And I expect the page title to be that of the page "Demo"
 
-  Scenario: Change element text
+  Scenario: Change element text on button click
     When I click the button "#changeTxtBtn"
     Then I expect the element "#changeTxtDest" text to contain "[changeTxtBtn]"
       And I expect the element "#changeTxtDest" text to be "This text is changed by [changeTxtBtn]..."
@@ -24,7 +24,7 @@ Feature: I. Mouse Actions
       And I expect the element "#changeTxtDest" text to not be "This text is changed by [changeTxtBtn]..."
       And I expect the element "#changeTxtDest" text to be empty
 
-  Scenario: Change element value
+  Scenario: Change element value on button click
     When I click the button "#changeValBtn"
     Then I expect the field "#changeValDest" value to contain "[changeValBtn]"
       And I expect the field "#changeValDest" value to be "This value is changed by [changeValBtn]..."
@@ -40,12 +40,44 @@ Feature: I. Mouse Actions
       And I expect the field "#changeValDest" value to be empty
       And I expect the field "#changeValDest" attribute "class" to not exist
 
+  Scenario: Change element inner html on button double click
+    When I double click the button "#changeInnerHtmlBtn"
+    Then I expect the element "#changeInnerHtmlBtn" to not be enabled
+      And I expect the element "#changeInnerHtmlDest" text to contain:
+      """
+      this element
+      to revert the changes of
+      """
+      And I expect the element "#changeInnerHtmlDest" text to match:
+      """
+      Double click
+
+      this element
+      to revert the changes of
+      [changeInnerHtmlBtn]...
+      """
+      But I double click the element "#changeInnerHtmlDest"
+    Then I expect the element "#changeInnerHtmlBtn" to be enabled
+      And I expect the element "#changeInnerHtmlDest" text to not contain:
+      """
+      this element
+      to revert the changes of
+      """
+      And I expect the element "#changeInnerHtmlDest" text to not match:
+      """
+      Double click
+
+      this element
+      to revert the changes of
+      [changeInnerHtmlBtn]...
+      """
+
   Scenario: Drag an element to another element
     When I drag the element "#draggableBox" to the element "#draggableBoxDest"
     Then I expect the element "#draggableBoxDest" text to be "This text is changed by [draggableBox]..."
       And I expect the element "#draggableBoxDest" location at x axis to be 1062.5
       And I expect the element "#draggableBoxDest" location at x axis to not be 255.5
-      And I expect the element "#draggableBoxDest" location at y axis to be 1294
+      And I expect the element "#draggableBoxDest" location at y axis to be 2126
       And I expect the element "#draggableBoxDest" location at y axis to not be 255.5
       And I expect the page title to contain "emo Pag"
       And I expect the page title to contain that of the page "demo"

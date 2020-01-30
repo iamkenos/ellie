@@ -53,3 +53,7 @@ Feature: II. Form Fields
       appended
       on [fmTextarea]...
       """
+
+  Scenario: Upload file to an input field
+    When I upload the file ".files/demo.txt" to the field "#fmFileInput"
+    Then I expect the field "#fmFileInput" value to contain "demo.txt"

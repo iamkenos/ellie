@@ -10,6 +10,7 @@ import checkCookieEquals from "../glue/check/checkCookieEquals";
 import checkCookieExists from "../glue/check/checkCookieExists";
 import checkCountEquals from "../glue/check/checkCountEquals";
 import checkCountGreaterLess from "../glue/check/checkCountGreaterLess";
+import checkCSSExists from "../glue/check/checkCSSExists";
 import checkDisplayed from "../glue/check/checkDisplayed";
 import checkDisplayedInViewport from "../glue/check/checkDisplayedInViewport";
 import checkElementImageMatch from "../glue/check/checkElementImageMatch";
@@ -94,6 +95,12 @@ Then(
 Then(
   /^I expect the element "([^"]*)?" count to( not)? be (greater|less) than "([^"]*)?"$/,
   checkCountGreaterLess
+);
+
+// ok
+Then(
+  /^I expect the (?:field|element) "([^"]*)?" css property "([^"]*)?" to( not)? exist$/,
+  checkCSSExists
 );
 
 Then(

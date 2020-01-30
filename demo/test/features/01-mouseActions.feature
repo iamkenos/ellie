@@ -56,6 +56,7 @@ Feature: I. Mouse Actions
       to revert the changes of
       [changeInnerHtmlBtn]...
       """
+      And I expect the field "#changeInnerHtmlDest" css property "border-color" to exist
       But I double click the element "#changeInnerHtmlDest"
     Then I expect the element "#changeInnerHtmlBtn" to be enabled
       And I expect the element "#changeInnerHtmlDest" text to not contain:
@@ -71,13 +72,14 @@ Feature: I. Mouse Actions
       to revert the changes of
       [changeInnerHtmlBtn]...
       """
+      And I expect the field "#changeInnerHtmlDest" css property "lipsum" to not exist
 
   Scenario: Drag an element to another element
     When I drag the element "#draggableBox" to the element "#draggableBoxDest"
     Then I expect the element "#draggableBoxDest" text to be "This text is changed by [draggableBox]..."
       And I expect the element "#draggableBoxDest" location at x axis to be 1062.5
       And I expect the element "#draggableBoxDest" location at x axis to not be 255.5
-      And I expect the element "#draggableBoxDest" location at y axis to be 2126
+      And I expect the element "#draggableBoxDest" location at y axis to be 2166
       And I expect the element "#draggableBoxDest" location at y axis to not be 255.5
       And I expect the page title to contain "emo Pag"
       And I expect the page title to contain that of the page "demo"

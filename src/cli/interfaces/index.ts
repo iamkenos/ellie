@@ -3,6 +3,7 @@ import { ChoiceCollection, Question, QuestionMap } from "inquirer";
 import { Options } from "yargs";
 
 interface IOverrideOption {
+  alias?: Options["alias"];
   enabled: boolean;
   type: Options["type"];
   description: Options["description"];

@@ -171,6 +171,7 @@ const CONFIG_PROPERTIES: IConfigProperty[] = [
     helptext: "The the level of logging verbosity",
     overrideOption: {
       enabled: true,
+      alias: "l",
       type: "string",
       description: "Set the level of logging verbosity"
     },
@@ -312,7 +313,12 @@ const CONFIG_PROPERTIES: IConfigProperty[] = [
   },
   {
     name: "tags",
-    helptext: "Only execute the features or scenarios with tags matching the expression"
+    helptext: "Only execute the features or scenarios with tags matching the expression",
+    overrideOption: {
+      enabled: true,
+      type: "string",
+      description: "Set the cucumber tag to look for in the specs"
+    }
   },
   {
     name: "waitforTimeout",

@@ -9,14 +9,11 @@
   <link href="favicon.png" rel="icon" type="image/png" />
 
   <!-- Reset CSS -->
-  <!-- <link rel="stylesheet" href="http://meyerweb.com/eric/tools/css/reset/reset.css" /> -->
-  <link rel="stylesheet" href="css/reset.css" />
+  <link rel="stylesheet" href="http://meyerweb.com/eric/tools/css/reset/reset.css" />
 
   <!-- Bootstrap -->
-  <!-- <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css" /> -->
-  <!-- <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css" /> -->
-  <link rel="stylesheet" href="css/bootstrap.min.css" />
-  <link rel="stylesheet" href="css/bootstrap.min.css" />
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css" />
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css" />
   <link rel="stylesheet" type="text/css" href="css/demo.css" />
 </head>
 
@@ -154,6 +151,9 @@
             [changeInnerHtmlBtn]...<br />
             """
           </dd>
+          <dd class="mono success">
+            I expect the field "#changeInnerHtmlDest" css property "border-color" to exist
+          </dd>
           <dd class="mono success">I expect the element "#changeInnerHtmlBtn" to be enabled</dd>
           <dd class="mono success">
             I expect the field "#fmTextarea" value to not contain:<br />
@@ -171,6 +171,9 @@
             to revert the changes of<br />
             [changeInnerHtmlBtn]...<br />
             """
+          </dd>
+          <dd class="mono success">
+            I expect the field "#changeInnerHtmlDest" css property "border-color" to not exist
           </dd>
           <dd class="mono sub">Result:</dd>
           <dd>
@@ -195,7 +198,7 @@
           </dd>
           <dd class="mono success">I expect the element "#draggableBoxDest" location at x axis to be 1062.5</dd>
           <dd class="mono success">I expect the element "#draggableBoxDest" location at x axis to not be 255.5</dd>
-          <dd class="mono success">I expect the element "#draggableBoxDest" location at y axis to be 2126</dd>
+          <dd class="mono success">I expect the element "#draggableBoxDest" location at y axis to be 2166</dd>
           <dd class="mono success">I expect the element "#draggableBoxDest" location at y axis to not be 255.5</dd>
         </dl>
       </div>
@@ -275,6 +278,22 @@
           <dd class="mono sub">Result:</dd>
           <dd>
             <textarea id="fmTextarea" class="target" rows="8" cols="60"></textarea>
+          </dd>
+          <br />
+          <dt>
+            <label for="fmFileInput" class="btn">
+              <i class="fa fa-cloud-upload"></i> fmFileInput
+            </label>
+            <input id="fmFileInput" class="file" type="file" data-target="#fmFileInputDest"></input>
+          </dt>
+          <dd>- upload a file to an input field</dd>
+          <dd class="mono sub">Actions:</dd>
+          <dd class="mono success">I upload the file ".files/demo.txt" to the field "#fmFileInput"</dd>
+          <dd class="mono sub">Checks:</dd>
+          <dd class="mono success">I expect the field "#fmFileInput" value to contain "demo.txt"</dd>
+          <dd class="mono sub">Result:</dd>
+          <dd>
+            <span id="fmFileInputDest" class="target"></span>
           </dd>
         </dl>
       </div>
@@ -492,12 +511,12 @@
     </div>
 
     <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
-    <script src="inc/jquery.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
     <!-- Include all compiled plugins (below), or include individual files as needed -->
-    <script src="inc/bootstrap.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
     <!-- jQuery cookie plugin -->
-    <script src="inc/jquery.cookie.min.js"></script>
-    <script src="inc/script.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-cookie/1.4.1/jquery.cookie.min.js"></script>
+    <script src="script/demo.js"></script>
 </body>
 
 </html>

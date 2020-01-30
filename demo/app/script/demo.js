@@ -264,6 +264,13 @@ function revertCssAndInnerHtml(event) {
   }
 }
 
+function setSourceValueToTargetText(event) {
+  const $source = $(this);
+  const $target = $($(this).data('target'));
+
+  $target.text($source.val());
+}
+
 // ################################################
 // ################################################
 // ################################################
@@ -309,6 +316,8 @@ $(function() {
   $('#changeInnerHtmlBtn').on('dblclick', changeCssAndInnerHtml);
 
   $('#changeInnerHtmlDest').on('dblclick', revertCssAndInnerHtml);
+
+  $('#fmFileInput').on('change', setSourceValueToTargetText);
 
   // atrributes
   $('[data-action]').on('click', handleDataAction);

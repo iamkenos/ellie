@@ -1,0 +1,146 @@
+/* Start: Generic ------------------------------------------ */
+html {
+  overflow-y: scroll;
+  font-size: 16px;
+}
+
+input {
+  width: 500px;
+}
+
+select {
+  width: 200px;
+}
+
+label:focus,
+button:focus,
+input:focus,
+select:focus,
+textarea:focus {
+  border-color: #41403e;
+}
+
+.xtnd-no-select {
+  user-select: none;
+  -webkit-user-select: none;
+  -khtml-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+}
+/* End: Generic -------------------------------------------- */
+
+/* Start: Images ------------------------------------------- */
+img.xtnd-logo {
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+}
+/* End: Images --------------------------------------------- */
+
+/* Start: Shapes ------------------------------------------- */
+.xtnd-small-spacer {
+  height: 45px;
+}
+
+.xtnd-med-spacer {
+  height: 90px;
+}
+
+.xtnd-large-spacer {
+  height: 200px;
+}
+
+.paper-btn.draggable {
+  position: absolute;
+  text-align: center;
+  background-color: #f5f0c6;
+  cursor: move;
+  z-index: 3;
+}
+
+.paper-btn.droppable {
+  position: absolute;
+  width: 300px;
+  height: 200px;
+  line-height: 180px;
+  text-align: center;
+  background-color: #d0dbc2;
+  cursor: move;
+}
+
+.paper-btn.xtnd-btn,
+.paper-btn.xtnd-btn:hover,
+.paper-btn.xtnd-btn:active {
+  color: #41403e;
+  border-color: #41403e;
+}
+
+/* End: Shapes --------------------------------------------- */
+
+/* Start: Terms -------------------------------------------- */
+dt {
+  padding-bottom: 20px;
+}
+
+dd.xtnd-head {
+  font-weight: bold;
+}
+
+dd.xtnd-desc {
+  padding-left: 20px;
+}
+/* End: Terms ---------------------------------------------- */
+
+/* Start: Overrides ---------------------------------------- */
+.tabs dl textarea {
+  resize: none;
+}
+
+.tabs dl input {
+  display: block;
+}
+
+.tabs dl input.xtnd-file {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0,0,0,0);
+  border: 0;
+}
+
+.tabs dl label {
+  text-align: left;
+}
+
+.tabs dl label.xtnd-toggle-box {
+  text-align: left;
+  padding: 0rem;
+  color: #41403e;
+  box-sizing: content-box;
+}
+
+.tabs dl label.xtnd-term {
+  border-bottom-left-radius: 15px 255px;
+  border-bottom-right-radius: 225px 15px;
+  border-top-left-radius: 255px 15px;
+  border-top-right-radius: 15px 225px;
+  box-shadow: 15px 28px 25px -18px rgba(0,0,0,.2);
+  transition: all 235ms ease-in-out 0s;
+  align-self: center;
+  background: 0 0;
+  border: 2px solid #41403e;
+  color: #41403e;
+  cursor: default;
+  display: inline-block;
+  font-size: 1rem;
+  outline: 0;
+  padding: .75rem;
+}
+
+.row.flex-spaces{
+  justify-content: space-between;
+}
+/* End: Overrides ------------------------------------------ */

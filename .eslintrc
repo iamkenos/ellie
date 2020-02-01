@@ -59,6 +59,13 @@
         "@typescript-eslint/no-empty-function": ["off"],
         "quotes": ["error", "single"]
       }
+    },
+    {
+      "files": ["test/**/*.spec.ts"],
+      "rules": {
+        "no-undef": ["off"],
+        "@typescript-eslint/no-empty-function": ["off"]
+      }
     }
   ]
 }

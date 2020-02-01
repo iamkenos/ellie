@@ -57,3 +57,24 @@ Feature: II. Form Fields
   Scenario: Upload file to an input field
     When I upload the file ".files/demo.txt" to the field "#fmFileInput"
     Then I expect the field "#fmFileInput" value to contain "demo.txt"
+
+  Scenario: Select a dropdown option by index
+    When I select the option with index "3" from the dropdown "#fmSelect"
+    Then I expect the option with index "0" from the dropdown "#fmSelect" to not be selected
+      And I expect the option with index "3" from the dropdown "#fmSelect" to be selected
+
+  Scenario: Select a dropdown option by label
+    When I select the option with label "Option 3" from the dropdown "#fmSelect"
+    Then I expect the option with label "Option 0" from the dropdown "#fmSelect" to not be selected
+      And I expect the option with label "Option 3" from the dropdown "#fmSelect" to be selected
+
+  Scenario: Select a dropdown option by attribute
+    When I select the option with value "option-3" from the dropdown "#fmSelect"
+    Then I expect the option with value "option-0" from the dropdown "#fmSelect" to not be selected
+      And I expect the option with value "option-3" from the dropdown "#fmSelect" to be selected
+  @debug
+  Scenario: Select a checkbox item
+    When I select the check box "#fmInputCheck2"
+    Then I expect the check box "#fmInputCheck2" to be selected
+      But I deselect the check box "#fmInputCheck1"
+      And I expect the check box "#fmInputCheck1" to not be selected

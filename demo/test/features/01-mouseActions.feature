@@ -79,7 +79,7 @@ Feature: I. Mouse Actions
     Then I expect the element "#draggableBoxDest" text to be "This text is changed by [draggableBox]..."
       And I expect the element "#draggableBoxDest" location at x axis to be 1062.5
       And I expect the element "#draggableBoxDest" location at x axis to not be 255.5
-      And I expect the element "#draggableBoxDest" location at y axis to be 2166
+      And I expect the element "#draggableBoxDest" location at y axis to be 2186
       And I expect the element "#draggableBoxDest" location at y axis to not be 255.5
       And I expect the page title to contain "emo Pag"
       And I expect the page title to contain that of the page "demo"

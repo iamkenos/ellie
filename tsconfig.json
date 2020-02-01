@@ -8,7 +8,8 @@
     "moduleResolution": "node",
     "removeComments": false,
     "target": "ES5",
-    "types": ["node", "@wdio/sync"]
+    "types": ["node", "@wdio/sync", "@types/jest"]
   },
-  "include": ["./src/**/*.ts", "./index.ts"]
+  "include": ["./src/**/*.ts", "./index.ts"],
+  "exclude": ["node_modules", "build", "test", "bin"]
 }

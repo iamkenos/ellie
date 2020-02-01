@@ -15,7 +15,7 @@ export default class Stack {
         if (err) {} // Workaround for ts6133 & eslint handle-callback-err
         return strackTraces;
       };
-      Error.captureStackTrace(this);
+      Error.captureStackTrace(this, Stack);
       this.stackTrace = this.stack;
     } finally {
       Error.stackTraceLimit = stackLimit;
@@ -30,13 +30,15 @@ export default class Stack {
   public static getCallerFile(): any {
     const stack = new Stack().stack;
     const element = stack[STACK_TRACE_DEPTH];
-    const directory = path.dirname(element.getFileName());
-    return `${path.basename(directory)}/${path.basename(element.getFileName())}[${element.getLineNumber()}]`;
+    const directory = path.basename(path.dirname(element.getFileName()));
+    const file = path.basename(element.getFileName(), ".js");
+    const caller = Stack.getCaller(false, STACK_TRACE_DEPTH + 1);
+    return `${directory}/${file}${caller ? "/" + caller : ""}:`;
   }
 
-  public static getCaller(normalize? : boolean): string {
+  public static getCaller(normalize? : boolean, depth? : number): string {
     const stack = new Stack().stack;
-    const element = stack[STACK_TRACE_DEPTH];
+    const element = stack[depth || STACK_TRACE_DEPTH];
     const functionName = element.getFunctionName();
     const caller = functionName ? `${element.getFunctionName().split(".").pop()}()` : "";
     return normalize ? normalizeFunctionName(caller) : caller;

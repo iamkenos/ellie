@@ -8,17 +8,17 @@ import { sendSyncRequest } from "../utils";
 
 export default abstract class Driver {
   public static acceptAlert(): void {
-    logger.info("Accept alert");
+    logger.info("NoArgs");
     browser.acceptAlert();
   }
 
   public static dismissAlert(): void {
-    logger.info("Dismiss alert");
+    logger.info("NoArgs");
     browser.dismissAlert();
   }
 
   public static closeLastWindow(): void {
-    logger.info("Close last window");
+    logger.info("NoArgs");
     const handles = browser.getWindowHandles();
     const parent = handles[0];
     const last = handles.slice(-1)[0];
@@ -29,7 +29,7 @@ export default abstract class Driver {
   }
 
   public static closeChildWindows(): void {
-    logger.info("Close child windows");
+    logger.info("NoArgs");
     const handles = browser.getWindowHandles();
     const parent = handles[0];
 
@@ -43,7 +43,7 @@ export default abstract class Driver {
   }
 
   public static focusLastWindow(): void {
-    logger.info("Focus last window");
+    logger.info("NoArgs");
     const handles = browser.getWindowHandles();
     const last = handles.slice(-1)[0];
 
@@ -51,7 +51,7 @@ export default abstract class Driver {
   }
 
   public static focusParentWindow(): void {
-    logger.info("Focus parent window");
+    logger.info("NoArgs");
     const handles = browser.getWindowHandles();
     const last = handles.slice(-1)[0];
 
@@ -59,77 +59,77 @@ export default abstract class Driver {
   }
 
   public static deleteCookie(cookie: string): void {
-    logger.info("Delete coookie: %s", cookie);
+    logger.info(cookie);
     browser.deleteCookie(cookie);
   }
 
   public static deleteCookies(): void {
-    logger.info("Delete coookies");
+    logger.info("NoArgs");
     browser.deleteCookies();
   }
 
   public static interceptAjaxRequests(): void {
-    logger.info("Interccept ajax requests");
+    logger.info("NoArgs");
     (browser as any).setupInterceptor();
   }
 
   public static getAlertText(): string {
-    logger.info("Get alert text");
+    logger.info("NoArgs");
     return browser.getAlertText();
   }
 
   public static maximizeWindow(): void {
-    logger.info("Maximize window");
+    logger.info("NoArgs");
     browser.maximizeWindow();
   }
 
   public static newWindow(url: string, name?: string, features?: string): void {
-    logger.info(`New window \nURL: ${url}\nName: ${name}\nFeatures: ${features}`);
+    logger.info(`URL: ${url} | Name: ${name} | Features: ${features}`);
     browser.newWindow(url, name, features);
   }
 
   public static back(): void {
-    logger.info("Back");
+    logger.info("NoArgs");
     browser.back();
   }
 
   public static forward(): void {
-    logger.info("Forward");
+    logger.info("NoArgs");
     browser.forward();
   }
 
   public static refresh(): void {
-    logger.info("Refresh");
+    logger.info("NoArgs");
     browser.refresh();
   }
 
   public static pause(milliseconds: number): void {
-    logger.info("Pause: %s", milliseconds);
+    logger.info(milliseconds);
     browser.pause(milliseconds);
   }
 
   public static pressKeys(...keys: string[]): void {
-    logger.info("Press keys: %s", ...keys);
+    logger.info("Keys: ", ...keys);
     browser.keys(keys);
   }
 
   public static scrollTo(x: number, y: number): void {
-    logger.info("Scroll to: %s, %s", x, y);
+    logger.info(`X: ${x} | Y: ${y}`);
     browser.execute((x, y) => window.scrollTo(x, y), x, y);
   }
 
   public static scrollToTop(): void {
-    logger.info("Scroll to top");
+    logger.info("NoArgs");
     browser.execute((x, y) => window.scrollTo(x, y), 0, 0);
   }
 
   public static scrollToBottom(): void {
-    logger.info("Scroll to bottom");
+    logger.info("NoArgs");
     browser.execute("window.scrollTo(0, document.body.scrollHeight)");
   }
 
   public static setCookie(cookieName: string, cookieValue: string): void {
-    logger.info("Set cookie: %s - %s", cookieName, cookieValue);
+    logger.info(`Cookie: ${cookieName} | Value: ${cookieValue}`);
     browser.setCookies({
       name: cookieName,
       value: cookieValue
@@ -137,7 +137,7 @@ export default abstract class Driver {
   }
 
   public static setWindowSize(screenWidth: string, screenHeight: string): void {
-    logger.info("Set window size: %s - %s", screenWidth, screenHeight);
+    logger.info(`Width: ${screenWidth} | Height: ${screenHeight}`);
     browser.setWindowSize(
       parseInt(screenWidth, 10),
       parseInt(screenHeight, 10)
@@ -145,102 +145,102 @@ export default abstract class Driver {
   }
 
   public static sendAlertText(text: string): void {
-    logger.info("Send alert text: %s", text);
+    logger.info("NoArgs");
     browser.sendAlertText(text);
   }
 
   public static sendHttpRequest(request: IHttpRequest): IHttpResponse {
-    logger.info(`Send http request: ${request.options}`);
+    logger.info(request.options);
     return sendSyncRequest(request);
   }
 
   public static switchToFrame(element: WebElement): void {
-    logger.info("Switch to frame: %s", element.selector);
+    logger.info(element);
     browser.switchToFrame(element.existing$());
   }
 
   public static switchToParentFrame(): void {
-    logger.info("Switch to parent frame");
+    logger.info("NoArgs");
     browser.switchToParentFrame();
   }
 
   public static url(url: string): void {
-    logger.info("Url: %s", url);
+    logger.info(url);
     browser.url(url);
   }
 
   public static checkAjaxRequestsMatchRef(filename: string, reverse?: boolean, prefilter?: PreFilterFunction): void {
-    logger.info("Check ajax requests match ref: %s", filename);
+    logger.info(`File: ${filename} | Reverse: ${!!~~reverse} | Prefilter: ${prefilter}`);
     new BrowserConditions()
       .ajaxRequestsMatch(filename, reverse, prefilter)
       .runStrict();
   }
 
   public static checkModalExisting(reverse?: boolean): void {
-    logger.info("Check modal existing");
+    logger.info(`Reverse: ${!!~~reverse}`);
     new BrowserConditions()
       .modalExists(reverse)
       .runStrict();
   }
 
   public static checkModalTextContains(expected: string, reverse?: boolean): void {
-    logger.info("Check modal text contains: %s", expected);
+    logger.info(`Expected: ${expected} | Reverse: ${!!~~reverse}`);
     new BrowserConditions()
       .modalTextContains(expected, reverse)
       .runStrict();
   }
 
   public static checkModalTextEquals(expected: string, reverse?: boolean): void {
-    logger.info("Check modal text equals: %s", expected);
+    logger.info(`Expected: ${expected} | Reverse: ${!!~~reverse}`);
     new BrowserConditions()
       .modalTextEquals(expected, reverse)
       .runStrict();
   }
 
   public static checkCookieContains(cookie: string, expected: string, reverse?: boolean): void {
-    logger.info("Check cookie contains: %s", expected);
+    logger.info(`Cookie: ${cookie} | Expected: ${expected} | Reverse: ${!!~~reverse}`);
     new BrowserConditions()
       .cookieContains(cookie, expected, reverse)
       .runStrict();
   }
 
   public static checkCookieEquals(cookie: string, expected: string, reverse?: boolean): void {
-    logger.info("Check cookie equals: %s - %s", cookie, expected);
+    logger.info(`Cookie: ${cookie} | Expected: ${expected} | Reverse: ${!!~~reverse}`);
     new BrowserConditions()
       .cookieEquals(cookie, expected, reverse)
       .runStrict();
   }
 
   public static checkCookieExists(cookie: string, reverse?: boolean): void {
-    logger.info("Check cookie exists: %s", cookie);
+    logger.info(`Cookie: ${cookie} | Reverse: ${!!~~reverse}`);
     new BrowserConditions()
       .cookieExists(cookie, reverse)
       .runStrict();
   }
 
   public static checkCountEquals(expected: number, reverse?: boolean): void {
-    logger.info("Check count equals: %s", expected);
+    logger.info(`Expected: ${expected} | Reverse: ${!!~~reverse}`);
     new BrowserConditions()
       .countEquals(expected, reverse)
       .runStrict();
   }
 
   public static checkCountGreaterThan(expected: number, reverse?: boolean): void {
-    logger.info("Check count greater than: %s", expected);
+    logger.info(`Expected: ${expected} | Reverse: ${!!~~reverse}`);
     new BrowserConditions()
       .countGreaterThan(expected, reverse)
       .runStrict();
   }
 
   public static checkCountLessThan(expected: number, reverse?: boolean): void {
-    logger.info("Check count less than: %s", expected);
+    logger.info(`Expected: ${expected} | Reverse: ${!!~~reverse}`);
     new BrowserConditions()
       .countLessThan(expected, reverse)
       .runStrict();
   }
 
   public static checkCustomTruthy(truthy: Function, reverse?: boolean): void {
-    logger.info("Check custom truthy");
+    logger.info(`Reverse: ${!!~~reverse}`);
     new BrowserConditions()
       .customTruthy(truthy, reverse)
       .runStrict();
@@ -248,7 +248,7 @@ export default abstract class Driver {
 
   public static checkHttpResponseMatchRef(
     request: IHttpRequest, filename: string, reverse?: boolean, prefilter?: PreFilterFunction): void {
-    logger.info("Check http response match ref: %s", filename);
+    logger.info(`Request: ${request.options} | File: ${filename} | Reverse: ${!!~~reverse} | Filter: ${prefilter}`);
     new BrowserConditions()
       .httpResponseMatch(request, filename, reverse, prefilter)
       .runStrict();
@@ -256,49 +256,49 @@ export default abstract class Driver {
 
   public static checkImageMatchRef(
     context: string, filename: string, reverse?: boolean, options?: IImageCompareOptions): void {
-    logger.info("Check image match ref: %s", filename);
+    logger.info(`Context: ${context} | File: ${filename} | Reverse: ${!!~~reverse} | Options: ${options}`);
     new BrowserConditions()
       .imageMatch(context, filename, reverse, options)
       .runStrict();
   }
 
   public static checkTitleContains(expected: string, reverse?: boolean): void {
-    logger.info("Check title contains: %s", expected);
+    logger.info(`Expected: ${expected} | Reverse: ${!!~~reverse}`);
     new BrowserConditions()
       .titleContains(expected, reverse)
       .runStrict();
   }
 
   public static checkTitleEquals(expected: string, reverse?: boolean): void {
-    logger.info("Check title equals: %s", expected);
+    logger.info(`Expected: ${expected} | Reverse: ${!!~~reverse}`);
     new BrowserConditions()
       .titleEquals(expected, reverse)
       .runStrict();
   }
 
   public static checkUrlContains(expected: string, reverse?: boolean): void {
-    logger.info("Check url contains: %s", expected);
+    logger.info(`Expected: ${expected} | Reverse: ${!!~~reverse}`);
     new BrowserConditions()
       .urlContains(expected, reverse)
       .runStrict();
   }
 
   public static checkUrlEquals(expected: string, reverse?: boolean): void {
-    logger.info("Check url equals: %s", expected);
+    logger.info(`Expected: ${expected} | Reverse: ${!!~~reverse}`);
     new BrowserConditions()
       .urlEquals(expected, reverse)
       .runStrict();
   }
 
   public static checkUrlPathContains(expected: string, reverse?: boolean): void {
-    logger.info("Check url path contains: %s", expected);
+    logger.info(`Expected: ${expected} | Reverse: ${!!~~reverse}`);
     new BrowserConditions()
       .urlPathContains(expected, reverse)
       .runStrict();
   }
 
   public static checkUrlPathEquals(expected: string, reverse?: boolean): void {
-    logger.info("Check url path equals: %s", expected);
+    logger.info(`Expected: ${expected} | Reverse: ${!!~~reverse}`);
     new BrowserConditions()
       .urlPathEquals(expected, reverse)
       .runStrict();

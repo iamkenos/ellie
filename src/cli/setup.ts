@@ -48,8 +48,6 @@ function createFromTemplate(source: any, templateFile: string, outputFile: strin
 
 export function generateSamples(): void {
   try {
-    logger.debug("generateSamples()");
-
     const source = path.join(__dirname, RESOURCES_DIR, SAMPLES_DIR);
     const target = path.join(process.cwd(), SAMPLES_DIR);
 
@@ -72,7 +70,6 @@ export function generateSamples(): void {
 
 export async function createLocalConfig(): Promise<any> {
   try {
-    logger.debug("createLocalConfig()");
     console.log(CONFIG_HELPER_INTRO.trim());
 
     const answers = await inquirer.prompt(CONFIG_INQUIRY).then(answers => {

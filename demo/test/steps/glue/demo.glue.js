@@ -1,5 +1,4 @@
 import DemoPage from '../../pages/objects/demo.page';
-import { driver } from '../../../../build';
 
 const demoPage = new DemoPage();
 

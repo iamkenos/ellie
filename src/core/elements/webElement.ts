@@ -38,41 +38,41 @@ export default class WebElement {
   }
 
   public addValue(value: string | number | boolean | object | any[]): void {
-    logger.info("Append value to %s: %s", this.selector, value);
+    logger.info(`Selector: ${this.selector} | Value: ${value}`);
     this.existing$().addValue(value);
   }
 
   public clearValue(): void {
-    logger.info("Clear value of %s", this.selector);
+    logger.info(`Selector: ${this.selector}`);
     this.existing$().clearValue();
   }
 
   public click(): void {
-    logger.info("Click %s", this.selector);
+    logger.info(`Selector: ${this.selector}`);
     this.existing$().click();
   }
 
   public doubleClick(): void {
-    logger.info("Double click %s", this.selector);
+    logger.info(`Selector: ${this.selector}`);
     this.existing$().doubleClick();
   }
 
   public moveAndClick(): void {
-    logger.info("Move and click %s", this.selector);
+    logger.info(`Selector: ${this.selector}`);
     const elem = this.existing$();
     elem.moveTo();
     elem.click();
   }
 
   public moveAndDoubleClick(): void {
-    logger.info("Move and double click %s", this.selector);
+    logger.info(`Selector: ${this.selector}`);
     const elem = this.existing$();
     elem.moveTo();
     elem.doubleClick();
   }
 
   public dragAndDrop(target: string, duration?: number): void {
-    logger.info("Drag and drop %s to %s", this.selector, target);
+    logger.info(`Selector: ${this.selector}`);
     const dest = new ElementConditions(target)
       .existing()
       .runStrict()
@@ -82,12 +82,12 @@ export default class WebElement {
   }
 
   public getAttribute(attrName: string): string {
-    logger.info("Get attribute %s: %s", this.selector, attrName);
+    logger.info(`Selector: ${this.selector} | Attribute: ${attrName}`);
     return this.existing$().getAttribute(attrName);
   }
 
   public isAttributeContaining(attrName: string, attrValue: string, reverse?: boolean): boolean {
-    logger.info("Is attribute containing %s: %s - %s", this.selector, attrName, attrValue);
+    logger.info(`Selector: ${this.selector} | Attribute: ${attrName} | Value: ${attrValue} | Reverse: ${!!~~reverse}`);
     return new ElementConditions(this.existing$().selector)
       .attributeExists(attrName)
       .attributeContains(attrName, attrValue, reverse)
@@ -96,7 +96,7 @@ export default class WebElement {
   }
 
   public isAttributeEquals(attrName: string, attrValue: string, reverse?: boolean): boolean {
-    logger.info("Is attribute equals %s: %s - %s", this.selector, attrName, attrValue);
+    logger.info(`Selector: ${this.selector} | Attribute: ${attrName} | Value: ${attrValue} | Reverse: ${!!~~reverse}`);
     return new ElementConditions(this.existing$().selector)
       .attributeExists(attrName)
       .attributeEquals(attrName, attrValue, reverse)
@@ -105,7 +105,7 @@ export default class WebElement {
   }
 
   public isAttributeExisting(attrName: string, reverse?: boolean): boolean {
-    logger.info("Is attribute existing %s: %s", this.selector, attrName);
+    logger.info(`Selector: ${this.selector} | Attribute: ${attrName} | Reverse: ${!!~~reverse}`);
     return new ElementConditions(this.existing$().selector)
       .attributeExists(attrName, reverse)
       .run()
@@ -113,7 +113,7 @@ export default class WebElement {
   }
 
   public checkAttributeContains(attrName: string, attrValue: string, reverse?: boolean): void {
-    logger.info("Check attribute contains %s: %s - %s", this.selector, attrName, attrValue);
+    logger.info(`Selector: ${this.selector} | Attribute: ${attrName} | Value: ${attrValue} | Reverse: ${!!~~reverse}`);
     new ElementConditions(this.existing$().selector)
       .attributeExists(attrName)
       .attributeContains(attrName, attrValue, reverse)
@@ -121,7 +121,7 @@ export default class WebElement {
   }
 
   public checkAttributeEquals(attrName: string, attrValue: string, reverse?: boolean): void {
-    logger.info("Check attribute equals %s: %s - %s", this.selector, attrName, attrValue);
+    logger.info(`Selector: ${this.selector} | Attribute: ${attrName} | Value: ${attrValue} | Reverse: ${!!~~reverse}`);
     new ElementConditions(this.existing$().selector)
       .attributeExists(attrName)
       .attributeEquals(attrName, attrValue, reverse)
@@ -129,14 +129,14 @@ export default class WebElement {
   }
 
   public checkAttributeExists(attrName: string, reverse?: boolean): void {
-    logger.info("Check attribute exists %s: %s", this.selector, attrName);
+    logger.info(`Selector: ${this.selector} | Attribute: ${attrName} | Reverse: ${!!~~reverse}`);
     new ElementConditions(this.existing$().selector)
       .attributeExists(attrName, reverse)
       .runStrict();
   }
 
   public isAxisLocationEquals(axis: WebdriverIO.LocationParam, expected: number, reverse?: boolean): boolean {
-    logger.info("Is axis location equals %s: %s - %s", this.selector, axis, expected);
+    logger.info(`Selector: ${this.selector} | Axis: ${axis} | Expected: ${expected} | Reverse: ${!!~~reverse}`);
     return new ElementConditions(this.existing$().selector)
       .axisLocationEquals(axis, expected, reverse)
       .run()
@@ -144,19 +144,19 @@ export default class WebElement {
   }
 
   public checkAxisLocationEquals(axis: WebdriverIO.LocationParam, expected: number, reverse?: boolean): void {
-    logger.info("Check axis location equals %s: %s - %s", this.selector, axis, expected);
+    logger.info(`Selector: ${this.selector} | Axis: ${axis} | Expected: ${expected} | Reverse: ${!!~~reverse}`);
     new ElementConditions(this.existing$().selector)
       .axisLocationEquals(axis, expected, reverse)
       .runStrict();
   }
 
   public getCSSProperty(cssProp: string): WebdriverIO.CSSProperty {
-    logger.info("Get CSS property %s: %s", this.selector, cssProp);
+    logger.info(`Selector: ${this.selector} | Property: ${cssProp}`);
     return this.existing$().getCSSProperty(cssProp);
   }
 
   public isCSSPropertyExisting(cssProp: string, reverse?: boolean): boolean {
-    logger.info("Is CSS property existing %s: %s", this.selector, cssProp);
+    logger.info(`Selector: ${this.selector} | Property: ${cssProp} | Reverse: ${!!~~reverse}`);
     return new ElementConditions(this.existing$().selector)
       .cssPropertyExists(cssProp, reverse)
       .run()
@@ -164,44 +164,44 @@ export default class WebElement {
   }
 
   public checkCSSPropertyExists(cssProp: string, reverse?: boolean): void {
-    logger.info("Check CSS property existing %s: %s", this.selector, cssProp);
+    logger.info(`Selector: ${this.selector} | Property: ${cssProp} | Reverse: ${!!~~reverse}`);
     new ElementConditions(this.existing$().selector)
       .cssPropertyExists(cssProp, reverse)
       .runStrict();
   }
 
   public getHTML(includeSelectorTag?: boolean): string {
-    logger.info("Get inner html %s", this.selector);
+    logger.info(`Selector: ${this.selector} | Include Tag?: ${!!~~includeSelectorTag}`);
     return this.existing$().getHTML(includeSelectorTag);
   }
 
   public getLocation(): WebdriverIO.LocationReturn {
-    logger.info("Get location %s", this.selector);
+    logger.info(`Selector: ${this.selector}`);
     return this.existing$().getLocation();
   }
 
   public getProperty(property: string): object | string | boolean | number {
-    logger.info("Get property %s: %s", this.selector, property);
+    logger.info(`Selector: ${this.selector} | Property: ${property}`);
     return this.existing$().getProperty(property);
   }
 
   public getSize(): WebdriverIO.SizeReturn {
-    logger.info("Get size %s", this.selector);
+    logger.info(`Selector: ${this.selector}`);
     return this.existing$().getSize();
   }
 
   public getTagName(): string {
-    logger.info("Get tag name %s", this.selector);
+    logger.info(`Selector: ${this.selector}`);
     return this.existing$().getTagName();
   }
 
   public getText(): string {
-    logger.info("Get text %s", this.selector);
+    logger.info(`Selector: ${this.selector}`);
     return this.existing$().getText();
   }
 
   public isTextContaining(expected: string, reverse?: boolean): boolean {
-    logger.info("Is text containing %s: ", this.selector, expected);
+    logger.info(`Selector: ${this.selector} | Expected: ${expected} | Reverse: ${!!~~reverse}`);
     return new ElementConditions(this.existing$().selector)
       .textContains(expected, reverse)
       .run()
@@ -209,7 +209,7 @@ export default class WebElement {
   }
 
   public isTextEmpty(reverse?: boolean): boolean {
-    logger.info("Is text empty %s", this.selector);
+    logger.info(`Selector: ${this.selector} | Reverse: ${!!~~reverse}`);
     return new ElementConditions(this.existing$().selector)
       .textEmpty(reverse)
       .run()
@@ -217,7 +217,7 @@ export default class WebElement {
   }
 
   public isTextEquals(expected: string, reverse?: boolean): boolean {
-    logger.info("Is text equals %s: %s", this.selector, expected);
+    logger.info(`Selector: ${this.selector} | Expected: ${expected} | Reverse: ${!!~~reverse}`);
     return new ElementConditions(this.existing$().selector)
       .textEquals(expected, reverse)
       .run()
@@ -225,33 +225,33 @@ export default class WebElement {
   }
 
   public checkTextContains(expected: string, reverse?: boolean): void {
-    logger.info("Check text contains %s: %s", this.selector, expected);
+    logger.info(`Selector: ${this.selector} | Expected: ${expected} | Reverse: ${!!~~reverse}`);
     new ElementConditions(this.existing$().selector)
       .textContains(expected, reverse)
       .runStrict();
   }
 
   public checkTextEmpty(reverse?: boolean): void {
-    logger.info("Check text empty %s", this.selector);
+    logger.info(`Selector: ${this.selector} | Reverse: ${!!~~reverse}`);
     new ElementConditions(this.existing$().selector)
       .textEmpty(reverse)
       .runStrict();
   }
 
   public checkTextEquals(expected: string, reverse?: boolean): void {
-    logger.info("Check text equals %s: %s", this.selector, expected);
+    logger.info(`Selector: ${this.selector} | Expected: ${expected} | Reverse: ${!!~~reverse}`);
     new ElementConditions(this.existing$().selector)
       .textEquals(expected, reverse)
       .runStrict();
   }
 
   public getValue(): string {
-    logger.info("Get value %s", this.selector);
+    logger.info(`Selector: ${this.selector}`);
     return this.existing$().getValue();
   }
 
   public isValueContaining(expected: string, reverse?: boolean): boolean {
-    logger.info("Is value containing %s: %s", this.selector, expected);
+    logger.info(`Selector: ${this.selector} | Expected: ${expected} | Reverse: ${!!~~reverse}`);
     return new ElementConditions(this.existing$().selector)
       .valueContains(expected, reverse)
       .run()
@@ -259,7 +259,7 @@ export default class WebElement {
   }
 
   public isValueEmpty(reverse?: boolean): boolean {
-    logger.info("Is value empty %s", this.selector);
+    logger.info(`Selector: ${this.selector} | Reverse: ${!!~~reverse}`);
     return new ElementConditions(this.existing$().selector)
       .valueEmpty(reverse)
       .run()
@@ -267,7 +267,7 @@ export default class WebElement {
   }
 
   public isValueEquals(expected: string, reverse?: boolean): boolean {
-    logger.info("Is value equals %s: %s", this.selector, expected);
+    logger.info(`Selector: ${this.selector} | Expected: ${expected} | Reverse: ${!!~~reverse}`);
     return new ElementConditions(this.existing$().selector)
       .valueEquals(expected, reverse)
       .run()
@@ -275,33 +275,33 @@ export default class WebElement {
   }
 
   public checkValueContains(expected: string, reverse?: boolean): void {
-    logger.info("Check value contains %s: %s", this.selector, expected);
+    logger.info(`Selector: ${this.selector} | Expected: ${expected} | Reverse: ${!!~~reverse}`);
     new ElementConditions(this.existing$().selector)
       .valueContains(expected, reverse)
       .runStrict();
   }
 
   public checkValueEmpty(reverse?: boolean): void {
-    logger.info("Check value empty %s", this.selector);
+    logger.info(`Selector: ${this.selector} | Reverse: ${!!~~reverse}`);
     new ElementConditions(this.existing$().selector)
       .valueEmpty(reverse)
       .runStrict();
   }
 
   public checkValueEquals(expected: string, reverse?: boolean): void {
-    logger.info("Check value equals %s: %s", this.selector, expected);
+    logger.info(`Selector: ${this.selector} | Expected: ${expected} | Reverse: ${!!~~reverse}`);
     new ElementConditions(this.existing$().selector)
       .valueEquals(expected, reverse)
       .runStrict();
   }
 
   public getCount(): number {
-    logger.info("Get count %s", this.selector);
+    logger.info(`Selector: ${this.selector}`);
     return $$(this.selector).length;
   }
 
   public isUnique(reverse?: boolean): boolean {
-    logger.info("Is unique %s", this.selector);
+    logger.info(`Selector: ${this.selector} | Reverse: ${!!~~reverse}`);
     return new ElementConditions(this.existing$().selector)
       .countEquals(1, reverse)
       .run()
@@ -309,14 +309,14 @@ export default class WebElement {
   }
 
   public checkUnique(reverse?: boolean): void {
-    logger.info("Check unique %s", this.selector);
+    logger.info(`Selector: ${this.selector} | Reverse: ${!!~~reverse}`);
     new ElementConditions(this.existing$().selector)
       .countEquals(1, reverse)
       .runStrict();
   }
 
   public isCountEquals(expected: number, reverse?: boolean): boolean {
-    logger.info("Is count equals %s: %s", this.selector, expected);
+    logger.info(`Selector: ${this.selector} | Expected: ${expected} | Reverse: ${!!~~reverse}`);
     return new ElementConditions(this.selector)
       .countEquals(expected, reverse)
       .run()
@@ -324,7 +324,7 @@ export default class WebElement {
   }
 
   public isCountGreaterThan(expected: number, reverse?: boolean): boolean {
-    logger.info("Is count greater than %s: %s", this.selector, expected);
+    logger.info(`Selector: ${this.selector} | Expected: ${expected} | Reverse: ${!!~~reverse}`);
     return new ElementConditions(this.selector)
       .countGreaterThan(expected, reverse)
       .run()
@@ -332,7 +332,7 @@ export default class WebElement {
   }
 
   public isCountLessThan(expected: number, reverse?: boolean): boolean {
-    logger.info("Is count less than %s: %s", this.selector, expected);
+    logger.info(`Selector: ${this.selector} | Expected: ${expected} | Reverse: ${!!~~reverse}`);
     return new ElementConditions(this.selector)
       .countLessThan(expected, reverse)
       .run()
@@ -340,28 +340,28 @@ export default class WebElement {
   }
 
   public checkCountEquals(expected: number, reverse?: boolean): void {
-    logger.info("Check count equals %s: %s", this.selector, expected);
+    logger.info(`Selector: ${this.selector} | Expected: ${expected} | Reverse: ${!!~~reverse}`);
     new ElementConditions(this.selector)
       .countEquals(expected, reverse)
       .runStrict();
   }
 
   public checkCountGreaterThan(expected: number, reverse?: boolean): void {
-    logger.info("Check count greater than %s: %s", this.selector, expected);
+    logger.info(`Selector: ${this.selector} | Expected: ${expected} | Reverse: ${!!~~reverse}`);
     new ElementConditions(this.selector)
       .countGreaterThan(expected, reverse)
       .runStrict();
   }
 
   public checkCountLessThan(expected: number, reverse?: boolean): void {
-    logger.info("Check count less than %s: %s", this.selector, expected);
+    logger.info(`Selector: ${this.selector} | Expected: ${expected} | Reverse: ${!!~~reverse}`);
     new ElementConditions(this.selector)
       .countLessThan(expected, reverse)
       .runStrict();
   }
 
   public isDisplayed(reverse?: boolean): boolean {
-    logger.info("Is displayed %s", this.selector);
+    logger.info(`Selector: ${this.selector} | Reverse: ${!!~~reverse}`);
     return new ElementConditions(this.existing$().selector)
       .displayed(reverse)
       .run()
@@ -369,7 +369,7 @@ export default class WebElement {
   }
 
   public checkDisplayed(reverse?: boolean): void {
-    logger.info("Check displayed %s", this.selector);
+    logger.info(`Selector: ${this.selector} | Reverse: ${!!~~reverse}`);
     new ElementConditions(this.selector)
       .existing()
       .displayed(reverse)
@@ -377,7 +377,7 @@ export default class WebElement {
   }
 
   public isDisplayedInViewport(reverse?: boolean): boolean {
-    logger.info("Is displayed in viewport %s", this.selector);
+    logger.info(`Selector: ${this.selector} | Reverse: ${!!~~reverse}`);
     return new ElementConditions(this.existing$().selector)
       .displayedInVewport(reverse)
       .run()
@@ -385,14 +385,14 @@ export default class WebElement {
   }
 
   public checkDisplayedInViewport(reverse?: boolean): void {
-    logger.info("Check displayed in viewport %s", this.selector);
+    logger.info(`Selector: ${this.selector} | Reverse: ${!!~~reverse}`);
     new ElementConditions(this.existing$().selector)
       .displayedInVewport(reverse)
       .runStrict();
   }
 
   public isEnabled(reverse?: boolean): boolean {
-    logger.info("Is enabled %s", this.selector);
+    logger.info(`Selector: ${this.selector} | Reverse: ${!!~~reverse}`);
     return new ElementConditions(this.existing$().selector)
       .enabled(reverse)
       .run()
@@ -400,14 +400,14 @@ export default class WebElement {
   }
 
   public checkEnabled(reverse?: boolean): void {
-    logger.info("Check enabled %s", this.selector);
+    logger.info(`Selector: ${this.selector} | Reverse: ${!!~~reverse}`);
     new ElementConditions(this.existing$().selector)
       .enabled(reverse)
       .runStrict();
   }
 
   public isExisting(reverse?: boolean, timeout?: number): boolean {
-    logger.info("Is existing %s", this.selector);
+    logger.info(`Selector: ${this.selector} | Reverse: ${!!~~reverse}`);
     return new ElementConditions(this.selector)
       .existing(reverse)
       .run(timeout || 0)
@@ -415,14 +415,14 @@ export default class WebElement {
   }
 
   public checkExisting(reverse?: boolean): void {
-    logger.info("Check existing %s", this.selector);
+    logger.info(`Selector: ${this.selector} | Reverse: ${!!~~reverse}`);
     new ElementConditions(this.selector)
       .existing(reverse)
       .runStrict();
   }
 
   public isFocused(reverse?: boolean): boolean {
-    logger.info("Is focused %s", this.selector);
+    logger.info(`Selector: ${this.selector} | Reverse: ${!!~~reverse}`);
     return new ElementConditions(this.existing$().selector)
       .focused(reverse)
       .run()
@@ -430,14 +430,14 @@ export default class WebElement {
   }
 
   public checkFocused(reverse?: boolean): void {
-    logger.info("Check focused %s", this.selector);
+    logger.info(`Selector: ${this.selector} | Reverse: ${!!~~reverse}`);
     new ElementConditions(this.existing$().selector)
       .focused(reverse)
       .runStrict();
   }
 
   public isImageMatchRef(filename: string, reverse?: boolean, options?: IImageCompareOptions): boolean {
-    logger.info("Is image matching %s: %s", this.selector, filename);
+    logger.info(`Selector: ${this.selector} | File: ${filename} | Options: ${options} | Reverse: ${!!~~reverse}`);
     return new ElementConditions(this.existing$().selector)
       .imageMatch(filename, reverse, options)
       .run()
@@ -445,14 +445,14 @@ export default class WebElement {
   }
 
   public checkImageMatchRef(filename: string, reverse?: boolean, options?: IImageCompareOptions): void {
-    logger.info("Check image matching %s: %s", this.selector, filename);
+    logger.info(`Selector: ${this.selector} | File: ${filename} | Options: ${options} | Reverse: ${!!~~reverse}`);
     new ElementConditions(this.existing$().selector)
       .imageMatch(filename, reverse, options)
       .runStrict();
   }
 
   public isSelected(reverse?: boolean): boolean {
-    logger.info("Is selected %s", this.selector);
+    logger.info(`Selector: ${this.selector} | Reverse: ${!!~~reverse}`);
     return new ElementConditions(this.existing$().selector)
       .selected(reverse)
       .run()
@@ -460,14 +460,14 @@ export default class WebElement {
   }
 
   public checkSelected(reverse?: boolean): void {
-    logger.info("Check selected %s", this.selector);
+    logger.info(`Selector: ${this.selector} | Reverse: ${!!~~reverse}`);
     new ElementConditions(this.existing$().selector)
       .selected(reverse)
       .runStrict();
   }
 
   public isSizeEquals(width: number, height: number, reverse?: boolean): boolean {
-    logger.info("Is size equals %s: %s x %s", this.selector, width, height);
+    logger.info(`Selector: ${this.selector} | Width: ${width} | Height: ${height} | Reverse: ${!!~~reverse}`);
     return new ElementConditions(this.existing$().selector)
       .sizeEquals(width, height, reverse)
       .run()
@@ -475,7 +475,7 @@ export default class WebElement {
   }
 
   public isSizeHeightEquals(expected: number, reverse?: boolean): boolean {
-    logger.info("Is size height equals %s: %s", this.selector, expected);
+    logger.info(`Selector: ${this.selector} | Expected: ${expected} | Reverse: ${!!~~reverse}`);
     return new ElementConditions(this.existing$().selector)
       .sizeHeightEquals(expected, reverse)
       .run()
@@ -483,7 +483,7 @@ export default class WebElement {
   }
 
   public isSizeWidthEquals(expected: number, reverse?: boolean): boolean {
-    logger.info("Is size width equals %s: %s", this.selector, expected);
+    logger.info(`Selector: ${this.selector} | Expected: ${expected} | Reverse: ${!!~~reverse}`);
     return new ElementConditions(this.existing$().selector)
       .sizeWidthEquals(expected, reverse)
       .run()
@@ -491,53 +491,53 @@ export default class WebElement {
   }
 
   public checkSizeEquals(width: number, height: number, reverse?: boolean): void {
-    logger.info("Check size equals %s: %s x %s", this.selector, width, height);
+    logger.info(`Selector: ${this.selector} | Width: ${width} | Height: ${height} | Reverse: ${!!~~reverse}`);
     new ElementConditions(this.existing$().selector)
       .sizeEquals(width, height, reverse)
       .runStrict();
   }
 
   public checkSizeHeightEquals(expected: number, reverse?: boolean): void {
-    logger.info("Check size height equals %s: %s", this.selector, expected);
+    logger.info(`Selector: ${this.selector} | Expected: ${expected} | Reverse: ${!!~~reverse}`);
     new ElementConditions(this.existing$().selector)
       .sizeHeightEquals(expected, reverse)
       .runStrict();
   }
 
   public checkSizeWidthEquals(expected: number, reverse?: boolean): void {
-    logger.info("Check size width equals %s: %s", this.selector, expected);
+    logger.info(`Selector: ${this.selector} | Expected: ${expected} | Reverse: ${!!~~reverse}`);
     new ElementConditions(this.existing$().selector)
       .sizeWidthEquals(expected, reverse)
       .runStrict();
   }
 
   public moveTo(xoffset?: number, yoffset?: number): void {
-    logger.info("Move to %s: %s.%s", this.selector, xoffset, yoffset);
+    logger.info(`Selector: ${this.selector} | X: ${xoffset} | Y: ${yoffset}`);
     this.existing$().moveTo(xoffset, yoffset);
   }
 
   public scrollIntoView(scrollIntoViewOptions?: boolean | object): void {
-    logger.info("Scroll intro view %s", this.selector);
+    logger.info(`Selector: ${this.selector} | Options: ${scrollIntoViewOptions}`);
     this.existing$().scrollIntoView(scrollIntoViewOptions);
   }
 
   public selectByAttribute(attribute: string, value: string): void {
-    logger.info("Select by attribute %s: %s - %s", this.selector, attribute, value);
+    logger.info(`Selector: ${this.selector} | Attribute: ${attribute} | Value: ${value}`);
     this.existing$().selectByAttribute(attribute, value);
   }
 
   public selectByIndex(index: number): void {
-    logger.info("Select by index %s: %s", this.selector, index);
+    logger.info(`Selector: ${this.selector} | Index: ${index}`);
     this.existing$().selectByIndex(index);
   }
 
   public selectByVisibleText(text: string): void {
-    logger.info("Select by visible text %s: %s", this.selector, text);
+    logger.info(`Selector: ${this.selector} | Text: ${text}`);
     this.existing$().selectByVisibleText(text);
   }
 
   public setValue(value: string | number | boolean | object | any[]): void {
-    logger.info("Set value %s: %s", this.selector, value);
+    logger.info(`Selector: ${this.selector} | Value: ${value}`);
     this.existing$().setValue(value);
   }
 

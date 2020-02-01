@@ -6,6 +6,7 @@ import elemFileUpload from "../glue/action/elemFileUpload";
 import elemMoveTo from "../glue/action/elemMoveTo";
 import elemOptionSelect from "../glue/action/elemOptionSelect";
 import elemScrollTo from "../glue/action/elemScrollTo";
+import elemSelect from "../glue/action/elemSelect";
 import elemValueClear from "../glue/action/elemValueClear";
 import elemValueSet from "../glue/action/elemValueSet";
 import elemValueSetMultiLine from "../glue/action/elemValueSetMultiLine";
@@ -42,6 +43,7 @@ When(
   elemDragAndDrop
 );
 
+// ok
 When(
   /^I upload the file "([^"]*)?" to the (?:field|element) "([^"]*)?"$/,
   elemFileUpload
@@ -52,9 +54,16 @@ When(
   elemMoveTo
 );
 
+// ok
 When(
   /^I select the option with (index|label|[^" ]*) "([^"]*)?" from the dropdown "([^"]*)?"$/,
   elemOptionSelect
+);
+
+// ok
+When(
+  /^I (select|deselect) the (?:element|option|check box|toggle item|radio button) "([^"]*)?"$/,
+  elemSelect
 );
 
 When(

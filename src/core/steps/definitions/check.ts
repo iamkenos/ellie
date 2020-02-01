@@ -153,6 +153,7 @@ Then(
   checkModalTextEquals
 );
 
+// ok
 Then(
   /^I expect the option with (index|index|[^" ]*) "([^"]*)?" from the dropdown "([^"]*)?" to( not)? be selected$/,
   checkOptionDdlSelected

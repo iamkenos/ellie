@@ -45,161 +45,173 @@
 
         <h3>Click</h3>
         <dl>
-          <dt>
-            <button id="createElemBtn" class="btn default" data-target="#createElemWrapper" data-actions='[
+          <span for="createElemBtn">
+            <dt>
+              <button id="createElemBtn" class="btn default" data-target="#createElemWrapper" data-actions='[
                     {"create": "<p>This element is created by [createElemBtn]...</p>"},
                     {"addClass": { "child": "p", "value": "target" }},
                     {"addAttr": { "child": "p", "attr": "id", "value": "createElemDest" }}]'>
-              createElemBtn
-            </button>
-          </dt>
-          <dd>- create a new element on click</dd>
-          <dd class="mono sub">Actions:</dd>
-          <dd class="mono success">I click the button "#createElemBtn"</dd>
-          <dd class="mono sub">Checks:</dd>
-          <dd class="mono success">I expect the element "#createElemDest" to exist</dd>
-          <dd class="mono success">I expect the element "#createElemDest" to not exist</dd>
-          <dd class="mono sub">Result:</dd>
-          <dd>
-            <span id="createElemWrapper"></span>
-          </dd>
+                createElemBtn
+              </button>
+            </dt>
+            <dd>- create a new element on click</dd>
+            <dd class="mono sub">Actions:</dd>
+            <dd class="mono success">I click the button "#createElemBtn"</dd>
+            <dd class="mono sub">Checks:</dd>
+            <dd class="mono success">I expect the element "#createElemDest" to exist</dd>
+            <dd class="mono success">I expect the element "#createElemDest" to not exist</dd>
+            <dd class="mono sub">Result:</dd>
+            <dd>
+              <span id="createElemWrapper"></span>
+            </dd>
+          </span>
           <br />
-          <dt>
-            <button id="changeTxtBtn" class="btn default" data-target="#changeTxtDest"
-              data-action='{"text": "This text is changed by [changeTxtBtn]..."}'>
-              changeTxtBtn
-            </button>
-          </dt>
-          <dd>- change the text of an existing element on click</dd>
-          <dd class="mono sub">Actions:</dd>
-          <dd class="mono success">I click the button "#changeTxtBtn"</dd>
-          <dd class="mono sub">Checks:</dd>
-          <dd class="mono success">I expect the element "#changeTxtDest" text to contain "[changeTxtBtn]"</dd>
-          <dd class="mono success">
-            I expect the element "#changeTxtDest" text to be "This text is changed by [changeTxtBtn]..."
-          </dd>
-          <dd class="mono success">I expect the element "#changeTxtDest" text to not be empty</dd>
-          <dd class="mono success">I expect the element "#changeTxtDest" text to not contain "[changeTxtBtn]"</dd>
-          <dd class="mono success">
-            I expect the element "#changeTxtDest" text to not be "This text is changed by [changeTxtBtn]..."
-          </dd>
-          <dd class="mono success">I expect the element "#changeTxtDest" text to be empty</dd>
-          <dd class="mono sub">Result:</dd>
-          <dd>
-            <span id="changeTxtDest" class="target"></span>
-          </dd>
+          <span for="changeTxtBtn">
+            <dt>
+              <button id="changeTxtBtn" class="btn default" data-target="#changeTxtDest"
+                data-action='{"text": "This text is changed by [changeTxtBtn]..."}'>
+                changeTxtBtn
+              </button>
+            </dt>
+            <dd>- change the text of an existing element on click</dd>
+            <dd class="mono sub">Actions:</dd>
+            <dd class="mono success">I click the button "#changeTxtBtn"</dd>
+            <dd class="mono sub">Checks:</dd>
+            <dd class="mono success">I expect the element "#changeTxtDest" text to contain "[changeTxtBtn]"</dd>
+            <dd class="mono success">
+              I expect the element "#changeTxtDest" text to be "This text is changed by [changeTxtBtn]..."
+            </dd>
+            <dd class="mono success">I expect the element "#changeTxtDest" text to not be empty</dd>
+            <dd class="mono success">I expect the element "#changeTxtDest" text to not contain "[changeTxtBtn]"</dd>
+            <dd class="mono success">
+              I expect the element "#changeTxtDest" text to not be "This text is changed by [changeTxtBtn]..."
+            </dd>
+            <dd class="mono success">I expect the element "#changeTxtDest" text to be empty</dd>
+            <dd class="mono sub">Result:</dd>
+            <dd>
+              <span id="changeTxtDest" class="target"></span>
+            </dd>
+          </span>
           <br />
-          <dt>
-            <button id="changeValBtn" class="btn default" data-target="#changeValDest" data-actions='[
+          <span for="changeValBtn">
+            <dt>
+              <button id="changeValBtn" class="btn default" data-target="#changeValDest" data-actions='[
                     {"value": "This value is changed by [changeValBtn]..."},
                     {"addAttr": { "attr": "class", "value": "target" }}]'>
-              changeValBtn
-            </button>
-          </dt>
-          <dd>- change the value of an existing element on click</dd>
-          <dd class="mono sub">Actions:</dd>
-          <dd class="mono success">I click the button "#changeValBtn"</dd>
-          <dd class="mono sub">Checks:</dd>
-          <dd class="mono success">I expect the field "#changeValDest" value to contain "[changeValBtn]"</dd>
-          <dd class="mono success">
-            I expect the field "#changeValDest" value to be "This value is changed by [changeValBtn]..."
-          </dd>
-          <dd class="mono success">I expect the field "#changeValDest" value to not be empty</dd>
-          <dd class="mono success">I expect the field "#changeValDest" attribute "class" to contain "tar"</dd>
-          <dd class="mono success">I expect the field "#changeValDest" attribute "class" to be "target"</dd>
-          <dd class="mono success">I expect the field "#changeValDest" attribute "class" to exist</dd>
-          <dd class="mono success">I expect the field "#changeValDest" attribute "class" to not contain "lipsum"</dd>
-          <dd class="mono success">I expect the field "#changeValDest" attribute "class" to not be "lipsum"</dd>
-          <dd class="mono success">I expect the field "#changeValDest" value to not contain "[changeValBtn]"</dd>
-          <dd class="mono success">
-            I expect the field "#changeValDest" value to not be "This value is changed by [changeValBtn]..."
-          </dd>
-          <dd class="mono success">I expect the field "#changeValDest" value to be empty</dd>
-          <dd class="mono success">I expect the field "#changeValDest" attribute "class" to not exist</dd>
-          <dd>
-            <input id="changeValDest"></input>
-          </dd>
+                changeValBtn
+              </button>
+            </dt>
+            <dd>- change the value of an existing element on click</dd>
+            <dd class="mono sub">Actions:</dd>
+            <dd class="mono success">I click the button "#changeValBtn"</dd>
+            <dd class="mono sub">Checks:</dd>
+            <dd class="mono success">I expect the field "#changeValDest" value to contain "[changeValBtn]"</dd>
+            <dd class="mono success">
+              I expect the field "#changeValDest" value to be "This value is changed by [changeValBtn]..."
+            </dd>
+            <dd class="mono success">I expect the field "#changeValDest" value to not be empty</dd>
+            <dd class="mono success">I expect the field "#changeValDest" attribute "class" to contain "tar"</dd>
+            <dd class="mono success">I expect the field "#changeValDest" attribute "class" to be "target"</dd>
+            <dd class="mono success">I expect the field "#changeValDest" attribute "class" to exist</dd>
+            <dd class="mono success">I expect the field "#changeValDest" attribute "class" to not contain "lipsum"</dd>
+            <dd class="mono success">I expect the field "#changeValDest" attribute "class" to not be "lipsum"</dd>
+            <dd class="mono success">I expect the field "#changeValDest" value to not contain "[changeValBtn]"</dd>
+            <dd class="mono success">
+              I expect the field "#changeValDest" value to not be "This value is changed by [changeValBtn]..."
+            </dd>
+            <dd class="mono success">I expect the field "#changeValDest" value to be empty</dd>
+            <dd class="mono success">I expect the field "#changeValDest" attribute "class" to not exist</dd>
+            <dd>
+              <input id="changeValDest"></input>
+            </dd>
+          </span>
+          <br />
         </dl>
 
         <h3>Double Click</h3>
         <dl>
-          <dt>
-            <button id="changeInnerHtmlBtn" class="btn default" data-target="#changeInnerHtmlDest">
-              changeInnerHtmlBtn
-            </button>
-          </dt>
-          <dd>- change the inner html of an existing element on double click</dd>
-          <dd class="mono sub">Actions:</dd>
-          <dd class="mono success">I double click the button "#changeInnerHtmlBtn"</dd>
-          <dd class="mono success">I double click the element "#changeInnerHtmlDest"</dd>
-          <dd class="mono sub">Checks:</dd>
-          <dd class="mono success">I expect the element "#changeInnerHtmlBtn" to not be enabled</dd>
-          <dd class="mono success">
-            I expect the field "#fmTextarea" value to contain:<br />
-            """<br />
-            this element<br />
-            to revert the changes of<br />
-            """
-          </dd>
-          <dd class="mono success">
-            I expect the field "#fmTextarea" value to match:<br />
-            """<br />
-            Double click<br />
-            <br />
-            this element<br />
-            to revert the changes of<br />
-            [changeInnerHtmlBtn]...<br />
-            """
-          </dd>
-          <dd class="mono success">
-            I expect the field "#changeInnerHtmlDest" css property "border-color" to exist
-          </dd>
-          <dd class="mono success">I expect the element "#changeInnerHtmlBtn" to be enabled</dd>
-          <dd class="mono success">
-            I expect the field "#fmTextarea" value to not contain:<br />
-            """<br />
-            this element<br />
-            to revert the changes of<br />
-            """
-          </dd>
-          <dd class="mono success">
-            I expect the field "#fmTextarea" value to not match:<br />
-            """<br />
-            Double click<br />
-            <br />
-            this element<br />
-            to revert the changes of<br />
-            [changeInnerHtmlBtn]...<br />
-            """
-          </dd>
-          <dd class="mono success">
-            I expect the field "#changeInnerHtmlDest" css property "border-color" to not exist
-          </dd>
-          <dd class="mono sub">Result:</dd>
-          <dd>
-            <span id="changeInnerHtmlDest" data-target="#changeInnerHtmlBtn"></span>
-          </dd>
+          <span for="changeInnerHtmlBtn">
+            <dt>
+              <button id="changeInnerHtmlBtn" class="btn default" data-target="#changeInnerHtmlDest">
+                changeInnerHtmlBtn
+              </button>
+            </dt>
+            <dd>- change the inner html of an existing element on double click</dd>
+            <dd class="mono sub">Actions:</dd>
+            <dd class="mono success">I double click the button "#changeInnerHtmlBtn"</dd>
+            <dd class="mono success">I double click the element "#changeInnerHtmlDest"</dd>
+            <dd class="mono sub">Checks:</dd>
+            <dd class="mono success">I expect the element "#changeInnerHtmlBtn" to not be enabled</dd>
+            <dd class="mono success">
+              I expect the field "#fmTextarea" value to contain:<br />
+              """<br />
+              this element<br />
+              to revert the changes of<br />
+              """
+            </dd>
+            <dd class="mono success">
+              I expect the field "#fmTextarea" value to match:<br />
+              """<br />
+              Double click<br />
+              <br />
+              this element<br />
+              to revert the changes of<br />
+              [changeInnerHtmlBtn]...<br />
+              """
+            </dd>
+            <dd class="mono success">
+              I expect the field "#changeInnerHtmlDest" css property "border-color" to exist
+            </dd>
+            <dd class="mono success">I expect the element "#changeInnerHtmlBtn" to be enabled</dd>
+            <dd class="mono success">
+              I expect the field "#fmTextarea" value to not contain:<br />
+              """<br />
+              this element<br />
+              to revert the changes of<br />
+              """
+            </dd>
+            <dd class="mono success">
+              I expect the field "#fmTextarea" value to not match:<br />
+              """<br />
+              Double click<br />
+              <br />
+              this element<br />
+              to revert the changes of<br />
+              [changeInnerHtmlBtn]...<br />
+              """
+            </dd>
+            <dd class="mono success">
+              I expect the field "#changeInnerHtmlDest" css property "border-color" to not exist
+            </dd>
+            <dd class="mono sub">Result:</dd>
+            <dd>
+              <span id="changeInnerHtmlDest" data-target="#changeInnerHtmlBtn"></span>
+            </dd>
+          </span>
         </dl>
 
         <h3>Drag and Drop</h3>
         <dl>
-          <dt>
-            <div class="relative">
-              <div id="draggableBox" data-dropzone="#draggableBoxDest" class="draggable">draggableBox</div>
-              <div id="draggableBoxDest" class="droppable">draggableBoxDest</div>
-            </div>
-          </dt>
-          <dd>- drag and drop an existing element</dd>
-          <dd class="mono sub">Actions:</dd>
-          <dd class="mono success">I drag the element "#draggableBox" to the element "#draggableBoxDest"</dd>
-          <dd class="mono sub">Checks:</dd>
-          <dd class="mono success">I expect the element "#draggableBoxDest" text to be "This text is changed by
-            [draggableBox]..."
-          </dd>
-          <dd class="mono success">I expect the element "#draggableBoxDest" location at x axis to be 1062.5</dd>
-          <dd class="mono success">I expect the element "#draggableBoxDest" location at x axis to not be 255.5</dd>
-          <dd class="mono success">I expect the element "#draggableBoxDest" location at y axis to be 2166</dd>
-          <dd class="mono success">I expect the element "#draggableBoxDest" location at y axis to not be 255.5</dd>
+          <span for="draggableBox">
+            <dt>
+              <div class="relative">
+                <div id="draggableBox" data-dropzone="#draggableBoxDest" class="draggable">draggableBox</div>
+                <div id="draggableBoxDest" class="droppable">draggableBoxDest</div>
+              </div>
+            </dt>
+            <dd>- drag and drop an existing element</dd>
+            <dd class="mono sub">Actions:</dd>
+            <dd class="mono success">I drag the element "#draggableBox" to the element "#draggableBoxDest"</dd>
+            <dd class="mono sub">Checks:</dd>
+            <dd class="mono success">I expect the element "#draggableBoxDest" text to be "This text is changed by
+              [draggableBox]..."
+            </dd>
+            <dd class="mono success">I expect the element "#draggableBoxDest" location at x axis to be 1062.5</dd>
+            <dd class="mono success">I expect the element "#draggableBoxDest" location at x axis to not be 255.5</dd>
+            <dd class="mono success">I expect the element "#draggableBoxDest" location at y axis to be 2166</dd>
+            <dd class="mono success">I expect the element "#draggableBoxDest" location at y axis to not be 255.5</dd>
+          </span>
+          <br />
         </dl>
       </div>
 
@@ -209,114 +221,306 @@
 
         <h3>Input</h3>
         <dl>
-          <dt class="btn">fmInput</dt>
-          <dd>- change values of an input field</dd>
-          <dd class="mono sub">Actions:</dd>
-          <dd class="mono success">I type "This text is " on the field "#fmInput"</dd>
-          <dd class="mono success">I append "appended on [fmInput]..." on the field "#fmInput"</dd>
-          <dd class="mono success">I clear the field "#fmInput"</dd>
-          <dd class="mono sub">Checks:</dd>
-          <dd class="mono success">I expect the field "#fmInput" value to not contain "[fmInput]"</dd>
-          <dd class="mono success">I expect the field "#fmInput" value to be "This text is appended on [fmInput]..."
-          </dd>
-          <dd class="mono success">I expect the field "#fmInput" value to be empty</dd>
-          <dd class="mono sub">Result:</dd>
-          <dd>
-            <input id="fmInput" class="target"></input>
-          </dd>
+          <span for="fmInput">
+            <dt class="btn">fmInput</dt>
+            <dd>- change values of an input field</dd>
+            <dd class="mono sub">Actions:</dd>
+            <dd class="mono success">I type "This text is " on the field "#fmInput"</dd>
+            <dd class="mono success">I append "appended on [fmInput]..." on the field "#fmInput"</dd>
+            <dd class="mono success">I clear the field "#fmInput"</dd>
+            <dd class="mono sub">Checks:</dd>
+            <dd class="mono success">I expect the field "#fmInput" value to not contain "[fmInput]"</dd>
+            <dd class="mono success">I expect the field "#fmInput" value to be "This text is appended on [fmInput]..."
+            </dd>
+            <dd class="mono success">I expect the field "#fmInput" value to be empty</dd>
+            <dd class="mono sub">Result:</dd>
+            <dd>
+              <input id="fmInput" class="target"></input>
+            </dd>
+          </span>
           <br />
-          <dt class="btn">fmTextarea</dt>
-          <dd>- change values of a textarea</dd>
-          <dd class="mono sub">Actions:</dd>
-          <dd class="mono success">
-            I type a multi-line value on the field "#fmTextarea":<br />
-            """<br />
-            This<br />
+          <span for="fmFileInput">
+            <dt>
+              <label for="fmFileInput" class="btn">
+                <i class="fa fa-cloud-upload"></i> fmFileInput
+              </label>
+              <input id="fmFileInput" class="file" type="file" data-target="#fmFileInputDest"></input>
+            </dt>
+            <dd>- upload a file to an input field</dd>
+            <dd class="mono sub">Actions:</dd>
+            <dd class="mono success">I upload the file ".files/demo.txt" to the field "#fmFileInput"</dd>
+            <dd class="mono sub">Checks:</dd>
+            <dd class="mono success">I expect the field "#fmFileInput" value to contain "demo.txt"</dd>
+            <dd class="mono sub">Result:</dd>
+            <dd>
+              <span id="fmFileInputDest" class="target"></span>
+            </dd>
             <br />
-            text is<br />
-            """
-          </dd>
-          <dd class="mono success">
-            I append a multi-line value on the field "#fmTextarea":<br />
-            """<br />
-            <br />
-            appended<br />
-            on [fmTextarea]...<br />
-            """
-          </dd>
-          <dd class="mono success">I clear the field "#fmTextarea"</dd>
-          <dd class="mono sub">Checks:</dd>
-          <dd class="mono success">I expect the field "#fmTextarea" value to contain:<br />
-            """<br />
-            <br />
-            text is<br />
-            """
-          </dd>
-          <dd class="mono success">I expect the field "#fmTextarea" value to match:<br />
-            """<br />
-            This<br />
-            <br />
-            text is<br />
-            appended<br />
-            on [fmTextarea]...<br />
-            """
-          </dd>
-          <dd class="mono success">I expect the field "#fmTextarea" value to not contain:<br />
-            """<br />
-            on [fmTextarea]...<br />
-            """
-          </dd>
-          <dd class="mono success">I expect the field "#fmTextarea" value to not match:<br />
-            """<br />
-            This<br />
-            <br />
-            text is<br />
-            appended<br />
-            on [fmTextarea]...<br />
-            """
-          </dd>
-          <dd class="mono sub">Result:</dd>
-          <dd>
-            <textarea id="fmTextarea" class="target" rows="8" cols="60"></textarea>
-          </dd>
+          </span>
           <br />
-          <dt>
-            <label for="fmFileInput" class="btn">
-              <i class="fa fa-cloud-upload"></i> fmFileInput
-            </label>
-            <input id="fmFileInput" class="file" type="file" data-target="#fmFileInputDest"></input>
-          </dt>
-          <dd>- upload a file to an input field</dd>
-          <dd class="mono sub">Actions:</dd>
-          <dd class="mono success">I upload the file ".files/demo.txt" to the field "#fmFileInput"</dd>
-          <dd class="mono sub">Checks:</dd>
-          <dd class="mono success">I expect the field "#fmFileInput" value to contain "demo.txt"</dd>
-          <dd class="mono sub">Result:</dd>
-          <dd>
-            <span id="fmFileInputDest" class="target"></span>
-          </dd>
+        </dl>
+
+        <h3>Text Area</h3>
+        <dl>
+          <span for="fmTextarea">
+            <dt class="btn">fmTextarea</dt>
+            <dd>- change values of a textarea</dd>
+            <dd class="mono sub">Actions:</dd>
+            <dd class="mono success">
+              I type a multi-line value on the field "#fmTextarea":<br />
+              """<br />
+              This<br />
+              <br />
+              text is<br />
+              """
+            </dd>
+            <dd class="mono success">
+              I append a multi-line value on the field "#fmTextarea":<br />
+              """<br />
+              <br />
+              appended<br />
+              on [fmTextarea]...<br />
+              """
+            </dd>
+            <dd class="mono success">I clear the field "#fmTextarea"</dd>
+            <dd class="mono sub">Checks:</dd>
+            <dd class="mono success">I expect the field "#fmTextarea" value to contain:<br />
+              """<br />
+              <br />
+              text is<br />
+              """
+            </dd>
+            <dd class="mono success">I expect the field "#fmTextarea" value to match:<br />
+              """<br />
+              This<br />
+              <br />
+              text is<br />
+              appended<br />
+              on [fmTextarea]...<br />
+              """
+            </dd>
+            <dd class="mono success">I expect the field "#fmTextarea" value to not contain:<br />
+              """<br />
+              on [fmTextarea]...<br />
+              """
+            </dd>
+            <dd class="mono success">I expect the field "#fmTextarea" value to not match:<br />
+              """<br />
+              This<br />
+              <br />
+              text is<br />
+              appended<br />
+              on [fmTextarea]...<br />
+              """
+            </dd>
+            <dd class="mono sub">Result:</dd>
+            <dd>
+              <textarea id="fmTextarea" class="target" rows="8" cols="60"></textarea>
+            </dd>
+          </span>
+          <br />
+        </dl>
+
+        <h3>Select</h3>
+        <dl>
+          <span for="fmSelect">
+            <dt class="btn">fmSelect</dt>
+            <dd>- choose an option from a select list using the index, text and attribute</dd>
+            <dd class="mono sub">Actions:</dd>
+            <dd class="mono success">I select the option with index "3" from the dropdown "#fmSelect"</dd>
+            <dd class="mono success">I select the option with label "Option 3" from the dropdown "#fmSelect"</dd>
+            <dd class="mono success">I select the option with value "option-3" from the dropdown "#fmSelect"</dd>
+            <dd class="mono sub">Checks:</dd>
+            <dd class="mono success">
+              I expect the option with index "0" from the dropdown "#fmSelect" to not be selected
+            </dd>
+            <dd class="mono success">
+              I expect the option with index "3" from the dropdown "#fmSelect" to be selected
+            </dd>
+            <dd class="mono success">
+              I expect the option with label "Option 0" from the dropdown "#fmSelect" to not be
+              selected</dd>
+            <dd class="mono success">
+              I expect the option with label "Option 3" from the dropdown "#fmSelect" to be
+              selected</dd>
+            <dd class="mono success">
+              I expect the option with value "option-0" from the dropdown "#fmSelect" to not be
+              selected</dd>
+            <dd class="mono success">
+              I expect the option with value "option-3" from the dropdown "#fmSelect" to be
+              selected</dd>
+            <dd class="mono sub">Result:</dd>
+            <dd>
+              <select id="fmSelect" class="target">
+                <option value="option-0" selected>Option 0</option>
+                <option value="option-1">Option 1</option>
+                <option value="option-2">Option 2</option>
+                <option value="option-3">Option 3</option>
+              </select>
+            </dd>
+          </span>
+          <br />
+        </dl>
+
+        <h3>Checkbox</h3>
+        <dl>
+          <span for="fmInputCheck">
+            <dt class="btn">fmInputCheck</dt>
+            <dd>- </dd>
+            <dd class="mono sub">Actions:</dd>
+            <dd class="mono success"></dd>
+            <dd class="mono sub">Checks:</dd>
+            <dd class="mono success"></dd>
+            <dd class="mono sub">Result:</dd>
+            <dd>
+              <label class="toggle-container mono">Checkbox 0
+                <input id="fmInputCheck0" type="checkbox">
+                <span class="checkmark"></span>
+              </label>
+              <label class="toggle-container mono">Checkbox 1
+                <input id="fmInputCheck1" type="checkbox">
+                <span class="checkmark"></span>
+              </label>
+              <label class="toggle-container mono">Checkbox 2
+                <input id="fmInputCheck2" type="checkbox">
+                <span class="checkmark"></span>
+              </label>
+              <label class="toggle-container mono">Checkbox 3
+                <input id="fmInputCheck3" type="checkbox">
+                <span class="checkmark"></span>
+              </label>
+            </dd>
+          </span>
+          <br />
+        </dl>
+
+        <h3>Radio Button</h3>
+        <dl>
+          <span for="fmInputRadio">
+            <dt class="btn">fmInputRadio</dt>
+            <dd>- </dd>
+            <dd class="mono sub">Actions:</dd>
+            <dd class="mono success"></dd>
+            <dd class="mono sub">Checks:</dd>
+            <dd class="mono success"></dd>
+            <dd class="mono sub">Result:</dd>
+            <dd>
+              <label class="toggle-container mono">Radio 0
+                <input id="fmInputRadio0" type="radio">
+                <span class="checkmark"></span>
+              </label>
+              <label class="toggle-container mono">Radio 1
+                <input id="fmInputRadio1" type="radio">
+                <span class="checkmark"></span>
+              </label>
+              <label class="toggle-container mono">Radio 2
+                <input id="fmInputRadio2" type="radio">
+                <span class="checkmark"></span>
+              </label>
+              <label class="toggle-container mono">Radio 3
+                <input id="fmInputRadio3" type="radio">
+                <span class="checkmark"></span>
+              </label>
+            </dd>
+          </span>
+          <br />
         </dl>
       </div>
 
       <div id="secAlerts" class="hidden">
         <h2>III. Alerts</h2>
         <hr />
+
+        <h3></h3>
+        <dl>
+          <span for="">
+            <dt class="btn"></dt>
+            <dd>- </dd>
+            <dd class="mono sub">Actions:</dd>
+            <dd class="mono success"></dd>
+            <dd class="mono sub">Checks:</dd>
+            <dd class="mono success"></dd>
+            <dd class="mono sub">Result:</dd>
+            <dd></dd>
+          </span>
+          <br />
+        </dl>
       </div>
       <div id="secContexts" class="hidden">
         <h2>IV. Contexts</h2>
         <hr />
+
+        <h3></h3>
+        <dl>
+          <span for="">
+            <dt class="btn"></dt>
+            <dd>- </dd>
+            <dd class="mono sub">Actions:</dd>
+            <dd class="mono success"></dd>
+            <dd class="mono sub">Checks:</dd>
+            <dd class="mono success"></dd>
+            <dd class="mono sub">Result:</dd>
+            <dd></dd>
+          </span>
+          <br />
+        </dl>
       </div>
       <div id="secDelays" class="hidden">
         <h2>V. Delays</h2>
         <hr />
+
+        <h3></h3>
+        <dl>
+          <span for="">
+            <dt class="btn"></dt>
+            <dd>- </dd>
+            <dd class="mono sub">Actions:</dd>
+            <dd class="mono success"></dd>
+            <dd class="mono sub">Checks:</dd>
+            <dd class="mono success"></dd>
+            <dd class="mono sub">Result:</dd>
+            <dd></dd>
+          </span>
+          <br />
+        </dl>
       </div>
       <div id="secImages" class="hidden">
         <h2>VI. Images</h2>
         <hr />
+
+        <h3></h3>
+        <dl>
+          <span for="">
+            <dt class="btn"></dt>
+            <dd>- </dd>
+            <dd class="mono sub">Actions:</dd>
+            <dd class="mono success"></dd>
+            <dd class="mono sub">Checks:</dd>
+            <dd class="mono success"></dd>
+            <dd class="mono sub">Result:</dd>
+            <dd></dd>
+          </span>
+          <br />
+        </dl>
       </div>
       <div id="secRequests" class="hidden">
         <h2>VII. Requests</h2>
         <hr />
+
+        <h3></h3>
+        <dl>
+          <span for="">
+            <dt class="btn"></dt>
+            <dd>- </dd>
+            <dd class="mono sub">Actions:</dd>
+            <dd class="mono success"></dd>
+            <dd class="mono sub">Checks:</dd>
+            <dd class="mono success"></dd>
+            <dd class="mono sub">Result:</dd>
+            <dd></dd>
+          </span>
+          <br />
+        </dl>
       </div>
       <div id="secOld" class="hidden">
         <div class="container">

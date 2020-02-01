@@ -10,6 +10,10 @@ textarea:focus {
   outline: none !important;
 }
 
+textarea {
+  resize: none;
+}
+
 dl {
   display: block;
   margin-left: 10px;
@@ -36,6 +40,13 @@ input.file {
 input.target,
 textarea.target {
   border: 1px solid #3c6edc;
+}
+
+select {
+  padding-left: 5px;
+  padding-right: 5px;
+  width: 200px;
+  border: 1px solid #2d372d;
 }
 
 dt {
@@ -172,6 +183,10 @@ dt {
   -ms-user-select: none;
 }
 /* End: Shapes --------------------------------------------- */
+
+/* Start: Toggle Items ------------------------------------- */
+
+/* End: Toggle Items --------------------------------------- */
 
 /* Start: Top navigation ----------------------------------- */
 .topnav {

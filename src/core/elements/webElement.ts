@@ -57,6 +57,12 @@ export default class WebElement {
     this.existing$().doubleClick();
   }
 
+  public focus(): void {
+    logger.info(`Selector: ${this.selector}`);
+    const elem = this.existing$();
+    browser.execute((elem) => elem.focus(), elem);
+  }
+
   public moveAndClick(): void {
     logger.info(`Selector: ${this.selector}`);
     const elem = this.existing$();

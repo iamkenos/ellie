@@ -2,12 +2,12 @@ import DemoPage from '../../pages/objects/demo.page';
 
 const demoPage = new DemoPage();
 
-export function scrollToSectionHeader(label) {
-  demoPage.getSectionHeader(label).scrollIntoView();
-}
-
 export function clickNavigationItem(label) {
   demoPage.getNavigationItem(label).click();
+}
+
+export function checkNavigationItemSelected(label, reverse) {
+  demoPage.getNavigationItem(label).checkSelected(reverse);
 }
 
 export function checkSectionHeaderExists(label, reverse) {

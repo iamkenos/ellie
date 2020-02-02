@@ -30,16 +30,17 @@ export default abstract class Driver {
 
   public static closeChildWindows(): void {
     logger.info("NoArgs");
-    const handles = browser.getWindowHandles();
+    let handles = browser.getWindowHandles();
     const parent = handles[0];
 
-    handles.forEach((handle: string, index: number) => {
-      if (index > 0) {
-        browser.switchWindow(handle);
-        browser.closeWindow();
-      }
-    });
-    browser.switchToWindow(parent);
+    while (handles.length > 1) {
+      const last = handles.slice(-1)[0];
+
+      browser.switchToWindow(last);
+      browser.closeWindow();
+      browser.switchToWindow(parent);
+      handles = browser.getWindowHandles();
+    }
   }
 
   public static focusLastWindow(): void {
@@ -53,9 +54,9 @@ export default abstract class Driver {
   public static focusParentWindow(): void {
     logger.info("NoArgs");
     const handles = browser.getWindowHandles();
-    const last = handles.slice(-1)[0];
+    const parent = handles[0];
 
-    browser.switchToWindow(last);
+    browser.switchToWindow(parent);
   }
 
   public static deleteCookie(cookie: string): void {

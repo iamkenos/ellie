@@ -10,54 +10,12 @@ function onClickToggleElement() {
   }, timeout);
 }
 
-function displayFirstMessage() {
-  $('#message1').removeClass('hidden');
-  $('#message2').addClass('hidden');
-}
-
-function displaySecondMessage() {
-  $('#message1').addClass('hidden');
-  $('#message2').removeClass('hidden');
-}
-
 function handleFormSubmit(event) {
   event.preventDefault();
 
   $(this)
     .find('.message')
     .removeClass('hidden');
-}
-
-function handleKeydown(event) {
-  const $target = $('#testKeyResponse');
-
-  $target.text(event.keyCode);
-}
-
-function openAlert(event) {
-  event.preventDefault();
-
-  window.alert('I am a alert box!');
-}
-
-function openConfirm(event) {
-  const $result = $('#confirmResult');
-  event.preventDefault();
-
-  const result = window.confirm('I am a confirm box!');
-  $result.text(result);
-}
-
-function openPrompt(event) {
-  const $result = $('#promptResult');
-  event.preventDefault();
-
-  const result = window.prompt('I am a prompt!');
-  $result.text(result);
-}
-
-function toggleMoveToElement(event) {
-  $(this).toggleClass('moveToClass');
 }
 
 // fn final ----------------------------------------------------------------------------------------
@@ -161,11 +119,20 @@ function delayedHandle(action, state, $source, $target, val) {
       break;
     }
 
-    case 'load': {
-      $source.parent().children().removeClass('active');
-      $source.addClass('active');
-      $target.children().addClass('hidden');
-      $(val).removeClass('hidden');
+    case 'alertBox': {
+      window.alert(val);
+      break;
+    }
+
+    case 'confirmBox': {
+      const result = window.confirm(val);
+      $target.text(result);
+      break;
+    }
+
+    case 'promptBox': {
+      const result = window.prompt(val);
+      $target.text(result);
       break;
     }
 
@@ -231,6 +198,13 @@ function detectDrop($el) {
   }
 }
 
+function clearTargetText(event) {
+  const $source = $(this);
+  const $target = $($(this).data('target'));
+
+  $target.text('');
+}
+
 function changeCssAndInnerHtml(event) {
   const $source = $(this);
   const $target = $($(this).data('target'));
@@ -267,6 +241,49 @@ function setSourceValueToTargetText(event) {
   $target.text($source.val());
 }
 
+function setSourceCoordinatesToTargetText(event) {
+  const $source = $(this);
+  const $target = $($(this).data('target'));
+  const x = event.pageX;
+  const y = event.pageY;
+
+  $target.text(`X: ${x} | Y: ${y}`);
+}
+
+function getViewportOffset($elem) {
+  const $window = $(window);
+  const scrollLeft = $window.scrollLeft();
+  const scrollTop = $window.scrollTop();
+  const offset = $elem.offset();
+  const rect1 = { x1: scrollLeft, y1: scrollTop, x2: scrollLeft + $window.width(), y2: scrollTop + $window.height() };
+  const rect2 = { x1: offset.left, y1: offset.top, x2: offset.left + $elem.width(), y2: offset.top + $elem.height() };
+  return {
+    left: offset.left - scrollLeft,
+    top: offset.top - scrollTop,
+    insideViewport: rect1.x1 < rect2.x2 && rect1.x2 > rect2.x1 && rect1.y1 < rect2.y2 && rect1.y2 > rect2.y1
+  };
+}
+
+function handleScroll(event) {
+  const $source = $('#scrollToElementBox');
+  const $target = $('#scrollToElementBoxDest');
+
+  if ($source.visible(true)) {
+    const rect = getViewportOffset($target);
+    $target.text(`Left: ${rect.left} | Top: ${rect.top}`);
+  } else {
+    $target.text('');
+  }
+}
+
+function handleKeydown(event) {
+  const $source = $(this);
+  const $target = $($(this).data('target'));
+
+  $source.val('');
+  $target.text(event.keyCode);
+}
+
 // ################################################
 // ################################################
 // ################################################
@@ -277,23 +294,12 @@ function setSourceValueToTargetText(event) {
 $(function() {
   $('.jsToggleElement').on('click', onClickToggleElement);
 
-  $('#toggleMessage')
-    .on('click', displayFirstMessage)
-    .on('dblclick', displaySecondMessage);
-
-  $('body').on('keydown', handleKeydown);
-
-  $('#openAlert').on('click', openAlert);
-
-  $('#openConfirm').on('click', openConfirm);
-
-  $('#openPrompt').on('click', openPrompt);
-
-  $('#moveTo').on('mouseenter mouseleave', toggleMoveToElement);
-
   $('#formSubmitTest').on('submit', handleFormSubmit);
 
   // jqeury final ----------------------------------------------------------------------------------------
+  // window
+  document.addEventListener('scroll', handleScroll, true);
+
   // elements
   $('#draggableBox').on('mousedown', handleMousedown);
 
@@ -302,6 +308,14 @@ $(function() {
   $('#changeInnerHtmlDest').on('dblclick', revertCssAndInnerHtml);
 
   $('#fmFileInput').on('change', setSourceValueToTargetText);
+
+  $('#keyPress')
+    .on('keydown', handleKeydown)
+    .on('keyup', handleKeydown);
+
+  $('#moveToElementBox')
+    .on('mouseenter', setSourceCoordinatesToTargetText)
+    .on('mouseleave', clearTargetText);
 
   // atrributes
   $('[data-action]').on('click', handleDataAction);

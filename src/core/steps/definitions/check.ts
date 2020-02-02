@@ -87,11 +87,13 @@ Then(
   checkCookieExists
 );
 
+// ok
 Then(
   /^I expect the element "([^"]*)?" count to( not)? be "([^"]*)?"$/,
   checkCountEquals
 );
 
+// ok
 Then(
   /^I expect the element "([^"]*)?" count to( not)? be (greater|less) than "([^"]*)?"$/,
   checkCountGreaterLess
@@ -108,6 +110,7 @@ Then(
   checkDisplayed
 );
 
+// ok
 Then(
   /^I expect the element "([^"]*)?" to( not)? be displayed within the viewport$/,
   checkDisplayedInViewport
@@ -123,11 +126,13 @@ Then(
   checkEnabled
 );
 
+// ok
 Then(
   /^I expect the element "([^"]*)?" to( not)? exist$/,
   checkExists
 );
 
+// ok
 Then(
   /^I expect the element "([^"]*)?" to( not)? have focus$/,
   checkFocused
@@ -138,16 +143,19 @@ Then(
   checkHttpResponseMatch
 );
 
+// ok
 Then(
   /^I expect (?:a|an) (?:alert|confirm box|prompt) to( not)? be opened$/,
   checkModalExists
 );
 
+// ok
 Then(
   /^I expect the (?:alert|confirm box|prompt) text to( not)? contain "([^"]*)?"$/,
   checkModalTextContains
 );
 
+// ok
 Then(
   /^I expect the (?:alert|confirm box|prompt) text to( not)? be "([^"]*)?"$/,
   checkModalTextEquals
@@ -155,10 +163,11 @@ Then(
 
 // ok
 Then(
-  /^I expect the option with (index|index|[^" ]*) "([^"]*)?" from the dropdown "([^"]*)?" to( not)? be selected$/,
+  /^I expect the option with (index|label|[^" ]*) "([^"]*)?" from the dropdown "([^"]*)?" to( not)? be selected$/,
   checkOptionDdlSelected
 );
 
+// ok
 Then(
   /^I expect the (?:element|option|check box|toggle item|radio button) "([^"]*)?" to( not)? be (?:checked|selected)$/,
   checkSelected
@@ -186,6 +195,7 @@ Then(
   checkTextContains
 );
 
+// ok
 Then(
   /^I expect the elements "([^"]*)?" texts to( not)? contain:$/,
   checkTextContainsArray
@@ -209,6 +219,7 @@ Then(
   checkTextEquals
 );
 
+// ok
 Then(
   /^I expect the elements "([^"]*)?" texts to( not)? match:$/,
   checkTextEqualsArray
@@ -216,8 +227,8 @@ Then(
 
 // ok: I expect the page title to contain ""
 // ok: I expect the page title to contain that of the page ""
-// pending: I expect the page title to not contain ""
-// pending: I expect the page title to not contain that of the page ""
+// ok: I expect the page title to not contain ""
+// ok: I expect the page title to not contain that of the page ""
 Then(
   /^I expect the (?:window|page) title to( not)? contain (?:"([^"]*)?"|that of the page "([^"]*)?")$/,
   checkTitleContains
@@ -225,31 +236,41 @@ Then(
 
 // ok: I expect the page title to be ""
 // ok: I expect the page title to be that of the page ""
-// pending: I expect the page title to not be ""
-// pending: I expect the page title to not be that of the page ""
+// ok: I expect the page title to not be ""
+// ok: I expect the page title to not be that of the page ""
 Then(
   /^I expect the (?:window|page) title to( not)? be (?:"([^"]*)?"|that of the page "([^"]*)?")$/,
   checkTitleEquals
 );
 
+// ok: I expect the url to contain ""
+// ok: I expect the url to contain that of the page ""
+// ok: I expect the url to not contain ""
+// ok: I expect the url to not contain that of the page ""
 Then(
-  /^I expect the url to( not)? contain "([^"]*)?"$/,
+  /^I expect the url to( not)? contain (?:"([^"]*)?"|that of the page "([^"]*)?")$/,
   checkUrlContains
 );
 
+// ok: I expect the url to be ""
+// ok: I expect the url to be that of the page ""
+// ok: I expect the url to not be ""
+// ok: I expect the url to not be that of the page ""
 Then(
-  /^I expect the url to( not)? be "([^"]*)?"$/,
+  /^I expect the url to( not)? be (?:"([^"]*)?"|that of the page "([^"]*)?")$/,
   checkUrlEquals
 );
 
+// ok
 Then(
-  /^I expect the path to( not)? contain "([^"]*)?"$/,
-  checkUrlPathEquals
+  /^I expect the url path to( not)? contain "([^"]*)?"$/,
+  checkUrlPathContains
 );
 
+// ok
 Then(
-  /^I expect the path to( not)? be "([^"]*)?"$/,
-  checkUrlPathContains
+  /^I expect the url path to( not)? be "([^"]*)?"$/,
+  checkUrlPathEquals
 );
 
 // ok
@@ -282,13 +303,15 @@ Then(
   checkValueEquals
 );
 
+// ok
 Then(
   /^I expect the (?:window|tab) count to( not)? be "([^"]*)?"$/,
   checkWindowCountEquals
 );
 
+// ok
 Then(
-  /^I expect the (?:window|tab) count to( not)? be (greater|less) "([^"]*)?"$/,
+  /^I expect the (?:window|tab) count to( not)? be (greater|less) than "([^"]*)?"$/,
   checkWindowCountGreaterLess
 );
 

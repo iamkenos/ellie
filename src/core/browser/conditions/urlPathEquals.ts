@@ -1,3 +1,5 @@
+import { URL } from "url";
+
 import logger from "../../../logger";
 import { IBrowserCondition, IExpectedConditionResult } from "../../interfaces";
 
@@ -19,10 +21,8 @@ export default class UrlPathEquals implements IBrowserCondition {
     let result: boolean;
 
     try {
-      const url = browser.getUrl().replace(/http(s?):\/\//, "");
-      const domain = `${url.split("/")[0]}`;
-      actual = url.replace(domain, "");
-      actual = browser.getUrl();
+      const url = new URL(browser.getUrl());
+      actual = url.pathname;
       result = this.reverse ? actual !== this.expected : actual === this.expected;
     } catch (e) {
       actual = e.message;

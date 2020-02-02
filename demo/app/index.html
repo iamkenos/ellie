@@ -5,9 +5,11 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <link href="/favicon.png" rel="icon" type="image/png">
   <link rel="stylesheet" href="https://unpkg.com/papercss@1.6.1/dist/paper.css">
-  <link rel="stylesheet" type="text/css" href="css/index.css" />
+  <link rel="stylesheet" type="text/css" href="css/index.css">
   <title>Demo Page</title>
+</head>
 
 <body>
   <div class="container">
@@ -132,10 +134,10 @@
               I expect the field "#changeValDest" value to not be empty
             </dd>
             <dd class="xtnd-desc">
-              I expect the field "#changeValDest" attribute "class" to contain "tar"
+              I expect the field "#changeValDest" attribute "class" to contain "success"
             </dd>
             <dd class="xtnd-desc">
-              I expect the field "#changeValDest" attribute "class" to be "target"
+              I expect the field "#changeValDest" attribute "class" to be "text-success"
             </dd>
             <dd class="xtnd-desc">
               I expect the field "#changeValDest" attribute "class" to exist
@@ -255,13 +257,13 @@
               I expect the element "#draggableBoxDest" text to be "This text is changed by [draggableBox]..."
             </dd>
             <dd class="xtnd-desc">
-              I expect the element "#draggableBoxDest" location at x axis to be 1062.5
+              I expect the element "#draggableBoxDest" location at x axis to be 372.5
             </dd>
             <dd class="xtnd-desc">
               I expect the element "#draggableBoxDest" location at x axis to not be 255.5
             </dd>
             <dd class="xtnd-desc">
-              I expect the element "#draggableBoxDest" location at y axis to be 2166
+              I expect the element "#draggableBoxDest" location at y axis to be 2646.40625
             </dd>
             <dd class="xtnd-desc">
               I expect the element "#draggableBoxDest" location at y axis to not be 255.5
@@ -271,6 +273,78 @@
               <div class="xtnd-large-spacer">
                 <div id="draggableBoxDest" class="paper-btn droppable xtnd-no-select">draggableBoxDest</div>
               </div>
+            </dd>
+          </span>
+        </dl>
+
+        <h3>Move To</h3>
+        <dl>
+          <span for="moveToElementBox">
+            <dt>
+              <label id="moveToElementBox" class="xtnd-term xtnd-no-select" data-target="#moveToElementBoxDest">
+                moveToElementBox
+              </label>
+            </dt>
+            <dd class="text-muted">- move mouse to an element</dd>
+            <dd class="xtnd-head text-secondary">Actions:</dd>
+            <dd class="xtnd-desc">
+              I move to the element "#moveToElementBox"
+            </dd>
+            <dd class="xtnd-desc">
+              I move to the element "h3=Move To"
+            </dd>
+            <dd class="xtnd-desc">
+              I move to the element "#moveToElementBox" with an offset of 5,10
+            </dd>
+            <dd class="xtnd-head text-secondary">Checks:</dd>
+            <dd class="xtnd-desc">
+              I expect the element "#moveToElementBoxDest" text to be "X: 379 | Y: 2969"
+            </dd>
+            <dd class="xtnd-desc">
+              I expect the element "#moveToElementBoxDest" text to be "X: 317 | Y: 2956"
+            </dd>
+            <dd class="xtnd-head text-secondary">Result:</dd>
+            <dd class="xtnd-desc">
+              <span id="moveToElementBoxDest" class="text-success"></span>
+            </dd>
+          </span>
+        </dl>
+
+        <h3>Scroll To</h3>
+        <dl>
+          <span for="scrollToElementBox">
+            <dt>
+              <label id="scrollToElementBox" class="xtnd-term xtnd-no-select" data-target="#scrollToElementBoxDest">
+                scrollToElementBox
+              </label>
+            </dt>
+            <dd class="text-muted">- scroll existing element into view</dd>
+            <dd class="xtnd-head text-secondary">Actions:</dd>
+            <dd class="xtnd-desc">
+              I scroll to the element "#scrollToElementBox"
+            </dd>
+            <dd class="xtnd-desc">
+              I scroll to the bottom of the page
+            </dd>
+            <dd class="xtnd-desc">
+              I scroll to the top of the page
+            </dd>
+            <dd class="xtnd-desc">
+              I scroll to the coordinates 300.2950 of the page
+            </dd>
+            <dd class="xtnd-head text-secondary">Checks:</dd>
+            <dd class="xtnd-desc">
+              I expect the element "#scrollToElementBoxDest" text to be "Left: 372.5 | Top: 869.40625"
+            </dd>
+            <dd class="xtnd-desc">
+              I expect the element "#scrollToElementBoxDest" to be displayed within the viewport
+            </dd>
+            <dd class="xtnd-desc">
+              I expect the element "#scrollToElementBoxDest" to not be displayed within the viewport
+            </dd>
+            <dd class="xtnd-head text-secondary">Result:</dd>
+            <dd class="xtnd-desc">
+              <span id="scrollToElementBoxDest" class="text-success"></span>
             </dd>
           </span>
         </dl>
@@ -394,14 +468,20 @@
                 fmInputCheck
               </label>
             </dt>
-            <dd class="text-muted">- descricption</dd>
+            <dd class="text-muted">- toggle a checkbox option on and off</dd>
             <dd class="xtnd-head text-secondary">Actions:</dd>
             <dd class="xtnd-desc">
-
+              I select the check box "#fmInputCheck2"
+            </dd>
+            <dd class="xtnd-desc">
+              I deselect the check box "#fmInputCheck1"
             </dd>
             <dd class="xtnd-head text-secondary">Checks:</dd>
             <dd class="xtnd-desc">
-
+              I expect the check box "#fmInputCheck2" to be selected
+            </dd>
+            <dd class="xtnd-desc">
+              I expect the check box "#fmInputCheck1" to not be selected
             </dd>
             <dd class="xtnd-head text-secondary">Result:</dd>
             <dd class="xtnd-desc">
@@ -436,14 +516,29 @@
                 fmInputRadio
               </label>
             </dt>
-            <dd class="text-muted">- descricption</dd>
+            <dd class="text-muted">- toggle different radio options</dd>
             <dd class="xtnd-head text-secondary">Actions:</dd>
             <dd class="xtnd-desc">
-
+              I select the radio button "#fmInputRadio2"
+            </dd>
+            <dd class="xtnd-desc">
+              I deselect the radio button "#fmInputRadio2"
+            </dd>
+            <dd class="xtnd-desc">
+              I select the radio button "#fmInputRadio1"
             </dd>
             <dd class="xtnd-head text-secondary">Checks:</dd>
             <dd class="xtnd-desc">
-
+              I expect the radio button "#fmInputRadio2" to be selected
+            </dd>
+            <dd class="xtnd-desc">
+              I expect the radio button "#fmInputRadio2" to be selected
+            </dd>
+            <dd class="xtnd-desc">
+              I expect the radio button "#fmInputRadio1" to be selected
+            </dd>
+            <dd class="xtnd-desc">
+              I expect the radio button "#fmInputRadio2" to not be selected
             </dd>
             <dd class="xtnd-head text-secondary">Result:</dd>
             <dd class="xtnd-desc">
@@ -541,19 +636,387 @@
         </dl>
       </div>
 
-      <div class="content" id="content8">
+      <div class="content" id="content3">
         <h2>III. Alerts</h2>
+        <h3>Alert Box</h3>
+        <dl>
+          <span for="openAlertLink">
+            <dt>
+              <a class="paper-btn xtnd-no-select" id="openAlertLink"
+                data-action='{"alertBox": "This alert box is opened by [openAlertLink]..."}'>
+                openAlertLink
+              </a>
+            </dt>
+            <dd class="text-muted">- interact with a page alert box</dd>
+            <dd class="xtnd-head text-secondary">Actions:</dd>
+            <dd class="xtnd-desc">
+              I click the link "openAlertLink"
+            </dd>
+            <dd class="xtnd-desc">
+              I accept the alert
+            </dd>
+            <dd class="xtnd-head text-secondary">Checks:</dd>
+            <dd class="xtnd-desc">
+              I expect the alert text to contain "This alert box is opened by"
+            </dd>
+            <dd class="xtnd-desc">
+              I expect the alert text to be "This alert box is opened by [openAlertLink]..."
+            </dd>
+            <dd class="xtnd-desc">
+              I expect an alert to not be opened
+            </dd>
+          </span>
+        </dl>
+
+        <h3>Confirm Box</h3>
+        <dl>
+          <span for="openConfirmLink">
+            <dt>
+              <a class="paper-btn xtnd-no-select" id="openConfirmLink"
+                data-action='{"confirmBox": "This confirm box is opened by [openConfirmLink]..."}'
+                data-target="#openConfirmDest">
+                openConfirmLink
+              </a>
+            </dt>
+            <dd class="text-muted">- interact with a page confirm box</dd>
+            <dd class="xtnd-head text-secondary">Actions:</dd>
+            <dd class="xtnd-desc">
+              I click the link "openConfirmLink"
+            </dd>
+            <dd class="xtnd-desc">
+              I accept the confirm box
+            </dd>
+            <dd class="xtnd-desc">
+              I dismiss the confirm box
+            </dd>
+            <dd class="xtnd-head text-secondary">Checks:</dd>
+            <dd class="xtnd-desc">
+              I expect a confirm box to be opened
+            </dd>
+            <dd class="xtnd-desc">
+              I expect the element "#openConfirmDest" text to be "true"
+            </dd>
+            <dd class="xtnd-desc">
+              I expect the element "#openConfirmDest" text to be "false"
+            </dd>
+            <dd class="xtnd-head text-secondary">Result:</dd>
+            <dd class="xtnd-desc">
+              <span id="openConfirmDest" class="text-success"></span>
+            </dd>
+          </span>
+        </dl>
+
+        <h3>Prompt Box</h3>
+        <dl>
+          <span for="openPromptLink">
+            <dt>
+              <a class="paper-btn xtnd-no-select" id="openPromptLink"
+                data-action='{"promptBox": "This prompt box is opened by [openPromptLink]..."}'
+                data-target="#openPromptDest">
+                openPromptLink
+              </a>
+            </dt>
+            <dd class="text-muted">- interact with a page confirm box</dd>
+            <dd class="xtnd-head text-secondary">Actions:</dd>
+            <dd class="xtnd-desc">
+              I click the link "openPromptLink"
+            </dd>
+            <dd class="xtnd-desc">
+              I type "This prompt box is opened by [openPromptLink]..." on the prompt
+            </dd>
+            <dd class="xtnd-desc">
+              I accept the prompt
+            </dd>
+            <dd class="xtnd-desc">
+              I dismiss the prompt
+            </dd>
+            <dd class="xtnd-head text-secondary">Checks:</dd>
+            <dd class="xtnd-desc">
+              I expect the element "#openPromptDest" text to be "This prompt box is opened by [openPromptLink]..."
+            </dd>
+            <dd class="xtnd-desc">
+              I expect the element "#openPromptDest" text to be "null"
+            </dd>
+            <dd class="xtnd-head text-secondary">Result:</dd>
+            <dd class="xtnd-desc">
+              <span id="openPromptDest" class="text-success"></span>
+            </dd>
+          </span>
+        </dl>
       </div>
 
       <div class="content" id="content4">
         <h2>IV. Contexts</h2>
+        <h3>Same Window</h3>
+        <dl>
+          <span for="openInSameWindowLink">
+            <dt>
+              <a class="paper-btn xtnd-no-select" id="openInSameWindowLink" href="./iframe.html">
+                openInSameWindowLink
+              </a>
+            <dd class="text-muted">- open link in the same window on click</dd>
+            <dd class="xtnd-head text-secondary">Actions:</dd>
+            <dd class="xtnd-desc">
+              I click the link "openInSameWindowLink"
+            </dd>
+            <dd class="xtnd-desc">
+              I navigate back from the current page
+            </dd>
+            <dd class="xtnd-desc">
+              I navigate forward from the current page
+            </dd>
+            <dd class="xtnd-desc">
+              I refresh the page
+            </dd>
+            <dd class="xtnd-head text-secondary">Checks:</dd>
+            <dd class="xtnd-desc">
+              I expect the element "iFrame=>Level 1 List Items" count to be "0"
+            </dd>
+            <dd class="xtnd-desc">
+              I expect the url to not contain "iframe"
+            </dd>
+            <dd class="xtnd-desc">
+              I expect the url to contain "iframe"
+            </dd>
+            <dd class="xtnd-desc">
+              I expect the element "iFrame=>Level 1 List Items" count to not be "0"
+            </dd>
+            <dd class="xtnd-desc">
+              I expect the element "iFrame=>Level 1 List Items" count to be greater than "4"
+            </dd>
+            <dd class="xtnd-desc">
+              I expect the element "iFrame=>Level 1 List Items" count to be less than "6"
+            </dd>
+            <dd class="xtnd-desc">
+              And I expect the element "iFrame=>Level 1 List Items" count to not be greater than "6"
+            </dd>
+            <dd class="xtnd-desc">
+              And I expect the element "iFrame=>Level 1 List Items" count to not be less than "4"
+            </dd>
+          </span>
+          <br />
+
+          <span for="keyPress">
+            <dt>
+              <input type="text" class="sm-3" placeholder="keyPress" id="keyPress" data-target="#keyPressDest">
+            </dt>
+            <dd class="text-muted">- detect keyboard press events</dd>
+            <dd class="xtnd-head text-secondary">Actions:</dd>
+            <dd class="xtnd-desc">
+              I focus on the field "#keyPress"
+            </dd>
+            <dd class="xtnd-desc">
+              I press the "Escape" key
+            </dd>
+            <dd class="xtnd-desc">
+              I press the "a" key
+            </dd>
+            <dd class="xtnd-head text-secondary">Checks:</dd>
+            <dd class="xtnd-desc">
+              I expect the element "#keyPress" to have focus
+            </dd>
+            <dd class="xtnd-desc">
+              I expect the element "#keyPressDest" to not have focus
+            </dd>
+            <dd class="xtnd-desc">
+              I expect the element "#keyPressDest" text to be "27"
+            </dd>
+            <dd class="xtnd-desc">
+              I expect the element "#keyPressDest" text to not be "54"
+            </dd>
+            <dd class="xtnd-head text-secondary">Result:</dd>
+            <dd class="xtnd-desc">
+              <div class="row xtnd-row">
+                <span>Key code:&nbsp;&nbsp;</span>
+                <span id="keyPressDest" class="text-success"></span>
+              </div>
+            </dd>
+          </span>
+        </dl>
+
+        <h3>New Window</h3>
+        <dl>
+          <span for="openInNewWindowLink">
+            <dt>
+              <a class="paper-btn xtnd-no-select" id="openInNewWindowLink" href="./iframe.html" target="_blank">
+                openInNewWindowLink
+              </a>
+            <dd class="text-muted">- open link in a new window on click</dd>
+            <dd class="xtnd-head text-secondary">Actions:</dd>
+            <dd class="xtnd-desc">
+              I click the link "openInNewWindowLink"
+            </dd>
+            <dd class="xtnd-desc">
+              I focus on the last opened window
+            </dd>
+            <dd class="xtnd-desc">
+              I close the last opened window
+            </dd>
+            <dd class="xtnd-head text-secondary">Checks:</dd>
+            <dd class="xtnd-desc">
+              I expect the window count to be "2"
+            </dd>
+            <dd class="xtnd-desc">
+              I expect the window count to not be "2"
+            </dd>
+            <dd class="xtnd-desc">
+              I expect the window count to be greater than "1"
+            </dd>
+            <dd class="xtnd-desc">
+              I expect the page title to not contain "Demo Page"
+            </dd>
+            <dd class="xtnd-desc">
+              I expect the page title to not contain that of the page "Demo"
+            </dd>
+            <dd class="xtnd-desc">
+              I expect the page title to not be "Demo Page"
+            </dd>
+            <dd class="xtnd-desc">
+              I expect the page title to not be that of the page "Demo"
+            </dd>
+            <dd class="xtnd-desc">
+              I expect the url to be that of the page "iFrame"
+            </dd>
+            <dd class="xtnd-desc">
+              I expect the window count to be less than "2"
+            </dd>
+            <dd class="xtnd-desc">
+              I expect the url to contain that of the page "Demo"
+            </dd>
+            <dd class="xtnd-desc">
+              I expect the url to not contain that of the page "iFrame"
+            </dd>
+            <dd class="xtnd-desc">
+              I expect the url to not be that of the page "iFrame"
+            </dd>
+          </span>
+          <br />
+
+          <span for="openBlankInNewWindowLink">
+            <dt>
+              <a class="paper-btn xtnd-no-select" id="openBlankInNewWindowLink" href="broken.html" target="_blank">
+                openBlankInNewWindowLink
+              </a>
+            <dd class="text-muted">- open a broken link in a new window on click</dd>
+            <dd class="xtnd-head text-secondary">Actions:</dd>
+            <dd class="xtnd-desc">
+              I click the link "openBlankInNewWindowLink"
+            </dd>
+            <dd class="xtnd-desc">
+              I close the last opened window
+            </dd>
+            <dd class="xtnd-desc">
+              I focus on the last opened window
+            </dd>
+            <dd class="xtnd-desc">
+              I focus on the parent window
+            </dd>
+            <dd class="xtnd-head text-secondary">Checks:</dd>
+            <dd class="xtnd-desc">
+              I expect the url path to be "/broken.html"
+            </dd>
+            <dd class="xtnd-desc">
+              I expect the url path to contain "broken"
+            </dd>
+            <dd class="xtnd-desc">
+              I expect the url path to not be "broken.html"
+            </dd>
+            <dd class="xtnd-desc">
+              I expect the url path to not contain "broken"
+            </dd>
+            <dd class="xtnd-desc">
+              I expect the url to be "http://localhost:8080/broken.html"
+            </dd>
+            <dd class="xtnd-desc">
+              I expect the url to not be "http://localhost:8080/broken.html"
+            </dd>
+            <dd class="xtnd-desc">
+              I expect the window count to be "2"
+            </dd>
+          </span>
+        </dl>
+
+        <h3>iFrame</h3>
+        <dl>
+          <span for="showPageInIframe">
+            <dt>
+              <label class="xtnd-term xtnd-no-select">
+                showPageInIframe
+              </label>
+            </dt>
+            <dd class="text-muted">- show another page in an iframe</dd>
+            <dd class="xtnd-head text-secondary">Actions:</dd>
+            <dd class="xtnd-desc">
+              I focus on the iframe "#showPageInIframe"
+            </dd>
+            <dd class="xtnd-desc">
+              I focus on the parent context
+            </dd>
+            <dd class="xtnd-head text-secondary">Checks:</dd>
+            <dd class="xtnd-desc">
+              I expect the elements "iFrame=>Level 1 List Items" texts to contain: <br />
+              | Values |<br />
+              | Item 3 |<br />
+              | Item 4 |
+            </dd>
+            <dd class="xtnd-desc">
+              And I expect the elements "iFrame=>Level 1 List Items" texts to not contain:<br />
+              | Values |<br />
+              | Item 0 |<br />
+              | Item 1 |
+            </dd>
+            <dd class="xtnd-desc">
+              I expect the elements "iFrame=>Level 2 List Items" texts to match:<br />
+              | Values &nbsp;&nbsp;&nbsp;|<br />
+              | Item 4.A |<br />
+              | Item 4.B |
+            </dd>
+            <dd class="xtnd-desc">
+              I expect the elements "iFrame=>Level 2 List Items" texts to not match:<br />
+              | Values &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;|<br />
+              | Item 4.B.II.a |<br />
+              | Item 4.B.II.b |
+            </dd>
+            <dd class="xtnd-desc">
+              I expect the element "iFrame=>Level 1 List Items" to not exist
+            </dd>
+            <dd class="xtnd-head text-secondary">Result:</dd>
+            <dd class="xtnd-desc">
+              <iframe class="xtnd-iframe" id="showPageInIframe" src="./iframe.html" frameborder="0"
+                scrolling="no"></iframe>
+            </dd>
+          </span>
+        </dl>
       </div>
 
       <div class="content" id="content5">
         <h2>V. Delays</h2>
+        <h3>Displayed</h3>
+        <dl>
+          <span for="elemId">
+            <dt>
+              <label class="xtnd-term xtnd-no-select">
+                elemId
+              </label>
+            </dt>
+            <dd class="text-muted">- descricption</dd>
+            <dd class="xtnd-head text-secondary">Actions:</dd>
+            <dd class="xtnd-desc">
+
+            </dd>
+            <dd class="xtnd-head text-secondary">Checks:</dd>
+            <dd class="xtnd-desc">
+
+            </dd>
+            <dd class="xtnd-head text-secondary">Result:</dd>
+            <dd class="xtnd-desc">
+              <span id="elemIdDest" class="text-success"></span>
+            </dd>
+          </span>
+        </dl>
       </div>
 
-      <div class="content" id="content6">
+      <div class="content" id="content8">
         <h2>VI. Images</h2>
       </div>
 
@@ -561,7 +1024,7 @@
         <h2>VII. Requests</h2>
       </div>
 
-      <div class="content" id="content3">
+      <div class="content" id="content6">
         <h3>SECTION 1</h3>
         <hr />
         <div style="position: relative; height: 200px;">
@@ -714,7 +1177,6 @@
         <h3>SECTION 16</h3>
         <hr />
         <div id="testKeyResponse"></div>
-        <iframe src="iframe.html" style="border:none;"></iframe>
 
         <h3>SECTION 17</h3>
         <hr />
@@ -758,6 +1220,7 @@
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
   <!-- jQuery cookie plugin -->
   <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-cookie/1.4.1/jquery.cookie.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-visible/1.2.0/jquery.visible.js"></script>
   <script src="script/index.js"></script>
 </body>
 

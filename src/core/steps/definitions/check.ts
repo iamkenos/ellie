@@ -43,289 +43,231 @@ import checkWindowCountEquals from "../glue/check/checkWindowCountEquals";
 import checkWindowCountGreaterLess from "../glue/check/checkWindowCountGreaterLess";
 import checkWindowImageMatch from "../glue/check/checkWindowImageMatch";
 
-// ok
 Then(
   /^I expect the (?:ajax|xhr) requests to( not)? match the reference "([^"]*)?"$/,
   checkAjaxRequestsMatch
 );
 
-// ok
 Then(
   /^I expect the (?:field|element) "([^"]*)?" attribute "([^"]*)?" to( not)? contain "([^"]*)?"$/,
   checkAttributeContains
 );
 
-// ok
 Then(
   /^I expect the (?:field|element) "([^"]*)?" attribute "([^"]*)?" to( not)? be "([^"]*)?"$/,
   checkAttributeEquals
 );
 
-// ok
 Then(
   /^I expect the (?:field|element) "([^"]*)?" attribute "([^"]*)?" to( not)? exist$/,
   checkAttributeExists
 );
 
-// ok
 Then(
   /^I expect the element "([^"]*)?" location at (x|y) axis to( not)? be ([\d+.?\d*]+)$/,
   checkAxisLocationEquals
 );
 
-// ok
 Then(
   /^I expect the cookie "([^"]*)?" value to( not)? contain "([^"]*)?"$/,
   checkCookieContains
 );
 
-// ok
 Then(
   /^I expect the cookie "([^"]*)?" value to( not)? be "([^"]*)?"$/,
   checkCookieEquals
 );
 
-// ok
 Then(
   /^I expect the cookie "([^"]*)?" value to( not)? exist$/,
   checkCookieExists
 );
 
-// ok
 Then(
   /^I expect the element "([^"]*)?" count to( not)? be "([^"]*)?"$/,
   checkCountEquals
 );
 
-// ok
 Then(
   /^I expect the element "([^"]*)?" count to( not)? be (greater|less) than "([^"]*)?"$/,
   checkCountGreaterLess
 );
 
-// ok
 Then(
   /^I expect the (?:field|element) "([^"]*)?" css property "([^"]*)?" to( not)? exist$/,
   checkCSSExists
 );
 
-// ok
 Then(
   /^I expect the element "([^"]*)?" to( not)? be displayed$/,
   checkDisplayed
 );
 
-// ok
 Then(
   /^I expect the element "([^"]*)?" to( not)? be displayed within the viewport$/,
   checkDisplayedInViewport
 );
 
-// ok
 Then(
   /^I expect the element "([^"]*)?" image to( not)? match the reference "([^"]*)?"$/,
   checkElementImageMatch
 );
 
-// ok
 Then(
   /^I expect the element "([^"]*)?" to( not)? be enabled$/,
   checkEnabled
 );
 
-// ok
 Then(
   /^I expect the element "([^"]*)?" to( not)? exist$/,
   checkExists
 );
 
-// ok
 Then(
   /^I expect the element "([^"]*)?" to( not)? have focus$/,
   checkFocused
 );
 
-// ok
 Then(
   /^I expect the response the following request to( not)? match the reference "([^"]*)?":$/,
   checkHttpResponseMatch
 );
 
-// ok
 Then(
   /^I expect (?:a|an) (?:alert|confirm box|prompt) to( not)? be opened$/,
   checkModalExists
 );
 
-// ok
 Then(
   /^I expect the (?:alert|confirm box|prompt) text to( not)? contain "([^"]*)?"$/,
   checkModalTextContains
 );
 
-// ok
 Then(
   /^I expect the (?:alert|confirm box|prompt) text to( not)? be "([^"]*)?"$/,
   checkModalTextEquals
 );
 
-// ok
 Then(
   /^I expect the option with (index|label|[^" ]*) "([^"]*)?" from the dropdown "([^"]*)?" to( not)? be selected$/,
   checkOptionDdlSelected
 );
 
-// ok
 Then(
   /^I expect the (?:element|option|check box|toggle item|radio button) "([^"]*)?" to( not)? be (?:checked|selected)$/,
   checkSelected
 );
 
-// ok
 Then(
   /^I expect the element "([^"]*)?" to( not)? be ([\d]+)px broad and ([\d]+)px tall$/,
   checkSizeEquals
 );
 
-// ok
 Then(
   /^I expect the element "([^"]*)?" to( not)? be ([\d]+)px (broad|tall)$/,
   checkSizeSideEquals
 );
 
-// ok
 Then(
   /^I expect the element "([^"]*)?" text to( not)? contain "([^"]*)?"$/,
   checkTextContains
 );
 
-// ok
 Then(
   /^I expect the element "([^"]*)?" text to( not)? contain:$/,
   checkTextContains
 );
 
-// ok
 Then(
   /^I expect the elements "([^"]*)?" texts to( not)? contain:$/,
   checkTextContainsArray
 );
 
-// ok
 Then(
   /^I expect the element "([^"]*)?" text to( not)? be empty$/,
   checkTextEmpty
 );
 
-// ok
 Then(
   /^I expect the element "([^"]*)?" text to( not)? be "([^"]*)?"$/,
   checkTextEquals
 );
 
-// ok
 Then(
   /^I expect the element "([^"]*)?" text to( not)? match:$/,
   checkTextEquals
 );
 
-// ok
 Then(
   /^I expect the elements "([^"]*)?" texts to( not)? match:$/,
   checkTextEqualsArray
 );
 
-// ok: I expect the page title to contain ""
-// ok: I expect the page title to contain that of the page ""
-// ok: I expect the page title to not contain ""
-// ok: I expect the page title to not contain that of the page ""
 Then(
   /^I expect the (?:window|page) title to( not)? contain (?:"([^"]*)?"|that of the page "([^"]*)?")$/,
   checkTitleContains
 );
 
-// ok: I expect the page title to be ""
-// ok: I expect the page title to be that of the page ""
-// ok: I expect the page title to not be ""
-// ok: I expect the page title to not be that of the page ""
 Then(
   /^I expect the (?:window|page) title to( not)? be (?:"([^"]*)?"|that of the page "([^"]*)?")$/,
   checkTitleEquals
 );
 
-// ok: I expect the url to contain ""
-// ok: I expect the url to contain that of the page ""
-// ok: I expect the url to not contain ""
-// ok: I expect the url to not contain that of the page ""
 Then(
   /^I expect the url to( not)? contain (?:"([^"]*)?"|that of the page "([^"]*)?")$/,
   checkUrlContains
 );
 
-// ok: I expect the url to be ""
-// ok: I expect the url to be that of the page ""
-// ok: I expect the url to not be ""
-// ok: I expect the url to not be that of the page ""
 Then(
   /^I expect the url to( not)? be (?:"([^"]*)?"|that of the page "([^"]*)?")$/,
   checkUrlEquals
 );
 
-// ok
 Then(
   /^I expect the url path to( not)? contain "([^"]*)?"$/,
   checkUrlPathContains
 );
 
-// ok
 Then(
   /^I expect the url path to( not)? be "([^"]*)?"$/,
   checkUrlPathEquals
 );
 
-// ok
 Then(
   /^I expect the (?:field|element) "([^"]*)?" value to( not)? contain "([^"]*)?"$/,
   checkValueContains
 );
 
-// ok
 Then(
   /^I expect the (?:field|element) "([^"]*)?" value to( not)? contain:$/,
   checkValueContains
 );
 
-// ok
 Then(
   /^I expect the (?:field|element) "([^"]*)?" value to( not)? be empty$/,
   checkValueEmpty
 );
 
-// ok
 Then(
   /^I expect the (?:field|element) "([^"]*)?" value to( not)? be "([^"]*)?"$/,
   checkValueEquals
 );
 
-// ok
 Then(
   /^I expect the (?:field|element) "([^"]*)?" value to( not)? match:$/,
   checkValueEquals
 );
 
-// ok
 Then(
   /^I expect the (?:window|tab) count to( not)? be "([^"]*)?"$/,
   checkWindowCountEquals
 );
 
-// ok
 Then(
   /^I expect the (?:window|tab) count to( not)? be (greater|less) than "([^"]*)?"$/,
   checkWindowCountGreaterLess
 );
 
-// ok
 Then(
   /^I expect the (viewport|page) image to( not)? match the reference "([^"]*)?"$/,
   checkWindowImageMatch

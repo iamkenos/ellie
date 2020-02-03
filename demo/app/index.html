@@ -1208,11 +1208,56 @@
             <dd class="text-muted">- show site cookies stored on button click</dd>
             <dd class="xtnd-head text-secondary">Actions:</dd>
             <dd class="xtnd-desc">
-
+              I set the cookie "cookie-1" with the content "value-1"
+            </dd>
+            <dd class="xtnd-desc">
+              I set the cookie "cookie-2" with the content "value-2"
+            </dd>
+            <dd class="xtnd-desc">
+              I set the cookie "cookie-3" with the content "value-3"
+            </dd>
+            <dd class="xtnd-desc">
+              I click the button "#showCookiesBtn"
+            </dd>
+            <dd class="xtnd-desc">
+              I delete the cookies
             </dd>
             <dd class="xtnd-head text-secondary">Checks:</dd>
             <dd class="xtnd-desc">
-
+              I expect the element "#showCookiesDest" text to match:<br />
+              """<br />
+              {<br />
+              &nbsp;&nbsp;"cookie-1": "value-1",<br />
+              &nbsp;&nbsp;"cookie-2": "value-2",<br />
+              &nbsp;&nbsp;"cookie-3": "value-3"<br />
+              }<br />
+              """
+            </dd>
+            <dd class="xtnd-desc">
+              I expect the cookie "cookie-1" value to contain "ue-1"
+            </dd>
+            <dd class="xtnd-desc">
+              I expect the cookie "cookie-1" value to not contain "ue-2"
+            </dd>
+            <dd class="xtnd-desc">
+              I expect the cookie "cookie-2" value to be "value-2"
+            </dd>
+            <dd class="xtnd-desc">
+              I expect the cookie "cookie-2" value to not be "value-1"
+            </dd>
+            <dd class="xtnd-desc">
+              I expect the cookie "cookie-2" value to exist
+            </dd>
+            <dd class="xtnd-desc">
+              I expect the cookie "cookie-3" value to not exist
+            </dd>
+            <dd class="xtnd-desc">
+              I expect the element "#showCookiesDest" text to match:
+              """<br />
+              {<br />
+              &nbsp;&nbsp; "": ""<br />
+              }<br />
+              """
             </dd>
             <dd class="xtnd-head text-secondary">Result:</dd>
             <dd class="xtnd-desc">

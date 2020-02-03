@@ -129,7 +129,7 @@ Then(
 );
 
 Then(
-  /^I expect the response the following request to( not)? match the reference "([^"]*)?":$/,
+  /^I expect the response to the following request to( not)? match the reference "([^"]*)?":$/,
   checkHttpResponseMatch
 );
 

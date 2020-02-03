@@ -1,9 +1,8 @@
 <h1 align="center">ELLIE</h1>
 
----
-
 <p align="center">
-  <a href="docs/DETAILED_USAGE.md">Detailed Usage</a> |
+  <a href="docs/SEEDED_STEPS.md">Seeded Steps</a> |
+  <a href="docs/DETAILED_GUIDE.md">Detailed Guide</a> |
   <a href="docs/CONTRIBUTE.md">Contribute</a> |
   <a href="docs/RELEASES.md">Releases</a>
 </p>
@@ -16,24 +15,25 @@
 
 ## Requirements
 
-|           | Tool    | Min Version |
-| --------- | ------- | ----------- |
-| **SDK**   | Node.JS | 10.15.3+    |
-| **Build** | NPM     | 6.4+        |
-| **IDE**   | VS Code | 1.41+       |
+- NodeJS _`10.15.3`_ or higher
+- Visual Studio Code _`1.41`_ is the recommended IDE
 
 ## Get Started
 
-1. Start by installing the project as a dependency:
+1. Start by creating a new npm project and installing this as a dependency:
 
-   `npm install ellie`
+   `npm init`
 
-2. Create sample files:
+   `npm install ellie --saveDev`
+
+2. Use the command line to generate sample tests and code to kickstart your project:
 
    `./node_modules/.bin/ellie whistle`
 
-3. Run tests using the sample files:
+3. Run the sample tests generated:
 
    `./node_modules/.bin/ellie ./samples/ellie.conf.js`
 
-4. Know more by going through the [detailed usage](./docs/DETAILED_USAGE.md) guide.
+4. Check out the list of [seeded steps](./docs/SEEDED_STEPS.md) available for you to use, all without writing a tiny bit of javascript code.
+
+5. Know more by going through the [detailed guide](./docs/DETAILED_GUIDE.md).

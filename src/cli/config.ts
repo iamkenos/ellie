@@ -168,7 +168,7 @@ const CONFIG_PROPERTIES: IConfigProperty[] = [
   },
   {
     name: "logLevel",
-    helptext: "The the level of logging verbosity",
+    helptext: "The level of logging verbosity",
     overrideOption: {
       enabled: true,
       alias: "l",
@@ -189,7 +189,7 @@ const CONFIG_PROPERTIES: IConfigProperty[] = [
   },
   {
     name: "maxInstances",
-    helptext: "The the number of concurrent browser instances to run per feature",
+    helptext: "The number of concurrent browser instances to run per feature",
     overrideOption: {
       enabled: true,
       description: "Set the number of concurrent browser instances running",
@@ -280,7 +280,7 @@ const CONFIG_PROPERTIES: IConfigProperty[] = [
   },
   {
     name: "specFileRetries",
-    helptext: "The number of times to retry the entire specfile when it fails as a whole"
+    helptext: "The number of times to retry the entire spec file when it fails as a whole"
   },
   {
     name: "specs",

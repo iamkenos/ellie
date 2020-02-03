@@ -1,12 +1,44 @@
-[Home](../../README.md) >> [Detailed Usage](../DETAILED_USAGE.md)
+# Detailed Guide
 
-<br/>
-
-## Configuration
+➤ [Home](../README.md)
 
 ---
 
-### Configuration Options
+## Table of contents
+
+1. [CLI tool](#cli-tool)
+2. [How to write tests](#how-to-write-tests)
+3. [How to run tests](#how-to-run-tests)
+4. [Page object model](#page-object-model)
+5. [Adding custom steps](#adding-custom-steps)
+6. [Configurations](#configurations)
+7. [Debugging](#debugging)
+
+## CLI tool
+
+## How to write tests
+
+## How to run tests
+
+## Page object model
+
+## Adding custom steps
+
+## Configurations
+
+### Helper
+
+Launch the configuration helper by running the `init` command:
+
+`ellie init`
+
+This will generate a default configuration file `ellie.conf.js` on the same directory as where the command is executed.
+
+Refer the help menu for a quick overview of the properties supported:
+
+`ellie --help`
+
+### Properties
 
 ```txt
 +==========================+==========================================+===========================================================+
@@ -18,7 +50,7 @@
 | baseUrl                  | http://localhost                         | The base url of the application under test                |
 +--------------------------+------------------------------------------+-----------------------------------------------------------+
 | capabilities             | [{                                       | W3C browser capabilities.                                 |
-|                          |    maxInstances: 5                       | See https://www.w3.org/TR/webdriver1/#capabilities        |
+|                          |    maxInstances: 5,                      | See https://www.w3.org/TR/webdriver1/#capabilities        |
 |                          |    browserName: "chrome",                |                                                           |
 |                          |    "goog:chromeOptions": {               |                                                           |
 |                          |      args: [                             |                                                           |
@@ -34,11 +66,11 @@
 |                          |      skipCompare: false                  |                                                           |
 |                          |    },                                    |                                                           |
 |                          |    httpResponse: {                       |                                                           |
-|                          |      outputDir: ".comparable/ajax",      |                                                           |
+|                          |      outputDir: ".comparable/http",      |                                                           |
 |                          |      skipCompare: false                  |                                                           |
 |                          |    },                                    |                                                           |
 |                          |    imageCompare: {                       |                                                           |
-|                          |      outputDir: ".comparable/ajax",      |                                                           |
+|                          |      outputDir: ".comparable/image",     |                                                           |
 |                          |      skipCompare: false                  |                                                           |
 |                          |    }                                     |                                                           |
 |                          | }                                        |                                                           |
@@ -57,12 +89,12 @@
 |                          |    after: ""                             |                                                           |
 |                          | }                                        |                                                           |
 +--------------------------+------------------------------------------+-----------------------------------------------------------+
-| logLevel                 | warn                                     | The the level of logging verbosity                        |
+| logLevel                 | warn                                     | The level of logging verbosity                            |
 +--------------------------+------------------------------------------+-----------------------------------------------------------+
 | locale                   | default                                  | Locale to use when looking for elemens                    |
 |                          |                                          | in your page meta files                                   |
 +--------------------------+------------------------------------------+-----------------------------------------------------------+
-| maxInstances             | 5                                        | The the number of concurrent browser instances            |
+| maxInstances             | 5                                        | The number of concurrent browser instances                |
 |                          |                                          | to run per feature                                        |
 +--------------------------+------------------------------------------+-----------------------------------------------------------+
 | pages                    | ["./pages/**/*.meta.js"]                 | Array of globs pointing to your page meta,                |
@@ -96,12 +128,18 @@
 | tags                     | ""                                       | Only execute the features or scenarios with tags          |
 |                          |                                          | matching the expression                                   |
 +--------------------------+------------------------------------------+-----------------------------------------------------------+
-| waitforTimeout           |                                          | Default timeout for all browser                           |
+| waitforTimeout           | 5000                                     | Default timeout for all browser                           |
 |                          |                                          | 'waitFor' commands in milliseconds                        |
 +--------------------------+------------------------------------------+-----------------------------------------------------------+
 ```
 
-### Configuration Overrides
+### Overrides
+
+Certain configuration properties can be overriden from the command line by passing in the keys as options.
+
+For instance, to run a single feature file and set the logging level to debug:
+
+`ellie ellie.conf.js --specs ./path/to/feature/file.feature --l debug`
 
 | Key          | Alias | Description                                            |
 | ------------ | ----- | ------------------------------------------------------ |
@@ -114,3 +152,23 @@
 | debugEnabled |       | Run the tests in debug mode                            |
 | specs        |       | Define which tests to run                              |
 | tags         |       | Set the cucumber tag to look for in the specs          |
+
+### Extending the configurations
+
+You can extend your configuration files using javascript require. This is specially useful when you want to create different config files for various test sets or even test environments.
+
+`ellie.component.conf.js`
+
+```js
+const config = require('./ellie.conf.js').config;
+
+config.specs: ['./features/component/*.feature'],
+
+exports.config = config;
+```
+
+From here you can run the tests as you would have done with any other config file:
+
+`ellie ellie.component.conf.js`
+
+## Debugging

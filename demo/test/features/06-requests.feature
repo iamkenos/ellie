@@ -7,7 +7,7 @@ Feature: VI. Requests
       And I expect the section header "VI. Requests" to exist
 
   Scenario: Send HTTP request by providing a path relative to the base url
-    Then I expect the response the following request to match the reference "06-requests/01-get-iframe":
+    Then I expect the response to the following request to match the reference "06-requests/01-get-iframe":
       """
       {
         "url": "/iframe.html"
@@ -15,7 +15,7 @@ Feature: VI. Requests
       """
 
   Scenario: Send HTTP requests to a completely external url
-    Then I expect the response the following request to match the reference "06-requests/02-get-reqres-users":
+    Then I expect the response to the following request to match the reference "06-requests/02-get-reqres-users":
       """
       {
         "url": "https://reqres.in/api/users",
@@ -24,7 +24,7 @@ Feature: VI. Requests
         }
       }
       """
-      And I expect the response the following request to match the reference "06-requests/02-post-reqres-register":
+      And I expect the response to the following request to match the reference "06-requests/02-post-reqres-register":
       """
       {
         "url": "https://reqres.in/api/register",

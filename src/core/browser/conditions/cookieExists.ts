@@ -22,8 +22,8 @@ export default class CookieExists implements IBrowserCondition {
     let result: boolean;
 
     try {
-      actual = !!browser.getNamedCookie(this.cookie);
-      result = this.reverse ? actual !== this.expected : actual === this.expected;
+      actual = !!browser.getCookies([this.cookie])[0];
+      result = actual === this.expected;
     } catch (e) {
       actual = e.message;
       result = false;
@@ -36,8 +36,8 @@ export default class CookieExists implements IBrowserCondition {
   Condition: ${this.reverse ? "Not " : ""}${this.name}
   Cookie: ${this.cookie}
   Result: ${result ? "Success" : "Failed"}
-  Expected: ${this.reverse ? !this.expected : this.expected}
-  Actual: ${this.reverse ? !actual : actual}
+  Expected: ${this.expected}
+  Actual: ${actual}
   `,
       isSuccess: result
     };

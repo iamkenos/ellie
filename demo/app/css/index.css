@@ -43,7 +43,14 @@ textarea:focus {
   cursor: pointer;
 }
 
+[id=nav-items] li a:hover {
+  color: #868e96;
+  border-bottom: 5px solid #868e96;
+}
+
+[id=nav-items] li a.xtnd-active-nav-item:hover,
 .xtnd-active-nav-item {
+  cursor: default;
   color: #868e96;
   border-bottom: 5px solid #868e96;
 }
@@ -115,6 +122,10 @@ dd.xtnd-desc {
 /* End: Terms ---------------------------------------------- */
 
 /* Start: Overrides ---------------------------------------- */
+pre {
+  width: 500px
+}
+
 dl textarea {
   resize: none;
 }
@@ -161,5 +172,12 @@ dl label.xtnd-term {
   font-size: 1rem;
   outline: 0;
   padding: .75rem;
+}
+
+.nav-brand a,
+.nav-brand a:hover {
+  cursor: pointer;
+  color: #41403e;
+  border-bottom: 5px solid #41403e;
 }
 /* End: Overrides ------------------------------------------ */

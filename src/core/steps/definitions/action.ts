@@ -35,7 +35,7 @@ import windowUrlSet from "../glue/action/windowUrlSet";
 
 // ok
 When(
-  /^I (click|double click) the (link|button|element) "([^"]*)?"(?: again)?$/,
+  /^I (click|double click|script click) the (link|button|element) "([^"]*)?"(?: again)?$/,
   elemClick
 );
 
@@ -99,8 +99,9 @@ When(
   elemValueSetMultiLine
 );
 
+// ok
 When(
-  /^I start to intercept ajax requests$/,
+  /^I start to intercept (?:ajax|xhr) requests$/,
   windowAjaxIntercept
 );
 

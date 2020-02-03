@@ -13,5 +13,7 @@ export default (action: string, type: string, key: string): void => {
     element.click();
   } else if (action === "double click") {
     element.doubleClick();
+  } else if (action === "script click") {
+    element.jsClick();
   }
 };

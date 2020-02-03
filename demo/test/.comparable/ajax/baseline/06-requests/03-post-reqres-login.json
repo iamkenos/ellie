@@ -1,0 +1,11 @@
+[
+  {
+    "url": "https://reqres.in/api/login",
+    "method": "POST",
+    "body": "email=eve.holt%40reqres.in&password=cityslicka",
+    "headers": {
+      "accept": "*/*",
+      "content-type": "application/x-www-form-urlencoded; charset=UTF-8"
+    }
+  }
+]

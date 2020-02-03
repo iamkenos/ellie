@@ -43,8 +43,9 @@ import checkWindowCountEquals from "../glue/check/checkWindowCountEquals";
 import checkWindowCountGreaterLess from "../glue/check/checkWindowCountGreaterLess";
 import checkWindowImageMatch from "../glue/check/checkWindowImageMatch";
 
+// ok
 Then(
-  /^I expect the ajax requests to( not)? match the reference "([^"]*)?"$/,
+  /^I expect the (?:ajax|xhr) requests to( not)? match the reference "([^"]*)?"$/,
   checkAjaxRequestsMatch
 );
 
@@ -117,6 +118,7 @@ Then(
   checkDisplayedInViewport
 );
 
+// ok
 Then(
   /^I expect the element "([^"]*)?" image to( not)? match the reference "([^"]*)?"$/,
   checkElementImageMatch
@@ -140,6 +142,7 @@ Then(
   checkFocused
 );
 
+// ok
 Then(
   /^I expect the response the following request to( not)? match the reference "([^"]*)?":$/,
   checkHttpResponseMatch
@@ -319,6 +322,7 @@ Then(
   checkWindowCountGreaterLess
 );
 
+// ok
 Then(
   /^I expect the (viewport|page) image to( not)? match the reference "([^"]*)?"$/,
   checkWindowImageMatch

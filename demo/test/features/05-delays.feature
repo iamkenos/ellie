@@ -10,7 +10,7 @@ Feature: V. Delays
     When I click the button "#makeElemVisibleBtn"
     Then I expect the element "#makeElemVisibleDest" to be displayed
       And I expect the page image to match the reference "05-delays/01-page"
-      But I click the button "#makeElemVisibleBtn" again
+      And I script click the button "#makeElemVisibleBtn"
     Then I expect the element "#makeElemVisibleDest" to not be displayed
 
   Scenario: Toggle element enabled state with delay on button click

@@ -280,7 +280,7 @@ const CONFIG_PROPERTIES: IConfigProperty[] = [
   },
   {
     name: "specFileRetries",
-    helptext: "The number of times to retry the entire specfile when it fails as a whole"
+    helptext: "The number of times to retry the entire spec file when it fails as a whole"
   },
   {
     name: "specs",

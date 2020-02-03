@@ -1,7 +1,5 @@
-[Home](../README.md)
+# Contribute
 
-<br/>
-
-## Contribute
+➤ [Home](../README.md)
 
 ---

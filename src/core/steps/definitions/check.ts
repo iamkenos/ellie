@@ -105,6 +105,7 @@ Then(
   checkCSSExists
 );
 
+// ok
 Then(
   /^I expect the element "([^"]*)?" to( not)? be displayed$/,
   checkDisplayed
@@ -121,6 +122,7 @@ Then(
   checkElementImageMatch
 );
 
+// ok
 Then(
   /^I expect the element "([^"]*)?" to( not)? be enabled$/,
   checkEnabled
@@ -173,11 +175,13 @@ Then(
   checkSelected
 );
 
+// ok
 Then(
   /^I expect the element "([^"]*)?" to( not)? be ([\d]+)px broad and ([\d]+)px tall$/,
   checkSizeEquals
 );
 
+// ok
 Then(
   /^I expect the element "([^"]*)?" to( not)? be ([\d]+)px (broad|tall)$/,
   checkSizeSideEquals

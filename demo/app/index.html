@@ -34,13 +34,10 @@
       <label class="xtnd-no-select" for="tab5">V. Delays</label>
 
       <input id="tab6" type="radio" name="tabs">
-      <label class="xtnd-no-select" for="tab6">VI. Images</label>
+      <label class="xtnd-no-select" for="tab6">VII. Requests</label>
 
       <input id="tab7" type="radio" name="tabs">
-      <label class="xtnd-no-select" for="tab7">VII. Requests</label>
-
-      <input id="tab8" type="radio" name="tabs">
-      <label class="xtnd-no-select" for="tab8">VIII. Boneyard</label>
+      <label class="xtnd-no-select" for="tab7">VIII. Boneyard</label>
 
       <div class="content" id="content1">
         <h2>I. Mouse Actions</h2>
@@ -993,31 +990,98 @@
         <h2>V. Delays</h2>
         <h3>Displayed</h3>
         <dl>
-          <span for="elemId">
+          <span for="makeElemVisibleBtn">
             <dt>
-              <label class="xtnd-term xtnd-no-select">
-                elemId
-              </label>
+              <button id="makeElemVisibleBtn" data-target="#makeElemVisibleDest" data-action='{"delayShow": "2000"}'>
+                makeElemVisibleBtn
+              </button>
             </dt>
-            <dd class="text-muted">- descricption</dd>
+            <dd class="text-muted">- toggle element visibility with delay on button click</dd>
             <dd class="xtnd-head text-secondary">Actions:</dd>
             <dd class="xtnd-desc">
-
+              I click the button "#makeElemVisibleBtn"
+            </dd>
+            <dd class="xtnd-desc">
+              I click the button "#makeElemVisibleBtn" again
             </dd>
             <dd class="xtnd-head text-secondary">Checks:</dd>
             <dd class="xtnd-desc">
-
+              I expect the element "#createElemDest" to be displayed
+            </dd>
+            <dd class="xtnd-desc">
+              I expect the element "#makeElemVisibleDest" to not be displayed
             </dd>
             <dd class="xtnd-head text-secondary">Result:</dd>
             <dd class="xtnd-desc">
-              <span id="elemIdDest" class="text-success"></span>
+              <span id="makeElemVisibleDest" class="text-success" hidden>
+                This element is displayed by [makeElemVisibleBtn]...
+              </span>
             </dd>
           </span>
         </dl>
-      </div>
 
-      <div class="content" id="content8">
-        <h2>VI. Images</h2>
+        <h3>Enabled</h3>
+        <dl>
+          <span for="makeElemEnabledBtn">
+            <dt>
+              <button id="makeElemEnabledBtn" data-target="#makeElemEnabledDest" data-action='{"delayEnable": "2000"}'>
+                makeElemEnabledBtn
+              </button>
+            </dt>
+            <dd class="text-muted">- toggle element enabled state with delay on button click</dd>
+            <dd class="xtnd-head text-secondary">Actions:</dd>
+            <dd class="xtnd-desc">
+              I click the button "#makeElemEnabledBtn"
+            </dd>
+            <dd class="xtnd-desc">
+              I click the button "#makeElemEnabledBtn" again
+            </dd>
+            <dd class="xtnd-head text-secondary">Checks:</dd>
+            <dd class="xtnd-desc">
+              I expect the element "#createElemDest" to be displayed
+            </dd>
+            <dd class="xtnd-desc">
+              I expect the element "#makeElemEnabledDest" to not be displayed
+            </dd>
+            <dd class="xtnd-head text-secondary">Result:</dd>
+            <dd class="xtnd-desc">
+              <input id="makeElemEnabledDest" class="text-success" disabled
+                placeholder="This element is enabled by [makeElemEnabledBtn]...">
+              </input>
+            </dd>
+          </span>
+        </dl>
+
+        <h3>Resized</h3>
+        <dl>
+          <span for="resizeElemBtn">
+            <dt>
+              <button id="resizeElemBtn" data-target="#resizeElemDest" data-action='{"delayResize": "2000"}'>
+                resizeElemBtn
+              </button>
+            </dt>
+            <dd class="text-muted">- toggle element enabled state with delay on button click</dd>
+            <dd class="xtnd-head text-secondary">Actions:</dd>
+            <dd class="xtnd-desc">
+              I click the button "#resizeElemBtn"
+            </dd>
+            <dd class="xtnd-desc">
+              I click the button "#resizeElemBtn" again
+            </dd>
+            <dd class="xtnd-head text-secondary">Checks:</dd>
+            <dd class="xtnd-desc">
+              I expect the element "#createElemDest" to be displayed
+            </dd>
+            <dd class="xtnd-desc">
+              I expect the element "#resizeElemDest" to not be displayed
+            </dd>
+            <dd class="xtnd-head text-secondary">Result:</dd>
+            <dd class="xtnd-desc">
+              <img id="resizeElemDest" src="./resources/img-0-400x400.jpg" class="float-left">
+              <img src="./resources/img-1-400x400.jpg">
+            </dd>
+          </span>
+        </dl>
       </div>
 
       <div class="content" id="content7">

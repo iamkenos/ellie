@@ -7,8 +7,8 @@ exports.config = {
     }
   ],
   comparable: {
-    ajaxRequest: { outputDir: '.comparable/ajax', skipCompare: false },
-    httpResponse: { outputDir: '.comparable/http', skipCompare: false },
+    ajaxRequest: { outputDir: '.comparable/ajax', skipCompare: true },
+    httpResponse: { outputDir: '.comparable/http', skipCompare: true },
     imageCompare: { outputDir: '.comparable/image', skipCompare: false }
   },
   hooks: {

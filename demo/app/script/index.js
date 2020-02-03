@@ -136,6 +136,47 @@ function delayedHandle(action, state, $source, $target, val) {
       break;
     }
 
+    case 'delayEnable': {
+      const timeout = val || 0;
+
+      setTimeout(function fn() {
+        if ($target.attr('disabled')) {
+          $target.removeAttr('disabled');
+        } else {
+          $target.attr('disabled', true);
+        }
+      }, timeout);
+      break;
+    }
+
+    case 'delayShow': {
+      const timeout = val || 0;
+
+      setTimeout(function fn() {
+        if ($target.attr('hidden')) {
+          $target.removeAttr('hidden');
+        } else {
+          $target.attr('hidden', true);
+        }
+      }, timeout);
+      break;
+    }
+
+    case 'delayResize': {
+      const timeout = val || 0;
+
+      setTimeout(function fn() {
+        if ($target.attr('height') && $target.attr('width')) {
+          $target.removeAttr('height');
+          $target.removeAttr('width');
+        } else {
+          $target.attr('height', 250);
+          $target.attr('width', 250);
+        }
+      }, timeout);
+      break;
+    }
+
     default: {
       if (state) {
         $target.prop(action, val === 'true');

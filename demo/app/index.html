@@ -6,6 +6,8 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta http-equiv="X-UA-Compatible" content="ie=edge">
   <link href="/favicon.png" rel="icon" type="image/png">
+
+  <!-- Paper CSS -->
   <link rel="stylesheet" href="https://unpkg.com/papercss@1.6.1/dist/paper.css">
   <link rel="stylesheet" type="text/css" href="css/index.css">
   <title>Demo Page</title>
@@ -13,32 +15,30 @@
 
 <body>
   <div class="container">
-    <h1>Demo Page</h1>
+    <div class="xtnd-med-spacer"></div>
     <img class="xtnd-logo" src="favicon.png">
     <br />
 
-    <div class="row flex-spaces tabs">
-      <input id="tab1" type="radio" name="tabs" checked>
-      <label class="xtnd-no-select" for="tab1">I. Mouse Actions</label>
+    <nav class="border fixed split-nav">
+      <div class="nav-brand">
+        <h3><a href="#">Demo Page</a></h3>
+      </div>
+      <div class="collapsible">
+        <input id="collapsible1" type="checkbox" name="collapsible1">
+        <div class="collapsible-body">
+          <ul id="nav-items" class="inline">
+            <li><a data-target="#container" data-action='{"load": "#content1"}'>I. Mouse Actions</a></li>
+            <li><a data-target="#container" data-action='{"load": "#content2"}'>II. Form Fields</a></li>
+            <li><a data-target="#container" data-action='{"load": "#content3"}'>III. Alerts</a></li>
+            <li><a data-target="#container" data-action='{"load": "#content4"}'>IV. Contexts</a></li>
+            <li><a data-target="#container" data-action='{"load": "#content5"}'>V. Delays</a></li>
+            <li><a data-target="#container" data-action='{"load": "#content6"}'>VI. Requests</a></li>
+          </ul>
+        </div>
+      </div>
+    </nav>
 
-      <input id="tab2" type="radio" name="tabs">
-      <label class="xtnd-no-select" for="tab2">II. Form Fields</label>
-
-      <input id="tab3" type="radio" name="tabs">
-      <label class="xtnd-no-select" for="tab3">III. Alerts</label>
-
-      <input id="tab4" type="radio" name="tabs">
-      <label class="xtnd-no-select" for="tab4">IV. Contexts</label>
-
-      <input id="tab5" type="radio" name="tabs">
-      <label class="xtnd-no-select" for="tab5">V. Delays</label>
-
-      <input id="tab6" type="radio" name="tabs">
-      <label class="xtnd-no-select" for="tab6">VII. Requests</label>
-
-      <input id="tab7" type="radio" name="tabs">
-      <label class="xtnd-no-select" for="tab7">VIII. Boneyard</label>
-
+    <div id="container">
       <div class="content" id="content1">
         <h2>I. Mouse Actions</h2>
         <h3>Click</h3>
@@ -295,10 +295,10 @@
             </dd>
             <dd class="xtnd-head text-secondary">Checks:</dd>
             <dd class="xtnd-desc">
-              I expect the element "#moveToElementBoxDest" text to be "X: 379 | Y: 2969"
+              I expect the element "#moveToElementBoxDest" text to be "X: 379 | Y: 2844"
             </dd>
             <dd class="xtnd-desc">
-              I expect the element "#moveToElementBoxDest" text to be "X: 317 | Y: 2956"
+              I expect the element "#moveToElementBoxDest" text to be "X: 317 | Y: 2831"
             </dd>
             <dd class="xtnd-head text-secondary">Result:</dd>
             <dd class="xtnd-desc">
@@ -331,7 +331,7 @@
             </dd>
             <dd class="xtnd-head text-secondary">Checks:</dd>
             <dd class="xtnd-desc">
-              I expect the element "#scrollToElementBoxDest" text to be "Left: 372.5 | Top: 869.40625"
+              I expect the element "#scrollToElementBoxDest" text to be "Left: 372.5 | Top: 1007.65625"
             </dd>
             <dd class="xtnd-desc">
               I expect the element "#scrollToElementBoxDest" to be displayed within the viewport
@@ -1084,196 +1084,94 @@
         </dl>
       </div>
 
-      <div class="content" id="content7">
-        <h2>VII. Requests</h2>
-      </div>
-
       <div class="content" id="content6">
-        <h3>SECTION 1</h3>
-        <hr />
-        <div style="position: relative; height: 200px;">
-          <div id="draggable" data-dropzone="#droppable"
-            style="width:100px; height:100px; background-color:steelblue; border:2px solid black; line-height:100px; text-align:center; cursor:move; font-size:12px; position:absolute;z-index:2;">
-            Drag me!
-          </div>
-          <div id="droppable"
-            style="position:absolute;right:0; width:200px; height:200px; background-color:lightgrey; line-height:200px; text-align:center; cursor:move; font-size:12px">
-            Dropzone
-          </div>
-        </div>
+        <h2>VI. Requests</h2>
 
-        <h3>SECTION 2</h3>
-        <hr />
-        <div id="visible">I' m a visible element</div>
-        <h3>SECTION 3</h3>
-        <hr />
-        <div id="hidden" class="hidden">I'm a hidden element</div>
-        <div>Just above me is a hidden element</div>
+        <h3>Http Requests</h3>
+        <dl>
+          <span for="internalUrl">
+            <dt>
+              <label class="xtnd-term xtnd-no-select">
+                internalUrl
+              </label>
+            </dt>
+            <dd class="text-muted">- send http request to a path relative to the base url</dd>
+            <dd class="xtnd-head text-secondary">Checks:</dd>
+            <dd class="xtnd-desc">
+              I expect the response the following request to match the reference "06-requests/01-get-iframe":<br />
+              """<br />
+              {<br />
+              &nbsp;&nbsp;"url": "/iframe.html"<br />
+              }<br />
+              """
+            </dd>
+          </span>
+          <br />
 
-        <h3>SECTION 4</h3>
-        <hr />
-        <div>
-          <button id="btnMakeVisible" class="btn jsToggleElement" data-show="#makeVisible" data-timeout="2000">
-            Show element
-          </button>
-        </div>
-        <div id="makeVisible" class="hidden">I'm only visible 2 seconds after the button was clicked</div>
-        <div>
-          <button id="btnMakeInvisible" class="btn jsToggleElement" data-hide="#makeInvisible" data-timeout="5000">
-            Hide element
-          </button>
-        </div>
-        <div id="makeInvisible">I'm only hidden 5 seconds after the button was clicked</div>
+          <span for="externalUrl">
+            <dt>
+              <label class="xtnd-term xtnd-no-select">
+                externalUrl
+              </label>
+            </dt>
+            <dd class="text-muted">- send http requests completely external url</dd>
+            <dd class="xtnd-head text-secondary">Checks:</dd>
+            <dd class="xtnd-desc">
+              I expect the response the following request to match the reference
+              "06-requests/02-get-reqres-users":<br />
+              """<br />
+              {<br />
+              &nbsp;&nbsp;"url": "https://reqres.in/api/users",<br />
+              &nbsp;&nbsp;"qs": {<br />
+              &nbsp;&nbsp;&nbsp;&nbsp;"page": 2<br />
+              &nbsp;&nbsp;}<br />
+              }<br />
+              """
+            </dd>
+            <dd class="xtnd-desc">
+              I expect the response the following request to match the reference
+              "06-requests/02-get-reqres-register":<br />
+              """<br />
+              {<br />
+              &nbsp;&nbsp;"url": "https://reqres.in/api/register",<br />
+              &nbsp;&nbsp;"method": "POST",<br />
+              &nbsp;&nbsp;"content-type": "application/jso",<br />
+              &nbsp;&nbsp;"form": {<br />
+              &nbsp;&nbsp;&nbsp;&nbsp;"email": "lipsum@foobar.com"<br />
+              &nbsp;&nbsp;&nbsp;&nbsp;"password": "lipsum"<br />
+              &nbsp;&nbsp;}<br />
+              }<br />
+              """
+            </dd>
+          </span>
+        </dl>
 
-        <h3>SECTION 5</h3>
-        <hr />
-        <div id="textComparison1">I'm the same as the first string</div>
-        <div id="textComparison2">I'm the same as the second string</div>
-        <div id="textComparison3">I'm the same as the first string</div>
-        <div id="textComparison4">
-          I have a text that
-          <br><br>spans across
-          <br><br><br>multiple lines.
-        </div>
-        <div id="textComparison5"></div>
-        <div id="textComparison6">I'm the same as the first string<span></span></div>
-        <div id="textComparison7">
-          <strong>I'm the same as the <em>first</em> string</strong>
-        </div>
-        <div id="textComparison8">I'm a string containing &euro; &copy; &gt;</div>
-        <div id="textComparison9">I'm a string containing &euro; &copy; &gt;</div>
-
-        <h3>SECTION 6</h3>
-        <hr />
-        <div><input type="text" id="valueComparison1" value="This input contains strawberry" size="30" /></div>
-        <div><input type="text" id="valueComparison2" value="This input contains cucumber" size="30" /></div>
-        <div><input type="text" id="valueComparison3" value="" size="30" /></div>
-        <div><input type="text" id="valueComparison4" value="&euro; &copy; &gt;" size="30" /></div>
-        <div>
-          <textarea id="valueComparison5" rows="4" cols="50">
-      I have a text that
-
-      spans across
-
-
-      multiple lines.</textarea></div>
-
-        <h3>SECTION 7</h3>
-        <hr />
-        <div id="attributeComparison" role="note">This element has a role attribute with the value "note"</div>
-        <div id="cssAttributeComparison" style="color:rgba(255,0,0,1); font-weight: 700">
-          This element has a color css attribute with the value "rgba(255,0,0,1)"
-        </div>
-
-        <h3>SECTION 8</h3>
-        <hr />
-        <input type="checkbox" id="checkbox" value="y" />
-        <input type="text" id="textinput" placeholder="Textinput" />
-
-        <h3>SECTION 9</h3>
-        <hr />
-        <div id="square100x100" style="width: 100px; height: 100px; background-color: black"></div>
-
-        <h3>SECTION 10</h3>
-        <hr />
-        <div id="classTest" class="class1 class2">I have cthe class class1 and class2 but not class3</div>
-
-        <h3>SECTION 11</h3>
-        <hr />
-        <div><a id="linkSameWindow" href="http://example.com/">This link opens example.com in the same window</a>
-        </div>
-        <div><a id="linkNewWindow" href="http://example.com/" target="_blank">This link opens example.com in a new
-            window</a></div>
-
-        <h3>SECTION 12</h3>
-        <hr />
-        <a href="https://example.com" id="testClick">Navigate to example.com</a>
-        <button id="toggleMessage">Open different alert based on click or double click</button>
-        <div id="message1" class="hidden">This is the first message</div>
-        <div id="message2" class="hidden">This is the second message</div>
-        <div id="toggleBackground">Change the background of this element based on click or double click</div>
-
-        <h3>SECTION 13</h3>
-        <hr />
-        <div><input type="text" size="30" value="" id="testInput" placeholder="Test input" autocomplete="off" />
-        </div>
-        <div><input type="file" size="30" id="uploadInput" /></div>
-
-        <h3>SECTION 14</h3>
-        <hr />
-        <form id="formSubmitTest">
-          <div><input type="text" size="30" value="" id="formInput" autocomplete="off" /></div>
-          <div class="message hidden">Form is submitted!</div>
-          <button type="submit">Submit</button>
-        </form>
-
-        <h3>SECTION 15</h3>
-        <hr />
-        <div>
-          <button id="waitForCheckedBtn" data-target="#waitForCheckedElement" data-action='{"checked": "true"}'>
-            Check
-          </button>
-          <input type="checkbox" id="waitForCheckedElement" value="test" />
-        </div>
-        <div>
-          <button id="waitForEnabledBtn" data-target="#waitForEnabledElement" data-action='{"disabled": "false"}'>
-            Enable
-          </button>
-          <input type="input" id="waitForEnabledElement" value="test" disabled />
-        </div>
-        <div>
-          <button id="waitForSelectedBtn" data-target="#waitForSelectedElement" data-action='{"select": "2"}'>
-            Select
-          </button>
-          <select id="waitForSelectedElement">
-            <option value="1" selected>First option</option>
-            <option value="2">Second option</option>
-          </select>
-        </div>
-        <div>
-          <button id="waitForVisibleBtn" data-target="#waitForVisibleElement" data-action='{"toggleClass": "hidden"}'>
-            Visible
-          </button>
-          <span id="waitForVisibleElement" class="hidden">Here I am!</span>
-        </div>
-
-
-        <h3>SECTION 16</h3>
-        <hr />
-        <div id="testKeyResponse"></div>
-
-        <h3>SECTION 17</h3>
-        <hr />
-        <div><button id="openAlert">Open an alert box</button></div>
-        <div><button id="openConfirm">Open an confirm box</button></div>
-        <div id="confirmResult"></div>
-        <div><button id="openPrompt">Open an prompt</button></div>
-        <div id="promptResult"></div>
-
-        <h3>SECTION 18</h3>
-        <hr />
-        <div>
-          <select id="selectElementTest">
-            <option name="firstOption" value="first">Option #1</option>
-            <option name="secondOption" value="second">Option #2</option>
-            <option name="thirdOption" value="third">Option #3</option>
-            <option name="fourthOption" value="fourth">Option #4</option>
-          </select>
-        </div>
-
-        <h3>SECTION 19</h3>
-        <hr />
-        <div>
-          <div id="moveTo">
-            Move to me please
-          </div>
-        </div>
-
-
-        <div class="spacer"></div>
-        <footer id="footer">
-          <div>The bottom of the page</div>
-        </footer>
+        <h3>Ajax Requests</h3>
+        <dl>
+          <span for="ajaxSubmitBtn">
+            <dt>
+              <button id="ajaxSubmitBtn" data-target="#ajaxSubmitDest" data-action='{"ajax": "Response received..."}'>
+                ajaxSubmitBtn
+              </button>
+            </dt>
+            <dd class="text-muted">- send ajax request on button click</dd>
+            <dd class="xtnd-head text-secondary">Actions:</dd>
+            <dd class="xtnd-desc">
+              I start to intercept ajax requests
+            </dd>
+            <dd class="xtnd-desc">
+              I click the button "#ajaxSubmitBtn"
+            </dd>
+            <dd class="xtnd-head text-secondary">Checks:</dd>
+            <dd class="xtnd-desc">
+              I expect the ajax requests to match the reference "06-requests/03-post-reqres-login"
+            </dd>
+            <dd class="xtnd-head text-secondary">Result:</dd>
+            <dd class="xtnd-desc">
+              <span id="ajaxSubmitDest" class="text-success"></span>
+            </dd>
+          </span>
+        </dl>
       </div>
     </div>
   </div>

@@ -79,28 +79,28 @@ Feature: I. Mouse Actions
     Then I expect the element "#draggableBoxDest" text to be "This text is changed by [draggableBox]..."
       And I expect the element "#draggableBoxDest" location at x axis to be 372.5
       And I expect the element "#draggableBoxDest" location at x axis to not be 255.5
-      And I expect the element "#draggableBoxDest" location at y axis to be 2646.40625
+      And I expect the element "#draggableBoxDest" location at y axis to be 2521.65625
       And I expect the element "#draggableBoxDest" location at y axis to not be 255.5
       And I expect the page title to contain "emo Pag"
       And I expect the page title to contain that of the page "demo"
 
   Scenario: Move to existing element
     When I move to the element "#moveToElementBox"
-    Then I expect the element "#moveToElementBoxDest" text to be "X: 379 | Y: 2969"
+    Then I expect the element "#moveToElementBoxDest" text to be "X: 379 | Y: 2844"
       But I move to the element "h3=Move To"
       And I move to the element "#moveToElementBox" with an offset of 5,10
-    Then I expect the element "#moveToElementBoxDest" text to be "X: 317 | Y: 2956"
+    Then I expect the element "#moveToElementBoxDest" text to be "X: 317 | Y: 2831"
 
   Scenario: Scroll to existing element
     When I scroll to the element "#scrollToElementBox"
-    Then I expect the element "#scrollToElementBoxDest" text to be "Left: 372.5 | Top: 992.40625"
+    Then I expect the element "#scrollToElementBoxDest" text to be "Left: 372.5 | Top: 1007.65625"
 
   Scenario: Scroll to a part of the window
     When I scroll to the bottom of the page
     Then I expect the element "#scrollToElementBoxDest" to be displayed within the viewport
-      And I expect the element "#scrollToElementBoxDest" text to be "Left: 372.5 | Top: 992.40625"
+      And I expect the element "#scrollToElementBoxDest" text to be "Left: 372.5 | Top: 1007.65625"
       But I scroll to the top of the page
     Then I expect the element "#scrollToElementBoxDest" to not be displayed within the viewport
       And I expect the element "#scrollToElementBoxDest" text to be ""
     When I scroll to the coordinates 300.2950 of the page
-    Then I expect the element "#scrollToElementBoxDest" text to be "Left: 372.5 | Top: 992.40625"
+    Then I expect the element "#scrollToElementBoxDest" text to be "Left: 372.5 | Top: 1007.65625"

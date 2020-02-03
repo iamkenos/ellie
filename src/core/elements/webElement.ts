@@ -47,6 +47,12 @@ export default class WebElement {
     this.existing$().clearValue();
   }
 
+  public jsClick(): void {
+    logger.info(`Selector: ${this.selector}`);
+    const elem = this.existing$();
+    browser.execute("arguments[0].click();", elem);
+  }
+
   public click(): void {
     logger.info(`Selector: ${this.selector}`);
     this.existing$().click();

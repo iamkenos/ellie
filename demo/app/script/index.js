@@ -1,15 +1,3 @@
-function onClickToggleElement() {
-  const $el = $(this);
-  const $showTarget = $($el.data('show'));
-  const $hideTarget = $($el.data('hide'));
-  const timeout = $el.data('timeout') || 0;
-
-  setTimeout(function toggleHiddenClass() {
-    $showTarget.removeClass('hidden');
-    $hideTarget.addClass('hidden');
-  }, timeout);
-}
-
 function handleFormSubmit(event) {
   event.preventDefault();
 
@@ -51,6 +39,35 @@ function handleDataActions(event) {
 
 function delayedHandle(action, state, $source, $target, val) {
   switch (action) {
+    case 'load': {
+      window.scrollTo(0, 0);
+      $source.closest('ul').find('li>:first-child').removeClass('xtnd-active-nav-item');
+      $source.addClass('xtnd-active-nav-item');
+      $target.children().addClass('hidden');
+      $(val).removeClass('hidden');
+      break;
+    }
+
+    case 'ajax': {
+      if (state === true) {
+        $.ajax({
+          url: 'https://reqres.in/api/login',
+          type: 'POST',
+          data: {
+            email: 'eve.holt@reqres.in',
+            password: 'cityslicka'
+          },
+          success: function(response) {
+            $target.html(val + '<br/>' + JSON.stringify(response, null, 2));
+          }
+        });
+      } else {
+        $target.text('');
+      }
+
+      break;
+    }
+
     case 'select': {
       if (state === true) {
         $target.val(val).change();
@@ -333,13 +350,21 @@ function handleKeydown(event) {
 // ################################################
 // ################################################
 $(function() {
-  $('.jsToggleElement').on('click', onClickToggleElement);
-
   $('#formSubmitTest').on('submit', handleFormSubmit);
 
   // jqeury final ----------------------------------------------------------------------------------------
-  // window
+  // global
   document.addEventListener('scroll', handleScroll, true);
+
+  $(window).on('load', function() {
+    const action = 'load';
+    const state = true;
+    const $source = $('#nav-items').find('li>:first-child').first();
+    const $target = $('#container');
+    const val = '#content1';
+
+    delayedHandle(action, state, $source, $target, val);
+  });
 
   // elements
   $('#draggableBox').on('mousedown', handleMousedown);

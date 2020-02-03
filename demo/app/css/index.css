@@ -38,6 +38,19 @@ textarea:focus {
   width: 100%;
   height: 600px;
 }
+
+[id=nav-items] li a {
+  cursor: pointer;
+}
+
+.xtnd-active-nav-item {
+  color: #868e96;
+  border-bottom: 5px solid #868e96;
+}
+
+.hidden {
+  display: none;
+}
 /* End: Generic -------------------------------------------- */
 
 /* Start: Images ------------------------------------------- */
@@ -102,15 +115,15 @@ dd.xtnd-desc {
 /* End: Terms ---------------------------------------------- */
 
 /* Start: Overrides ---------------------------------------- */
-.tabs dl textarea {
+dl textarea {
   resize: none;
 }
 
-.tabs dl input {
+dl input {
   display: block;
 }
 
-.tabs dl input.xtnd-file {
+dl input.xtnd-file {
   position: absolute;
   width: 1px;
   height: 1px;
@@ -121,18 +134,18 @@ dd.xtnd-desc {
   border: 0;
 }
 
-.tabs dl label {
+dl label {
   text-align: left;
 }
 
-.tabs dl label.xtnd-toggle-box {
+dl label.xtnd-toggle-box {
   text-align: left;
   padding: 0rem;
   color: #41403e;
   box-sizing: content-box;
 }
 
-.tabs dl label.xtnd-term {
+dl label.xtnd-term {
   border-bottom-left-radius: 15px 255px;
   border-bottom-right-radius: 225px 15px;
   border-top-left-radius: 255px 15px;
@@ -148,9 +161,5 @@ dd.xtnd-desc {
   font-size: 1rem;
   outline: 0;
   padding: .75rem;
-}
-
-.row.flex-spaces{
-  justify-content: space-between;
 }
 /* End: Overrides ------------------------------------------ */

@@ -3,7 +3,7 @@ export default {
     url: '/',
     title: 'Demo Page',
     locators: {
-      navigationItem: '//div[contains(@class,"tabs")]/label[text()="##LABEL##"]',
+      navigationItem: '//ul[@id="nav-items"]//a[text()="##LABEL##"]',
       sectionHeader: '//h2[text()="##LABEL##"]'
     }
   }

@@ -73,16 +73,19 @@ Then(
   checkAxisLocationEquals
 );
 
+// ok
 Then(
   /^I expect the cookie "([^"]*)?" value to( not)? contain "([^"]*)?"$/,
   checkCookieContains
 );
 
+// ok
 Then(
   /^I expect the cookie "([^"]*)?" value to( not)? be "([^"]*)?"$/,
   checkCookieEquals
 );
 
+// ok
 Then(
   /^I expect the cookie "([^"]*)?" value to( not)? exist$/,
   checkCookieExists

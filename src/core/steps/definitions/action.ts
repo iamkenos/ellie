@@ -111,16 +111,19 @@ When(
   windowChildrenClose
 );
 
+// ok
 When(
   /^I delete the cookie "([^"]*)?"$/,
   windowCookieDelete
 );
 
+// ok
 When(
   /^I delete the cookies$/,
   windowCookiesDelete
 );
 
+// ok
 When(
   /^I set the cookie "([^"]*)?" with the content "([^"]*)?"$/,
   windowCookieSet

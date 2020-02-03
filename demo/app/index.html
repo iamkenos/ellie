@@ -19,20 +19,44 @@
     <img class="xtnd-logo" src="favicon.png">
     <br />
 
-    <nav class="border fixed split-nav">
+    <nav class="border fixed split-nav xtnd-no-select">
       <div class="nav-brand">
-        <h3><a href="#">Demo Page</a></h3>
+        <h3><a>Demo Page</a></h3>
       </div>
       <div class="collapsible">
         <input id="collapsible1" type="checkbox" name="collapsible1">
         <div class="collapsible-body">
           <ul id="nav-items" class="inline">
-            <li><a data-target="#container" data-action='{"load": "#content1"}'>I. Mouse Actions</a></li>
-            <li><a data-target="#container" data-action='{"load": "#content2"}'>II. Form Fields</a></li>
-            <li><a data-target="#container" data-action='{"load": "#content3"}'>III. Alerts</a></li>
-            <li><a data-target="#container" data-action='{"load": "#content4"}'>IV. Contexts</a></li>
-            <li><a data-target="#container" data-action='{"load": "#content5"}'>V. Delays</a></li>
-            <li><a data-target="#container" data-action='{"load": "#content6"}'>VI. Requests</a></li>
+            <li>
+              <a data-target="#container" data-action='{"load": "#content1"}'>
+                I. Mouse Actions
+              </a>
+            </li>
+            <li>
+              <a data-target="#container" data-action='{"load": "#content2"}'>
+                II. Form Fields
+              </a>
+            </li>
+            <li>
+              <a data-target="#container" data-action='{"load": "#content3"}'>
+                III. Alerts
+              </a>
+            </li>
+            <li>
+              <a data-target="#container" data-action='{"load": "#content4"}'>
+                IV. Contexts
+              </a>
+            </li>
+            <li>
+              <a data-target="#container" data-action='{"load": "#content5"}'>
+                V. Delays
+              </a>
+            </li>
+            <li>
+              <a data-target="#container" data-action='{"load": "#content6"}'>
+                VI. Requests
+              </a>
+            </li>
           </ul>
         </div>
       </div>
@@ -1150,7 +1174,7 @@
         <dl>
           <span for="ajaxSubmitBtn">
             <dt>
-              <button id="ajaxSubmitBtn" data-target="#ajaxSubmitDest" data-action='{"ajax": "Response received..."}'>
+              <button id="ajaxSubmitBtn" data-target="#ajaxSubmitDest" data-action='{"ajax": ""}'>
                 ajaxSubmitBtn
               </button>
             </dt>
@@ -1172,6 +1196,30 @@
             </dd>
           </span>
         </dl>
+
+        <h3>Cookies</h3>
+        <dl>
+          <span for="showCookiesBtn">
+            <dt>
+              <button id="showCookiesBtn" data-target="#showCookiesDest" data-action='{"showCookies": ""}'>
+                showCookiesBtn
+              </button>
+            </dt>
+            <dd class="text-muted">- show site cookies stored on button click</dd>
+            <dd class="xtnd-head text-secondary">Actions:</dd>
+            <dd class="xtnd-desc">
+
+            </dd>
+            <dd class="xtnd-head text-secondary">Checks:</dd>
+            <dd class="xtnd-desc">
+
+            </dd>
+            <dd class="xtnd-head text-secondary">Result:</dd>
+            <dd class="xtnd-desc">
+              <span id="showCookiesDest" class="text-success"></span>
+            </dd>
+          </span>
+        </dl>
       </div>
     </div>
   </div>
@@ -1188,25 +1236,32 @@
 
 </html>
 
-<!-- <dl>
-  <span for="elemId">
-    <dt>
-      <label class="xtnd-term xtnd-no-select">
-        elemId
-      </label>
-    </dt>
-    <dd class="text-muted">- descricption</dd>
-    <dd class="xtnd-head text-secondary">Actions:</dd>
-    <dd class="xtnd-desc">
+<!-- Content Template -->
+<!--
+<div class="content" id="content[number]">
+  <h2>Category</h2>
+  <h3>Sub Title</h3>
+  <dl>
+    <span for="elemId">
+      <dt>
+        <label class="xtnd-term xtnd-no-select">
+          elemId
+        </label>
+      </dt>
+      <dd class="text-muted">- descricption</dd>
+      <dd class="xtnd-head text-secondary">Actions:</dd>
+      <dd class="xtnd-desc">
 
-    </dd>
-    <dd class="xtnd-head text-secondary">Checks:</dd>
-    <dd class="xtnd-desc">
+      </dd>
+      <dd class="xtnd-head text-secondary">Checks:</dd>
+      <dd class="xtnd-desc">
 
-    </dd>
-    <dd class="xtnd-head text-secondary">Result:</dd>
-    <dd class="xtnd-desc">
-      <span id="elemIdDest" class="text-success"></span>
-    </dd>
-  </span>
-</dl> -->
+      </dd>
+      <dd class="xtnd-head text-secondary">Result:</dd>
+      <dd class="xtnd-desc">
+        <span id="elemIdDest" class="text-success"></span>
+      </dd>
+    </span>
+  </dl>
+</div>
+-->

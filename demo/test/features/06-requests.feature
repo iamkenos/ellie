@@ -41,3 +41,32 @@ Feature: VI. Requests
     When I start to intercept ajax requests
       And I click the button "#ajaxSubmitBtn"
     Then I expect the ajax requests to match the reference "06-requests/03-post-reqres-login"
+  Scenario: Manipulate site cookies
+
+    When I set the cookie "cookie-1" with the content "value-1"
+      And I set the cookie "cookie-2" with the content "value-2"
+      And I set the cookie "cookie-3" with the content "value-3"
+      And I click the button "#showCookiesBtn"
+    Then I expect the element "#showCookiesDest" text to match:
+      """
+      {
+        "cookie-1": "value-1",
+        "cookie-2": "value-2",
+        "cookie-3": "value-3"
+      }
+      """
+    Then I expect the cookie "cookie-1" value to contain "ue-1"
+      And I expect the cookie "cookie-1" value to not contain "ue-2"
+      And I expect the cookie "cookie-2" value to be "value-2"
+      And I expect the cookie "cookie-2" value to not be "value-1"
+      And I expect the cookie "cookie-2" value to exist
+      And I delete the cookie "cookie-3"
+      And I expect the cookie "cookie-3" value to not exist
+    When I delete the cookies
+      And I click the button "#showCookiesBtn"
+    Then I expect the element "#showCookiesDest" text to match:
+      """
+      {
+        "": ""
+      }
+      """

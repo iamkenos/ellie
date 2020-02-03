@@ -1,12 +1,3 @@
-function handleFormSubmit(event) {
-  event.preventDefault();
-
-  $(this)
-    .find('.message')
-    .removeClass('hidden');
-}
-
-// fn final ----------------------------------------------------------------------------------------
 function handleDataAction(event) {
   const $source = $(this);
   const $target = $($(this).data('target'));
@@ -58,7 +49,8 @@ function delayedHandle(action, state, $source, $target, val) {
             password: 'cityslicka'
           },
           success: function(response) {
-            $target.html(val + '<br/>' + JSON.stringify(response, null, 2));
+            const parsed = JSON.stringify(response, null, 2).trim();
+            $target.html(buildCodeWrapper(parsed));
           }
         });
       } else {
@@ -68,18 +60,9 @@ function delayedHandle(action, state, $source, $target, val) {
       break;
     }
 
-    case 'select': {
-      if (state === true) {
-        $target.val(val).change();
-      } else {
-        $target.val('1').change();
-      }
-
-      break;
-    }
-
-    case 'toggleClass': {
-      $target.toggleClass(val);
+    case 'showCookies': {
+      const cookies = JSON.stringify(getCookies(), null, 2).trim();
+      $target.html(buildCodeWrapper(cookies));
       break;
     }
 
@@ -342,17 +325,21 @@ function handleKeydown(event) {
   $target.text(event.keyCode);
 }
 
-// ################################################
-// ################################################
-// ################################################
-// ################################################
-// ################################################
-// ################################################
-// ################################################
-$(function() {
-  $('#formSubmitTest').on('submit', handleFormSubmit);
+function getCookies() {
+  const pairs = document.cookie.split(';');
+  const cookies = {};
+  for (let i = 0; i < pairs.length; i++) {
+    const pair = pairs[i].split('=');
+    cookies[(pair[0] + '').trim()] = unescape(pair.slice(1).join('='));
+  }
+  return cookies;
+}
 
-  // jqeury final ----------------------------------------------------------------------------------------
+function buildCodeWrapper(content) {
+  return `<pre><code class="text-success">${content}</code></pre>`;
+}
+
+$(function() {
   // global
   document.addEventListener('scroll', handleScroll, true);
 
@@ -363,6 +350,7 @@ $(function() {
     const $target = $('#container');
     const val = '#content1';
 
+    // $.cookie('initial-cookie', 'lipsumn@ellie');
     delayedHandle(action, state, $source, $target, val);
   });
 

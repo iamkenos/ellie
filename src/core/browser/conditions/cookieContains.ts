@@ -22,7 +22,7 @@ export default class CookieContains implements IBrowserCondition {
     let result: boolean;
 
     try {
-      actual = browser.getNamedCookie(this.cookie).value;
+      actual = browser.getCookies([this.cookie])[0].value;
       result = this.reverse ? !actual.includes(this.expected) : actual.includes(this.expected);
     } catch (e) {
       actual = e.message;

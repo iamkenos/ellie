@@ -6,7 +6,7 @@ Feature: III. Alerts
       And I click the "III. Alerts" navigation item
       And I expect the section header "III. Alerts" to exist
 
-  Scenario: Interact with an page alert box
+  Scenario: Interact with a page alert box
     When I click the link "openAlertLink"
     Then I expect the alert text to contain "This alert box is opened by"
       And I expect the alert text to be "This alert box is opened by [openAlertLink]..."

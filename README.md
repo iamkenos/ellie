@@ -3,7 +3,6 @@
 <p align="center">
   <a href="docs/SEEDED_STEPS.md">Seeded Steps</a> |
   <a href="docs/DETAILED_GUIDE.md">Detailed Guide</a> |
-  <a href="docs/CONTRIBUTE.md">Contribute</a> |
   <a href="docs/RELEASES.md">Releases</a>
 </p>
 
@@ -11,29 +10,38 @@
 
 ## About
 
-...
+This is a thin wrapper around the popular [WebdriverIO](https://webdriver.io/) test automation framework. The focus is to use it together with [Cucumber](https://cucumber.io/docs/guides/overview/) and provide a set of seeded steps that can be used out of the box without writing additional code.
+
+Check out the [steps](./docs/SEEDED_STEPS.md) readily available for you to use and know more by going through the [detailed guide](./docs/DETAILED_GUIDE.md).
 
 ## Requirements
 
 - NodeJS _`10.15.3`_ or higher
-- Visual Studio Code _`1.41`_ is the recommended IDE
 
 ## Get Started
 
-1. Start by creating a new npm project and installing this as a dependency:
+1. Get it
 
    `npm init`
 
    `npm install ellie --saveDev`
 
-2. Use the command line to generate sample tests and code to kickstart your project:
+2. Try it
 
-   `./node_modules/.bin/ellie whistle`
+   `ellie whistle`
 
-3. Run the sample tests generated:
+3. Run it
 
-   `./node_modules/.bin/ellie ./samples/ellie.conf.js`
+   `ellie ./samples/ellie.conf.js`
 
-4. Check out the list of [seeded steps](./docs/SEEDED_STEPS.md) available for you to use, all without writing a tiny bit of javascript code.
+## Acknowledgements
 
-5. Know more by going through the [detailed guide](./docs/DETAILED_GUIDE.md).
+- The [WebdriverIO team](https://github.com/webdriverio/webdriverio/graphs/contributors) for their awesome work
+
+## Contribute
+
+...
+
+## License
+
+...

@@ -1,5 +1,0 @@
-# Contribute
-
-➤ [Home](../README.md)
-
----

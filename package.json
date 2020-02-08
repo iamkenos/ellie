@@ -20,26 +20,22 @@
     "start": "npm run build && node bin/ellie",
     "prebuild": "rimraf build && npm run lint -- --fix",
     "build": "tsc",
-    "postbuild": "npm run postbuild:cp:resources && npm run postbuild:cp:prettierrc && npm run postbuild:cp:babelrc && npm run postbuild:prettier",
+    "postbuild": "npm run postbuild:cp:resources && npm run postbuild:cp:prettierrc && npm run postbuild:prettier",
     "postbuild:cp:resources": "copyfiles -u 1 \"./src/**/resources/**\" build",
     "postbuild:cp:prettierrc": "copyfiles \"./.prettierrc\" build/cli/resources",
-    "postbuild:cp:babelrc": "copyfiles \"./.babelrc\" build/cli/resources",
     "postbuild:prettier": "prettier --write \"./build/**/*.js\"",
     "demo:serve": "http-server ./demo/app",
-    "demo:test": "./bin/ellie.js demo/test/demo.conf.js",
+    "demo:test": "./bin/ellie.js demo/test/demo.conf.ts",
     "postdemo:test": "npm run postdemo:report:gen && npm run postdemo:report:serve",
     "postdemo:report:gen": "allure generate demo/test/.reports/allure -c -o demo/test/.reports/allure/report",
     "postdemo:report:serve": "allure open demo/test/.reports/allure/report",
     "pack": "npm run build && rimraf ellie-*.tgz && npm pack",
     "lint": "eslint ./",
     "test:functional": "start-test demo:serve 8080 demo:test",
-    "test:unit": "jest --coverage"
+    "test:unit": "jest --config .jestrc.json --coverage"
   },
   "dependencies": {
-    "@babel/cli": "^7.8.3",
-    "@babel/core": "^7.8.3",
-    "@babel/preset-env": "^7.8.3",
-    "@babel/register": "^7.8.3",
+    "@types/cucumber": "^6.0.0",
     "@wdio/allure-reporter": "^5.18.6",
     "@wdio/browserstack-service": "^5.18.1",
     "@wdio/cli": "^5.18.6",
@@ -61,14 +57,16 @@
     "prettier": "^1.19.1",
     "syncrequest": "^1.4.7",
     "table": "^5.4.6",
+    "ts-node": "^8.6.2",
+    "tsconfig-paths": "^3.9.0",
     "wdio-image-comparison-service": "^1.9.0",
     "wdio-intercept-service": "^4.0.0",
     "webdriverio": "^5.18.6",
-    "yargs": "^15.1.0"
+    "yargs": "^15.1.0",
+    "typescript": "^3.7.5"
   },
   "devDependencies": {
     "@types/chai": "^4.2.7",
-    "@types/cucumber": "^6.0.0",
     "@types/deep-diff": "^1.0.0",
     "@types/ejs": "^3.0.0",
     "@types/eslint": "^6.1.7",
@@ -96,7 +94,6 @@
     "lint-staged": "^10.0.2",
     "rimraf": "^3.0.1",
     "start-server-and-test": "^1.10.8",
-    "ts-jest": "^25.1.0",
-    "typescript": "^3.7.5"
+    "ts-jest": "^25.1.0"
   }
 }

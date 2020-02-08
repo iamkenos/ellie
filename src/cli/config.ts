@@ -33,13 +33,13 @@ export const DEFAULT: IConfig = {
   locale: "default",
   logLevel: DEFAULT_LEVEL,
   maxInstances: 5,
-  pages: ["./pages/**/*.meta.js"],
+  pages: ["./pages/**/*.meta.ts"],
   browserstackEnabled: false,
   browserstackLocal: false,
   reportOutDir: ".reports",
   specFileRetries: 0,
   specs: ["./features/**/*.feature"],
-  steps: ["./steps/definitions/**/*.js"],
+  steps: ["./steps/definitions/**/*.ts"],
   stepTimeout: 30000,
   tags: "",
   waitforTimeout: 5000,
@@ -93,15 +93,15 @@ export const PRETTIER_SETTINGS_FILE = RESOURCES_DIR + "/.prettierrc";
 
 export const CONFIG_LOCAL_TPL_FILE = RESOURCES_DIR + "/ellie.conf.tpl.ejs";
 
-export const CONFIG_LOCAL_OUT_FILE = "ellie.conf.js";
+export const CONFIG_LOCAL_OUT_FILE = "ellie.conf.ts";
 
 export const CONFIG_WDIO_TPL_FILE = RESOURCES_DIR + "/wdio.conf.tpl.ejs";
 
 export const CONFIG_WDIO_OUT_FILE = "wdio.conf.js";
 
-export const BABEL_SETTINGS_FILE = "/.babelrc";
-
 export const SAMPLES_DIR = "/samples";
+
+export const SAMPLES_TS_CONFIG_FILE = "tsconfig.json";
 
 export const CONFIG_HELPER_INTRO = `
 ----------------------------------
@@ -120,9 +120,9 @@ To run your tests, execute:
 $ ellie .${SAMPLES_DIR}/${CONFIG_LOCAL_OUT_FILE}
 `;
 
-export const SAMPLES_HELPER_BABELRC_EXISTS_MESSAGE = `
-You seem to have already created a .babelrc file.
-Consider replacing the contents with the following:
+export const SAMPLES_HELPER_TS_CONFIG_EXISTS_MESSAGE = `
+You seem to have already created a tsconfig.json file.
+Consider adding the following:
 `;
 
 const CONFIG_PROPERTIES: IConfigProperty[] = [

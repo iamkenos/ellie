@@ -12,7 +12,7 @@
       "console": "integratedTerminal",
       "cwd": "${workspaceFolder}",
       "program": "${workspaceRoot}/bin/ellie.js",
-      "args": ["./demo/test/demo.conf.js", "--debugEnabled", "--specs", "${file}", "--l", "debug", "--tags", "@debug"]
+      "args": ["./demo/test/demo.conf.ts", "--debugEnabled", "--specs", "${file}", "--l", "debug", "--tags", "@debug"]
     },
     {
       "name": "ellie @ launch demo app",

@@ -1,5 +1,5 @@
-import { Then, When } from 'cucumber';
-import * as webdrverIO from '../glue/webdriverIO.glue';
+import { Then, When } from "cucumber";
+import * as webdrverIO from "../glue/webdriverIO.glue";
 
 When(
   /^I navigate on the WDIO page$/,

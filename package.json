@@ -1,9 +1,9 @@
 {
   "name": "ellie",
   "version": "1.0.0",
-  "license": "ISC",
+  "license": "MIT",
   "author": "iamkenos",
-  "description": "A web app testing framework build on top of WebDriverIO and Cucumber",
+  "description": "This is a thin wrapper around the popular WebdriverIO test automation framework",
   "main": "./build/index.js",
   "bin": {
     "ellie": "bin/ellie.js"
@@ -26,13 +26,15 @@
     "postbuild:prettier": "prettier --write \"./build/**/*.js\"",
     "demo:serve": "http-server ./demo/app",
     "demo:test": "./bin/ellie.js demo/test/demo.conf.ts",
-    "postdemo:test": "npm run postdemo:report:gen && npm run postdemo:report:serve",
+    "postdemo:test": "npm run postdemo:report:gen",
     "postdemo:report:gen": "allure generate demo/test/.reports/allure -c -o demo/test/.reports/allure/report",
     "postdemo:report:serve": "allure open demo/test/.reports/allure/report",
     "pack": "npm run build && rimraf ellie-*.tgz && npm pack",
     "lint": "eslint ./",
     "test:functional": "start-test demo:serve 8080 demo:test",
-    "test:unit": "jest --config .jestrc.json --coverage"
+    "test:unit": "jest --config .jestrc.json --coverage",
+    "prepublish": "npm run build && npm run test:unit && npm run test:functional",
+    "postpublish": "npm version patch"
   },
   "dependencies": {
     "@types/cucumber": "^6.0.0",

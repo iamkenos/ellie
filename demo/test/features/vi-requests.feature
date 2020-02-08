@@ -41,8 +41,8 @@ Feature: VI. Requests
     When I start to intercept ajax requests
       And I click the button "#ajaxSubmitBtn"
     Then I expect the ajax requests to match the reference "06-requests/03-post-reqres-login"
-  Scenario: Manipulate site cookies
 
+  Scenario: Manipulate site cookies
     When I set the cookie "cookie-1" with the content "value-1"
       And I set the cookie "cookie-2" with the content "value-2"
       And I set the cookie "cookie-3" with the content "value-3"

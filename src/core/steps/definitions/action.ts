@@ -148,7 +148,6 @@ When(
   windowPageNavigate
 );
 
-// n/a
 When(
   /^I pause for (\d+)ms$/,
   windowPause
@@ -174,7 +173,6 @@ When(
   windowScrollToCoordinates
 );
 
-// n/a
 When(
   /^I have a screen that is maximized$/,
   windowSizeMaximize

@@ -1,5 +1,5 @@
-import { Then, When } from 'cucumber';
-import * as demo from '../glue/demo.glue';
+import { Then, When } from "cucumber";
+import * as demo from "../glue/demo.glue";
 
 When(
   /^I click the "([^"]*)?" navigation item$/,

@@ -18,6 +18,13 @@ export interface IHttpResponse {
 export interface IHttpRequest {
   options: CoreOptions & UrlOptions;
 }
+export interface IPageMeta {
+  default: {
+    url: string;
+    title: string;
+    locators: object;
+  };
+}
 
 export interface IExpectedConditionResult {
   name: string;

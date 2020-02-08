@@ -1,25 +1,25 @@
-import WebdriverIOPage from '../../pages/objects/webdriverIO.page';
-import { driver } from 'ellie';
+import WebdriverIOPage from "../../pages/objects/webdriverIO.page";
+import { driver } from "ellie";
 
 const wdioPage = new WebdriverIOPage();
 
-export function navigate() {
+export function navigate(): void {
   wdioPage.navigate();
 }
 
-export function checkTitle(reverse) {
+export function checkTitle(reverse: boolean): void {
   wdioPage.checkTitle(reverse);
 }
 
-export function clickGetStarted() {
-  wdioPage.getStarted.click();
+export function clickGetStarted(): void {
+  wdioPage.getStarted().click();
 }
 
-export function checkProjectTitleText(reverse, value) {
+export function checkProjectTitleText(reverse: boolean, value: string): void {
   // you can create anonymous functions that encloses a single function which
   // returns a truthy value. this is useful when you want to create custom assertions
   // and still make use of the framework's internal retry mechanism
-  const isProjectTitleTextEquals = () => wdioPage.projectTitle.isTextEquals(value, reverse);
+  const isProjectTitleTextEquals = (): boolean => wdioPage.projectTitle().isTextEquals(value, reverse);
   driver.checkCustomTruthy(isProjectTitleTextEquals);
 
   // the check above is for illustration purposes and can be simplified by
@@ -27,6 +27,6 @@ export function checkProjectTitleText(reverse, value) {
   // wdioPage.projectTitle.checkTextEquals(value, reverse);
 }
 
-export function checkNavBarDisplayed(reverse) {
-  wdioPage.navBar.checkDisplayed(reverse);
+export function checkNavBarDisplayed(reverse: boolean): void {
+  wdioPage.navBar().checkDisplayed(reverse);
 }

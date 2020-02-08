@@ -32,7 +32,7 @@ Launch the configuration helper by running the `init` command:
 
 `ellie init`
 
-This will generate a default configuration file `ellie.conf.js` on the same directory as where the command is executed.
+This will generate a default configuration file `ellie.conf.ts` on the same directory as where the command is executed.
 
 Refer the help menu for a quick overview of the properties supported:
 
@@ -139,7 +139,7 @@ Certain configuration properties can be overriden from the command line by passi
 
 For instance, to run a single feature file and set the logging level to debug:
 
-`ellie ellie.conf.js --specs ./path/to/feature/file.feature --l debug`
+`ellie ellie.conf.ts --specs ./path/to/feature/file.feature --l debug`
 
 | Key          | Alias | Description                                            |
 | ------------ | ----- | ------------------------------------------------------ |
@@ -155,20 +155,20 @@ For instance, to run a single feature file and set the logging level to debug:
 
 ### Extending the configurations
 
-You can extend your configuration files using javascript require. This is specially useful when you want to create different config files for various test sets or even test environments.
+You can extend your configuration files using typescript imports. This is specially useful when you want to create different config files for various test sets or even test environments.
 
-`ellie.component.conf.js`
+`ellie.component.conf.ts`
 
 ```js
-const config = require('./ellie.conf.js').config;
+import config from "./ellie.conf";
 
-config.specs: ['./features/component/*.feature'],
+config.specs = ["./features/component/*.feature"];
 
-exports.config = config;
+export default config;
 ```
 
 From here you can run the tests as you would have done with any other config file:
 
-`ellie ellie.component.conf.js`
+`ellie ellie.component.conf.ts`
 
 ## Debugging

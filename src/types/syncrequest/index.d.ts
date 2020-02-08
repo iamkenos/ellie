@@ -1,7 +1,7 @@
 /// <reference types="node" />
 
 declare module "syncrequest" {
-  import { CoreOptions, UrlOptions, Response } from "request";
+  import { CoreOptions, Response, UrlOptions } from "request";
   interface IHttpResponse {
     error: any;
     response: Response;

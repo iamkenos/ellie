@@ -1,3 +1,4 @@
+require("ts-node/register");
 const fse = require('fs-extra');
 const { table, getBorderCharacters } = require('table');
 const { addAttachment } = require('@wdio/allure-reporter').default;
@@ -215,7 +216,9 @@ exports.config = {
       <%- answers.steps.map(i => JSON.stringify(i)) %>
     ],
     // <string[]> ("extension:module") require files with the given EXTENSION after requiring MODULE (repeatable)
-    requireModule: ['@babel/register'],
+    requireModule: [
+      'tsconfig-paths/register', () => { require('ts-node').register({ files: true }) }
+    ],
     // <boolean> show full backtrace for errors
     backtrace: false,
     // <boolean> disable colors in formatter output
@@ -291,7 +294,6 @@ exports.config = {
    * @param {Array.<String>} specs List of spec file paths that are to be run
    */
   before: function (capabilities, specs) {
-    require('@babel/register');
     <% if (answers.hooks.before) { %>
     const hook = require('<%= answers.hooks.before %>').default;
     hook(capabilities, specs);

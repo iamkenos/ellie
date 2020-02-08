@@ -240,7 +240,6 @@ function detectDrop($el) {
 }
 
 function clearTargetText(event) {
-  const $source = $(this);
   const $target = $($(this).data('target'));
 
   $target.text('');
@@ -283,7 +282,6 @@ function setSourceValueToTargetText(event) {
 }
 
 function setSourceCoordinatesToTargetText(event) {
-  const $source = $(this);
   const $target = $($(this).data('target'));
   const x = event.pageX;
   const y = event.pageY;

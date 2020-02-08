@@ -1,1 +1,5 @@
-exports.config = <%- JSON.stringify(answers) %>;
+import { IConfig } from "ellie";
+
+const config: IConfig = <%- JSON.stringify(answers) %>;
+
+export default config;

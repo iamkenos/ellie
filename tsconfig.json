@@ -1,5 +1,6 @@
 {
   "compilerOptions": {
+    "baseUrl": "./",
     "declaration": true,
     "downlevelIteration": true,
     "esModuleInterop": true,
@@ -10,6 +11,6 @@
     "target": "ES5",
     "types": ["node", "@wdio/sync", "@types/jest"]
   },
-  "include": ["./src/**/*.ts", "./index.ts"],
-  "exclude": ["node_modules", "build", "test", "bin"]
+  "include": ["./src/**/*.ts"],
+  "exclude": ["node_modules", "build", "test", "bin", "src/cli/resources/samples"]
 }

@@ -1,4 +1,4 @@
-demo
-src
-test
-build/cli/resources/samples
+demo/
+src/
+test/
+build/cli/resources/samples/

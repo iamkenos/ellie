@@ -7,7 +7,6 @@ import * as path from "path";
 import logger from "../logger";
 import { LEVELS } from "../logger/config";
 import {
-  BABEL_SETTINGS_FILE,
   CONFIG_HELPER_INTRO,
   CONFIG_HELPER_SUCCESS_MESSAGE,
   CONFIG_INQUIRY,
@@ -20,10 +19,12 @@ import {
   PRETTIER_SETTINGS_FILE,
   RESOURCES_DIR,
   SAMPLES_DIR,
-  SAMPLES_HELPER_BABELRC_EXISTS_MESSAGE,
-  SAMPLES_HELPER_SUCCESS_MESSAGE
+  SAMPLES_HELPER_SUCCESS_MESSAGE,
+  SAMPLES_HELPER_TS_CONFIG_EXISTS_MESSAGE,
+  SAMPLES_TS_CONFIG_FILE
 } from "./config";
 import { inspect, readFileSync, resolveComparableOutDirs, resolveFiles } from "./utils";
+require("ts-node/register");
 
 function createFromTemplate(source: any, templateFile: string, outputFile: string): string {
   logger.debug("createFromTemplate() %s", outputFile);
@@ -51,14 +52,14 @@ export function generateSamples(): void {
     const source = path.join(__dirname, RESOURCES_DIR, SAMPLES_DIR);
     const target = path.join(process.cwd(), SAMPLES_DIR);
 
-    const bblSource = path.join(__dirname, RESOURCES_DIR, BABEL_SETTINGS_FILE);
-    const bblTarget = path.join(process.cwd(), BABEL_SETTINGS_FILE);
+    const tscSource = path.join(__dirname, RESOURCES_DIR, SAMPLES_TS_CONFIG_FILE);
+    const tscTarget = path.join(process.cwd(), SAMPLES_TS_CONFIG_FILE);
 
     fs.copySync(source, target, { recursive: true });
-    if (fs.existsSync(bblTarget)) {
-      console.log(SAMPLES_HELPER_BABELRC_EXISTS_MESSAGE.trim());
-      console.log(readFileSync(bblSource));
-    } else fs.copySync(bblSource, bblTarget, { overwrite: false });
+    if (fs.existsSync(tscTarget)) {
+      console.log(SAMPLES_HELPER_TS_CONFIG_EXISTS_MESSAGE.trim());
+      console.log(readFileSync(tscSource));
+    } else fs.copySync(tscSource, tscTarget, { overwrite: false });
 
     console.log(SAMPLES_HELPER_SUCCESS_MESSAGE.trim());
     process.exit(0);
@@ -100,7 +101,7 @@ export function createWdioConfig(sourceFile: string, overrides: any): string {
     const configFile = path.join(process.cwd(), sourceFile);
     const configDir = path.dirname(configFile);
     const outputFile = path.join(configDir, CONFIG_WDIO_OUT_FILE);
-    const config = { ...DEFAULT, ...require(configFile).config, ...overrides };
+    const config = { ...DEFAULT, ...require(configFile).default, ...overrides };
 
     // soft check for logLevel to prevent wdio from dying
     if (!LEVELS.includes(config.logLevel)) {

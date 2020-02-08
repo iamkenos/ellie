@@ -32,7 +32,7 @@ Check out the [steps](./docs/SEEDED_STEPS.md) readily available for you to use a
 
 3. Run it
 
-   `ellie ./samples/ellie.conf.js`
+   `ellie ./samples/ellie.conf.ts`
 
 ## Acknowledgements
 

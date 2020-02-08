@@ -1,6 +1,7 @@
 import { driver } from "../browser";
 import { WebElement, WebElements } from "../elements";
 import { getPageObject } from "../utils";
+import { IPageMeta } from "../interfaces";
 
 export default class BasePage {
   protected properties: any;
@@ -13,7 +14,7 @@ export default class BasePage {
     [key: string]: string;
   };
 
-  public constructor(meta: string, locale?: string) {
+  public constructor(meta: IPageMeta, locale?: string) {
     this.properties = getPageObject(meta, locale);
     this.url = this.properties.url;
     this.title = this.properties.title;
@@ -40,11 +41,11 @@ export default class BasePage {
     driver.checkUrlEquals(this.url, reverse);
   }
 
-  public getElement(element: string): WebElement {
-    return new WebElement(element);
+  public getElement(locator: string): WebElement {
+    return new WebElement(locator);
   }
 
-  public getElements(element: string): WebElements {
-    return new WebElements(element);
+  public getElements(locator: string): WebElements {
+    return new WebElements(locator);
   }
 }

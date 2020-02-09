@@ -24,7 +24,7 @@ export function checkProjectTitleText(reverse: boolean, value: string): void {
 
   // the check above is for illustration purposes and can be simplified by
   // using the statement below
-  // wdioPage.projectTitle.checkTextEquals(value, reverse);
+  // wdioPage.projectTitle().checkTextEquals(value, reverse);
 }
 
 export function checkNavBarDisplayed(reverse: boolean): void {

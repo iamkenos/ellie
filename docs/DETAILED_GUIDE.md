@@ -14,29 +14,639 @@
 6. [Configurations](#configurations)
 7. [Debugging](#debugging)
 
+For simplicity, all the examples shown below will be the same ones you get from running the `whistle` command.
+
 ## CLI tool
+
+Refer to the help menu for a quick overview of CLI usage and accepted commands
+
+`ellie --help`
+
+```txt
+Usage:
+  ellie init                   Launches the configuration helper
+  ellie whistle                Generate sample files to get started with
+  ellie babygirl               Endure and survive
+  ellie [file]                 Launches the WebdriverIO test runner
+  ellie [file] [options]       Stdin overrides for certain config properties; See options list below
+
+Complete list of properties:
+* Inquired when running the config helper
+
+  bail                   Threshold on the amount of tests allowed to fail before bailing out
+  * baseUrl              The base url of the application under test
+  capabilities           W3C browser capabilities. See https://www.w3.org/TR/webdriver1/#capabilities
+  comparable             Object containing properties of comparable files. See defaults for more info.
+  custom                 Object containing keys that you want to be accessible from the global browser scope
+  hooks                  Object containing keys that correspond to supported hooks
+  * logLevel             The level of logging verbosity
+  locale                 Locale to use when looking for elements in your page meta files
+  * maxInstances         The number of concurrent browser instances to run per feature
+  * pages                Array of globs pointing to your page meta, relative to the config file
+  * browserstackEnabled  Whether to enable the use of BrowserStack
+  * browserstackLocal    Enable if you want to use BrowserStack to test local URLs
+  * user                 BrowserStack username
+  * key                  BrowserStack access key
+  debugEnabled           Whether to enable debug mode
+  reportOutDir           Directory to store the reports in, relative to the config file
+  specFileRetries        The number of times to retry the entire spec file when it fails as a whole
+  * specs                Array of globs pointing to your cucumber tests, relative to the config file
+  * steps                Array of globs pointing to your cucumber steps, relative to the config file
+  stepTimeout            Default timeout for WebdriverIO to wait for a single test step to finish in milliseconds
+  tags                   Only execute the features or scenarios with tags matching the expression
+  waitforTimeout         Default timeout for all browser 'waitFor' commands in milliseconds
+
+Options:
+  --help          Show help                                                                                    [boolean]
+  --version       Show version number                                                                          [boolean]
+  --bail          Fail fast after hitting a threshold of failing tests                                          [number]
+  --baseUrl       Shorten url command calls                                                                     [string]
+  --logLevel, -l  Set the level of logging verbosity                                                            [string]
+  --maxInstances  Set the number of concurrent browser instances running                                        [number]
+  --user          BrowserStack username                                                                         [string]
+  --key           BrowserStack access key                                                                       [string]
+  --debugEnabled  Run the tests in debug mode                                                                  [boolean]
+  --specs         Define which tests to run                                                                      [array]
+  --tags          Set the cucumber tag to look for in the specs                                                 [string]
+```
+
+The CLI tool supports a couple of commands, arguments, and options:
+
+### Commands
+
+- `init`:
+
+  - `$ ellie init`
+  - launches a inquirer prompt that generates a default configuration file `ellie.conf.ts` based on the answers provided; the file will be on the same directory as where the command is executed
+
+- `whistle`:
+
+  - `$ ellie whistle`
+  - generates sample files to get you started with; the files will be generated inside on a `samples` directory, relative to where the command is executed
+
+- `babygirl`:
+  - `$ ellie babygirl`
+  - to the edge of the universe and back, endure and survive; just because :)
+
+### Arguments
+
+- `[file]`:
+  - `$ ellie ellie.conf.ts`
+  - generates a `wdio.conf` file based on the contents parsed from the config file provided then starts the wdio test runner
+
+### Options
+
+- apart from the options `--help` and `--version`, all the other options are intended to be used as runtime overrides — hence, a config file is required; see the [configuration overrides](##overrides) section below for usage
 
 ## How to write tests
 
+Tests are written in a `.feature` file — a collection of behaviors you want to simulate. Scenarios are formed in BDD style, using Cucumber's Gherkin language in order to make tests less code-like and more human readable.
+
+It would be advisable to go through the following links if you're new to Cucumber and Gherkin:
+
+- [Gherkin Reference](https://cucumber.io/docs/gherkin/reference/)
+- [Step Definitions](https://cucumber.io/docs/cucumber/step-definitions/)
+- [Tag Expressions](https://docs.cucumber.io/tag-expressions/)
+
+_`webdriverIO.feature`_
+
+```gherkin
+@sample
+Feature: WebDriverIO
+
+  Next-gen WebDriver test framework for Node.js
+  WebdriverIO is:
+  - Extendable
+  Adding helper functions, or more complicated sets and combinations of existing commands is simple and really useful
+  - Compatible
+  WebdriverIO has 1st class support for the WebDriver specification as well as to Appium and allows to run tests on desktop and mobile
+  - Feature Rich
+  It implements all Webdriver protocol commands and provides useful integrations with other tools
+
+  ellie is an abstraction of WebdriverIO. It aims to get you started quickly on writing
+  browser and devices automated tests using cucumber and page object model
+
+  Background:
+    Given I have a screen that is 1600 by 1024 pixels
+
+  @sample @boilerplate-style
+  Scenario: Cucumber boilerplate style
+    This is an example of writing tests following the cucumber boilerplate fashion.
+    Element locators and page URLs are directly supplied from the built-in steps.
+    It works but element locators will be harder to maintain as the number of tests grow.
+    # This is a comment below the scenario description
+
+    When I open the url "https://webdriver.io/"
+    Then I expect the element ".projectTitle" text to be "WEBDRIVER I/O"
+      And I expect the page title to be "WebdriverIO · Next-gen WebDriver test framework for Node.js"
+    When I click the element "//a[text()='Get Started']"
+    Then I expect the element "#docsNav" to be displayed
+
+  Scenario: Page meta object model
+    This is an example of writing tests using page object model.
+    Element locators and page URLs are defined in a meta file e.g. webdrverIO.meta.js.
+    Parameters followng the format 'Meta=>Element' are supplied from the built-in steps.
+
+    When I open the url of the page "WebdriverIO"
+    Then I expect the element "WebdriverIO=>Project title" text to be "WEBDRIVER I/O"
+      And I expect the window title to be that of the page "WebdriverIO"
+    When I click the element "WebdriverIO=>Button: Get Started"
+    Then I expect the element "WebdriverIO=>navBar" to be displayed
+
+  Scenario Outline: Page class object model: <ITER>
+    This is another example of writing tests using page object model.
+    Unlike the previous example, this one makes use page object classes e.g. webdrverIO.page.js.
+    This approch is more suitable for implementing custom and complex steps.
+
+    When I navigate on the WDIO page
+    Then I expect the project title to be "WEBDRIVER I/O" on the WDIO page
+      And I expect the title to match the value on the WDIO page
+    When I click the Get Started buttton on the WDIO page
+    Then I expect the nav bar to be displayed on the WDIO page
+
+    Examples:
+      | ITER       |
+      | iteration1 |
+      | iteration2 |
+```
+
+To write a single test, you need the bare minimum parts of a feature file:
+
+### Feature
+
+- described by a title and an optional narrative
+
+  ```gherkin
+  Feature: WebDriverIO
+
+    Next-gen WebDriver test framework for Node.js
+    WebdriverIO is:
+    .
+    .
+    .
+  ```
+
+### Scenario
+
+- described by a summary and an optional narrative
+
+  ```gherkin
+  Scenario: Cucumber boilerplate style
+    This is an example of writing tests following the cucumber boilerplate fashion.
+    .
+    .
+    .
+  ```
+
+### Steps
+
+- denoted by keywords
+  - `Given` — a condition
+  - `When` — an action
+  - `Then` — an outcome
+  - `And` / `But` — used to conjugate successive `Given`s, `When`s, `Then`s to make the statements aesthetically pleasing
+- has to map to a step definition
+
+  ```gherkin
+  When I open the url "https://webdriver.io/"
+  Then I expect the element ".projectTitle" text to be "WEBDRIVER I/O"
+    And I expect the page title to be "WebdriverIO · Next-gen WebDriver test framework for Node.js"
+  When I click the element "//a[text()='Get Started']"
+  Then I expect the element "#docsNav" to be displayed
+  ```
+
+- seeded step definitions are available [here](./SEEDED_STEPS.md)
+- when using the seeded steps, arguments that correspond to an element locator can either be fed a selector directly or a selector identifier from an existing page meta — read more about meta files [below](#page-object-model)
+
+  - this step will look for an element with the xpath `//a[text()='Get Started']`
+
+    ```gherkin
+    When I click the element "//a[text()='Get Started']"
+    ```
+
+  - this step will look for a locator identified by the key `"Button: Get Started"` inside a meta file named `WebdriverIO`
+
+    ```gherkin
+    When I click the element "WebdriverIO=>Button: Get Started"
+    ```
+
+    - meta name and locator identifier should follow the convention `metaname=>locatorIdentifier`; the two are separater by a `=>`
+    - meta name supplied in the steps is case-insensitive; this is being transformed to lowercase internally
+    - if a provided identifier follows the convention but fails to resolve properly, it will be treated as if it's a direct element locator
+
 ## How to run tests
+
+Open your configuration file and modify the property `specs` so that it provides a glob that includes the tests you want to run.
+
+_`ellie.conf.ts`_
+
+```ts
+export default {
+  .
+  .
+  specs: [
+    "./features/path/to/my/feature/file1.feature",
+    "./features/path/to/my/feature/file2.feature",
+    "./features/path/to/**/*.feature", // providing a glob like this covers the other 2 above
+  ],
+  .
+  .
+}
+```
+
+From here, call the binary and provide the path to your configuration file
+
+`$ ellie ellie.conf.ts`
 
 ## Page object model
 
+Page object model is an design pattern where web pages are represented as classes. Web elements found on the said page are stored in the the same class, accessed using getters.
+
+The actual selectors for these elements are stored in another reference file called the `meta`.
+
+Although going with this approach is purely optional for you to write automated tests, learning how to use this will allow you to write more complex steps and make full use of the framework's features.
+
+In most cases, ideally you would create the following files per page:
+
+- meta file — holds the locators
+- page object file — interface between the meta file and the glue file
+- glue file — holds functions that correspond to different actions you can do in the page; interface between the page object file and the step definition file
+- step definition file — holds the regex matching functions for all your Gherkin steps; interface between the glue file and feature file
+
+_`webdriverIO.meta.ts`_
+
+```ts
+export default {
+  default: {
+    url: "https://webdriver.io/",
+    title: "WebdriverIO · Next-gen WebDriver test framework for Node.js",
+    locators: {
+      // locator keys can be enclosed in quotes
+      "Project title": ".projectTitle",
+      "Button: Get Started": "//a[text()='Get Started']",
+
+      // or directly as a property
+      navBar: "#docsNav"
+    }
+  }
+};
+```
+
+A meta file should have the following parts:
+
+### Default export
+
+- denoted by `export default`
+
+  ```ts
+  export default {
+    .
+    .
+    .
+  }
+  ```
+
+### Default locale
+
+- denoted by the `default` property
+
+  ```ts
+  default: {
+    .
+    .
+    .
+  }
+  ```
+
+### Default Url, Title, and Locators
+
+- `url` — can either be absolute or a path; if a path is used, it will be res9olved relative to the config file's `baseUrl` property
+- `title` — the window title that is applied when the page is active
+- `locators` — an object containing the selectors to various web elements found on the page
+- these properties must be existing but not necessarily given a value when creating a meta file
+
+  ```ts
+  default: {
+    url: "https://webdriver.io/",
+    title: "WebdriverIO · Next-gen WebDriver test framework for Node.js",
+    locators: {
+      // locator keys can be enclosed in quotes
+      "Project title": ".projectTitle",
+      "Button: Get Started": "//a[text()='Get Started']",
+
+      // or directly as a property
+      navBar: "#docsNav"
+  }
+  ```
+
+It is also possible to add various locales which is specially useful for pages that renders in different languages
+
+```ts
+default: {
+  url: "https://webdriver.io/",
+  title: "WebdriverIO · Next-gen WebDriver test framework for Node.js",
+  locators: {
+    // locator keys can be enclosed in quotes
+    "Project title": ".projectTitle",
+    "Button: Get Started": "//a[text()='Get Started']",
+
+    // or directly as a property
+    navBar: "#docsNav"
+}
+```
+
+```ts
+export default {
+  default: {
+    url: "https://webdriver.io/",
+    title: "WebdriverIO · Next-gen WebDriver test framework for Node.js",
+    locators: {
+      "Project title": ".projectTitle",
+      "Button: Get Started": "//a[text()='Get Started']",
+      navBar: "#docsNav"
+    }
+  },
+  chinese: {
+    url: "https://webdriver.io/zh",
+    title: "Some title in chinese",
+    locators: {
+      "Button: Get Started": "//a[text()='开始使用']"
+    }
+  }
+};
+```
+
+Given a meta file above and by modifying the configuration property `locale`, you can instruct the runner to pick values from the specific locale instead of the default.
+
+_`ellie.conf.ts`_
+
+```ts
+export default {
+  .
+  .
+  locale: "chinese",
+  .
+  .
+}
+```
+
+_`webdriverIO.feature`_
+
+```gherkin
+When I open the url of the page "WebdriverIO"
+```
+
+- this step will yield `https://webdriver.io/zh`
+
+```gherkin
+Then I expect the element "WebdriverIO=>Project title" text to be "WEBDRIVER I/O"
+```
+
+- since the `"Project title"` property is not defined in the `chinese` locale, the `default` value will be used
+
+```gherkin
+And I expect the window title to be that of the page "WebdriverIO"
+```
+
+- this step will yield `Some title in chinese`
+
+```gherkin
+When I click the element "WebdriverIO=>Button: Get Started"
+```
+
+- this step will yield `//a[text()='开始使用']`
+
+_`webdriverIO.page.ts`_
+
+```ts
+import { BasePage, WebElement } from "ellie";
+import webdriverIO from "../meta/webdriverIO.meta";
+
+export default class WebdriverIOPage extends BasePage {
+  constructor() {
+    super(webdriverIO);
+  }
+
+  public projectTitle(): WebElement {
+    return this.getElement(this.locators["Project title"]);
+  }
+
+  public getStarted(): WebElement {
+    return this.getElement(this.locators["Button: Get Started"]);
+  }
+
+  public navBar(): WebElement {
+    return this.getElement(this.locators.navBar);
+  }
+}
+```
+
+A page object file should have the following parts:
+
+### BasePage import
+
+- use member imports to take just what you need to
+
+  ```ts
+  import { BasePage, WebElement } from "ellie";
+  ```
+
+### Meta file import
+
+- use default import from the corresponding meta file
+
+  ```ts
+  import webdriverIO from "../meta/webdriverIO.meta";
+  ```
+
+### Default class export
+
+- extend the imported `BasePage`
+
+  ```ts
+  export default class WebdriverIOPage extends BasePage {
+    ...
+  }
+  ```
+
+### Default constructor
+
+- call the parent class' constructor and feed the imported meta
+
+  ```ts
+  constructor() {
+    super(webdriverIO);
+  }
+  ```
+
+### Element getters
+
+- to allow you to interact with said elements from another file
+
+  ```ts
+  public projectTitle(): WebElement {
+    return this.getElement(this.locators["Project title"]);
+  }
+
+  public getStarted(): WebElement {
+    return this.getElement(this.locators["Button: Get Started"]);
+  }
+
+  public navBar(): WebElement {
+    return this.getElement(this.locators.navBar);
+  }
+  ```
+
 ## Adding custom steps
 
+For better maintenance, separate your step definitions from the actual step implementations / glue code.
+
+_`webdriverIO.glue.ts`_
+
+```ts
+import WebdriverIOPage from "../../pages/objects/webdriverIO.page";
+import { driver } from "ellie";
+
+const wdioPage = new WebdriverIOPage();
+
+export function navigate(): void {
+  wdioPage.navigate();
+}
+
+export function checkTitle(reverse: boolean): void {
+  wdioPage.checkTitle(reverse);
+}
+
+export function clickGetStarted(): void {
+  wdioPage.getStarted().click();
+}
+
+export function checkProjectTitleText(reverse: boolean, value: string): void {
+  // you can create anonymous functions that encloses a single function which
+  // returns a truthy value. this is useful when you want to create custom assertions
+  // and still make use of the framework's internal retry mechanism
+  const isProjectTitleTextEquals = (): boolean => wdioPage.projectTitle().isTextEquals(value, reverse);
+  driver.checkCustomTruthy(isProjectTitleTextEquals);
+
+  // the check above is for illustration purposes and can be simplified by
+  // using the statement below
+  // wdioPage.projectTitle().checkTextEquals(value, reverse);
+}
+
+export function checkNavBarDisplayed(reverse: boolean): void {
+  wdioPage.navBar().checkDisplayed(reverse);
+}
+```
+
+A step glue file should have the following parts:
+
+### Page object import
+
+- use default import from the corresponding page object file
+
+  ```ts
+  import WebdriverIOPage from "../../pages/objects/webdriverIO.page";
+  ```
+
+### Page object instance
+
+- use typescript class instances
+
+  ```ts
+  const wdioPage = new WebdriverIOPage();
+  ```
+
+### Exported functions
+
+- you would ideally have action and assertion functions
+
+  ```ts
+  export function clickGetStarted(): void {
+    wdioPage.getStarted().click();
+  }
+
+  .
+  .
+  .
+
+  export function checkNavBarDisplayed(reverse: boolean): void {
+    wdioPage.navBar().checkDisplayed(reverse);
+  }
+  ```
+
+_`webdriverIO.def.ts`_
+
+```ts
+import { Then, When } from "cucumber";
+import * as webdrverIO from "../glue/webdriverIO.glue";
+
+When(
+  /^I navigate on the WDIO page$/,
+  webdrverIO.navigate
+);
+
+When(
+  /^I click the Get Started buttton on the WDIO page$/,
+  webdrverIO.clickGetStarted
+);
+
+Then(
+  /^I expect the title to( not)? match the value on the WDIO page$/,
+  webdrverIO.checkTitle
+);
+
+Then(
+  /^I expect the project title to( not)? be "([^"]*)?" on the WDIO page$/,
+  webdrverIO.checkProjectTitleText
+);
+
+Then(
+  /^I expect the nav bar to( not)? be displayed on the WDIO page$/,
+  webdrverIO.checkNavBarDisplayed
+);
+```
+
+A step definition file should have the following parts:
+
+### Cucumber keyword imports
+
+- use member imports to take just what you need to
+
+  ```ts
+  import { Then, When } from "cucumber";
+  ```
+
+### Glue file import
+
+- use multi import to access all exports from the corresponding glue file
+
+  ```ts
+  import * as webdrverIO from "../glue/webdriverIO.glue";
+  ```
+
+### Step functions
+
+- you would ideally have action and assertion functions
+- it is important to bear in mind that step definitions should be _**unique**_ across all the definition files
+- you cannot have a feature step that matches to 2 step defintions as cucumber will be confused on which one to use
+
+  ```ts
+  When(
+    /^I click the Get Started buttton on the WDIO page$/,
+    webdrverIO.clickGetStarted
+  );
+
+  .
+  .
+  .
+
+  Then(
+    /^I expect the nav bar to( not)? be displayed on the WDIO page$/,
+    webdrverIO.checkNavBarDisplayed
+  );
+  ```
+
 ## Configurations
-
-### Helper
-
-Launch the configuration helper by running the `init` command:
-
-`ellie init`
-
-This will generate a default configuration file `ellie.conf.ts` on the same directory as where the command is executed.
-
-Refer the help menu for a quick overview of the properties supported:
-
-`ellie --help`
 
 ### Properties
 

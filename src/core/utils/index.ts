@@ -1,5 +1,6 @@
 import * as fs from "fs-extra";
 import * as path from "path";
+import { merge } from "lodash";
 import { diff, PreFilterFunction } from "deep-diff";
 import { sync } from "syncrequest";
 import { URL } from "url";
@@ -76,13 +77,9 @@ export function getIndexedSelector(selector: string, index: number): string {
 
 export function getPageObject(meta: any, locale: string): any {
   const loc = locale || (browser as any).config.locale;
-  const object = meta[loc];
+  const object = merge({}, meta[DEFAULT.locale], meta[loc]);
+  if (!meta[loc]) logger.warn(`Locale '${loc}' not found in page'`);
 
-  if (!object) {
-    throw new Error(`
-  Locale '${loc}' not found in page'
-  Page: ${inspect(meta)}`);
-  }
   return object;
 }
 

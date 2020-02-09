@@ -33,8 +33,9 @@
     "lint": "eslint ./",
     "test:functional": "start-test demo:serve 8080 demo:test",
     "test:unit": "jest --config .jestrc.json --coverage",
-    "prepublish": "npm run build && npm run test:unit && npm run test:functional",
-    "postpublish": "npm version patch"
+    "prerelease": "npm run build && npm run test:unit && npm run test:functional",
+    "release": "npm publish",
+    "postrelease": "npm version patch"
   },
   "dependencies": {
     "@types/cucumber": "^6.0.0",
@@ -76,6 +77,7 @@
     "@types/glob": "^7.1.1",
     "@types/inquirer": "^6.5.0",
     "@types/jest": "^25.1.1",
+    "@types/lodash": "^4.14.149",
     "@types/prettier": "^1.19.0",
     "@types/request": "^2.48.4",
     "@types/rimraf": "^2.0.3",

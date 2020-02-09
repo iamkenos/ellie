@@ -1,5 +1,5 @@
 {
-  "name": "ellie",
+  "name": "@iamkenos/ellie",
   "version": "1.0.0",
   "license": "MIT",
   "author": "iamkenos",
@@ -29,13 +29,12 @@
     "postdemo:test": "npm run postdemo:report:gen",
     "postdemo:report:gen": "allure generate demo/test/.reports/allure -c -o demo/test/.reports/allure/report",
     "postdemo:report:serve": "allure open demo/test/.reports/allure/report",
-    "pack": "npm run build && rimraf ellie-*.tgz && npm pack",
+    "pack": "rimraf ellie-*.tgz && npm pack",
     "lint": "eslint ./",
     "test:functional": "start-test demo:serve 8080 demo:test",
     "test:unit": "jest --config .jestrc.json --coverage",
-    "prerelease": "npm run build && npm run test:unit && npm run test:functional",
-    "release": "npm publish",
-    "postrelease": "npm version patch"
+    "prepublish": "npm run build",
+    "postpublish": "npm version patch && git push origin $(git rev-parse --abbrev-ref HEAD)"
   },
   "dependencies": {
     "@types/cucumber": "^6.0.0",

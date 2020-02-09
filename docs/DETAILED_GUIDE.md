@@ -419,7 +419,7 @@ When I click the element "WebdriverIO=>Button: Get Started"
 _`webdriverIO.page.ts`_
 
 ```ts
-import { BasePage, WebElement } from "ellie";
+import { BasePage, WebElement } from "@iamkenos/ellie";
 import webdriverIO from "../meta/webdriverIO.meta";
 
 export default class WebdriverIOPage extends BasePage {
@@ -448,7 +448,7 @@ A page object file should have the following parts:
 - use member imports to take just what you need to
 
   ```ts
-  import { BasePage, WebElement } from "ellie";
+  import { BasePage, WebElement } from "@iamkenos/ellie";
   ```
 
 ### Meta file import
@@ -505,7 +505,7 @@ _`webdriverIO.glue.ts`_
 
 ```ts
 import WebdriverIOPage from "../../pages/objects/webdriverIO.page";
-import { driver } from "ellie";
+import { driver } from "@iamkenos/ellie";
 
 const wdioPage = new WebdriverIOPage();
 

@@ -1,4 +1,4 @@
-import { BasePage, WebElement } from "ellie";
+import { BasePage, WebElement } from "@iamkenos/ellie";
 import webdriverIO from "../meta/webdriverIO.meta";
 
 export default class WebdriverIOPage extends BasePage {

@@ -27,7 +27,7 @@ Check out the [steps](./docs/SEEDED_STEPS.md) readily available for you to use a
 
 1. Get it
 
-   `npm install ellie`
+   `npm install @iamkenos/ellie`
 
 2. Try it
 

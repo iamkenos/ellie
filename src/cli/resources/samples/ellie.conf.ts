@@ -1,4 +1,4 @@
-import { IConfig } from "ellie";
+import { IConfig } from "@iamkenos/ellie";
 
 export default {
   capabilities: [

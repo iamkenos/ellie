@@ -1,5 +1,6 @@
-require("ts-node/register");
+require('ts-node/register');
 const fse = require('fs-extra');
+const path = require('path');
 const { table, getBorderCharacters } = require('table');
 const { addAttachment } = require('@wdio/allure-reporter').default;
 
@@ -196,7 +197,7 @@ exports.config = {
     [
       'junit',
       {
-        outputDir: '<%= answers.reportOutDir %>/junit',
+        outputDir: path.join('<%= answers.reportOutDir %>','junit'),
         outputFileFormat: (options) => `wdio-${options.cid}-junit-reporter.xml`
       }
     ],
@@ -206,7 +207,7 @@ exports.config = {
         disableWebdriverStepsReporting: true,
         disableWebdriverScreenshotsReporting: false,
         useCucumberStepReporter: true,
-        outputDir: '<%= answers.reportOutDir %>/allure',
+        outputDir: path.join('<%= answers.reportOutDir %>','allure'),
       }
     ]
   ],
@@ -250,7 +251,7 @@ exports.config = {
   // ==============
   comparable: <%- JSON.stringify(answers.comparable) %>,
   custom: <%- JSON.stringify(answers.custom) %>,
-  directory: '<%- answers.directory %>',
+  directory: <%- JSON.stringify(answers.directory) %>,
   locale: '<%- answers.locale %>',
   pages: [<%- answers.pages.map(i => JSON.stringify(i)) %>],
   //
@@ -273,7 +274,7 @@ exports.config = {
         fse.removeSync(config.comparable[key].diffDir);
         fse.mkdirsSync(config.comparable[key].baselineDir)
       })
-      fse.removeSync('<%= answers.reportOutDir %>');
+      fse.removeSync(<%- JSON.stringify(answers.reportOutDir) %>);
     } catch(e) {
       throw new Error(e);
     }

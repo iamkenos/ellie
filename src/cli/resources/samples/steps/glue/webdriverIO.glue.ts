@@ -1,5 +1,5 @@
 import WebdriverIOPage from "../../pages/objects/webdriverIO.page";
-import { driver } from "ellie";
+import { driver } from "@iamkenos/ellie";
 
 const wdioPage = new WebdriverIOPage();
 

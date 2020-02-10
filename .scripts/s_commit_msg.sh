@@ -2,7 +2,7 @@
 REPO_DIR=$(git rev-parse --show-toplevel)
 RED=$'\e[1;31m'
 RESET=$'\e[0m'
-FORMAT="^((chore|deps|docs|feat|fix|perf|refactor|style|test):[[:space:]].+)|([[:digit:]].[[:digit:]].[[:digit:]])$"
+FORMAT="^(chore|deps|docs|feat|fix|perf|refactor|style|test|release):[[:space:]].+$"
 MESSAGE=$(cat $REPO_DIR/$HUSKY_GIT_PARAMS)
 
 if [[ ! $MESSAGE =~ $FORMAT ]];

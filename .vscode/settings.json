@@ -7,7 +7,7 @@
   "cucumberautocomplete.formatConfOverride": { "And": 3, "But": 3 },
   "cucumberautocomplete.onTypeFormat": true,
   "cucumberautocomplete.stepsInvariants": true,
-  "editor.formatOnSave": false,
+  "editor.formatOnSave": true,
   "editor.codeActionsOnSave": { "source.fixAll.eslint": true },
   "eslint.validate": ["javascript", "typescript"],
   "files.associations": { "*.ejs": "javascript" },

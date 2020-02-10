@@ -1,6 +1,6 @@
 import { IConfig } from "../../build";
 
-export default {
+const config: IConfig = {
   baseUrl: "http://localhost:8080",
   capabilities: [
     {
@@ -22,4 +22,6 @@ export default {
   steps: ["./steps/definitions/**/*.ts"],
   pages: ["./pages/**/*.meta.ts"],
   waitforTimeout: 8000
-} as IConfig;
+};
+
+export default config;

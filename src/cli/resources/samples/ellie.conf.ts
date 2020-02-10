@@ -1,6 +1,6 @@
 import { IConfig } from "@iamkenos/ellie";
 
-export default {
+const config: IConfig = {
   capabilities: [
     {
       browserName: "chrome",
@@ -15,4 +15,6 @@ export default {
     before: "./hooks/before",
     afterScenario: "./hooks/afterScenario"
   }
-} as IConfig;
+};
+
+export default config;

@@ -197,7 +197,7 @@ exports.config = {
     [
       'junit',
       {
-        outputDir: path.join('<%= answers.reportOutDir %>','junit'),
+        outputDir: path.join(<%- JSON.stringify(answers.reportOutDir) %>,'junit'),
         outputFileFormat: (options) => `wdio-${options.cid}-junit-reporter.xml`
       }
     ],
@@ -207,7 +207,7 @@ exports.config = {
         disableWebdriverStepsReporting: true,
         disableWebdriverScreenshotsReporting: false,
         useCucumberStepReporter: true,
-        outputDir: path.join('<%= answers.reportOutDir %>','allure'),
+        outputDir: path.join(<%- JSON.stringify(answers.reportOutDir) %>,'allure'),
       }
     ]
   ],

@@ -12,7 +12,6 @@
 4. [Page object model](#page-object-model)
 5. [Adding custom steps](#adding-custom-steps)
 6. [Configurations](#configurations)
-7. [Debugging](#debugging)
 
 For simplicity, all the examples shown below will be the same ones you get from running the `whistle` command.
 
@@ -77,7 +76,7 @@ The CLI tool supports a couple of commands, arguments, and options:
 - `init`:
 
   - `$ ellie init`
-  - launches a inquirer prompt that generates a default configuration file `ellie.conf.ts` based on the answers provided; the file will be on the same directory as where the command is executed
+  - launches an inquirer prompt that generates a default configuration file `ellie.conf.ts` based on the answers provided; the file will be on the same directory as where the command is executed
 
 - `whistle`:
 
@@ -266,12 +265,12 @@ The actual selectors for these elements are stored in another reference file cal
 
 Although going with this approach is purely optional for you to write automated tests, learning how to use this will allow you to write more complex steps and make full use of the framework's features.
 
-In most cases, ideally you would create the following files per page:
+In most cases, ideally you would create the following files for each page you want to interact with:
 
 - meta file — holds the locators
 - page object file — interface between the meta file and the glue file
 - glue file — holds functions that correspond to different actions you can do in the page; interface between the page object file and the step definition file
-- step definition file — holds the regex matching functions for all your Gherkin steps; interface between the glue file and feature file
+- step definition file — holds the regex matching functions for all your gherkin steps; interface between the glue file and feature file
 
 _`webdriverIO.meta.ts`_
 
@@ -320,7 +319,7 @@ A meta file should have the following parts:
 
 ### Default Url, Title, and Locators
 
-- `url` — can either be absolute or a path; if a path is used, it will be res9olved relative to the config file's `baseUrl` property
+- `url` — can either be a full url or a path; if a path is used, it will be resolved relative to the config file's `baseUrl` property
 - `title` — the window title that is applied when the page is active
 - `locators` — an object containing the selectors to various web elements found on the page
 - these properties must be existing but not necessarily given a value when creating a meta file
@@ -339,21 +338,7 @@ A meta file should have the following parts:
   }
   ```
 
-It is also possible to add various locales which is specially useful for pages that renders in different languages
-
-```ts
-default: {
-  url: "https://webdriver.io/",
-  title: "WebdriverIO · Next-gen WebDriver test framework for Node.js",
-  locators: {
-    // locator keys can be enclosed in quotes
-    "Project title": ".projectTitle",
-    "Button: Get Started": "//a[text()='Get Started']",
-
-    // or directly as a property
-    navBar: "#docsNav"
-}
-```
+It is also possible to add various locales which is specially useful for managing element selectors of pages that renders in different languages.
 
 ```ts
 export default {
@@ -361,8 +346,11 @@ export default {
     url: "https://webdriver.io/",
     title: "WebdriverIO · Next-gen WebDriver test framework for Node.js",
     locators: {
+      // locator keys can be enclosed in quotes
       "Project title": ".projectTitle",
       "Button: Get Started": "//a[text()='Get Started']",
+
+      // or directly as a property
       navBar: "#docsNav"
     }
   },
@@ -376,7 +364,7 @@ export default {
 };
 ```
 
-Given a meta file above and by modifying the configuration property `locale`, you can instruct the runner to pick values from the specific locale instead of the default.
+Given the meta file above and by modifying the configuration property `locale`, you can instruct the runner to pick values from the specific locale instead of the default.
 
 _`ellie.conf.ts`_
 
@@ -780,5 +768,3 @@ export default config;
 From here you can run the tests as you would have done with any other config file:
 
 `ellie ellie.component.conf.ts`
-
-## Debugging

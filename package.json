@@ -34,7 +34,7 @@
     "test:functional": "start-test demo:serve 8080 demo:test",
     "test:unit": "jest --config .jestrc.json --coverage",
     "prepublish": "npm run build",
-    "postpublish": "npm version patch && git push origin $(git rev-parse --abbrev-ref HEAD)"
+    "postpublish": "npm version patch -m \"release: %s\" && git push origin $(git rev-parse --abbrev-ref HEAD)"
   },
   "dependencies": {
     "@types/cucumber": "^6.0.0",

@@ -34,7 +34,7 @@
     "test:functional": "start-test demo:serve 8080 demo:test",
     "test:unit": "jest --config .jestrc.json --coverage",
     "prerelease": "npm run build && node ./.scripts/s_pre_release.js",
-    "release": "npm run publish",
+    "release": "npm publish",
     "postrelease": "git push origin $(git rev-parse --abbrev-ref HEAD) --tags"
   },
   "dependencies": {

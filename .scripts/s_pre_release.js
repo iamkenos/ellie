@@ -44,3 +44,4 @@ ${prevChanges}
 `;
 
 fs.outputFileSync(RELEASE_LOG_FILE, release);
+shell.exec('git add . && npm version patch -f -m "release: %s"');

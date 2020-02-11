@@ -17,23 +17,22 @@ const dd = ('0' + dt.getDate()).slice(-2);
 const mm = ('0' + (dt.getMonth() + 1)).slice(-2);
 const yyyy = dt.getFullYear();
 
+const releaseLogContent = fs.readFileSync(RELEASE_LOG_FILE, 'utf8');
+const releaseLogHeader = releaseLogContent.split('\n').splice(0, 8).join('\n');
+const prevChanges = releaseLogContent.replace(releaseLogHeader, '').trim();
+
 const releaseDate = '`' + `${yyyy}-${mm}-${dd}` + '`';
-const currVersion = getVersion();
+const lastVersion = prevChanges.trim().substring(3, prevChanges.indexOf('\n'));
 const tmpVersion = getNextVersion();
-const newVersion = '## ' + tmpVersion.substring(0, tmpVersion.indexOf('\n'));
+const newVersion = '## ' + tmpVersion.substring(1, tmpVersion.indexOf('\n'));
 
 const gitLog = gitReset() && getGitLog();
-const releaseLogContent = fs.readFileSync(RELEASE_LOG_FILE, 'utf8');
-const releaseLogHeader = releaseLogContent.split('\n').splice(0, 5).join('\n');
-
-const prevChanges = releaseLogContent.replace(releaseLogHeader, '').trim();
-const currChanges = gitLog.splice(0, gitLog.findIndex(i => i.includes(`release: ${currVersion}`)))
+const currChanges = gitLog.splice(0, gitLog.findIndex(i => i.includes(`release: ${lastVersion}`)))
   .map(i => i.substring(2))
   .join('\n');
 
 const release =
 `${releaseLogHeader}
-
 ${newVersion}
 
 ${releaseDate}

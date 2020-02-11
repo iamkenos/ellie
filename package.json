@@ -33,7 +33,8 @@
     "lint": "eslint ./",
     "test:functional": "start-test demo:serve 8080 demo:test",
     "test:unit": "jest --config .jestrc.json --coverage",
-    "prerelease": "npm run build && npm version patch -m \"release: %s\"",
+    "version": "git add . > /dev/null",
+    "prerelease": "npm run build && node ./.scripts/s_change_log.js && npm version patch -m 'release: %s'",
     "release": "npm run publish",
     "postrelease": "git push origin $(git rev-parse --abbrev-ref HEAD) --tags"
   },
@@ -97,6 +98,7 @@
     "jest": "^25.1.0",
     "lint-staged": "^10.0.2",
     "rimraf": "^3.0.1",
+    "shelljs": "^0.8.3",
     "start-server-and-test": "^1.10.8",
     "ts-jest": "^25.1.0"
   }

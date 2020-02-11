@@ -33,8 +33,9 @@
     "lint": "eslint ./",
     "test:functional": "start-test demo:serve 8080 demo:test",
     "test:unit": "jest --config .jestrc.json --coverage",
-    "prepublish": "npm run build",
-    "postpublish": "npm version patch -m \"release: %s\" && git push origin $(git rev-parse --abbrev-ref HEAD) --tags"
+    "prerelease": "npm run build && npm version patch -m \"release: %s\"",
+    "release": "npm run publish",
+    "postrelease": "git push origin $(git rev-parse --abbrev-ref HEAD) --tags"
   },
   "dependencies": {
     "@types/cucumber": "^6.0.0",

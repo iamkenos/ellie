@@ -6,6 +6,28 @@
 
 _Note: Gaps between patch versions are faulty, broken or test releases._
 
+## 1.0.3
+
+`2020-02-12`
+
+- [ec07a01](https://github.com//iamkenos/ellie/commit/ec07a01) fix: prerelease script [[iamkenos](https://github.com/iamkenos)]
+- [5e25b52](https://github.com//iamkenos/ellie/commit/5e25b52) release: 1.0.2 [[iamkenos](https://github.com/iamkenos)]
+- [ed2bc9d](https://github.com//iamkenos/ellie/commit/ed2bc9d) release: 1.0.1 [[iamkenos](https://github.com/iamkenos)]
+- [f40d5bc](https://github.com//iamkenos/ellie/commit/f40d5bc) fix: npm release [[iamkenos](https://github.com/iamkenos)]
+- [e3ca557](https://github.com//iamkenos/ellie/commit/e3ca557) chore: prerelease script [[iamkenos](https://github.com/iamkenos)]
+- [48de786](https://github.com//iamkenos/ellie/commit/48de786) chore: changelog script [[iamkenos](https://github.com/iamkenos)]
+- [158902a](https://github.com//iamkenos/ellie/commit/158902a) docs: fix release log [[iamkenos](https://github.com/iamkenos)]
+- [a311cb6](https://github.com//iamkenos/ellie/commit/a311cb6) chore: fix versioning [[iamkenos](https://github.com/iamkenos)]
+- [9852b58](https://github.com//iamkenos/ellie/commit/9852b58) feat: generate allure html report on after hook [[iamkenos](https://github.com/iamkenos)]
+- [7b5a6a1](https://github.com//iamkenos/ellie/commit/7b5a6a1) chore: rework version bumping [[iamkenos](https://github.com/iamkenos)]
+- [b0214af](https://github.com//iamkenos/ellie/commit/b0214af) docs: update release log [[iamkenos](https://github.com/iamkenos)]
+- [027e3c7](https://github.com//iamkenos/ellie/commit/027e3c7) chore: update release commit message [[iamkenos](https://github.com/iamkenos)]
+- [836cc76](https://github.com//iamkenos/ellie/commit/836cc76) fix: windows path resolution on ejs template [[iamkenos](https://github.com/iamkenos)]
+- [c7a9532](https://github.com//iamkenos/ellie/commit/c7a9532) chore: ignore file and commit msg hook updates [[iamkenos](https://github.com/iamkenos)]
+- [578c3f9](https://github.com//iamkenos/ellie/commit/578c3f9) chore: add commit message hook [[iamkenos](https://github.com/iamkenos)]
+- [444d7d0](https://github.com//iamkenos/ellie/commit/444d7d0) docs: md typos [[iamkenos](https://github.com/iamkenos)]
+- [d1c7131](https://github.com//iamkenos/ellie/commit/d1c7131) fix: scope references and use paths for report output dir [[iamkenos](https://github.com/iamkenos)]
+
 ## 1.0.0
 
 `2020-02-09`

@@ -4,7 +4,7 @@ import logger from "../logger";
 
 export default (wdioConfFile: string): void => {
   const wdio = new Launcher(wdioConfFile, {}, false);
-  logger.info("WebDriverIO launcher initialized");
+  logger.info("Starting WebdriverIO runner...");
   wdio.run().then(
     (code: number): void => {
       logger.info("Finished");

@@ -270,6 +270,7 @@ const CONFIG_PROPERTIES: IConfigProperty[] = [
     helptext: "Whether to enable debug mode",
     overrideOption: {
       enabled: true,
+      alias: "d",
       type: "boolean",
       description: "Run the tests in debug mode"
     }

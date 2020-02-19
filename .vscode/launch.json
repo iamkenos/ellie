@@ -12,7 +12,9 @@
       "console": "integratedTerminal",
       "cwd": "${workspaceFolder}",
       "program": "${workspaceRoot}/bin/ellie.js",
-      "args": ["./demo/test/demo.conf.ts", "--debugEnabled", "--specs", "${file}", "--l", "debug", "--tags", "@debug"]
+      "args": ["./demo/test/demo.conf.ts", "--d", "--specs", "${file}", "--l", "debug", "--tags", "@debug"],
+      "outFiles": ["${workspaceFolder}/build/**/*.js"],
+      "skipFiles": ["./node_modules/**/*.js"]
     },
     {
       "name": "ellie @ launch demo app",

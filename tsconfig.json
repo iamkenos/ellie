@@ -8,6 +8,7 @@
     "module": "commonjs",
     "moduleResolution": "node",
     "removeComments": false,
+    "sourceMap": true,
     "target": "ES5",
     "types": ["node", "@wdio/sync", "@types/jest"]
   },

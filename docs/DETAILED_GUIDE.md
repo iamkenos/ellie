@@ -56,17 +56,17 @@ Complete list of properties:
   waitforTimeout         Default timeout for all browser 'waitFor' commands in milliseconds
 
 Options:
-  --help          Show help                                                                                    [boolean]
-  --version       Show version number                                                                          [boolean]
-  --bail          Fail fast after hitting a threshold of failing tests                                          [number]
-  --baseUrl       Shorten url command calls                                                                     [string]
-  --logLevel, -l  Set the level of logging verbosity                                                            [string]
-  --maxInstances  Set the number of concurrent browser instances running                                        [number]
-  --user          BrowserStack username                                                                         [string]
-  --key           BrowserStack access key                                                                       [string]
-  --debugEnabled  Run the tests in debug mode                                                                  [boolean]
-  --specs         Define which tests to run                                                                      [array]
-  --tags          Set the cucumber tag to look for in the specs                                                 [string]
+  --help              Show help                                                                                [boolean]
+  --version           Show version number                                                                      [boolean]
+  --bail              Fail fast after hitting a threshold of failing tests                                      [number]
+  --baseUrl           Shorten url command calls                                                                 [string]
+  --logLevel, -l      Set the level of logging verbosity                                                        [string]
+  --maxInstances      Set the number of concurrent browser instances running                                    [number]
+  --user              BrowserStack username                                                                     [string]
+  --key               BrowserStack access key                                                                   [string]
+  --debugEnabled, -d  Run the tests in debug mode                                                              [boolean]
+  --specs             Define which tests to run                                                                  [array]
+  --tags              Set the cucumber tag to look for in the specs                                             [string]
 ```
 
 The CLI tool supports a couple of commands, arguments, and options:
@@ -747,7 +747,7 @@ For instance, to run a single feature file and set the logging level to debug:
 | maxInstances |       | Set the number of concurrent browser instances running |
 | user         |       | BrowserStack username                                  |
 | key          |       | BrowserStack access key                                |
-| debugEnabled |       | Run the tests in debug mode                            |
+| debugEnabled | d     | Run the tests in debug mode                            |
 | specs        |       | Define which tests to run                              |
 | tags         |       | Set the cucumber tag to look for in the specs          |
 

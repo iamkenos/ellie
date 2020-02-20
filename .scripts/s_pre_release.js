@@ -9,7 +9,7 @@ const RELEASE_LOG_FILE = path.join(__dirname, '../docs/RELEASES.md');
 
 const gitReset = () => shell.exec('git reset --hard', { silent: true });
 const getVersion = () => shell.exec('./bin/ellie.js --version', { silent: true }).stdout.trim();
-const getGitLog = () => shell.exec(`git log --pretty=format:"${LOG_FORMAT}" --graph`, { silent: true }).stdout.split('\n');
+const getGitLog = () => shell.exec(`git log --pretty=format:"${LOG_FORMAT}" --graph $(git rev-parse --abbrev-ref HEAD)`, { silent: true }).stdout.split('\n');
 const getNextVersion = () => shell.exec('npm --no-git-tag-version version patch', { silent: true }).stdout;
 
 const dt = new Date();
@@ -23,8 +23,8 @@ const prevChanges = releaseLogContent.replace(releaseLogHeader, '').trim();
 
 const releaseDate = '`' + `${yyyy}-${mm}-${dd}` + '`';
 const lastVersion = prevChanges.trim().substring(3, prevChanges.indexOf('\n'));
-const tmpVersion = getNextVersion();
-const newVersion = '## ' + tmpVersion.substring(1, tmpVersion.indexOf('\n'));
+const newVersion = getNextVersion();
+const releaseVersion = '## ' + newVersion.substring(1, newVersion.indexOf('\n'));
 
 const gitLog = gitReset() && getGitLog();
 const currChanges = gitLog.splice(0, gitLog.findIndex(i => i.includes(`release: ${lastVersion}`)))
@@ -33,7 +33,7 @@ const currChanges = gitLog.splice(0, gitLog.findIndex(i => i.includes(`release: 
 
 const release =
 `${releaseLogHeader}
-${newVersion}
+${releaseVersion}
 
 ${releaseDate}
 

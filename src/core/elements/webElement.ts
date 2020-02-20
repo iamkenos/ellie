@@ -1,7 +1,8 @@
 import logger from "../../logger";
 import ElementConditions from "./evaluation/elementConditions";
-import { IImageCompareOptions } from "../interfaces";
+import { IClickOptions, IImageCompareOptions } from "../interfaces";
 import { getAbsoluteXPathScript, getIndexedSelector } from "../utils";
+import { inspect } from "../../cli/utils";
 
 export default class WebElement {
   public selector: string;
@@ -53,9 +54,9 @@ export default class WebElement {
     browser.execute("arguments[0].click();", elem);
   }
 
-  public click(): void {
-    logger.info(`Selector: ${this.selector}`);
-    this.existing$().click();
+  public click(options?: IClickOptions): void {
+    logger.info(`Selector: ${this.selector}${options ? " | Options: " + inspect(options) : ""}`);
+    this.existing$().click(options);
   }
 
   public doubleClick(): void {
@@ -449,7 +450,7 @@ export default class WebElement {
   }
 
   public isImageMatchRef(filename: string, reverse?: boolean, options?: IImageCompareOptions): boolean {
-    logger.info(`Selector: ${this.selector} | File: ${filename} | Options: ${options} | Reverse: ${!!~~reverse}`);
+    logger.info(`Selector: ${this.selector} | File: ${filename} | Options: ${inspect(options)} | Reverse: ${!!~~reverse}`);
     return new ElementConditions(this.existing$().selector)
       .imageMatch(filename, reverse, options)
       .run()
@@ -457,7 +458,7 @@ export default class WebElement {
   }
 
   public checkImageMatchRef(filename: string, reverse?: boolean, options?: IImageCompareOptions): void {
-    logger.info(`Selector: ${this.selector} | File: ${filename} | Options: ${options} | Reverse: ${!!~~reverse}`);
+    logger.info(`Selector: ${this.selector} | File: ${filename} | Options: ${inspect(options)} | Reverse: ${!!~~reverse}`);
     new ElementConditions(this.existing$().selector)
       .imageMatch(filename, reverse, options)
       .runStrict();
@@ -528,9 +529,9 @@ export default class WebElement {
     this.existing$().moveTo(xoffset, yoffset);
   }
 
-  public scrollIntoView(scrollIntoViewOptions?: boolean | object): void {
-    logger.info(`Selector: ${this.selector} | Options: ${scrollIntoViewOptions}`);
-    this.existing$().scrollIntoView(scrollIntoViewOptions);
+  public scrollIntoView(options?: boolean | object): void {
+    logger.info(`Selector: ${this.selector} | Options: ${inspect(options)}`);
+    this.existing$().scrollIntoView(options);
   }
 
   public selectByAttribute(attribute: string, value: string): void {

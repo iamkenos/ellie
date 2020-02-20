@@ -34,7 +34,7 @@ import windowSwitchFrame from "../glue/action/windowSwitchFrame";
 import windowUrlSet from "../glue/action/windowUrlSet";
 
 When(
-  /^I (click|double click|script click) the (link|button|element) "([^"]*)?"(?: again)?$/,
+  /^I ((double|script|middle|right)(?: ))?click the (link|button|element) "([^"]*)?"(?: again)?$/,
   elemClick
 );
 

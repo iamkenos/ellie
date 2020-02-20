@@ -26,6 +26,12 @@ export interface IPageMeta {
   };
 }
 
+export interface IClickOptions {
+  button?: 0 | "left" | 1 | "middle" | 2 | "right";
+  x?: number;
+  y?: number;
+}
+
 export interface IExpectedConditionResult {
   name: string;
   message: string;

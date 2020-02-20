@@ -348,9 +348,13 @@ $(function() {
     const $target = $('#container');
     const val = '#content1';
 
-    // $.cookie('initial-cookie', 'lipsumn@ellie');
     delayedHandle(action, state, $source, $target, val);
   });
+
+  // atrributes
+  $('[data-action]').on('click', handleDataAction);
+
+  $('[data-actions]').on('click', handleDataActions);
 
   // elements
   $('#draggableBox').on('mousedown', handleMousedown);
@@ -369,8 +373,27 @@ $(function() {
     .on('mouseenter', setSourceCoordinatesToTargetText)
     .on('mouseleave', clearTargetText);
 
-  // atrributes
-  $('[data-action]').on('click', handleDataAction);
+  $(document).on('contextmenu', '#changeTxtBtn', handleDataAction);
+  $('#changeTxtBtn').off('click');
 
-  $('[data-actions]').on('click', handleDataActions);
+  $('#changeValBtn').on('mousedown', (btn) => {
+    const $source = btn.currentTarget;
+    const data = $source.dataset;
+    const $target = $(data.target);
+    const actions = JSON.parse(data.actions);
+    const state = !~~$(this).data('state');
+
+    if (btn.which === 2) {
+      for (let i = 0; i < actions.length; i++) {
+        const innerData = actions[i];
+        const action = Object.keys(innerData)[0];
+        const val = innerData[action];
+
+        event.preventDefault();
+        setTimeout(delayedHandle(action, state, $source, $target, val), 500);
+        $(this).data('state', state);
+      }
+    }
+  });
+  $('#changeValBtn').off('click');
 });

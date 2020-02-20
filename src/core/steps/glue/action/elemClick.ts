@@ -9,11 +9,15 @@ export default (action: string, type: string, key: string): void => {
     element.selector = `=${key}`;
   }
 
-  if (action === "click") {
-    element.click();
-  } else if (action === "double click") {
+  if (action === "double") {
     element.doubleClick();
-  } else if (action === "script click") {
+  } else if (action === "script") {
     element.jsClick();
+  } else if (action === "middle") {
+    element.click({ button: action });
+  } else if (action === "right") {
+    element.click({ button: action });
+  } else {
+    element.click();
   }
 };

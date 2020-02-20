@@ -14,18 +14,18 @@ Feature: I. Mouse Actions
       And I expect the page title to be "Demo Page"
       And I expect the page title to be that of the page "Demo"
 
-  Scenario: Change element text on button click
-    When I click the button "#changeTxtBtn"
+  Scenario: Change element text on button right click
+    When I right click the button "#changeTxtBtn"
     Then I expect the element "#changeTxtDest" text to contain "[changeTxtBtn]"
       And I expect the element "#changeTxtDest" text to be "This text is changed by [changeTxtBtn]..."
       And I expect the element "#changeTxtDest" text to not be empty
-      But I click the button "#changeTxtBtn" again
+      But I right click the button "#changeTxtBtn" again
     Then I expect the element "#changeTxtDest" text to not contain "[changeTxtBtn]"
       And I expect the element "#changeTxtDest" text to not be "This text is changed by [changeTxtBtn]..."
       And I expect the element "#changeTxtDest" text to be empty
 
-  Scenario: Change element value on button click
-    When I click the button "#changeValBtn"
+  Scenario: Change element value on button middle click
+    When I middle click the button "#changeValBtn"
     Then I expect the field "#changeValDest" value to contain "[changeValBtn]"
       And I expect the field "#changeValDest" value to be "This value is changed by [changeValBtn]..."
       And I expect the field "#changeValDest" value to not be empty
@@ -34,7 +34,7 @@ Feature: I. Mouse Actions
       And I expect the field "#changeValDest" attribute "class" to exist
       And I expect the field "#changeValDest" attribute "class" to not contain "lipsum"
       And I expect the field "#changeValDest" attribute "class" to not be "lipsum"
-      But I click the button "#changeValBtn" again
+      But I middle click the button "#changeValBtn" again
     Then I expect the field "#changeValDest" value to not contain "[changeValBtn]"
       And I expect the field "#changeValDest" value to not be "This value is changed by [changeValBtn]..."
       And I expect the field "#changeValDest" value to be empty

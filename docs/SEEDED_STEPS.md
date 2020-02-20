@@ -6,13 +6,16 @@
 
 ## When
 
-- `When I (click|double click|script click) the (link|button|element) "([^"]*)?"(?: again)?`
+- `When I ((double|script|middle|right)(?: ))?click the (link|button|element) "([^"]*)?"(?: again)?`
 
-  - click, double click, or do a javascript click on a link or element
+  - click, double click, javascript click, middle click, or right click on a link or element
 
     ```gherkin
     When I click the link "openInSameWindowLink"
     When I double click the button "#changeInnerHtmlBtn"
+    When I right click the button "#changeTxtBtn"
+    When I middle click the button "#changeValBtn"
+    When I script click the button "#makeElemVisibleBtn"
     ```
 
 - `When I drag the element "([^"]*)?" to the element "([^"]*)?"`

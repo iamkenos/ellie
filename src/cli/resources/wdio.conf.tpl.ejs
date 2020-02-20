@@ -397,9 +397,6 @@ exports.config = {
    * @param {Array.<String>} specs List of spec file paths that ran
    */
   after: function (result, capabilities, specs) {
-    const allureOutputDir = path.join(<%- JSON.stringify(answers.reportOutDir) %>, 'allure');
-    allure(['generate', allureOutputDir, '-c', '-o', path.join(allureOutputDir, 'report')]);
-
     <% if (answers.hooks.after) { %>
     const hook = require('<%= answers.hooks.after %>').default;
     hook(result, capabilities, specs);
@@ -421,8 +418,10 @@ exports.config = {
    * @param {Array.<Object>} capabilities list of capabilities details
    * @param {<Object>} results object containing test results
    */
-  // onComplete: function(exitCode, config, capabilities, results) {
-  // },
+  onComplete: function(exitCode, config, capabilities, results) {
+    const allureOutputDir = path.join(<%- JSON.stringify(answers.reportOutDir) %>, 'allure');
+    allure(['generate', allureOutputDir, '-c', '-o', path.join(allureOutputDir, 'report')]);
+  },
   /**
   * Gets executed when a refresh happens.
   * @param {String} oldSessionId session ID of the old session

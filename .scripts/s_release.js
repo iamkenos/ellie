@@ -22,30 +22,22 @@ function preRelease(version = VERSIONS[0]) {
 
   const releaseLogContent = fs.readFileSync(RELEASE_LOG_FILE, 'utf8');
   const releaseLogHeader = releaseLogContent.split('\n').splice(0, 8).join('\n');
-  const prevChanges = releaseLogContent.replace(releaseLogHeader, '').trim();
+  const prevChanges = releaseLogContent.replace(releaseLogHeader, '').trimLeft();
 
-  const releaseDate = '`' + `${yyyy}-${mm}-${dd}` + '`';
+  const releaseDate = '`' + `${yyyy}-${mm}-${dd}` + '`' + '\n';
   const prevVersion = prevChanges.trim().substring(3, prevChanges.indexOf('\n'));
   const nextVersion = shell.exec(`npm --no-git-tag-version version ${version}`, { silent: true }).stdout;
-  const releaseVersion = '## ' + nextVersion.substring(1, nextVersion.indexOf('\n'));
+  const releaseVersion = '## ' + nextVersion.substring(1, nextVersion.indexOf('\n')) + '\n';
 
   const log = gitReset() && gitLog();
   const releaseChanges = log.splice(0, log.findIndex(msg => msg.includes(`release: ${prevVersion}`)))
     .map(msg => msg.substring(2))
-    .join('\n');
+    .join('\n')
+    .concat('\n');
 
-  const release =
-  `${releaseLogHeader}
-  ${releaseVersion}
+  const release = [releaseLogHeader, releaseVersion, releaseDate, releaseChanges, prevChanges];
 
-  ${releaseDate}
-
-  ${releaseChanges}
-
-  ${prevChanges}
-  `;
-
-  fs.outputFileSync(RELEASE_LOG_FILE, release);
+  fs.outputFileSync(RELEASE_LOG_FILE, release.join('\n'));
   shell.exec(`git add . && npm version ${version} -f -m "release: %s"`);
 }
 

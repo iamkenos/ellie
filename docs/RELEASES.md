@@ -6,11 +6,11 @@
 
 _Note: Gaps between patch versions are faulty, broken or test releases._
 
-  ## 1.1.0
+## 1.1.0
 
-  `2020-02-22`
+`2020-02-22`
 
-  - [9c6db56](https://github.com//iamkenos/ellie/commit/9c6db56) fix: reverse statements on glue sample [[iamkenos](https://github.com/iamkenos)]
+- [9c6db56](https://github.com//iamkenos/ellie/commit/9c6db56) fix: reverse statements on glue sample [[iamkenos](https://github.com/iamkenos)]
 - [df05e9c](https://github.com//iamkenos/ellie/commit/df05e9c) refactor: rework reverse conditions [[iamkenos](https://github.com/iamkenos)]
 - [19393f5](https://github.com//iamkenos/ellie/commit/19393f5) chore: control release version type [[iamkenos](https://github.com/iamkenos)]
 - [1f45a55](https://github.com//iamkenos/ellie/commit/1f45a55) chore: use current branch for release notes git log [[iamkenos](https://github.com/iamkenos)]
@@ -19,7 +19,7 @@ _Note: Gaps between patch versions are faulty, broken or test releases._
 - [b6c6491](https://github.com//iamkenos/ellie/commit/b6c6491) chore: silenced http-server [[iamkenos](https://github.com/iamkenos)]
 - [42bcb27](https://github.com//iamkenos/ellie/commit/42bcb27) refactor: added sourcemap for direct debugging [[iamkenos](https://github.com/iamkenos)]
 
-  ## 1.0.3
+## 1.0.3
 
 `2020-02-12`
 
@@ -46,4 +46,3 @@ _Note: Gaps between patch versions are faulty, broken or test releases._
 `2020-02-09`
 
 - [748dd5d](https://github.com/iamkenos/ellie/tree/748dd5d) initial release [[iamkenos](https://github.com/iamkenos)]
-  

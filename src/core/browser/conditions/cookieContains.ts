@@ -8,13 +8,13 @@ export default class CookieContains implements IBrowserCondition {
 
   private readonly expected: string;
 
-  private readonly reverse: boolean;
+  private readonly preferred: boolean;
 
-  public constructor(cookie: string, expected: string, reverse: boolean) {
+  public constructor(cookie: string, expected: string, preferred: boolean) {
     this.name = logger.getCaller(true);
     this.cookie = cookie;
     this.expected = expected;
-    this.reverse = reverse;
+    this.preferred = preferred;
   }
 
   public evaluate(): IExpectedConditionResult {
@@ -23,7 +23,7 @@ export default class CookieContains implements IBrowserCondition {
 
     try {
       actual = browser.getCookies([this.cookie])[0].value;
-      result = this.reverse ? !actual.includes(this.expected) : actual.includes(this.expected);
+      result = this.preferred ? actual.includes(this.expected) : !actual.includes(this.expected);
     } catch (e) {
       actual = e.message;
       result = false;
@@ -33,7 +33,7 @@ export default class CookieContains implements IBrowserCondition {
       name: this.name,
       message:
   `
-  Condition: ${this.reverse ? "Not " : ""}${this.name}
+  Condition: ${this.preferred ? "" : "(Reversed) "}${this.name}
   Cookie: ${this.cookie}
   Result: ${result ? "Success" : "Failed"}
   Expected: ${this.expected}

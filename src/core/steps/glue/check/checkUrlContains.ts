@@ -1,10 +1,10 @@
 import { driver } from "../../../browser";
 import { getPageUrl } from "../../../utils";
 
-export default (reverse: string, expected: string, page: string): void => {
+export default (preferred: string, expected: string, page: string): void => {
   if (expected) {
-    driver.checkUrlContains(expected, !!reverse);
+    driver.checkUrlContains(expected, !preferred);
   } else {
-    driver.checkUrlContains(getPageUrl(page), !!reverse);
+    driver.checkUrlContains(getPageUrl(page), !preferred);
   }
 };

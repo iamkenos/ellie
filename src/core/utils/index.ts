@@ -153,7 +153,7 @@ export function getJSONDiff(type: keyof IConfig["comparable"], filename: string,
     }
   }
 
-  return undefined;
+  return "";
 }
 
 export function getImageFile(context: ImageCompareContext, filename: string, elem?: WebdriverIO.Element): IImageSave {
@@ -226,7 +226,7 @@ export function getImageDiff(filename: string, compare: IImageCompare): string {
     }
   }
 
-  return undefined;
+  return "";
 }
 
 export function isJSON(str: string): boolean {

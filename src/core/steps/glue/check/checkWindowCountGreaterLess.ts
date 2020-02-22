@@ -1,9 +1,9 @@
 import { driver } from "../../../browser";
 
-export default (reverse: string, type: string, expected: string): void => {
+export default (preferred: string, type: string, expected: string): void => {
   if (type === "greater") {
-    driver.checkCountGreaterThan(parseInt(expected), !!reverse);
+    driver.checkCountGreaterThan(parseInt(expected), !preferred);
   } else if (type === "less") {
-    driver.checkCountLessThan(parseInt(expected), !!reverse);
+    driver.checkCountLessThan(parseInt(expected), !preferred);
   }
 };

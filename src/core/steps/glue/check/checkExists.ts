@@ -1,8 +1,8 @@
 import { WebElement } from "../../../elements";
 import { getPageElement } from "../../../utils";
 
-export default (key: string, reverse: string): void => {
+export default (key: string, preferred: string): void => {
   const selector = getPageElement(key);
   const element = new WebElement(selector);
-  element.checkExisting(!!reverse);
+  element.checkExisting(!preferred);
 };

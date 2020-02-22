@@ -12,15 +12,15 @@ export default class HttpResponseMatch implements IBrowserCondition {
 
   private readonly filename: string;
 
-  private readonly reverse: boolean;
+  private readonly preferred: boolean;
 
   private readonly prefilter: any;
 
-  public constructor(request: IHttpRequest, filename: string, reverse: boolean, prefilter?: PreFilterFunction) {
+  public constructor(request: IHttpRequest, filename: string, preferred: boolean, prefilter?: PreFilterFunction) {
     this.name = logger.getCaller(true);
     this.request = request;
     this.filename = filename;
-    this.reverse = reverse;
+    this.preferred = preferred;
     this.prefilter = prefilter;
   }
 
@@ -40,7 +40,7 @@ export default class HttpResponseMatch implements IBrowserCondition {
         },
         this.prefilter
       );
-      result = this.reverse ? !!actual : !actual;
+      result = this.preferred ? !actual : !!actual;
     } catch (e) {
       actual = e.message;
       result = false;
@@ -50,9 +50,9 @@ export default class HttpResponseMatch implements IBrowserCondition {
       name: this.name,
       message:
   `
-  Condition: ${this.reverse ? "Not " : ""}${this.name}
+  Condition: ${this.preferred ? "" : "(Reversed) "}${this.name}
   Result: ${result ? "Success" : "Failed"}
-  Expected: ${this.reverse ? "Different" : "No Difference"}
+  Expected: ${this.preferred ? "Match" : "Different"}
   Actual: ${actual}
   `,
       isSuccess: result

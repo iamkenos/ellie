@@ -8,12 +8,12 @@ export default class UrlPathContains implements IBrowserCondition {
 
   private readonly expected: string;
 
-  private readonly reverse: boolean;
+  private readonly preferred: boolean;
 
-  public constructor(expected: string, reverse: boolean) {
+  public constructor(expected: string, preferred: boolean) {
     this.name = logger.getCaller(true);
     this.expected = expected;
-    this.reverse = reverse;
+    this.preferred = preferred;
   }
 
   public evaluate(): IExpectedConditionResult {
@@ -23,7 +23,7 @@ export default class UrlPathContains implements IBrowserCondition {
     try {
       const url = new URL(browser.getUrl());
       actual = url.pathname;
-      result = this.reverse ? !actual.includes(this.expected) : actual.includes(this.expected);
+      result = this.preferred ? actual.includes(this.expected) : !actual.includes(this.expected);
     } catch (e) {
       actual = e.message;
       result = false;
@@ -33,7 +33,7 @@ export default class UrlPathContains implements IBrowserCondition {
       name: this.name,
       message:
   `
-  Condition: ${this.reverse ? "Not " : ""}${this.name}
+  Condition: ${this.preferred ? "" : "(Reversed) "}${this.name}
   Result: ${result ? "Success" : "Failed"}
   Expected: ${this.expected}
   Actual: ${actual}

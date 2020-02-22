@@ -6,12 +6,12 @@ export default class TextEqualsArray implements IElementCondition {
 
   private readonly expected: string[];
 
-  private readonly reverse: boolean;
+  private readonly preferred: boolean;
 
-  public constructor(expected: string[], reverse: boolean) {
+  public constructor(expected: string[], preferred: boolean) {
     this.name = logger.getCaller(true);
     this.expected = expected;
-    this.reverse = reverse;
+    this.preferred = preferred;
   }
 
   public evaluate(selector: string): IExpectedConditionResult {
@@ -20,8 +20,8 @@ export default class TextEqualsArray implements IElementCondition {
 
     try {
       actual = $$(selector).map(e => e.getText());
-      result = this.reverse ? JSON.stringify(actual) !== JSON.stringify(this.expected)
-        : JSON.stringify(actual) === JSON.stringify(this.expected);
+      result = this.preferred ? JSON.stringify(actual) === JSON.stringify(this.expected)
+        : JSON.stringify(actual) !== JSON.stringify(this.expected);
     } catch (e) {
       actual = e.message;
       result = false;
@@ -31,7 +31,7 @@ export default class TextEqualsArray implements IElementCondition {
       name: this.name,
       message:
   `
-  Condition: ${this.reverse ? "Not " : ""}${this.name}
+  Condition: ${this.preferred ? "" : "(Reversed) "}${this.name}
   Result: ${result ? "Success" : "Failed"}
   Expected: \n${this.expected.map((i: string) => `    ${i}`).join("\n")}
   Actual: \n${actual.map((i: string) => `    ${i}`).join("\n")}

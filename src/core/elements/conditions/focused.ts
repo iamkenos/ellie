@@ -6,12 +6,12 @@ export default class Focused implements IElementCondition {
 
   private readonly expected: boolean;
 
-  private readonly reverse: boolean;
+  private readonly preferred: boolean;
 
-  public constructor(reverse: boolean) {
+  public constructor(preferred: boolean) {
     this.name = logger.getCaller(true);
-    this.expected = !reverse;
-    this.reverse = reverse;
+    this.expected = preferred;
+    this.preferred = preferred;
   }
 
   public evaluate(selector: string): IExpectedConditionResult {
@@ -30,10 +30,10 @@ export default class Focused implements IElementCondition {
       name: this.name,
       message:
   `
-  Condition: ${this.reverse ? "Not " : ""}${this.name}
+  Condition: ${this.preferred ? "" : "(Reversed) "}${this.name}
   Result: ${result ? "Success" : "Failed"}
-  Expected: ${this.reverse ? !this.expected : this.expected}
-  Actual: ${this.reverse ? !actual : actual}
+  Expected: ${this.expected}
+  Actual: ${actual}
   `,
       isSuccess: result
     };

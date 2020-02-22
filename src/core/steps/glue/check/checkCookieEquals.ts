@@ -1,5 +1,5 @@
 import { driver } from "../../../browser";
 
-export default (cookie: string, reverse: string, expected = ""): void => {
-  driver.checkCookieEquals(cookie, expected, !!reverse);
+export default (cookie: string, preferred: string, expected = ""): void => {
+  driver.checkCookieEquals(cookie, expected, !preferred);
 };

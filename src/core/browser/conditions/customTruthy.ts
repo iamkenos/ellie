@@ -7,12 +7,15 @@ export default class CustomTruthy implements IBrowserCondition {
 
   private readonly truthy: Function;
 
-  private readonly reverse: boolean;
+  private readonly expected: boolean;
 
-  public constructor(truthy: Function, reverse: boolean) {
+  private readonly preferred: boolean;
+
+  public constructor(truthy: Function, preferred: boolean) {
     this.name = normalizeFunctionName(truthy.name) || logger.getCaller(true);
     this.truthy = truthy;
-    this.reverse = reverse;
+    this.expected = preferred;
+    this.preferred = preferred;
   }
 
   public evaluate(): IExpectedConditionResult {
@@ -21,7 +24,7 @@ export default class CustomTruthy implements IBrowserCondition {
 
     try {
       actual = this.truthy();
-      result = this.reverse ? !actual : actual;
+      result = this.preferred ? actual : !actual;
     } catch (e) {
       actual = e.message;
       result = false;
@@ -31,9 +34,9 @@ export default class CustomTruthy implements IBrowserCondition {
       name: this.name,
       message:
   `
-  Condition: ${this.reverse ? "Not " : ""}${this.name}
+  Condition: ${this.preferred ? "" : "(Reversed) "}${this.name}
   Result: ${result ? "Success" : "Failed"}
-  Expected: ${!this.reverse}
+  Expected: ${this.expected}
   Actual: ${actual}
   `,
       isSuccess: result

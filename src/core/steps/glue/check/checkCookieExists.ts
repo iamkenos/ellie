@@ -1,5 +1,5 @@
 import { driver } from "../../../browser";
 
-export default (cookie: string, reverse: string): void => {
-  driver.checkCookieExists(cookie, !!reverse);
+export default (cookie: string, preferred: string): void => {
+  driver.checkCookieExists(cookie, !preferred);
 };

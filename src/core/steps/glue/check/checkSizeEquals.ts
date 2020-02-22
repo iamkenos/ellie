@@ -1,8 +1,8 @@
 import { WebElement } from "../../../elements";
 import { getPageElement } from "../../../utils";
 
-export default (key: string, reverse: string, width: string, height: string): void => {
+export default (key: string, preferred: string, width: string, height: string): void => {
   const selector = getPageElement(key);
   const element = new WebElement(selector);
-  element.checkSizeEquals(parseInt(width), parseInt(height), !!reverse);
+  element.checkSizeEquals(parseInt(width), parseInt(height), !preferred);
 };

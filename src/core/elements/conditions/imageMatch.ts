@@ -10,15 +10,15 @@ export default class ImageMatch implements IElementCondition {
 
   private readonly filename: string;
 
-  private readonly reverse: boolean;
+  private readonly preferred: boolean;
 
   private readonly options: IImageCompareOptions;
 
-  public constructor(filename: string, reverse: boolean, options?: IImageCompareOptions) {
+  public constructor(filename: string, preferred: boolean, options?: IImageCompareOptions) {
     this.name = logger.getCaller(true);
     this.context = ImageCompareContext.ELEMENT;
     this.filename = filename;
-    this.reverse = reverse;
+    this.preferred = preferred;
     this.options = options;
   }
 
@@ -28,7 +28,7 @@ export default class ImageMatch implements IElementCondition {
 
     try {
       actual = getImageDiff(this.filename, { context: this.context, options: this.options, element: $(selector) });
-      result = this.reverse ? !!actual : !actual;
+      result = this.preferred ? !actual : !!actual;
     } catch (e) {
       actual = e.message;
       result = false;
@@ -38,9 +38,9 @@ export default class ImageMatch implements IElementCondition {
       name: this.name,
       message:
   `
-  Condition: ${this.reverse ? "Not " : ""}${this.name}
+  Condition: ${this.preferred ? "" : "(Reversed) "}${this.name}
   Result: ${result ? "Success" : "Failed"}
-  Expected: ${this.reverse ? "Different" : "No Difference"}
+  Expected: ${this.preferred ? "Match" : "Different"}
   Actual: ${actual}
   `,
       isSuccess: result

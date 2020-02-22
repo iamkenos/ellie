@@ -9,14 +9,14 @@ export default class AjaxRequestMatch implements IBrowserCondition {
 
   private readonly filename: string;
 
-  private readonly reverse: boolean;
+  private readonly preferred: boolean;
 
   private readonly prefilter: any;
 
-  public constructor(filename: string, reverse: boolean, prefilter?: PreFilterFunction) {
+  public constructor(filename: string, preferred: boolean, prefilter?: PreFilterFunction) {
     this.name = logger.getCaller(true);
     this.filename = filename;
-    this.reverse = reverse;
+    this.preferred = preferred;
     this.prefilter = prefilter;
   }
 
@@ -28,7 +28,7 @@ export default class AjaxRequestMatch implements IBrowserCondition {
       browser.pause(1000);
       actual = (browser as any).getRequests().map((i: any) => { delete i.response.headers; return i; });
       actual = getJSONDiff("ajaxRequest", this.filename, actual, this.prefilter);
-      result = this.reverse ? !!actual : !actual;
+      result = this.preferred ? !actual : !!actual;
     } catch (e) {
       actual = e.message;
       result = false;
@@ -38,9 +38,9 @@ export default class AjaxRequestMatch implements IBrowserCondition {
       name: this.name,
       message:
   `
-  Condition: ${this.reverse ? "Not " : ""}${this.name}
+  Condition: ${this.preferred ? "" : "(Reversed) "}${this.name}
   Result: ${result ? "Success" : "Failed"}
-  Expected: ${this.reverse ? "Different" : "No Difference"}
+  Expected: ${this.preferred ? "Match" : "Different"}
   Actual: ${actual}
   `,
       isSuccess: result

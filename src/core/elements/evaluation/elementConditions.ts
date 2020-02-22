@@ -50,133 +50,133 @@ export default class ElementConditions {
     this.selector = selector;
   }
 
-  public attributeContains(attribute: string, expected: string, reverse = false): ElementConditions {
-    this.conditions.push(new AttributeContains(attribute, expected, reverse));
+  public attributeContains(attribute: string, expected: string, preferred: boolean): ElementConditions {
+    this.conditions.push(new AttributeContains(attribute, expected, preferred));
     return this;
   }
 
-  public axisLocationEquals(axis: WebdriverIO.LocationParam, expected: number, reverse = false): ElementConditions {
-    this.conditions.push(new AxisLocationEquals(axis, expected, reverse));
+  public axisLocationEquals(axis: WebdriverIO.LocationParam, expected: number, preferred: boolean): ElementConditions {
+    this.conditions.push(new AxisLocationEquals(axis, expected, preferred));
     return this;
   }
 
-  public attributeExists(attribute: string, reverse = false): ElementConditions {
-    this.conditions.push(new AttributeExists(attribute, reverse));
+  public attributeExists(attribute: string, preferred: boolean): ElementConditions {
+    this.conditions.push(new AttributeExists(attribute, preferred));
     return this;
   }
 
-  public attributeEquals(attribute: string, expected: string, reverse = false): ElementConditions {
-    this.conditions.push(new AttributeEquals(attribute, expected, reverse));
+  public attributeEquals(attribute: string, expected: string, preferred: boolean): ElementConditions {
+    this.conditions.push(new AttributeEquals(attribute, expected, preferred));
     return this;
   }
 
-  public countEquals(expected: number, reverse = false): ElementConditions {
-    this.conditions.push(new CountEquals(expected, reverse));
+  public countEquals(expected: number, preferred: boolean): ElementConditions {
+    this.conditions.push(new CountEquals(expected, preferred));
     return this;
   }
 
-  public countGreaterThan(expected: number, reverse = false): ElementConditions {
-    this.conditions.push(new CountGreaterThan(expected, reverse));
+  public countGreaterThan(expected: number, preferred: boolean): ElementConditions {
+    this.conditions.push(new CountGreaterThan(expected, preferred));
     return this;
   }
 
-  public countLessThan(expected: number, reverse = false): ElementConditions {
-    this.conditions.push(new CountLessThan(expected, reverse));
+  public countLessThan(expected: number, preferred: boolean): ElementConditions {
+    this.conditions.push(new CountLessThan(expected, preferred));
     return this;
   }
 
-  public cssPropertyExists(cssProperty: string, reverse = false): ElementConditions {
-    this.conditions.push(new CSSPropertyExists(cssProperty, reverse));
+  public cssPropertyExists(cssProperty: string, preferred: boolean): ElementConditions {
+    this.conditions.push(new CSSPropertyExists(cssProperty, preferred));
     return this;
   }
 
-  public displayed(reverse = false): ElementConditions {
-    this.conditions.push(new Displayed(reverse));
+  public displayed(preferred: boolean): ElementConditions {
+    this.conditions.push(new Displayed(preferred));
     return this;
   }
 
-  public displayedInVewport(reverse = false): ElementConditions {
-    this.conditions.push(new DisplayedInViewport(reverse));
+  public displayedInVewport(preferred: boolean): ElementConditions {
+    this.conditions.push(new DisplayedInViewport(preferred));
     return this;
   }
 
-  public enabled(reverse = false): ElementConditions {
-    this.conditions.push(new Enabled(reverse));
+  public enabled(preferred: boolean): ElementConditions {
+    this.conditions.push(new Enabled(preferred));
     return this;
   }
 
-  public existing(reverse = false): ElementConditions {
-    this.conditions.push(new Existing(reverse));
+  public existing(preferred: boolean): ElementConditions {
+    this.conditions.push(new Existing(preferred));
     return this;
   }
 
-  public focused(reverse = false): ElementConditions {
-    this.conditions.push(new Focused(reverse));
+  public focused(preferred: boolean): ElementConditions {
+    this.conditions.push(new Focused(preferred));
     return this;
   }
 
-  public imageMatch(filename: string, reverse = false, options?: IImageCompareOptions): ElementConditions {
-    this.conditions.push(new ImageMatch(filename, reverse, options));
+  public imageMatch(filename: string, preferred: boolean, options?: IImageCompareOptions): ElementConditions {
+    this.conditions.push(new ImageMatch(filename, preferred, options));
     return this;
   }
 
-  public selected(reverse = false): ElementConditions {
-    this.conditions.push(new Selected(reverse));
+  public selected(preferred: boolean): ElementConditions {
+    this.conditions.push(new Selected(preferred));
     return this;
   }
 
-  public sizeEquals(width: number, height: number, reverse = false): ElementConditions {
-    this.conditions.push(new SizeEquals(width, height, reverse));
+  public sizeEquals(width: number, height: number, preferred: boolean): ElementConditions {
+    this.conditions.push(new SizeEquals(width, height, preferred));
     return this;
   }
 
-  public sizeHeightEquals(expected: number, reverse = false): ElementConditions {
-    this.conditions.push(new SizeHeightEquals(expected, reverse));
+  public sizeHeightEquals(expected: number, preferred: boolean): ElementConditions {
+    this.conditions.push(new SizeHeightEquals(expected, preferred));
     return this;
   }
 
-  public sizeWidthEquals(expected: number, reverse = false): ElementConditions {
-    this.conditions.push(new SizeWidthEquals(expected, reverse));
+  public sizeWidthEquals(expected: number, preferred: boolean): ElementConditions {
+    this.conditions.push(new SizeWidthEquals(expected, preferred));
     return this;
   }
 
-  public textContains(expected: string, reverse = false): ElementConditions {
-    this.conditions.push(new TextContains(expected, reverse));
+  public textContains(expected: string, preferred: boolean): ElementConditions {
+    this.conditions.push(new TextContains(expected, preferred));
     return this;
   }
 
-  public textEmpty(reverse = false): ElementConditions {
-    this.conditions.push(new TextEmpty(reverse));
+  public textEmpty(preferred: boolean): ElementConditions {
+    this.conditions.push(new TextEmpty(preferred));
     return this;
   }
 
-  public textEquals(expected: string, reverse = false): ElementConditions {
-    this.conditions.push(new TextEquals(expected, reverse));
+  public textEquals(expected: string, preferred: boolean): ElementConditions {
+    this.conditions.push(new TextEquals(expected, preferred));
     return this;
   }
 
-  public textEqualsArray(expected: string[], reverse = false): ElementConditions {
-    this.conditions.push(new TextEqualsArray(expected, reverse));
+  public textEqualsArray(expected: string[], preferred: boolean): ElementConditions {
+    this.conditions.push(new TextEqualsArray(expected, preferred));
     return this;
   }
 
-  public textContainsArray(expected: string[], reverse = false): ElementConditions {
-    this.conditions.push(new TextContainsArray(expected, reverse));
+  public textContainsArray(expected: string[], preferred: boolean): ElementConditions {
+    this.conditions.push(new TextContainsArray(expected, preferred));
     return this;
   }
 
-  public valueContains(expected: string, reverse = false): ElementConditions {
-    this.conditions.push(new ValueContains(expected, reverse));
+  public valueContains(expected: string, preferred: boolean): ElementConditions {
+    this.conditions.push(new ValueContains(expected, preferred));
     return this;
   }
 
-  public valueEmpty(reverse = false): ElementConditions {
-    this.conditions.push(new ValueEmpty(reverse));
+  public valueEmpty(preferred: boolean): ElementConditions {
+    this.conditions.push(new ValueEmpty(preferred));
     return this;
   }
 
-  public valueEquals(expected: string, reverse = false): ElementConditions {
-    this.conditions.push(new ValueEquals(expected, reverse));
+  public valueEquals(expected: string, preferred: boolean): ElementConditions {
+    this.conditions.push(new ValueEquals(expected, preferred));
     return this;
   }
 
@@ -205,7 +205,7 @@ export default class ElementConditions {
       );
       return this.result;
     } catch (e) {
-      throw new AssertionError(this.result.getErrorMessage(this.name, this.conditions, timeout));
+      throw new AssertionError(this.result.getErrorMessage(this.name, timeout));
     }
   }
 }

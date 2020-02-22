@@ -8,13 +8,13 @@ export default class AttributeExists implements IElementCondition {
 
   private readonly expected: boolean;
 
-  private readonly reverse: boolean;
+  private readonly preferred: boolean;
 
-  public constructor(attribute: string, reverse: boolean) {
+  public constructor(attribute: string, preferred: boolean) {
     this.name = logger.getCaller(true);
     this.attribute = attribute;
-    this.expected = !reverse;
-    this.reverse = reverse;
+    this.expected = preferred;
+    this.preferred = preferred;
   }
 
   public evaluate(selector: string): IExpectedConditionResult {
@@ -33,7 +33,7 @@ export default class AttributeExists implements IElementCondition {
       name: this.name,
       message:
   `
-  Condition: ${this.reverse ? "Not " : ""}${this.name}
+  Condition: ${this.preferred ? "" : "(Reversed) "}${this.name}
   Attribute: ${this.attribute}
   Result: ${result ? "Success" : "Failed"}
   Expected: ${this.expected}

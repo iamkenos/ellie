@@ -5,6 +5,7 @@ import BrowserConditions from "./evaluation/browserConditions";
 import { WebElement } from "../elements";
 import { IHttpRequest, IHttpResponse, IImageCompareOptions } from "../interfaces";
 import { sendSyncRequest } from "../utils";
+import { inspect } from "../../cli/utils";
 
 export default abstract class Driver {
   public static acceptAlert(): void {
@@ -129,19 +130,19 @@ export default abstract class Driver {
     browser.execute("window.scrollTo(0, document.body.scrollHeight)");
   }
 
-  public static setCookie(cookieName: string, cookieValue: string): void {
-    logger.info(`Cookie: ${cookieName} | Value: ${cookieValue}`);
+  public static setCookie(key: string, value: string): void {
+    logger.info(`Cookie: ${key} | Value: ${value}`);
     browser.setCookies({
-      name: cookieName,
-      value: cookieValue
+      name: key,
+      value: value
     });
   }
 
-  public static setWindowSize(screenWidth: string, screenHeight: string): void {
-    logger.info(`Width: ${screenWidth} | Height: ${screenHeight}`);
+  public static setWindowSize(width: string, height: string): void {
+    logger.info(`Width: ${width} | Height: ${height}`);
     browser.setWindowSize(
-      parseInt(screenWidth, 10),
-      parseInt(screenHeight, 10)
+      parseInt(width, 10),
+      parseInt(height, 10)
     );
   }
 
@@ -151,12 +152,12 @@ export default abstract class Driver {
   }
 
   public static sendHttpRequest(request: IHttpRequest): IHttpResponse {
-    logger.info(request.options);
+    logger.info(inspect(request.options));
     return sendSyncRequest(request);
   }
 
   public static switchToFrame(element: WebElement): void {
-    logger.info(element);
+    logger.info(element.selector);
     browser.switchToFrame(element.existing$());
   }
 
@@ -170,138 +171,138 @@ export default abstract class Driver {
     browser.url(url);
   }
 
-  public static checkAjaxRequestsMatchRef(filename: string, reverse?: boolean, prefilter?: PreFilterFunction): void {
-    logger.info(`File: ${filename} | Reverse: ${!!~~reverse} | Prefilter: ${prefilter}`);
+  public static checkAjaxRequestsMatchRef(filename: string, preferred = true, prefilter?: PreFilterFunction): void {
+    logger.info(`File: ${filename} | Reverse: ${!preferred} | Prefilter: ${prefilter}`);
     new BrowserConditions()
-      .ajaxRequestsMatch(filename, reverse, prefilter)
+      .ajaxRequestsMatch(filename, preferred, prefilter)
       .runStrict();
   }
 
-  public static checkModalExisting(reverse?: boolean): void {
-    logger.info(`Reverse: ${!!~~reverse}`);
+  public static checkModalExisting(preferred = true): void {
+    logger.info(`Reverse: ${!preferred}`);
     new BrowserConditions()
-      .modalExists(reverse)
+      .modalExists(preferred)
       .runStrict();
   }
 
-  public static checkModalTextContains(expected: string, reverse?: boolean): void {
-    logger.info(`Expected: ${expected} | Reverse: ${!!~~reverse}`);
+  public static checkModalTextContains(expected: string, preferred = true): void {
+    logger.info(`Expected: ${expected} | Reverse: ${!preferred}`);
     new BrowserConditions()
-      .modalTextContains(expected, reverse)
+      .modalTextContains(expected, preferred)
       .runStrict();
   }
 
-  public static checkModalTextEquals(expected: string, reverse?: boolean): void {
-    logger.info(`Expected: ${expected} | Reverse: ${!!~~reverse}`);
+  public static checkModalTextEquals(expected: string, preferred = true): void {
+    logger.info(`Expected: ${expected} | Reverse: ${!preferred}`);
     new BrowserConditions()
-      .modalTextEquals(expected, reverse)
+      .modalTextEquals(expected, preferred)
       .runStrict();
   }
 
-  public static checkCookieContains(cookie: string, expected: string, reverse?: boolean): void {
-    logger.info(`Cookie: ${cookie} | Expected: ${expected} | Reverse: ${!!~~reverse}`);
+  public static checkCookieContains(cookie: string, expected: string, preferred = true): void {
+    logger.info(`Cookie: ${cookie} | Expected: ${expected} | Reverse: ${!preferred}`);
     new BrowserConditions()
-      .cookieContains(cookie, expected, reverse)
+      .cookieContains(cookie, expected, preferred)
       .runStrict();
   }
 
-  public static checkCookieEquals(cookie: string, expected: string, reverse?: boolean): void {
-    logger.info(`Cookie: ${cookie} | Expected: ${expected} | Reverse: ${!!~~reverse}`);
+  public static checkCookieEquals(cookie: string, expected: string, preferred = true): void {
+    logger.info(`Cookie: ${cookie} | Expected: ${expected} | Reverse: ${!preferred}`);
     new BrowserConditions()
-      .cookieEquals(cookie, expected, reverse)
+      .cookieEquals(cookie, expected, preferred)
       .runStrict();
   }
 
-  public static checkCookieExists(cookie: string, reverse?: boolean): void {
-    logger.info(`Cookie: ${cookie} | Reverse: ${!!~~reverse}`);
+  public static checkCookieExists(cookie: string, preferred = true): void {
+    logger.info(`Cookie: ${cookie} | Reverse: ${!preferred}`);
     new BrowserConditions()
-      .cookieExists(cookie, reverse)
+      .cookieExists(cookie, preferred)
       .runStrict();
   }
 
-  public static checkCountEquals(expected: number, reverse?: boolean): void {
-    logger.info(`Expected: ${expected} | Reverse: ${!!~~reverse}`);
+  public static checkCountEquals(expected: number, preferred = true): void {
+    logger.info(`Expected: ${expected} | Reverse: ${!preferred}`);
     new BrowserConditions()
-      .countEquals(expected, reverse)
+      .countEquals(expected, preferred)
       .runStrict();
   }
 
-  public static checkCountGreaterThan(expected: number, reverse?: boolean): void {
-    logger.info(`Expected: ${expected} | Reverse: ${!!~~reverse}`);
+  public static checkCountGreaterThan(expected: number, preferred = true): void {
+    logger.info(`Expected: ${expected} | Reverse: ${!preferred}`);
     new BrowserConditions()
-      .countGreaterThan(expected, reverse)
+      .countGreaterThan(expected, preferred)
       .runStrict();
   }
 
-  public static checkCountLessThan(expected: number, reverse?: boolean): void {
-    logger.info(`Expected: ${expected} | Reverse: ${!!~~reverse}`);
+  public static checkCountLessThan(expected: number, preferred = true): void {
+    logger.info(`Expected: ${expected} | Reverse: ${!preferred}`);
     new BrowserConditions()
-      .countLessThan(expected, reverse)
+      .countLessThan(expected, preferred)
       .runStrict();
   }
 
-  public static checkCustomTruthy(truthy: Function, reverse?: boolean): void {
-    logger.info(`Reverse: ${!!~~reverse}`);
+  public static checkCustomTruthy(truthy: Function, preferred = true): void {
+    logger.info(`Reverse: ${!preferred}`);
     new BrowserConditions()
-      .customTruthy(truthy, reverse)
+      .customTruthy(truthy, preferred)
       .runStrict();
   }
 
   public static checkHttpResponseMatchRef(
-    request: IHttpRequest, filename: string, reverse?: boolean, prefilter?: PreFilterFunction): void {
-    logger.info(`Request: ${request.options} | File: ${filename} | Reverse: ${!!~~reverse} | Filter: ${prefilter}`);
+    request: IHttpRequest, filename: string, preferred = true, prefilter?: PreFilterFunction): void {
+    logger.info(`Request: ${request.options} | File: ${filename} | Reverse: ${!preferred} | Filter: ${prefilter}`);
     new BrowserConditions()
-      .httpResponseMatch(request, filename, reverse, prefilter)
+      .httpResponseMatch(request, filename, preferred, prefilter)
       .runStrict();
   }
 
   public static checkImageMatchRef(
-    context: string, filename: string, reverse?: boolean, options?: IImageCompareOptions): void {
-    logger.info(`Context: ${context} | File: ${filename} | Reverse: ${!!~~reverse} | Options: ${options}`);
+    context: string, filename: string, preferred = true, options?: IImageCompareOptions): void {
+    logger.info(`Context: ${context} | File: ${filename} | Reverse: ${!preferred} | Options: ${options}`);
     new BrowserConditions()
-      .imageMatch(context, filename, reverse, options)
+      .imageMatch(context, filename, preferred, options)
       .runStrict();
   }
 
-  public static checkTitleContains(expected: string, reverse?: boolean): void {
-    logger.info(`Expected: ${expected} | Reverse: ${!!~~reverse}`);
+  public static checkTitleContains(expected: string, preferred = true): void {
+    logger.info(`Expected: ${expected} | Reverse: ${!preferred}`);
     new BrowserConditions()
-      .titleContains(expected, reverse)
+      .titleContains(expected, preferred)
       .runStrict();
   }
 
-  public static checkTitleEquals(expected: string, reverse?: boolean): void {
-    logger.info(`Expected: ${expected} | Reverse: ${!!~~reverse}`);
+  public static checkTitleEquals(expected: string, preferred = true): void {
+    logger.info(`Expected: ${expected} | Reverse: ${!preferred}`);
     new BrowserConditions()
-      .titleEquals(expected, reverse)
+      .titleEquals(expected, preferred)
       .runStrict();
   }
 
-  public static checkUrlContains(expected: string, reverse?: boolean): void {
-    logger.info(`Expected: ${expected} | Reverse: ${!!~~reverse}`);
+  public static checkUrlContains(expected: string, preferred = true): void {
+    logger.info(`Expected: ${expected} | Reverse: ${!preferred}`);
     new BrowserConditions()
-      .urlContains(expected, reverse)
+      .urlContains(expected, preferred)
       .runStrict();
   }
 
-  public static checkUrlEquals(expected: string, reverse?: boolean): void {
-    logger.info(`Expected: ${expected} | Reverse: ${!!~~reverse}`);
+  public static checkUrlEquals(expected: string, preferred = true): void {
+    logger.info(`Expected: ${expected} | Reverse: ${!preferred}`);
     new BrowserConditions()
-      .urlEquals(expected, reverse)
+      .urlEquals(expected, preferred)
       .runStrict();
   }
 
-  public static checkUrlPathContains(expected: string, reverse?: boolean): void {
-    logger.info(`Expected: ${expected} | Reverse: ${!!~~reverse}`);
+  public static checkUrlPathContains(expected: string, preferred = true): void {
+    logger.info(`Expected: ${expected} | Reverse: ${!preferred}`);
     new BrowserConditions()
-      .urlPathContains(expected, reverse)
+      .urlPathContains(expected, preferred)
       .runStrict();
   }
 
-  public static checkUrlPathEquals(expected: string, reverse?: boolean): void {
-    logger.info(`Expected: ${expected} | Reverse: ${!!~~reverse}`);
+  public static checkUrlPathEquals(expected: string, preferred = true): void {
+    logger.info(`Expected: ${expected} | Reverse: ${!preferred}`);
     new BrowserConditions()
-      .urlPathEquals(expected, reverse)
+      .urlPathEquals(expected, preferred)
       .runStrict();
   }
 }

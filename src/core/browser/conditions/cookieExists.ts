@@ -8,13 +8,13 @@ export default class CookieExists implements IBrowserCondition {
 
   private readonly expected: boolean;
 
-  private readonly reverse: boolean;
+  private readonly preferred: boolean;
 
-  public constructor(cookie: string, reverse: boolean) {
+  public constructor(cookie: string, preferred: boolean) {
     this.name = logger.getCaller(true);
     this.cookie = cookie;
-    this.expected = !reverse;
-    this.reverse = reverse;
+    this.expected = preferred;
+    this.preferred = preferred;
   }
 
   public evaluate(): IExpectedConditionResult {
@@ -33,7 +33,7 @@ export default class CookieExists implements IBrowserCondition {
       name: this.name,
       message:
   `
-  Condition: ${this.reverse ? "Not " : ""}${this.name}
+  Condition: ${this.preferred ? "" : "(Reversed) "}${this.name}
   Cookie: ${this.cookie}
   Result: ${result ? "Success" : "Failed"}
   Expected: ${this.expected}

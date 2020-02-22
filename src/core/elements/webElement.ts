@@ -13,7 +13,7 @@ export default class WebElement {
 
   public existing$(): WebdriverIO.Element {
     return new ElementConditions(this.selector, logger.getCaller())
-      .existing()
+      .existing(true)
       .runStrict()
       .getElement();
   }
@@ -87,105 +87,105 @@ export default class WebElement {
   public dragAndDrop(target: string, duration?: number): void {
     logger.info(`Selector: ${this.selector}`);
     const dest = new ElementConditions(target)
-      .existing()
+      .existing(true)
       .runStrict()
       .getElement();
 
     this.existing$().dragAndDrop(dest, duration);
   }
 
-  public getAttribute(attrName: string): string {
-    logger.info(`Selector: ${this.selector} | Attribute: ${attrName}`);
-    return this.existing$().getAttribute(attrName);
+  public getAttribute(key: string): string {
+    logger.info(`Selector: ${this.selector} | Attribute: ${key}`);
+    return this.existing$().getAttribute(key);
   }
 
-  public isAttributeContaining(attrName: string, attrValue: string, reverse?: boolean): boolean {
-    logger.info(`Selector: ${this.selector} | Attribute: ${attrName} | Value: ${attrValue} | Reverse: ${!!~~reverse}`);
+  public isAttributeContaining(key: string, value: string, preferred = true): boolean {
+    logger.info(`Selector: ${this.selector} | Attribute: ${key} | Value: ${value} | Reverse: ${!preferred}`);
     return new ElementConditions(this.existing$().selector)
-      .attributeExists(attrName)
-      .attributeContains(attrName, attrValue, reverse)
+      .attributeExists(key, true)
+      .attributeContains(key, value, preferred)
       .run()
       .isSuccess();
   }
 
-  public isAttributeEquals(attrName: string, attrValue: string, reverse?: boolean): boolean {
-    logger.info(`Selector: ${this.selector} | Attribute: ${attrName} | Value: ${attrValue} | Reverse: ${!!~~reverse}`);
+  public isAttributeEquals(key: string, value: string, preferred = true): boolean {
+    logger.info(`Selector: ${this.selector} | Attribute: ${key} | Value: ${value} | Reverse: ${!preferred}`);
     return new ElementConditions(this.existing$().selector)
-      .attributeExists(attrName)
-      .attributeEquals(attrName, attrValue, reverse)
+      .attributeExists(key, true)
+      .attributeEquals(key, value, preferred)
       .run()
       .isSuccess();
   }
 
-  public isAttributeExisting(attrName: string, reverse?: boolean): boolean {
-    logger.info(`Selector: ${this.selector} | Attribute: ${attrName} | Reverse: ${!!~~reverse}`);
+  public isAttributeExisting(key: string, preferred = true): boolean {
+    logger.info(`Selector: ${this.selector} | Attribute: ${key} | Reverse: ${!preferred}`);
     return new ElementConditions(this.existing$().selector)
-      .attributeExists(attrName, reverse)
+      .attributeExists(key, preferred)
       .run()
       .isSuccess();
   }
 
-  public checkAttributeContains(attrName: string, attrValue: string, reverse?: boolean): void {
-    logger.info(`Selector: ${this.selector} | Attribute: ${attrName} | Value: ${attrValue} | Reverse: ${!!~~reverse}`);
+  public checkAttributeContains(key: string, value: string, preferred = true): void {
+    logger.info(`Selector: ${this.selector} | Attribute: ${key} | Value: ${value} | Reverse: ${!preferred}`);
     new ElementConditions(this.existing$().selector)
-      .attributeExists(attrName)
-      .attributeContains(attrName, attrValue, reverse)
+      .attributeExists(key, true)
+      .attributeContains(key, value, preferred)
       .runStrict();
   }
 
-  public checkAttributeEquals(attrName: string, attrValue: string, reverse?: boolean): void {
-    logger.info(`Selector: ${this.selector} | Attribute: ${attrName} | Value: ${attrValue} | Reverse: ${!!~~reverse}`);
+  public checkAttributeEquals(key: string, value: string, preferred = true): void {
+    logger.info(`Selector: ${this.selector} | Attribute: ${key} | Value: ${value} | Reverse: ${!preferred}`);
     new ElementConditions(this.existing$().selector)
-      .attributeExists(attrName)
-      .attributeEquals(attrName, attrValue, reverse)
+      .attributeExists(key, true)
+      .attributeEquals(key, value, preferred)
       .runStrict();
   }
 
-  public checkAttributeExists(attrName: string, reverse?: boolean): void {
-    logger.info(`Selector: ${this.selector} | Attribute: ${attrName} | Reverse: ${!!~~reverse}`);
+  public checkAttributeExists(key: string, preferred = true): void {
+    logger.info(`Selector: ${this.selector} | Attribute: ${key} | Reverse: ${!preferred}`);
     new ElementConditions(this.existing$().selector)
-      .attributeExists(attrName, reverse)
+      .attributeExists(key, preferred)
       .runStrict();
   }
 
-  public isAxisLocationEquals(axis: WebdriverIO.LocationParam, expected: number, reverse?: boolean): boolean {
-    logger.info(`Selector: ${this.selector} | Axis: ${axis} | Expected: ${expected} | Reverse: ${!!~~reverse}`);
+  public isAxisLocationEquals(axis: WebdriverIO.LocationParam, expected: number, preferred = true): boolean {
+    logger.info(`Selector: ${this.selector} | Axis: ${axis} | Expected: ${expected} | Reverse: ${!preferred}`);
     return new ElementConditions(this.existing$().selector)
-      .axisLocationEquals(axis, expected, reverse)
+      .axisLocationEquals(axis, expected, preferred)
       .run()
       .isSuccess();
   }
 
-  public checkAxisLocationEquals(axis: WebdriverIO.LocationParam, expected: number, reverse?: boolean): void {
-    logger.info(`Selector: ${this.selector} | Axis: ${axis} | Expected: ${expected} | Reverse: ${!!~~reverse}`);
+  public checkAxisLocationEquals(axis: WebdriverIO.LocationParam, expected: number, preferred = true): void {
+    logger.info(`Selector: ${this.selector} | Axis: ${axis} | Expected: ${expected} | Reverse: ${!preferred}`);
     new ElementConditions(this.existing$().selector)
-      .axisLocationEquals(axis, expected, reverse)
+      .axisLocationEquals(axis, expected, preferred)
       .runStrict();
   }
 
-  public getCSSProperty(cssProp: string): WebdriverIO.CSSProperty {
-    logger.info(`Selector: ${this.selector} | Property: ${cssProp}`);
-    return this.existing$().getCSSProperty(cssProp);
+  public getCSSProperty(key: string): WebdriverIO.CSSProperty {
+    logger.info(`Selector: ${this.selector} | Property: ${key}`);
+    return this.existing$().getCSSProperty(key);
   }
 
-  public isCSSPropertyExisting(cssProp: string, reverse?: boolean): boolean {
-    logger.info(`Selector: ${this.selector} | Property: ${cssProp} | Reverse: ${!!~~reverse}`);
+  public isCSSPropertyExisting(key: string, preferred = true): boolean {
+    logger.info(`Selector: ${this.selector} | Property: ${key} | Reverse: ${!preferred}`);
     return new ElementConditions(this.existing$().selector)
-      .cssPropertyExists(cssProp, reverse)
+      .cssPropertyExists(key, preferred)
       .run()
       .isSuccess();
   }
 
-  public checkCSSPropertyExists(cssProp: string, reverse?: boolean): void {
-    logger.info(`Selector: ${this.selector} | Property: ${cssProp} | Reverse: ${!!~~reverse}`);
+  public checkCSSPropertyExists(key: string, preferred = true): void {
+    logger.info(`Selector: ${this.selector} | Property: ${key} | Reverse: ${!preferred}`);
     new ElementConditions(this.existing$().selector)
-      .cssPropertyExists(cssProp, reverse)
+      .cssPropertyExists(key, preferred)
       .runStrict();
   }
 
-  public getHTML(includeSelectorTag?: boolean): string {
-    logger.info(`Selector: ${this.selector} | Include Tag?: ${!!~~includeSelectorTag}`);
-    return this.existing$().getHTML(includeSelectorTag);
+  public getHTML(isSelfIncluded = true): string {
+    logger.info(`Selector: ${this.selector} | Include Self: ${isSelfIncluded}`);
+    return this.existing$().getHTML(isSelfIncluded);
   }
 
   public getLocation(): WebdriverIO.LocationReturn {
@@ -193,9 +193,9 @@ export default class WebElement {
     return this.existing$().getLocation();
   }
 
-  public getProperty(property: string): object | string | boolean | number {
-    logger.info(`Selector: ${this.selector} | Property: ${property}`);
-    return this.existing$().getProperty(property);
+  public getProperty(key: string): object | string | boolean | number {
+    logger.info(`Selector: ${this.selector} | Property: ${key}`);
+    return this.existing$().getProperty(key);
   }
 
   public getSize(): WebdriverIO.SizeReturn {
@@ -213,48 +213,78 @@ export default class WebElement {
     return this.existing$().getText();
   }
 
-  public isTextContaining(expected: string, reverse?: boolean): boolean {
-    logger.info(`Selector: ${this.selector} | Expected: ${expected} | Reverse: ${!!~~reverse}`);
+  public isTextContaining(expected: string, preferred = true): boolean {
+    logger.info(`Selector: ${this.selector} | Expected: ${expected} | Reverse: ${!preferred}`);
     return new ElementConditions(this.existing$().selector)
-      .textContains(expected, reverse)
+      .textContains(expected, preferred)
       .run()
       .isSuccess();
   }
 
-  public isTextEmpty(reverse?: boolean): boolean {
-    logger.info(`Selector: ${this.selector} | Reverse: ${!!~~reverse}`);
+  public isTextEmpty(preferred = true): boolean {
+    logger.info(`Selector: ${this.selector} | Reverse: ${!preferred}`);
     return new ElementConditions(this.existing$().selector)
-      .textEmpty(reverse)
+      .textEmpty(preferred)
       .run()
       .isSuccess();
   }
 
-  public isTextEquals(expected: string, reverse?: boolean): boolean {
-    logger.info(`Selector: ${this.selector} | Expected: ${expected} | Reverse: ${!!~~reverse}`);
+  public isTextEquals(expected: string, preferred = true): boolean {
+    logger.info(`Selector: ${this.selector} | Expected: ${expected} | Reverse: ${!preferred}`);
     return new ElementConditions(this.existing$().selector)
-      .textEquals(expected, reverse)
+      .textEquals(expected, preferred)
       .run()
       .isSuccess();
   }
 
-  public checkTextContains(expected: string, reverse?: boolean): void {
-    logger.info(`Selector: ${this.selector} | Expected: ${expected} | Reverse: ${!!~~reverse}`);
+  public checkTextContains(expected: string, preferred = true): void {
+    logger.info(`Selector: ${this.selector} | Expected: ${expected} | Reverse: ${!preferred}`);
     new ElementConditions(this.existing$().selector)
-      .textContains(expected, reverse)
+      .textContains(expected, preferred)
       .runStrict();
   }
 
-  public checkTextEmpty(reverse?: boolean): void {
-    logger.info(`Selector: ${this.selector} | Reverse: ${!!~~reverse}`);
+  public checkTextEmpty(preferred = true): void {
+    logger.info(`Selector: ${this.selector} | Reverse: ${!preferred}`);
     new ElementConditions(this.existing$().selector)
-      .textEmpty(reverse)
+      .textEmpty(preferred)
       .runStrict();
   }
 
-  public checkTextEquals(expected: string, reverse?: boolean): void {
-    logger.info(`Selector: ${this.selector} | Expected: ${expected} | Reverse: ${!!~~reverse}`);
+  public checkTextEquals(expected: string, preferred = true): void {
+    logger.info(`Selector: ${this.selector} | Expected: ${expected} | Reverse: ${!preferred}`);
     new ElementConditions(this.existing$().selector)
-      .textEquals(expected, reverse)
+      .textEquals(expected, preferred)
+      .runStrict();
+  }
+
+  public isTextEqualsArray(expected: string[], preferred = true): void {
+    logger.info(`Selector: ${this.selector} | Expected: ${expected} | Reverse: ${!preferred}`);
+    new ElementConditions(this.existing$().selector)
+      .textEqualsArray(expected, preferred)
+      .run()
+      .isSuccess();
+  }
+
+  public isTextContainingArray(expected: string[], preferred: boolean): void {
+    logger.info(`Selector: ${this.selector} | Expected: ${expected} | Reverse: ${!preferred}`);
+    new ElementConditions(this.existing$().selector)
+      .textContainsArray(expected, preferred)
+      .run()
+      .isSuccess();
+  }
+
+  public checkTextEqualsArray(expected: string[], preferred = true): void {
+    logger.info(`Selector: ${this.selector} | Expected: ${expected} | Reverse: ${!preferred}`);
+    new ElementConditions(this.existing$().selector)
+      .textEqualsArray(expected, preferred)
+      .runStrict();
+  }
+
+  public checkTextContainsArray(expected: string[], preferred: boolean): void {
+    logger.info(`Selector: ${this.selector} | Expected: ${expected} | Reverse: ${!preferred}`);
+    new ElementConditions(this.existing$().selector)
+      .textContainsArray(expected, preferred)
       .runStrict();
   }
 
@@ -263,48 +293,48 @@ export default class WebElement {
     return this.existing$().getValue();
   }
 
-  public isValueContaining(expected: string, reverse?: boolean): boolean {
-    logger.info(`Selector: ${this.selector} | Expected: ${expected} | Reverse: ${!!~~reverse}`);
+  public isValueContaining(expected: string, preferred = true): boolean {
+    logger.info(`Selector: ${this.selector} | Expected: ${expected} | Reverse: ${!preferred}`);
     return new ElementConditions(this.existing$().selector)
-      .valueContains(expected, reverse)
+      .valueContains(expected, preferred)
       .run()
       .isSuccess();
   }
 
-  public isValueEmpty(reverse?: boolean): boolean {
-    logger.info(`Selector: ${this.selector} | Reverse: ${!!~~reverse}`);
+  public isValueEmpty(preferred = true): boolean {
+    logger.info(`Selector: ${this.selector} | Reverse: ${!preferred}`);
     return new ElementConditions(this.existing$().selector)
-      .valueEmpty(reverse)
+      .valueEmpty(preferred)
       .run()
       .isSuccess();
   }
 
-  public isValueEquals(expected: string, reverse?: boolean): boolean {
-    logger.info(`Selector: ${this.selector} | Expected: ${expected} | Reverse: ${!!~~reverse}`);
+  public isValueEquals(expected: string, preferred = true): boolean {
+    logger.info(`Selector: ${this.selector} | Expected: ${expected} | Reverse: ${!preferred}`);
     return new ElementConditions(this.existing$().selector)
-      .valueEquals(expected, reverse)
+      .valueEquals(expected, preferred)
       .run()
       .isSuccess();
   }
 
-  public checkValueContains(expected: string, reverse?: boolean): void {
-    logger.info(`Selector: ${this.selector} | Expected: ${expected} | Reverse: ${!!~~reverse}`);
+  public checkValueContains(expected: string, preferred = true): void {
+    logger.info(`Selector: ${this.selector} | Expected: ${expected} | Reverse: ${!preferred}`);
     new ElementConditions(this.existing$().selector)
-      .valueContains(expected, reverse)
+      .valueContains(expected, preferred)
       .runStrict();
   }
 
-  public checkValueEmpty(reverse?: boolean): void {
-    logger.info(`Selector: ${this.selector} | Reverse: ${!!~~reverse}`);
+  public checkValueEmpty(preferred = true): void {
+    logger.info(`Selector: ${this.selector} | Reverse: ${!preferred}`);
     new ElementConditions(this.existing$().selector)
-      .valueEmpty(reverse)
+      .valueEmpty(preferred)
       .runStrict();
   }
 
-  public checkValueEquals(expected: string, reverse?: boolean): void {
-    logger.info(`Selector: ${this.selector} | Expected: ${expected} | Reverse: ${!!~~reverse}`);
+  public checkValueEquals(expected: string, preferred = true): void {
+    logger.info(`Selector: ${this.selector} | Expected: ${expected} | Reverse: ${!preferred}`);
     new ElementConditions(this.existing$().selector)
-      .valueEquals(expected, reverse)
+      .valueEquals(expected, preferred)
       .runStrict();
   }
 
@@ -313,214 +343,214 @@ export default class WebElement {
     return $$(this.selector).length;
   }
 
-  public isUnique(reverse?: boolean): boolean {
-    logger.info(`Selector: ${this.selector} | Reverse: ${!!~~reverse}`);
+  public isUnique(preferred = true): boolean {
+    logger.info(`Selector: ${this.selector} | Reverse: ${!preferred}`);
     return new ElementConditions(this.existing$().selector)
-      .countEquals(1, reverse)
+      .countEquals(1, preferred)
       .run()
       .isSuccess();
   }
 
-  public checkUnique(reverse?: boolean): void {
-    logger.info(`Selector: ${this.selector} | Reverse: ${!!~~reverse}`);
+  public checkUnique(preferred = true): void {
+    logger.info(`Selector: ${this.selector} | Reverse: ${!preferred}`);
     new ElementConditions(this.existing$().selector)
-      .countEquals(1, reverse)
+      .countEquals(1, preferred)
       .runStrict();
   }
 
-  public isCountEquals(expected: number, reverse?: boolean): boolean {
-    logger.info(`Selector: ${this.selector} | Expected: ${expected} | Reverse: ${!!~~reverse}`);
+  public isCountEquals(expected: number, preferred = true): boolean {
+    logger.info(`Selector: ${this.selector} | Expected: ${expected} | Reverse: ${!preferred}`);
     return new ElementConditions(this.selector)
-      .countEquals(expected, reverse)
+      .countEquals(expected, preferred)
       .run()
       .isSuccess();
   }
 
-  public isCountGreaterThan(expected: number, reverse?: boolean): boolean {
-    logger.info(`Selector: ${this.selector} | Expected: ${expected} | Reverse: ${!!~~reverse}`);
+  public isCountGreaterThan(expected: number, preferred = true): boolean {
+    logger.info(`Selector: ${this.selector} | Expected: ${expected} | Reverse: ${!preferred}`);
     return new ElementConditions(this.selector)
-      .countGreaterThan(expected, reverse)
+      .countGreaterThan(expected, preferred)
       .run()
       .isSuccess();
   }
 
-  public isCountLessThan(expected: number, reverse?: boolean): boolean {
-    logger.info(`Selector: ${this.selector} | Expected: ${expected} | Reverse: ${!!~~reverse}`);
+  public isCountLessThan(expected: number, preferred = true): boolean {
+    logger.info(`Selector: ${this.selector} | Expected: ${expected} | Reverse: ${!preferred}`);
     return new ElementConditions(this.selector)
-      .countLessThan(expected, reverse)
+      .countLessThan(expected, preferred)
       .run()
       .isSuccess();
   }
 
-  public checkCountEquals(expected: number, reverse?: boolean): void {
-    logger.info(`Selector: ${this.selector} | Expected: ${expected} | Reverse: ${!!~~reverse}`);
+  public checkCountEquals(expected: number, preferred = true): void {
+    logger.info(`Selector: ${this.selector} | Expected: ${expected} | Reverse: ${!preferred}`);
     new ElementConditions(this.selector)
-      .countEquals(expected, reverse)
+      .countEquals(expected, preferred)
       .runStrict();
   }
 
-  public checkCountGreaterThan(expected: number, reverse?: boolean): void {
-    logger.info(`Selector: ${this.selector} | Expected: ${expected} | Reverse: ${!!~~reverse}`);
+  public checkCountGreaterThan(expected: number, preferred = true): void {
+    logger.info(`Selector: ${this.selector} | Expected: ${expected} | Reverse: ${!preferred}`);
     new ElementConditions(this.selector)
-      .countGreaterThan(expected, reverse)
+      .countGreaterThan(expected, preferred)
       .runStrict();
   }
 
-  public checkCountLessThan(expected: number, reverse?: boolean): void {
-    logger.info(`Selector: ${this.selector} | Expected: ${expected} | Reverse: ${!!~~reverse}`);
+  public checkCountLessThan(expected: number, preferred = true): void {
+    logger.info(`Selector: ${this.selector} | Expected: ${expected} | Reverse: ${!preferred}`);
     new ElementConditions(this.selector)
-      .countLessThan(expected, reverse)
+      .countLessThan(expected, preferred)
       .runStrict();
   }
 
-  public isDisplayed(reverse?: boolean): boolean {
-    logger.info(`Selector: ${this.selector} | Reverse: ${!!~~reverse}`);
+  public isDisplayed(preferred = true): boolean {
+    logger.info(`Selector: ${this.selector} | Reverse: ${!preferred}`);
     return new ElementConditions(this.existing$().selector)
-      .displayed(reverse)
+      .displayed(preferred)
       .run()
       .isSuccess();
   }
 
-  public checkDisplayed(reverse?: boolean): void {
-    logger.info(`Selector: ${this.selector} | Reverse: ${!!~~reverse}`);
+  public checkDisplayed(preferred = true): void {
+    logger.info(`Selector: ${this.selector} | Reverse: ${!preferred}`);
     new ElementConditions(this.selector)
-      .existing()
-      .displayed(reverse)
+      .existing(true)
+      .displayed(preferred)
       .runStrict();
   }
 
-  public isDisplayedInViewport(reverse?: boolean): boolean {
-    logger.info(`Selector: ${this.selector} | Reverse: ${!!~~reverse}`);
+  public isDisplayedInViewport(preferred = true): boolean {
+    logger.info(`Selector: ${this.selector} | Reverse: ${!preferred}`);
     return new ElementConditions(this.existing$().selector)
-      .displayedInVewport(reverse)
+      .displayedInVewport(preferred)
       .run()
       .isSuccess();
   }
 
-  public checkDisplayedInViewport(reverse?: boolean): void {
-    logger.info(`Selector: ${this.selector} | Reverse: ${!!~~reverse}`);
+  public checkDisplayedInViewport(preferred = true): void {
+    logger.info(`Selector: ${this.selector} | Reverse: ${!preferred}`);
     new ElementConditions(this.existing$().selector)
-      .displayedInVewport(reverse)
+      .displayedInVewport(preferred)
       .runStrict();
   }
 
-  public isEnabled(reverse?: boolean): boolean {
-    logger.info(`Selector: ${this.selector} | Reverse: ${!!~~reverse}`);
+  public isEnabled(preferred = true): boolean {
+    logger.info(`Selector: ${this.selector} | Reverse: ${!preferred}`);
     return new ElementConditions(this.existing$().selector)
-      .enabled(reverse)
+      .enabled(preferred)
       .run()
       .isSuccess();
   }
 
-  public checkEnabled(reverse?: boolean): void {
-    logger.info(`Selector: ${this.selector} | Reverse: ${!!~~reverse}`);
+  public checkEnabled(preferred = true): void {
+    logger.info(`Selector: ${this.selector} | Reverse: ${!preferred}`);
     new ElementConditions(this.existing$().selector)
-      .enabled(reverse)
+      .enabled(preferred)
       .runStrict();
   }
 
-  public isExisting(reverse?: boolean, timeout?: number): boolean {
-    logger.info(`Selector: ${this.selector} | Reverse: ${!!~~reverse}`);
+  public isExisting(preferred = true, timeout = 0): boolean {
+    logger.info(`Selector: ${this.selector} | Reverse: ${!preferred}`);
     return new ElementConditions(this.selector)
-      .existing(reverse)
-      .run(timeout || 0)
+      .existing(preferred)
+      .run(timeout)
       .isSuccess();
   }
 
-  public checkExisting(reverse?: boolean): void {
-    logger.info(`Selector: ${this.selector} | Reverse: ${!!~~reverse}`);
+  public checkExisting(preferred = true): void {
+    logger.info(`Selector: ${this.selector} | Reverse: ${!preferred}`);
     new ElementConditions(this.selector)
-      .existing(reverse)
+      .existing(preferred)
       .runStrict();
   }
 
-  public isFocused(reverse?: boolean): boolean {
-    logger.info(`Selector: ${this.selector} | Reverse: ${!!~~reverse}`);
+  public isFocused(preferred = true): boolean {
+    logger.info(`Selector: ${this.selector} | Reverse: ${!preferred}`);
     return new ElementConditions(this.existing$().selector)
-      .focused(reverse)
+      .focused(preferred)
       .run()
       .isSuccess();
   }
 
-  public checkFocused(reverse?: boolean): void {
-    logger.info(`Selector: ${this.selector} | Reverse: ${!!~~reverse}`);
+  public checkFocused(preferred = true): void {
+    logger.info(`Selector: ${this.selector} | Reverse: ${!preferred}`);
     new ElementConditions(this.existing$().selector)
-      .focused(reverse)
+      .focused(preferred)
       .runStrict();
   }
 
-  public isImageMatchRef(filename: string, reverse?: boolean, options?: IImageCompareOptions): boolean {
-    logger.info(`Selector: ${this.selector} | File: ${filename} | Options: ${inspect(options)} | Reverse: ${!!~~reverse}`);
+  public isImageMatchRef(filename: string, preferred = true, options?: IImageCompareOptions): boolean {
+    logger.info(`Selector: ${this.selector} | File: ${filename} | Options: ${inspect(options)} | Reverse: ${!preferred}`);
     return new ElementConditions(this.existing$().selector)
-      .imageMatch(filename, reverse, options)
+      .imageMatch(filename, preferred, options)
       .run()
       .isSuccess();
   }
 
-  public checkImageMatchRef(filename: string, reverse?: boolean, options?: IImageCompareOptions): void {
-    logger.info(`Selector: ${this.selector} | File: ${filename} | Options: ${inspect(options)} | Reverse: ${!!~~reverse}`);
+  public checkImageMatchRef(filename: string, preferred = true, options?: IImageCompareOptions): void {
+    logger.info(`Selector: ${this.selector} | File: ${filename} | Options: ${inspect(options)} | Reverse: ${!preferred}`);
     new ElementConditions(this.existing$().selector)
-      .imageMatch(filename, reverse, options)
+      .imageMatch(filename, preferred, options)
       .runStrict();
   }
 
-  public isSelected(reverse?: boolean): boolean {
-    logger.info(`Selector: ${this.selector} | Reverse: ${!!~~reverse}`);
+  public isSelected(preferred = true): boolean {
+    logger.info(`Selector: ${this.selector} | Reverse: ${!preferred}`);
     return new ElementConditions(this.existing$().selector)
-      .selected(reverse)
+      .selected(preferred)
       .run()
       .isSuccess();
   }
 
-  public checkSelected(reverse?: boolean): void {
-    logger.info(`Selector: ${this.selector} | Reverse: ${!!~~reverse}`);
+  public checkSelected(preferred = true): void {
+    logger.info(`Selector: ${this.selector} | Reverse: ${!preferred}`);
     new ElementConditions(this.existing$().selector)
-      .selected(reverse)
+      .selected(preferred)
       .runStrict();
   }
 
-  public isSizeEquals(width: number, height: number, reverse?: boolean): boolean {
-    logger.info(`Selector: ${this.selector} | Width: ${width} | Height: ${height} | Reverse: ${!!~~reverse}`);
+  public isSizeEquals(width: number, height: number, preferred = true): boolean {
+    logger.info(`Selector: ${this.selector} | Width: ${width} | Height: ${height} | Reverse: ${!preferred}`);
     return new ElementConditions(this.existing$().selector)
-      .sizeEquals(width, height, reverse)
+      .sizeEquals(width, height, preferred)
       .run()
       .isSuccess();
   }
 
-  public isSizeHeightEquals(expected: number, reverse?: boolean): boolean {
-    logger.info(`Selector: ${this.selector} | Expected: ${expected} | Reverse: ${!!~~reverse}`);
+  public isSizeHeightEquals(expected: number, preferred = true): boolean {
+    logger.info(`Selector: ${this.selector} | Expected: ${expected} | Reverse: ${!preferred}`);
     return new ElementConditions(this.existing$().selector)
-      .sizeHeightEquals(expected, reverse)
+      .sizeHeightEquals(expected, preferred)
       .run()
       .isSuccess();
   }
 
-  public isSizeWidthEquals(expected: number, reverse?: boolean): boolean {
-    logger.info(`Selector: ${this.selector} | Expected: ${expected} | Reverse: ${!!~~reverse}`);
+  public isSizeWidthEquals(expected: number, preferred = true): boolean {
+    logger.info(`Selector: ${this.selector} | Expected: ${expected} | Reverse: ${!preferred}`);
     return new ElementConditions(this.existing$().selector)
-      .sizeWidthEquals(expected, reverse)
+      .sizeWidthEquals(expected, preferred)
       .run()
       .isSuccess();
   }
 
-  public checkSizeEquals(width: number, height: number, reverse?: boolean): void {
-    logger.info(`Selector: ${this.selector} | Width: ${width} | Height: ${height} | Reverse: ${!!~~reverse}`);
+  public checkSizeEquals(width: number, height: number, preferred = true): void {
+    logger.info(`Selector: ${this.selector} | Width: ${width} | Height: ${height} | Reverse: ${!preferred}`);
     new ElementConditions(this.existing$().selector)
-      .sizeEquals(width, height, reverse)
+      .sizeEquals(width, height, preferred)
       .runStrict();
   }
 
-  public checkSizeHeightEquals(expected: number, reverse?: boolean): void {
-    logger.info(`Selector: ${this.selector} | Expected: ${expected} | Reverse: ${!!~~reverse}`);
+  public checkSizeHeightEquals(expected: number, preferred = true): void {
+    logger.info(`Selector: ${this.selector} | Expected: ${expected} | Reverse: ${!preferred}`);
     new ElementConditions(this.existing$().selector)
-      .sizeHeightEquals(expected, reverse)
+      .sizeHeightEquals(expected, preferred)
       .runStrict();
   }
 
-  public checkSizeWidthEquals(expected: number, reverse?: boolean): void {
-    logger.info(`Selector: ${this.selector} | Expected: ${expected} | Reverse: ${!!~~reverse}`);
+  public checkSizeWidthEquals(expected: number, preferred = true): void {
+    logger.info(`Selector: ${this.selector} | Expected: ${expected} | Reverse: ${!preferred}`);
     new ElementConditions(this.existing$().selector)
-      .sizeWidthEquals(expected, reverse)
+      .sizeWidthEquals(expected, preferred)
       .runStrict();
   }
 
@@ -534,9 +564,9 @@ export default class WebElement {
     this.existing$().scrollIntoView(options);
   }
 
-  public selectByAttribute(attribute: string, value: string): void {
-    logger.info(`Selector: ${this.selector} | Attribute: ${attribute} | Value: ${value}`);
-    this.existing$().selectByAttribute(attribute, value);
+  public selectByAttribute(key: string, value: string): void {
+    logger.info(`Selector: ${this.selector} | Attribute: ${key} | Value: ${value}`);
+    this.existing$().selectByAttribute(key, value);
   }
 
   public selectByIndex(index: number): void {

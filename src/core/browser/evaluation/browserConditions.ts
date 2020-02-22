@@ -43,100 +43,100 @@ export default class BrowserConditions {
     this.result = new BrowserConditionsResult();
   }
 
-  public ajaxRequestsMatch(filename: string, reverse = false, prefilter: PreFilterFunction): BrowserConditions {
-    this.conditions.push(new AjaxRequestsMatch(filename, reverse, prefilter));
+  public ajaxRequestsMatch(filename: string, preferred: boolean, prefilter: PreFilterFunction): BrowserConditions {
+    this.conditions.push(new AjaxRequestsMatch(filename, preferred, prefilter));
     return this;
   }
 
-  public cookieContains(cookie: string, expected: string, reverse = false): BrowserConditions {
-    this.conditions.push(new CookieContains(cookie, expected, reverse));
+  public cookieContains(cookie: string, expected: string, preferred: boolean): BrowserConditions {
+    this.conditions.push(new CookieContains(cookie, expected, preferred));
     return this;
   }
 
-  public cookieEquals(cookie: string, expected: string, reverse = false): BrowserConditions {
-    this.conditions.push(new CookieEquals(cookie, expected, reverse));
+  public cookieEquals(cookie: string, expected: string, preferred: boolean): BrowserConditions {
+    this.conditions.push(new CookieEquals(cookie, expected, preferred));
     return this;
   }
 
-  public cookieExists(cookie: string, reverse = false): BrowserConditions {
-    this.conditions.push(new CookieExists(cookie, reverse));
+  public cookieExists(cookie: string, preferred: boolean): BrowserConditions {
+    this.conditions.push(new CookieExists(cookie, preferred));
     return this;
   }
 
-  public countEquals(expected: number, reverse = false): BrowserConditions {
-    this.conditions.push(new CountEquals(expected, reverse));
+  public countEquals(expected: number, preferred: boolean): BrowserConditions {
+    this.conditions.push(new CountEquals(expected, preferred));
     return this;
   }
 
-  public countGreaterThan(expected: number, reverse = false): BrowserConditions {
-    this.conditions.push(new CountGreaterThan(expected, reverse));
+  public countGreaterThan(expected: number, preferred: boolean): BrowserConditions {
+    this.conditions.push(new CountGreaterThan(expected, preferred));
     return this;
   }
 
-  public customTruthy(truthy: Function, reverse = false): BrowserConditions {
-    this.conditions.push(new CustomTruthy(truthy, reverse));
+  public customTruthy(truthy: Function, preferred: boolean): BrowserConditions {
+    this.conditions.push(new CustomTruthy(truthy, preferred));
     return this;
   }
 
-  public countLessThan(expected: number, reverse = false): BrowserConditions {
-    this.conditions.push(new CountLessThan(expected, reverse));
+  public countLessThan(expected: number, preferred: boolean): BrowserConditions {
+    this.conditions.push(new CountLessThan(expected, preferred));
     return this;
   }
 
   public httpResponseMatch(
-    request: IHttpRequest, filename: string, reverse = false, prefilter: PreFilterFunction): BrowserConditions {
-    this.conditions.push(new HttpResponseMatch(request, filename, reverse, prefilter));
+    request: IHttpRequest, filename: string, preferred: boolean, prefilter: PreFilterFunction): BrowserConditions {
+    this.conditions.push(new HttpResponseMatch(request, filename, preferred, prefilter));
     return this;
   }
 
   public imageMatch(
-    context: string, filename: string, reverse = false, options?: IImageCompareOptions): BrowserConditions {
-    this.conditions.push(new ImageMatch(context, filename, reverse, options));
+    context: string, filename: string, preferred: boolean, options?: IImageCompareOptions): BrowserConditions {
+    this.conditions.push(new ImageMatch(context, filename, preferred, options));
     return this;
   }
 
-  public modalExists(reverse = false): BrowserConditions {
-    this.conditions.push(new ModalExists(reverse));
+  public modalExists(preferred: boolean): BrowserConditions {
+    this.conditions.push(new ModalExists(preferred));
     return this;
   }
 
-  public modalTextContains(expected: string, reverse = false): BrowserConditions {
-    this.conditions.push(new ModalTextContains(expected, reverse));
+  public modalTextContains(expected: string, preferred: boolean): BrowserConditions {
+    this.conditions.push(new ModalTextContains(expected, preferred));
     return this;
   }
 
-  public modalTextEquals(expected: string, reverse = false): BrowserConditions {
-    this.conditions.push(new ModalTextEquals(expected, reverse));
+  public modalTextEquals(expected: string, preferred: boolean): BrowserConditions {
+    this.conditions.push(new ModalTextEquals(expected, preferred));
     return this;
   }
 
-  public titleContains(expected: string, reverse = false): BrowserConditions {
-    this.conditions.push(new TitleContains(expected, reverse));
+  public titleContains(expected: string, preferred: boolean): BrowserConditions {
+    this.conditions.push(new TitleContains(expected, preferred));
     return this;
   }
 
-  public titleEquals(expected: string, reverse = false): BrowserConditions {
-    this.conditions.push(new TitleEquals(expected, reverse));
+  public titleEquals(expected: string, preferred: boolean): BrowserConditions {
+    this.conditions.push(new TitleEquals(expected, preferred));
     return this;
   }
 
-  public urlContains(expected: string, reverse = false): BrowserConditions {
-    this.conditions.push(new UrlContains(expected, reverse));
+  public urlContains(expected: string, preferred: boolean): BrowserConditions {
+    this.conditions.push(new UrlContains(expected, preferred));
     return this;
   }
 
-  public urlEquals(expected: string, reverse = false): BrowserConditions {
-    this.conditions.push(new UrlEquals(expected, reverse));
+  public urlEquals(expected: string, preferred: boolean): BrowserConditions {
+    this.conditions.push(new UrlEquals(expected, preferred));
     return this;
   }
 
-  public urlPathContains(expected: string, reverse = false): BrowserConditions {
-    this.conditions.push(new UrlPathContains(expected, reverse));
+  public urlPathContains(expected: string, preferred: boolean): BrowserConditions {
+    this.conditions.push(new UrlPathContains(expected, preferred));
     return this;
   }
 
-  public urlPathEquals(expected: string, reverse = false): BrowserConditions {
-    this.conditions.push(new UrlPathEquals(expected, reverse));
+  public urlPathEquals(expected: string, preferred: boolean): BrowserConditions {
+    this.conditions.push(new UrlPathEquals(expected, preferred));
     return this;
   }
 

@@ -6,7 +6,7 @@ export default (action: string, key: string): void => {
   const element = new WebElement(selector);
 
   if (action === "select") {
-    element.isSelected(true) && element.click();
+    element.isSelected(false) && element.click();
   } else if (action === "deselect") {
     element.isSelected() && element.click();
   }

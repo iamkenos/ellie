@@ -1,4 +1,4 @@
-import { IElementCondition, IExpectedConditionResult } from "../../interfaces";
+import { IExpectedConditionResult } from "../../interfaces";
 
 export default class ElementConditionsResult {
   private results: Map<string, IExpectedConditionResult>;
@@ -18,10 +18,10 @@ export default class ElementConditionsResult {
     return Array.from(this.results.values()).every(result => result.isSuccess && true);
   }
 
-  public getErrorMessage(expression: string, conditions: IElementCondition[], timeout: number): string {
+  public getErrorMessage(expression: string, timeout: number): string {
     const results = Array.from(this.results.values());
     const success = results.filter(result => result.isSuccess === true).length;
-    const total = conditions.length;
+    const total = results.length;
 
     return `
   Element expected conditions not met after waiting for ${timeout}ms

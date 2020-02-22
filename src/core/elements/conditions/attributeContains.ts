@@ -8,13 +8,13 @@ export default class AttributeContains implements IElementCondition {
 
   private readonly expected: string;
 
-  private readonly reverse: boolean;
+  private readonly preferred: boolean;
 
-  public constructor(attribute: string, expected: string, reverse: boolean) {
+  public constructor(attribute: string, expected: string, preferred: boolean) {
     this.name = logger.getCaller(true);
     this.attribute = attribute;
     this.expected = expected;
-    this.reverse = reverse;
+    this.preferred = preferred;
   }
 
   public evaluate(selector: string): IExpectedConditionResult {
@@ -23,7 +23,7 @@ export default class AttributeContains implements IElementCondition {
 
     try {
       actual = $(selector).getAttribute(this.attribute);
-      result = this.reverse ? !actual.includes(this.expected) : actual.includes(this.expected);
+      result = this.preferred ? actual.includes(this.expected) : !actual.includes(this.expected);
     } catch (e) {
       actual = e.message;
       result = false;
@@ -33,7 +33,7 @@ export default class AttributeContains implements IElementCondition {
       name: this.name,
       message:
   `
-  Condition: ${this.reverse ? "Not " : ""}${this.name}
+  Condition: ${this.preferred ? "" : "(Reversed) "}${this.name}
   Attribute: ${this.attribute}
   Result: ${result ? "Success" : "Failed"}
   Expected: ${this.expected}

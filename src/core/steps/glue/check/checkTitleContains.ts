@@ -1,10 +1,10 @@
 import { driver } from "../../../browser";
 import { getPageTitle } from "../../../utils";
 
-export default (reverse: string, expected: string, page: string): void => {
+export default (preferred: string, expected: string, page: string): void => {
   if (expected) {
-    driver.checkTitleContains(expected, !!reverse);
+    driver.checkTitleContains(expected, !preferred);
   } else {
-    driver.checkTitleContains(getPageTitle(page), !!reverse);
+    driver.checkTitleContains(getPageTitle(page), !preferred);
   }
 };

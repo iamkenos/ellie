@@ -1,5 +1,5 @@
 import { driver } from "../../../browser";
 
-export default (reverse: string): void => {
-  driver.checkModalExisting(!!reverse);
+export default (preferred: string): void => {
+  driver.checkModalExisting(!preferred);
 };

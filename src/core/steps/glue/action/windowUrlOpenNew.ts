@@ -1,7 +1,7 @@
 import { driver } from "../../../browser";
 import { getPageUrl } from "../../../utils";
 
-export default (url: string, page: string): void => {
+export default (page: string, url: string): void => {
   if (url) {
     driver.newWindow(url);
   } else {

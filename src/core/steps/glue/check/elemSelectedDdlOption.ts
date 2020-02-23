@@ -1,8 +1,8 @@
 import { WebElement, WebElements } from "../../../elements";
 import { getPageElement } from "../../../utils";
 
-export default (context: string, value: string, key: string, preferred: string): void => {
-  const selector = getPageElement(key);
+export default (context: string, value: string, page: string, key: string, preferred: string): void => {
+  const selector = getPageElement(page, key);
   const element = new WebElement(selector);
   const options = new WebElements(element.child$("//option").selector);
 

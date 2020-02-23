@@ -21,7 +21,6 @@ import windowLastClose from "../glue/action/windowLastClose";
 import windowLastFocus from "../glue/action/windowLastFocus";
 import windowModalHandle from "../glue/action/windowModalHandle";
 import windowModalTextSet from "../glue/action/windowModalTextSet";
-import windowOpen from "../glue/action/windowOpen";
 import windowPageNavigate from "../glue/action/windowPageNavigate";
 import windowParentFocus from "../glue/action/windowParentFocus";
 import windowPause from "../glue/action/windowPause";
@@ -31,60 +30,61 @@ import windowScrollToCoordinates from "../glue/action/windowScrollToCoordinates"
 import windowSizeMaximize from "../glue/action/windowSizeMaximize";
 import windowSizeSet from "../glue/action/windowSizeSet";
 import windowSwitchFrame from "../glue/action/windowSwitchFrame";
-import windowUrlSet from "../glue/action/windowUrlSet";
+import windowUrlOpen from "../glue/action/windowUrlOpen";
+import windowUrlOpenNew from "../glue/action/windowUrlOpenNew";
 
 When(
-  /^I ((double|script|middle|right)(?: ))?click the (link|button|element) "([^"]*)?"(?: again)?$/,
+  /^I (?:(double|script|middle|right) )?click the(?: "([^"]*)?" page's)? "([^"]*)?" (link|button|element)(?: again)?$/,
   elemClick
 );
 
 When(
-  /^I drag the element "([^"]*)?" to the element "([^"]*)?"$/,
+  /^I drag the(?: "([^"]*)?" page's)? "([^"]*)?" element to the "([^"]*)?" element$/,
   elemDragAndDrop
 );
 
 When(
-  /^I upload the file "([^"]*)?" to the (?:field|element) "([^"]*)?"$/,
+  /^I upload the "([^"]*)?" file to the(?: "([^"]*)?" page's)? "([^"]*)?" (?:field|element)$/,
   elemFileUpload
 );
 
 When(
-  /^I focus on the (?:field|element) "([^"]*)?"$/,
+  /^I focus on the(?: "([^"]*)?" page's)? "([^"]*)?" (?:field|element)$/,
   elemFocus
 );
 
 When(
-  /^I move to the element "([^"]*)?"(?: with an offset of (\d+),(\d+))?$/,
+  /^I move to the(?: "([^"]*)?" page's)? "([^"]*)?" element(?: with an offset of (\d+),(\d+))?$/,
   elemMoveTo
 );
 
 When(
-  /^I select the option with (index|label|[^" ]*) "([^"]*)?" from the dropdown "([^"]*)?"$/,
+  /^I select the option with (index|label|[^" ]*) "([^"]*)?" from the(?: "([^"]*)?" page's)? "([^"]*)?" dropdown$/,
   elemOptionSelect
 );
 
 When(
-  /^I (select|deselect) the (?:element|option|check box|toggle item|radio button) "([^"]*)?"$/,
+  /^I (select|deselect) the(?: "([^"]*)?" page's)? "([^"]*)?" (?:element|option|check box|toggle item|radio button)$/,
   elemSelect
 );
 
 When(
-  /^I scroll to the element "([^"]*)?"$/,
+  /^I scroll to the(?: "([^"]*)?" page's)? "([^"]*)?" element$/,
   elemScrollTo
 );
 
 When(
-  /^I clear the (?:field|element) "([^"]*)?"$/,
+  /^I clear the(?: "([^"]*)?" page's)? "([^"]*)?" (?:field|element)$/,
   elemValueClear
 );
 
 When(
-  /^I (type|append) "([^"]*)?" on the (?:field|element) "([^"]*)?"$/,
+  /^I (type|append) "([^"]*)?" on the(?: "([^"]*)?" page's)? "([^"]*)?" (?:field|element)$/,
   elemValueSet
 );
 
 When(
-  /^I (type|append) a multi-line value on the (?:field|element) "([^"]*)?":$/,
+  /^I (type|append) a multi-line value on the(?: "([^"]*)?" page's)? "([^"]*)?" (?:field|element):$/,
   elemValueSetMultiLine
 );
 
@@ -99,17 +99,17 @@ When(
 );
 
 When(
-  /^I delete the cookie "([^"]*)?"$/,
+  /^I delete the "([^"]*)?" site cookie$/,
   windowCookieDelete
 );
 
 When(
-  /^I delete the cookies$/,
+  /^I delete the site cookies$/,
   windowCookiesDelete
 );
 
 When(
-  /^I set the cookie "([^"]*)?" with the content "([^"]*)?"$/,
+  /^I set the "([^"]*)?" site cookie value to "([^"]*)?"$/,
   windowCookieSet
 );
 
@@ -136,11 +136,6 @@ When(
 When(
   /^I type "([^"]*)?" on the prompt$/,
   windowModalTextSet
-);
-
-When(
-  /^I open the url (?:"([^"]*)?"|of the page "([^"]*)?") on a new window$/,
-  windowOpen
 );
 
 When(
@@ -184,11 +179,16 @@ When(
 );
 
 When(
-  /^I focus on the (?:iframe "([^"]*)?"|parent context)$/,
+  /^I focus on the(?: "([^"]*)?" page's)? (?:"([^"]*)?" iframe|parent context)$/,
   windowSwitchFrame
 );
 
 When(
-  /^I open the url (?:"([^"]*)?"|of the page "([^"]*)?")$/,
-  windowUrlSet
+  /^I open the (?:"([^"]*)?" page's url|url "([^"]*)?")$/,
+  windowUrlOpen
+);
+
+When(
+  /^I open the (?:"([^"]*)?" page's url|url "([^"]*)?") on a new window$/,
+  windowUrlOpenNew
 );

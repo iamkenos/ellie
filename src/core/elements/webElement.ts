@@ -258,36 +258,6 @@ export default class WebElement {
       .runStrict();
   }
 
-  public isTextEqualsArray(expected: string[], preferred = true): void {
-    logger.info(`Selector: ${this.selector} | Expected: ${expected} | Reverse: ${!preferred}`);
-    new ElementConditions(this.existing$().selector)
-      .textEqualsArray(expected, preferred)
-      .run()
-      .isSuccess();
-  }
-
-  public isTextContainingArray(expected: string[], preferred: boolean): void {
-    logger.info(`Selector: ${this.selector} | Expected: ${expected} | Reverse: ${!preferred}`);
-    new ElementConditions(this.existing$().selector)
-      .textContainsArray(expected, preferred)
-      .run()
-      .isSuccess();
-  }
-
-  public checkTextEqualsArray(expected: string[], preferred = true): void {
-    logger.info(`Selector: ${this.selector} | Expected: ${expected} | Reverse: ${!preferred}`);
-    new ElementConditions(this.existing$().selector)
-      .textEqualsArray(expected, preferred)
-      .runStrict();
-  }
-
-  public checkTextContainsArray(expected: string[], preferred: boolean): void {
-    logger.info(`Selector: ${this.selector} | Expected: ${expected} | Reverse: ${!preferred}`);
-    new ElementConditions(this.existing$().selector)
-      .textContainsArray(expected, preferred)
-      .runStrict();
-  }
-
   public getValue(): string {
     logger.info(`Selector: ${this.selector}`);
     return this.existing$().getValue();

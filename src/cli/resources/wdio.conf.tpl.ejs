@@ -420,7 +420,7 @@ exports.config = {
    */
   onComplete: function(exitCode, config, capabilities, results) {
     const allureOutputDir = path.join(<%- JSON.stringify(answers.reportOutDir) %>, 'allure');
-    allure(['generate', allureOutputDir, '-c', '-o', path.join(allureOutputDir, 'report')]);
+    allure(['-q', 'generate', allureOutputDir, '-c', '-o', path.join(allureOutputDir, 'report')]);
   },
   /**
   * Gets executed when a refresh happens.

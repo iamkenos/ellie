@@ -38,17 +38,33 @@ function preRelease(version = VERSIONS[0]) {
   const release = [releaseLogHeader, releaseVersion, releaseDate, releaseChanges, prevChanges];
 
   fs.outputFileSync(RELEASE_LOG_FILE, release.join('\n'));
-  shell.exec(`git add . && npm version ${version} -f -m "release: %s"`);
+  return shell.exec(`git add . && npm version ${version} -f -m "release: %s"`);
 }
 
 function release() {
-  preRelease(process.argv[2]);
-  shell.exec('npm publish');
-  postRelease();
+  return shell.exec('npm publish');
 }
 
 function postRelease() {
-  shell.exec(`git push origin ${GIT_BRANCH} --tags`);
+  return shell.exec(`git push origin ${GIT_BRANCH} --tags`);
 }
 
-release();
+function printMarker(title) {
+  console.log('--------------------------------')
+  console.log(title)
+  console.log('--------------------------------')
+}
+
+function run(header, shellString) {
+  printMarker(`Start: ${header}...`)
+
+  console.log(shellString.stdout.trim())
+  if(shellString.code !== 0) throw new Error(shellString.stderr.trim());
+  
+  printMarker(`End: ${header}...`)
+}
+
+
+run('Changelog', preRelease(process.argv[2]));
+run('Publish', release());
+run('Push', postRelease());

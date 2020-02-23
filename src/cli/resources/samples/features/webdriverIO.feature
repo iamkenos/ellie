@@ -24,32 +24,32 @@ Feature: WebDriverIO
     # This is a comment below the scenario description
 
     When I open the url "https://webdriver.io/"
-    Then I expect the element ".projectTitle" text to be "WEBDRIVER I/O"
+    Then I expect the ".projectTitle" element text to be "WEBDRIVER I/O"
       And I expect the page title to be "WebdriverIO · Next-gen WebDriver test framework for Node.js"
-    When I click the element "//a[text()='Get Started']"
-    Then I expect the element "#docsNav" to be displayed
+    When I click the "//a[text()='Get Started']" element
+    Then I expect the "#docsNav" element to be displayed
 
-  Scenario: Page meta object model
+  Scenario: Page object model: meta style
     This is an example of writing tests using page object model.
-    Element locators and page URLs are defined in a meta file e.g. webdrverIO.meta.js.
-    Parameters followng the format 'Meta=>Element' are supplied from the built-in steps.
+    Element locators and other page properties are defined in a meta file e.g. webdrverIO.meta.js.
+    Use the optional page name parameter on applicable built-in steps to access the page meta properties
 
-    When I open the url of the page "WebdriverIO"
-    Then I expect the element "WebdriverIO=>Project title" text to be "WEBDRIVER I/O"
-      And I expect the window title to be that of the page "WebdriverIO"
-    When I click the element "WebdriverIO=>Button: Get Started"
-    Then I expect the element "WebdriverIO=>navBar" to be displayed
+    When I open the "WebdriverIO" page's url
+    Then I expect the "WebdriverIO" page's "Project title" element text to be "WEBDRIVER I/O"
+      And I expect the window title to match the "WebdriverIO" page's title
+    When I click the "WebdriverIO" page's "Button: Get Started" element
+    Then I expect the "WebdriverIO" page's "navBar" element to be displayed
 
-  Scenario Outline: Page class object model: <ITER>
+  Scenario Outline: Page object model: classes style <ITER>
     This is another example of writing tests using page object model.
     Unlike the previous example, this one makes use page object classes e.g. webdrverIO.page.js.
-    This approch is more suitable for implementing custom and complex steps.
+    This approch is more suitable for implementing custom and more complex steps.
 
-    When I navigate on the WDIO page
-    Then I expect the project title to be "WEBDRIVER I/O" on the WDIO page
-      And I expect the title to match the value on the WDIO page
-    When I click the Get Started buttton on the WDIO page
-    Then I expect the nav bar to be displayed on the WDIO page
+    When I open the WebdriverIO page's url
+    Then I expect the WebdriverIO page's project title to be "WEBDRIVER I/O"
+      And I expect the window title to match the WebdriverIO page's title
+    When I click the WebdriverIO page's Get Started button
+    Then I expect the the WebdriverIO page's nav bar to be displayed
 
     Examples:
       | ITER       |

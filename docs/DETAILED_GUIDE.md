@@ -136,32 +136,32 @@ Feature: WebDriverIO
     # This is a comment below the scenario description
 
     When I open the url "https://webdriver.io/"
-    Then I expect the element ".projectTitle" text to be "WEBDRIVER I/O"
+    Then I expect the ".projectTitle" element text to be "WEBDRIVER I/O"
       And I expect the page title to be "WebdriverIO · Next-gen WebDriver test framework for Node.js"
-    When I click the element "//a[text()='Get Started']"
-    Then I expect the element "#docsNav" to be displayed
+    When I click the "//a[text()='Get Started']" element
+    Then I expect the "#docsNav" element to be displayed
 
-  Scenario: Page meta object model
+  Scenario: Page object model: meta style
     This is an example of writing tests using page object model.
-    Element locators and page URLs are defined in a meta file e.g. webdrverIO.meta.js.
-    Parameters followng the format 'Meta=>Element' are supplied from the built-in steps.
+    Element locators and other page properties are defined in a meta file e.g. webdrverIO.meta.js.
+    Use the optional page name parameter on applicable built-in steps to access the page meta properties
 
-    When I open the url of the page "WebdriverIO"
-    Then I expect the element "WebdriverIO=>Project title" text to be "WEBDRIVER I/O"
-      And I expect the window title to be that of the page "WebdriverIO"
-    When I click the element "WebdriverIO=>Button: Get Started"
-    Then I expect the element "WebdriverIO=>navBar" to be displayed
+    When I open the "WebdriverIO" page's url
+    Then I expect the "WebdriverIO" page's "Project title" element text to be "WEBDRIVER I/O"
+      And I expect the window title to match the "WebdriverIO" page's title
+    When I click the "WebdriverIO" page's "Button: Get Started" element
+    Then I expect the "WebdriverIO" page's "navBar" element to be displayed
 
-  Scenario Outline: Page class object model: <ITER>
+  Scenario Outline: Page object model: classes style <ITER>
     This is another example of writing tests using page object model.
     Unlike the previous example, this one makes use page object classes e.g. webdrverIO.page.js.
-    This approch is more suitable for implementing custom and complex steps.
+    This approch is more suitable for implementing custom and more complex steps.
 
-    When I navigate on the WDIO page
-    Then I expect the project title to be "WEBDRIVER I/O" on the WDIO page
-      And I expect the title to match the value on the WDIO page
-    When I click the Get Started buttton on the WDIO page
-    Then I expect the nav bar to be displayed on the WDIO page
+    When I open the WebdriverIO page's url
+    Then I expect the WebdriverIO page's project title to be "WEBDRIVER I/O"
+      And I expect the window title to match the WebdriverIO page's title
+    When I click the WebdriverIO page's Get Started button
+    Then I expect the the WebdriverIO page's nav bar to be displayed
 
     Examples:
       | ITER       |
@@ -208,10 +208,10 @@ To write a single test, you need the bare minimum parts of a feature file:
 
   ```gherkin
   When I open the url "https://webdriver.io/"
-  Then I expect the element ".projectTitle" text to be "WEBDRIVER I/O"
+  Then I expect the ".projectTitle" element text to be "WEBDRIVER I/O"
     And I expect the page title to be "WebdriverIO · Next-gen WebDriver test framework for Node.js"
-  When I click the element "//a[text()='Get Started']"
-  Then I expect the element "#docsNav" to be displayed
+  When I click the "//a[text()='Get Started']" element
+  Then I expect the "#docsNav" element to be displayed
   ```
 
 - seeded step definitions are available [here](./SEEDED_STEPS.md)
@@ -220,18 +220,16 @@ To write a single test, you need the bare minimum parts of a feature file:
   - this step will look for an element with the xpath `//a[text()='Get Started']`
 
     ```gherkin
-    When I click the element "//a[text()='Get Started']"
+    When I click the "//a[text()='Get Started']" element
     ```
 
   - this step will look for a locator identified by the key `"Button: Get Started"` inside a meta file named `WebdriverIO`
 
     ```gherkin
-    When I click the element "WebdriverIO=>Button: Get Started"
+    When I click the "WebdriverIO" page's "Button: Get Started" element
     ```
 
-    - meta name and locator identifier should follow the convention `metaname=>locatorIdentifier`; the two are separater by a `=>`
     - meta name supplied in the steps is case-insensitive; this is being transformed to lowercase internally
-    - if a provided identifier follows the convention but fails to resolve properly, it will be treated as if it's a direct element locator
 
 ## How to run tests
 
@@ -381,25 +379,25 @@ export default {
 _`webdriverIO.feature`_
 
 ```gherkin
-When I open the url of the page "WebdriverIO"
+When I open the "WebdriverIO" page's url
 ```
 
 - this step will yield `https://webdriver.io/zh`
 
 ```gherkin
-Then I expect the element "WebdriverIO=>Project title" text to be "WEBDRIVER I/O"
+Then I expect the "WebdriverIO" page's "Project title" element text to be "WEBDRIVER I/O"
 ```
 
 - since the `"Project title"` property is not defined in the `chinese` locale, the `default` value will be used
 
 ```gherkin
-And I expect the window title to be that of the page "WebdriverIO"
+And I expect the window title to match the "WebdriverIO" page's title
 ```
 
 - this step will yield `Some title in chinese`
 
 ```gherkin
-When I click the element "WebdriverIO=>Button: Get Started"
+When I click the "WebdriverIO" page's "Button: Get Started" element
 ```
 
 - this step will yield `//a[text()='开始使用']`
@@ -501,28 +499,28 @@ export function navigate(): void {
   wdioPage.navigate();
 }
 
-export function checkTitle(reverse: boolean): void {
-  wdioPage.checkTitle(reverse);
+export function checkTitle(preferred: boolean): void {
+  wdioPage.checkTitle(!preferred);
 }
 
 export function clickGetStarted(): void {
   wdioPage.getStarted().click();
 }
 
-export function checkProjectTitleText(reverse: boolean, value: string): void {
+export function checkProjectTitleText(preferred: boolean, value: string): void {
   // you can create anonymous functions that encloses a single function which
   // returns a truthy value. this is useful when you want to create custom assertions
   // and still make use of the framework's internal retry mechanism
-  const isProjectTitleTextEquals = (): boolean => wdioPage.projectTitle().isTextEquals(value, reverse);
+  const isProjectTitleTextEquals = (): boolean => wdioPage.projectTitle().isTextEquals(value, !preferred);
   driver.checkCustomTruthy(isProjectTitleTextEquals);
 
   // the check above is for illustration purposes and can be simplified by
   // using the statement below
-  // wdioPage.projectTitle().checkTextEquals(value, reverse);
+  // wdioPage.projectTitle().checkTextEquals(value, !preferred);
 }
 
-export function checkNavBarDisplayed(reverse: boolean): void {
-  wdioPage.navBar().checkDisplayed(reverse);
+export function checkNavBarDisplayed(preferred: boolean): void {
+  wdioPage.navBar().checkDisplayed(!preferred);
 }
 ```
 
@@ -557,8 +555,8 @@ A step glue file should have the following parts:
   .
   .
 
-  export function checkNavBarDisplayed(reverse: boolean): void {
-    wdioPage.navBar().checkDisplayed(reverse);
+  export function checkNavBarDisplayed(preferred: boolean): void {
+    wdioPage.navBar().checkDisplayed(!preferred);
   }
   ```
 
@@ -569,27 +567,27 @@ import { Then, When } from "cucumber";
 import * as webdrverIO from "../glue/webdriverIO.glue";
 
 When(
-  /^I navigate on the WDIO page$/,
+  /^I open the WebdriverIO page's url$/,
   webdrverIO.navigate
 );
 
 When(
-  /^I click the Get Started buttton on the WDIO page$/,
+  /^I click the WebdriverIO page's Get Started button$/,
   webdrverIO.clickGetStarted
 );
 
 Then(
-  /^I expect the title to( not)? match the value on the WDIO page$/,
+  /^I expect the window title to( not)? match the WebdriverIO page's title$/,
   webdrverIO.checkTitle
 );
 
 Then(
-  /^I expect the project title to( not)? be "([^"]*)?" on the WDIO page$/,
+  /^I expect the WebdriverIO page's project title to( not)? be "([^"]*)?"$/,
   webdrverIO.checkProjectTitleText
 );
 
 Then(
-  /^I expect the nav bar to( not)? be displayed on the WDIO page$/,
+  /^I expect the the WebdriverIO page's nav bar to( not)? be displayed$/,
   webdrverIO.checkNavBarDisplayed
 );
 ```
@@ -620,7 +618,7 @@ A step definition file should have the following parts:
 
   ```ts
   When(
-    /^I click the Get Started buttton on the WDIO page$/,
+    /^I click the WebdriverIO page's Get Started button$/,
     webdrverIO.clickGetStarted
   );
 
@@ -629,7 +627,7 @@ A step definition file should have the following parts:
   .
 
   Then(
-    /^I expect the nav bar to( not)? be displayed on the WDIO page$/,
+    /^I expect the the WebdriverIO page's nav bar to( not)? be displayed$/,
     webdrverIO.checkNavBarDisplayed
   );
   ```

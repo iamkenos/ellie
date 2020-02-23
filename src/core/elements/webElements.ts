@@ -1,5 +1,6 @@
 import logger from "../../logger";
 import WebElement from "./webElement";
+import ElementConditions from "./evaluation/elementConditions";
 import { getIndexedSelector } from "../utils";
 
 export default class WebElements {
@@ -37,5 +38,35 @@ export default class WebElements {
 
   public getTextArray(): string[] {
     return this.toArray().map(elem => elem.getText());
+  }
+
+  public isTextEqualsArray(expected: string[], preferred = true): void {
+    logger.info(`Selector: ${this.selector} | Expected: ${expected} | Reverse: ${!preferred}`);
+    new ElementConditions(new WebElement(this.selector).existing$().selector)
+      .textEqualsArray(expected, preferred)
+      .run()
+      .isSuccess();
+  }
+
+  public isTextContainingArray(expected: string[], preferred: boolean): void {
+    logger.info(`Selector: ${this.selector} | Expected: ${expected} | Reverse: ${!preferred}`);
+    new ElementConditions(new WebElement(this.selector).existing$().selector)
+      .textContainsArray(expected, preferred)
+      .run()
+      .isSuccess();
+  }
+
+  public checkTextEqualsArray(expected: string[], preferred = true): void {
+    logger.info(`Selector: ${this.selector} | Expected: ${expected} | Reverse: ${!preferred}`);
+    new ElementConditions(new WebElement(this.selector).existing$().selector)
+      .textEqualsArray(expected, preferred)
+      .runStrict();
+  }
+
+  public checkTextContainsArray(expected: string[], preferred: boolean): void {
+    logger.info(`Selector: ${this.selector} | Expected: ${expected} | Reverse: ${!preferred}`);
+    new ElementConditions(new WebElement(this.selector).existing$().selector)
+      .textContainsArray(expected, preferred)
+      .runStrict();
   }
 }

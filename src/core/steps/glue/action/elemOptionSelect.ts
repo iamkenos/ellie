@@ -1,8 +1,8 @@
 import { WebElement } from "../../../elements";
 import { getPageElement } from "../../../utils";
 
-export default (context: string, value: string, key: string): void => {
-  const selector = getPageElement(key);
+export default (context: string, value: string, page: string, key: string): void => {
+  const selector = getPageElement(page, key);
   const element = new WebElement(selector);
 
   if (context === "index") {

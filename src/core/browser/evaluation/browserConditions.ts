@@ -26,7 +26,7 @@ import {
 } from "../conditions";
 import { IBrowserCondition, IHttpRequest, IImageCompareOptions } from "../../interfaces";
 
-const WAIT_TIMEOUT: number = (browser as any).config.waitforTimeout;
+const WAIT_TIMEOUT: number = browser.config.waitforTimeout;
 
 export default class BrowserConditions {
   private readonly conditions: IBrowserCondition[];

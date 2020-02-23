@@ -76,7 +76,7 @@ export function getIndexedSelector(selector: string, index: number): string {
 }
 
 export function getPageObject(meta: any, locale: string): any {
-  const loc = locale || (browser as any).config.locale;
+  const loc = locale || (browser.config as any).locale;
   const object = merge({}, meta[DEFAULT.locale], meta[loc]);
   if (!meta[loc]) logger.warn(`Locale '${loc}' not found in page'`);
 
@@ -84,13 +84,13 @@ export function getPageObject(meta: any, locale: string): any {
 }
 
 export function getPageProperty(page: string, ...propTree: string[]): any {
-  const pages: string[] = (browser as any).config.pages;
+  const pages: string[] = (browser.config as any).pages;
   const pagesStr = `\n${pages.map((i: string) => `    ${i}`).join(",\n")}`;
   const pageMeta = pages.find((pg: string) => path.basename(pg).split(".")[0].toLowerCase() === page.toLowerCase());
   if (!pageMeta) { throw new Error(`\n  Unable to resolve "${page}" from any of the available pages: ${pagesStr}`); }
 
   const pageObject = require(pageMeta).default;
-  const pageLocale = (browser as any).config.locale;
+  const pageLocale = (browser.config as any).locale;
   const propFromLocale = (locale: string): any => {
     const localeTree = [locale, ...propTree];
     const localeTreeStr = localeTree.join(".");
@@ -121,24 +121,19 @@ export function getPageTitle(key: string): string {
   return getPageProperty(key, "title");
 }
 
-export function getPageElement(key: string): string {
-  const rex = new RegExp(/(([-_A-Z\d]+)=>)?(.+)/i);
-  const matches = key.match(rex);
-  const page = matches[2];
-  const element = matches[3];
-
-  return page ? getPageProperty(page, "locators", element) : key;
+export function getPageElement(page: string, key: string): string {
+  return page ? getPageProperty(page, "locators", key) : key;
 }
 
 export function getJSONDiff(type: keyof IConfig["comparable"], filename: string, toCompare: any, prefilter?: PreFilterFunction): string {
-  const comparable = (browser as any).config.comparable[type];
+  const comparable = (browser.config as any).comparable[type];
   const actFile = path.join(comparable.actualDir, filename) + ".json";
   const expFile = path.join(comparable.baselineDir, filename) + ".json";
   const difFile = path.join(comparable.diffDir, filename) + ".json";
 
   fs.outputFileSync(actFile, JSON.stringify(toCompare, null, 2));
 
-  if (!~~comparable.skipCompare) {
+  if (!comparable.skipCompare) {
     if (!fs.existsSync(expFile)) { return `Baseline JSON file "${expFile}" not found`; }
 
     allure.addAttachment("Actual:", readFileSync(actFile));
@@ -183,7 +178,7 @@ export function getImageDiff(filename: string, compare: IImageCompare): string {
   let result: IImageCompareResult = {};
 
   const saved = getImageFile(compare.context, filename, compare.element);
-  const comparable = (browser as any).config.comparable.imageCompare;
+  const comparable = (browser.config as any).comparable.imageCompare;
   const actFile = path.join(comparable.actualDir, saved.fileName);
   const expFile = path.join(comparable.baselineDir, saved.fileName);
   const difFile = path.join(comparable.diffDir, saved.fileName);
@@ -240,7 +235,7 @@ export function isJSON(str: string): boolean {
 }
 
 export function sendSyncRequest(request: IHttpRequest): IHttpResponse {
-  request.options.url = new URL((request.options.url as string), (browser as any).config.baseUrl).href;
+  request.options.url = new URL((request.options.url as string), browser.config.baseUrl).href;
 
   const rs = sync({ ...request.options });
   if (rs.error) {

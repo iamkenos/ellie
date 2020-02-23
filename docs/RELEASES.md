@@ -6,6 +6,17 @@
 
 _Note: Gaps between patch versions are faulty, broken or test releases._
 
+## 1.2.0
+
+`2020-02-23`
+
+- [5ba9711](https://github.com//iamkenos/ellie/commit/5ba9711) docs: readme update [[iamkenos](https://github.com/iamkenos)]
+- [10372f4](https://github.com//iamkenos/ellie/commit/10372f4) refactor: rephrase built in steps [[iamkenos](https://github.com/iamkenos)]
+- [80c9bf9](https://github.com//iamkenos/ellie/commit/80c9bf9) deps: update dependencies [[iamkenos](https://github.com/iamkenos)]
+- [c629cb3](https://github.com//iamkenos/ellie/commit/c629cb3) feat: silenced allure reporter on test complete [[iamkenos](https://github.com/iamkenos)]
+- [5cf6245](https://github.com//iamkenos/ellie/commit/5cf6245) chore: add error checks on release script [[iamkenos](https://github.com/iamkenos)]
+- [aa532c9](https://github.com//iamkenos/ellie/commit/aa532c9) chore: fix release log spacing [[iamkenos](https://github.com/iamkenos)]
+
 ## 1.1.0
 
 `2020-02-22`

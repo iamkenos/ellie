@@ -1,7 +1,7 @@
 <h1 align="center">ELLIE</h1>
 
 <p align="center">
-  <a href="./docs/SEEDED_STEPS.md">Seeded Steps</a> |
+  <a href="./docs/SEEDED_STEPS.md">Steps</a> |
   <a href="./docs/DETAILED_GUIDE.md">Detailed Guide</a> |
   <a href="./docs/RELEASES.md">Releases</a>
 </p>
@@ -10,7 +10,9 @@
 
 ## About
 
-This is a thin wrapper around the popular [WebdriverIO](https://webdriver.io/) test automation framework focusing on the following key features:
+This is a thin wrapper around the popular [WebdriverIO](https://webdriver.io/) test automation framework.
+
+Key features:
 
 - write tests with [TypeScript](https://www.typescriptlang.org/docs/handbook/modules.html) and [Cucumber](https://cucumber.io/docs/guides/overview/)
 - provide a set of seeded steps that can be used out of the box

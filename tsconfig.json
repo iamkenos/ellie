@@ -10,7 +10,7 @@
     "removeComments": false,
     "sourceMap": true,
     "target": "ES5",
-    "types": ["node", "@wdio/sync", "@types/jest"]
+    "types": ["node", "@types/jest", "@wdio/sync", "wdio-intercept-service", "wdio-image-comparison-service"]
   },
   "include": ["./src/**/*.ts"],
   "exclude": ["node_modules", "build", "test", "bin", "src/cli/resources/samples"]

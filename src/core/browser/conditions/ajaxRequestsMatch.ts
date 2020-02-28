@@ -21,13 +21,14 @@ export default class AjaxRequestMatch implements IBrowserCondition {
   }
 
   public evaluate(): IExpectedConditionResult {
+    let requests: any[];
     let actual: string;
     let result: boolean;
 
     try {
       browser.pause(1000);
-      actual = (browser as any).getRequests().map((i: any) => { delete i.response.headers; return i; });
-      actual = getJSONDiff("ajaxRequest", this.filename, actual, this.prefilter);
+      requests = browser.getRequests().map((i: any) => { delete i.response.headers; return i; });
+      actual = getJSONDiff("ajaxRequest", this.filename, requests, this.prefilter);
       result = this.preferred ? !actual : !!actual;
     } catch (e) {
       actual = e.message;

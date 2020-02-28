@@ -52,6 +52,14 @@
   },
   "overrides": [
     {
+      "files": ["src/types/**/*.d.ts"],
+      "rules": {
+        "no-useless-constructor": ["off"],
+        "@typescript-eslint/no-useless-constructor": ["off"],
+        "@typescript-eslint/prefer-namespace-keyword": ["off"]
+      }
+    },
+    {
       "files": ["test/**/*.spec.ts"],
       "rules": {
         "no-undef": ["off"],

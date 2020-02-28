@@ -163,13 +163,13 @@ export function getImageFile(context: ImageCompareContext, filename: string, ele
 
   switch (context) {
     case ImageCompareContext.VIEWPORT: {
-      return { parsedName: file, ...(browser as any).saveScreen(file) };
+      return { parsedName: file, ...browser.saveScreen(file) };
     }
     case ImageCompareContext.ELEMENT: {
-      return { parsedName: file, ...(browser as any).saveElement(elem, file) };
+      return { parsedName: file, ...browser.saveElement(elem, file) };
     }
     case ImageCompareContext.PAGE: {
-      return { parsedName: file, ...(browser as any).saveFullPageScreen(file) };
+      return { parsedName: file, ...browser.saveFullPageScreen(file) };
     }
   }
 }
@@ -199,15 +199,15 @@ export function getImageDiff(filename: string, compare: IImageCompare): string {
 
     switch (compare.context) {
       case ImageCompareContext.VIEWPORT: {
-        result = (browser as any).checkScreen(saved.parsedName, compare.options);
+        result = browser.checkScreen(saved.parsedName, compare.options);
         break;
       }
       case ImageCompareContext.ELEMENT: {
-        result = (browser as any).checkElement(compare.element, saved.parsedName, compare.options);
+        result = browser.checkElement(compare.element, saved.parsedName, compare.options);
         break;
       }
       case ImageCompareContext.PAGE: {
-        result = (browser as any).checkFullPageScreen(saved.parsedName, compare.options);
+        result = browser.checkFullPageScreen(saved.parsedName, compare.options);
         break;
       }
     }

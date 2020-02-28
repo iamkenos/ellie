@@ -72,7 +72,7 @@ export default abstract class Driver {
 
   public static interceptAjaxRequests(): void {
     logger.info("NoArgs");
-    (browser as any).setupInterceptor();
+    browser.setupInterceptor();
   }
 
   public static getAlertText(): string {

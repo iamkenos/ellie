@@ -4,12 +4,13 @@ import { merge } from "lodash";
 import { diff, PreFilterFunction } from "deep-diff";
 import { sync } from "syncrequest";
 import { URL } from "url";
+import { ImageCompareResult } from "webdriver-image-comparison";
 import allure from "@wdio/allure-reporter";
 
 import logger from "../../logger";
 import { ImageCompareContext } from "../enums";
 import { IConfig } from "../../cli/interfaces";
-import { IHttpRequest, IHttpResponse, IImageCompare, IImageCompareResult, IImageSave } from "../interfaces";
+import { IHttpRequest, IHttpResponse, IImageCompare, IImageSave } from "../interfaces";
 import { inspect, readFileSync } from "../../cli/utils";
 import { DEFAULT } from "../../cli/config";
 
@@ -175,7 +176,7 @@ export function getImageFile(context: ImageCompareContext, filename: string, ele
 }
 
 export function getImageDiff(filename: string, compare: IImageCompare): string {
-  let result: IImageCompareResult = {};
+  let result: number | ImageCompareResult;
 
   const saved = getImageFile(compare.context, filename, compare.element);
   const comparable = (browser.config as any).comparable.imageCompare;
@@ -215,9 +216,10 @@ export function getImageDiff(filename: string, compare: IImageCompare): string {
     attachImage("Actual:", actFile);
     attachImage("Expected:", expFile);
 
+    // @ts-ignore
     if (result.misMatchPercentage) {
       attachImage("Differences:", difFile);
-      return `Image mismatch by ${result.misMatchPercentage}%`;
+      return `Image mismatch by ${result}%`;
     }
   }
 

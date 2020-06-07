@@ -23,7 +23,7 @@ Check out the [steps](./docs/SEEDED_STEPS.md) readily available for you to use a
 
 ## Requirements
 
-- NodeJS _`10.15.3`_ or higher
+- NodeJS _`12.18.0`_ or higher
 
 ## Get Started
 

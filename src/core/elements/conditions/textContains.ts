@@ -10,7 +10,7 @@ export default class TextContains implements IElementCondition {
 
   public constructor(expected: string, preferred: boolean) {
     this.name = logger.getCaller(true);
-    this.expected = expected;
+    this.expected = expected || "";
     this.preferred = preferred;
   }
 

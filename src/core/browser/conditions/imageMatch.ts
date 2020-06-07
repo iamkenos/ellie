@@ -1,6 +1,8 @@
+import { WdioCheckFullPageMethodOptions, WdioCheckScreenMethodOptions } from "wdio-image-comparison-service";
+
 import logger from "../../../logger";
 import { ImageCompareContext } from "../../enums";
-import { IBrowserCondition, IExpectedConditionResult, IImageCompareOptions } from "../../interfaces";
+import { IBrowserCondition, IExpectedConditionResult } from "../../interfaces";
 import { getImageDiff } from "../../utils";
 
 export default class ImageMatch implements IBrowserCondition {
@@ -12,9 +14,11 @@ export default class ImageMatch implements IBrowserCondition {
 
   private readonly preferred: boolean;
 
-  private readonly options: IImageCompareOptions;
+  private readonly options: WdioCheckScreenMethodOptions;
 
-  public constructor(context: string, filename: string, preferred: boolean, options?: IImageCompareOptions) {
+  public constructor(
+    context: string, filename: string, preferred: boolean,
+    options?: WdioCheckFullPageMethodOptions | WdioCheckScreenMethodOptions) {
     this.name = logger.getCaller(true);
     this.context = ImageCompareContext[context.toUpperCase()];
     this.filename = filename;

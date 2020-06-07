@@ -1,6 +1,8 @@
+import { WdioCheckElementMethodOptions } from "wdio-image-comparison-service";
+
 import logger from "../../logger";
 import ElementConditions from "./evaluation/elementConditions";
-import { IClickOptions, IImageCompareOptions } from "../interfaces";
+import { IClickOptions } from "../interfaces";
 import { getAbsoluteXPathScript, getIndexedSelector } from "../utils";
 import { inspect } from "../../cli/utils";
 
@@ -84,14 +86,14 @@ export default class WebElement {
     elem.doubleClick();
   }
 
-  public dragAndDrop(target: string, duration?: number): void {
+  public dragAndDrop(target: string, options?: WebdriverIO.DragAndDropOptions): void {
     logger.info(`Selector: ${this.selector}`);
     const dest = new ElementConditions(target)
       .existing(true)
       .runStrict()
       .getElement();
 
-    this.existing$().dragAndDrop(dest, duration);
+    this.existing$().dragAndDrop(dest, options);
   }
 
   public getAttribute(key: string): string {
@@ -449,7 +451,7 @@ export default class WebElement {
       .runStrict();
   }
 
-  public isImageMatchRef(filename: string, preferred = true, options?: IImageCompareOptions): boolean {
+  public isImageMatchRef(filename: string, preferred = true, options?: WdioCheckElementMethodOptions): boolean {
     logger.info(`Selector: ${this.selector} | File: ${filename} | Options: ${inspect(options)} | Reverse: ${!preferred}`);
     return new ElementConditions(this.existing$().selector)
       .imageMatch(filename, preferred, options)
@@ -457,7 +459,7 @@ export default class WebElement {
       .isSuccess();
   }
 
-  public checkImageMatchRef(filename: string, preferred = true, options?: IImageCompareOptions): void {
+  public checkImageMatchRef(filename: string, preferred = true, options?: WdioCheckElementMethodOptions): void {
     logger.info(`Selector: ${this.selector} | File: ${filename} | Options: ${inspect(options)} | Reverse: ${!preferred}`);
     new ElementConditions(this.existing$().selector)
       .imageMatch(filename, preferred, options)
@@ -524,9 +526,9 @@ export default class WebElement {
       .runStrict();
   }
 
-  public moveTo(xoffset?: number, yoffset?: number): void {
-    logger.info(`Selector: ${this.selector} | X: ${xoffset} | Y: ${yoffset}`);
-    this.existing$().moveTo(xoffset, yoffset);
+  public moveTo(options?: WebdriverIO.MoveToOptions): void {
+    logger.info(`Selector: ${this.selector} | Options: ${options}`);
+    this.existing$().moveTo(options);
   }
 
   public scrollIntoView(options?: boolean | object): void {

@@ -330,7 +330,8 @@ exports.config = {
    * Runs before a Cucumber step
    */
   beforeStep: function ({ uri, feature, step }, context) {
-    const stepArg = step.argument;
+    // for some reason 'step' seem to give the entire thing (including uri, feature, step, and then some) ¯\_(ツ)_/¯
+    const stepArg = step.step.argument;
     const data = [];
 
     if(stepArg) {

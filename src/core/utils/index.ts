@@ -216,7 +216,8 @@ export function getImageDiff(filename: string, compare: IImageCompare): string {
     attachImage("Actual:", actFile);
     attachImage("Expected:", expFile);
 
-    if (typeof result === "number") {
+    // @ts-ignore
+    if (result.misMatchPercentage) {
       attachImage("Differences:", difFile);
       return `Image mismatch by ${result}%`;
     }

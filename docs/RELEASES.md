@@ -6,6 +6,13 @@
 
 _Note: Gaps between patch versions are faulty, broken or test releases._
 
+## 1.3.1
+
+`2020-06-07`
+
+- [6476174](https://github.com//iamkenos/ellie/commit/6476174) deps: upgrade to wdio v6 and node lts [[iamkenos](https://github.com/iamkenos)]
+- [d2f8aba](https://github.com//iamkenos/ellie/commit/d2f8aba) refactor: removed as any for newly supported typings [[iamkenos](https://github.com/iamkenos)]
+
 ## 1.2.0
 
 `2020-02-23`

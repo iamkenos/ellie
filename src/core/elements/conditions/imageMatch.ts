@@ -1,6 +1,8 @@
+import { WdioCheckElementMethodOptions } from "wdio-image-comparison-service";
+
 import logger from "../../../logger";
 import { ImageCompareContext } from "../../enums";
-import { IElementCondition, IExpectedConditionResult, IImageCompareOptions } from "../../interfaces";
+import { IElementCondition, IExpectedConditionResult } from "../../interfaces";
 import { getImageDiff } from "../../utils";
 
 export default class ImageMatch implements IElementCondition {
@@ -12,9 +14,9 @@ export default class ImageMatch implements IElementCondition {
 
   private readonly preferred: boolean;
 
-  private readonly options: IImageCompareOptions;
+  private readonly options: WdioCheckElementMethodOptions;
 
-  public constructor(filename: string, preferred: boolean, options?: IImageCompareOptions) {
+  public constructor(filename: string, preferred: boolean, options?: WdioCheckElementMethodOptions) {
     this.name = logger.getCaller(true);
     this.context = ImageCompareContext.ELEMENT;
     this.filename = filename;

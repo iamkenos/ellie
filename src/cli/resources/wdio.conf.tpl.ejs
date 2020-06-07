@@ -329,8 +329,8 @@ exports.config = {
   /**
    * Runs before a Cucumber step
    */
-  beforeStep: function (uri, feature, stepData, context) {
-    const stepArg = stepData.step.argument;
+  beforeStep: function ({ uri, feature, step }, context) {
+    const stepArg = step.argument;
     const data = [];
 
     if(stepArg) {
@@ -346,20 +346,20 @@ exports.config = {
 
     <% if (answers.hooks.beforeStep) { %>
     const hook = require('<%= answers.hooks.beforeStep %>').default;
-    hook(uri, feature, stepData, context);
+    hook({ uri, feature, step }, context);
     <% } %>
   },
   /**
    * Runs after a Cucumber step
    */
-  afterStep: function (uri, feature, { error, result, duration, passed }, stepData, context) {
+  afterStep: function ({ uri, feature, step }, context, { error, result, duration, passed, retries }) {
     if (error !== undefined) {
       browser.takeScreenshot();
     }
 
     <% if (answers.hooks.afterStep) { %>
     const hook = require('<%= answers.hooks.afterStep %>').default;
-    hook(uri, feature, { error, result, duration, passed }, stepData, context);
+    hook({ uri, feature, step }, context, { error, result, duration, passed, retries });
     <% } %>
   },
   /**

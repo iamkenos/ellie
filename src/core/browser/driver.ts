@@ -1,9 +1,10 @@
 import { PreFilterFunction } from "deep-diff";
+import { WdioCheckFullPageMethodOptions, WdioCheckScreenMethodOptions } from "wdio-image-comparison-service";
 
 import logger from "../../logger";
 import BrowserConditions from "./evaluation/browserConditions";
 import { WebElement } from "../elements";
-import { IHttpRequest, IHttpResponse, IImageCompareOptions } from "../interfaces";
+import { IHttpRequest, IHttpResponse } from "../interfaces";
 import { sendSyncRequest } from "../utils";
 import { inspect } from "../../cli/utils";
 
@@ -85,9 +86,9 @@ export default abstract class Driver {
     browser.maximizeWindow();
   }
 
-  public static newWindow(url: string, name?: string, features?: string): void {
-    logger.info(`URL: ${url} | Name: ${name} | Features: ${features}`);
-    browser.newWindow(url, name, features);
+  public static newWindow(url: string, options?: WebdriverIO.NewWindowOptions): void {
+    logger.info(`URL: ${url} | Options: ${options}`);
+    browser.newWindow(url, options);
   }
 
   public static back(): void {
@@ -257,7 +258,8 @@ export default abstract class Driver {
   }
 
   public static checkImageMatchRef(
-    context: string, filename: string, preferred = true, options?: IImageCompareOptions): void {
+    context: string, filename: string, preferred = true,
+    options?: WdioCheckFullPageMethodOptions | WdioCheckScreenMethodOptions): void {
     logger.info(`Context: ${context} | File: ${filename} | Reverse: ${!preferred} | Options: ${options}`);
     new BrowserConditions()
       .imageMatch(context, filename, preferred, options)

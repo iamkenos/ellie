@@ -1,4 +1,5 @@
 import { AssertionError } from "chai";
+import { WdioCheckElementMethodOptions } from "wdio-image-comparison-service";
 
 import logger from "../../../logger";
 import ElementConditionsResult from "./elementConditionsResult";
@@ -30,7 +31,7 @@ import {
   ValueEmpty,
   ValueEquals
 } from "../conditions";
-import { IElementCondition, IImageCompareOptions } from "../../interfaces";
+import { IElementCondition } from "../../interfaces";
 
 const WAIT_TIMEOUT: number = browser.config.waitforTimeout;
 
@@ -115,7 +116,7 @@ export default class ElementConditions {
     return this;
   }
 
-  public imageMatch(filename: string, preferred: boolean, options?: IImageCompareOptions): ElementConditions {
+  public imageMatch(filename: string, preferred: boolean, options?: WdioCheckElementMethodOptions): ElementConditions {
     this.conditions.push(new ImageMatch(filename, preferred, options));
     return this;
   }
@@ -201,7 +202,7 @@ export default class ElementConditions {
           this.result.isSuccess() || logger.debug("Retrying...");
           return this.result.isSuccess();
         },
-        timeout
+        { timeout }
       );
       return this.result;
     } catch (e) {

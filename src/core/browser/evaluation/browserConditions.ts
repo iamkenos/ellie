@@ -1,5 +1,6 @@
 import { AssertionError } from "chai";
 import { PreFilterFunction } from "deep-diff";
+import { WdioCheckFullPageMethodOptions, WdioCheckScreenMethodOptions } from "wdio-image-comparison-service";
 
 import BrowserConditionsResult from "./browserConditionsResult";
 import logger from "../../../logger";
@@ -24,7 +25,7 @@ import {
   UrlPathContains,
   UrlPathEquals
 } from "../conditions";
-import { IBrowserCondition, IHttpRequest, IImageCompareOptions } from "../../interfaces";
+import { IBrowserCondition, IHttpRequest } from "../../interfaces";
 
 const WAIT_TIMEOUT: number = browser.config.waitforTimeout;
 
@@ -90,7 +91,8 @@ export default class BrowserConditions {
   }
 
   public imageMatch(
-    context: string, filename: string, preferred: boolean, options?: IImageCompareOptions): BrowserConditions {
+    context: string, filename: string, preferred: boolean,
+    options?: WdioCheckFullPageMethodOptions | WdioCheckScreenMethodOptions): BrowserConditions {
     this.conditions.push(new ImageMatch(context, filename, preferred, options));
     return this;
   }
@@ -161,7 +163,7 @@ export default class BrowserConditions {
           this.result.isSuccess() || logger.debug("Retrying...");
           return this.result.isSuccess();
         },
-        timeout
+        { timeout }
       );
       return this.result;
     } catch (e) {

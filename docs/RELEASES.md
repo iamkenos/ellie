@@ -6,6 +6,12 @@
 
 _Note: Gaps between patch versions are faulty, broken or test releases._
 
+## 1.3.2
+
+`2020-06-19`
+
+- [9fa9d35](https://github.com//iamkenos/ellie/commit/9fa9d35) deps: wdio fixes [[iamkenos](https://github.com/iamkenos)]
+
 ## 1.3.1
 
 `2020-06-07`

@@ -60,6 +60,10 @@ export interface IConfig {
   browserstackEnabled?: boolean;
   browserstackLocal?: boolean;
   reportOutDir?: string;
+  seleniumInstallArgs?: {
+    version?: string;
+    drivers?: {}
+  },
   specFileRetries?: number;
   specs?: string[];
   steps?: string[];

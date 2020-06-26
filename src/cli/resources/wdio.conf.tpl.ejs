@@ -168,8 +168,9 @@ exports.config = {
   // your test setup with almost no effort. Unlike plugins, they don't add new
   // commands. Instead, they hook themselves up into the test process.
   services: [
-    '<%= answers.browserstackEnabled ? 'browserstack' : 'selenium-standalone' %>',
     'intercept',
+    <%- answers.browserstackEnabled ? 'browserstack' :
+    JSON.stringify(['selenium-standalone', { installArgs: answers.seleniumInstallArgs, args: answers.seleniumInstallArgs }]) %>,
     [
       'image-comparison',
       {
@@ -177,7 +178,7 @@ exports.config = {
         baselineFolder: <%- JSON.stringify(answers.comparable.imageCompare.baselineDir) %>,
         actualFolder: <%- JSON.stringify(answers.comparable.imageCompare.actualDir) %>,
         diffFolder: <%- JSON.stringify(answers.comparable.imageCompare.diffDir) %>,
-        formatImageName: "{tag}",
+        formatImageName: '{tag}',
       }
     ]
   ],

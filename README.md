@@ -24,6 +24,7 @@ Check out the [steps](./docs/SEEDED_STEPS.md) readily available for you to use a
 ## Requirements
 
 - NodeJS _`12.18.0`_ or higher
+- JDK
 
 ## Get Started
 

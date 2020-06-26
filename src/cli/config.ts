@@ -37,6 +37,7 @@ export const DEFAULT: IConfig = {
   browserstackEnabled: false,
   browserstackLocal: false,
   reportOutDir: ".reports",
+  seleniumInstallArgs: {},
   specFileRetries: 0,
   specs: ["./features/**/*.feature"],
   steps: ["./steps/definitions/**/*.ts"],
@@ -278,6 +279,10 @@ const CONFIG_PROPERTIES: IConfigProperty[] = [
   {
     name: "reportOutDir",
     helptext: "Directory to store the reports in, relative to the config file"
+  },
+  {
+    name: "seleniumInstallArgs",
+    helptext: "The selenium standalone install and runtime arguments"
   },
   {
     name: "specFileRetries",

@@ -15,7 +15,7 @@ This is a thin wrapper around the popular [WebdriverIO](https://webdriver.io/) t
 Key features:
 
 - write tests with [TypeScript](https://www.typescriptlang.org/docs/handbook/modules.html) and [Cucumber](https://cucumber.io/docs/guides/overview/)
-- provide a set of seeded steps that can be used out of the box
+- cucumber steps that can be used out of the box
 - run tests synchronously and provide a presentable feedback
 - internal polling and retries when interacting with the browser and its elements
 
@@ -34,11 +34,11 @@ Check out the [steps](./docs/SEEDED_STEPS.md) readily available for you to use a
 
 2. Try it
 
-   `ellie whistle`
+   `./node_mobules/.bin/ellie whistle`
 
 3. Run it
 
-   `ellie ./samples/ellie.conf.ts`
+   `./node_mobules/.bin/ellie ./samples/ellie.conf.ts`
 
 ## Acknowledgements
 

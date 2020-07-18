@@ -1,7 +1,7 @@
 export default {
   default: {
     url: "https://webdriver.io/",
-    title: "WebdriverIO · Next-gen WebDriver test framework for Node.js",
+    title: "WebdriverIO · Next-gen browser and mobile automation test framework for Node.js",
     locators: {
       // locator keys can be enclosed in quotes
       "Project title": ".projectTitle",

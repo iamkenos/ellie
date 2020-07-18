@@ -129,22 +129,24 @@ Feature: WebDriverIO
   Background:
     Given I have a screen that is 1600 by 1024 pixels
 
+  # These are tags
   @sample @boilerplate-style
   Scenario: Cucumber boilerplate style
     This is an example of writing tests following the cucumber boilerplate fashion.
     Element locators and page URLs are directly supplied from the built-in steps.
+    Ideal when you want to get started quickly and run tests just by writing gherkin statements without additional code.
     It works but element locators will be harder to maintain as the number of tests grow.
     # This is a comment below the scenario description
 
     When I open the url "https://webdriver.io/"
     Then I expect the ".projectTitle" element text to be "WEBDRIVER I/O"
-      And I expect the page title to be "WebdriverIO · Next-gen WebDriver test framework for Node.js"
+      And I expect the page title to be "WebdriverIO · Next-gen browser and mobile automation test framework for Node.js"
     When I click the "//a[text()='Get Started']" element
     Then I expect the "#docsNav" element to be displayed
 
   Scenario: Page object model: meta style
     This is an example of writing tests using page object model.
-    Element locators and other page properties are defined in a meta file e.g. webdrverIO.meta.js.
+    Element locators and other page properties are defined in a meta file e.g. webdrverIO.meta.ts.
     Use the optional page name parameter on applicable built-in steps to access the page meta properties
 
     When I open the "WebdriverIO" page's url
@@ -153,10 +155,11 @@ Feature: WebDriverIO
     When I click the "WebdriverIO" page's "Button: Get Started" element
     Then I expect the "WebdriverIO" page's "navBar" element to be displayed
 
+  # Scenario outlines run multiple iterations of the same test. This is cucumber's take on data driven testing
   Scenario Outline: Page object model: classes style <ITER>
     This is another example of writing tests using page object model.
-    Unlike the previous example, this one makes use page object classes e.g. webdrverIO.page.js.
-    This approch is more suitable for implementing custom and more complex steps.
+    Unlike the previous example, this one makes use page object classes e.g. webdrverIO.page.ts.
+    This approach is more suitable for implementing custom and more complex steps.
 
     When I open the WebdriverIO page's url
     Then I expect the WebdriverIO page's project title to be "WEBDRIVER I/O"
@@ -210,7 +213,7 @@ To write a single test, you need the bare minimum parts of a feature file:
   ```gherkin
   When I open the url "https://webdriver.io/"
   Then I expect the ".projectTitle" element text to be "WEBDRIVER I/O"
-    And I expect the page title to be "WebdriverIO · Next-gen WebDriver test framework for Node.js"
+    And I expect the page title to be "WebdriverIO · Next-gen browser and mobile automation test framework for Node.js"
   When I click the "//a[text()='Get Started']" element
   Then I expect the "#docsNav" element to be displayed
   ```
@@ -258,7 +261,7 @@ From here, call the binary and provide the path to your configuration file
 
 ## Page object model
 
-Page object model is an design pattern where web pages are represented as classes. Web elements found on the said page are stored in the the same class, accessed using getters.
+Page object model is a design pattern where web pages are represented as classes. Web elements found on the said page are stored in the the same class, accessed using getters.
 
 The actual selectors for these elements are stored in another reference file called the `meta`.
 
@@ -277,7 +280,7 @@ _`webdriverIO.meta.ts`_
 export default {
   default: {
     url: "https://webdriver.io/",
-    title: "WebdriverIO · Next-gen WebDriver test framework for Node.js",
+    title: "WebdriverIO · Next-gen browser and mobile automation test framework for Node.js",
     locators: {
       // locator keys can be enclosed in quotes
       "Project title": ".projectTitle",
@@ -326,7 +329,7 @@ A meta file should have the following parts:
   ```ts
   default: {
     url: "https://webdriver.io/",
-    title: "WebdriverIO · Next-gen WebDriver test framework for Node.js",
+    title: "WebdriverIO · Next-gen browser and mobile automation test framework for Node.js",
     locators: {
       // locator keys can be enclosed in quotes
       "Project title": ".projectTitle",
@@ -343,7 +346,7 @@ It is also possible to add various locales which is specially useful for managin
 export default {
   default: {
     url: "https://webdriver.io/",
-    title: "WebdriverIO · Next-gen WebDriver test framework for Node.js",
+    title: "WebdriverIO · Next-gen browser and mobile automation test framework for Node.js",
     locators: {
       // locator keys can be enclosed in quotes
       "Project title": ".projectTitle",

@@ -6,6 +6,15 @@
 
 _Note: Gaps between patch versions are faulty, broken or test releases._
 
+## 1.3.3
+
+`2020-07-18`
+
+- [ba9f363](https://github.com//iamkenos/ellie/commit/ba9f363) feat: json diff options [[iamkenos](https://github.com/iamkenos)]
+- [1950e79](https://github.com//iamkenos/ellie/commit/1950e79) chore: docs and sample updates [[iamkenos](https://github.com/iamkenos)]
+- [fc57819](https://github.com//iamkenos/ellie/commit/fc57819) deps: npm update [[iamkenos](https://github.com/iamkenos)]
+- [c23e7c9](https://github.com//iamkenos/ellie/commit/c23e7c9) feat: new property seleniumInstallArgs [[iamkenos](https://github.com/iamkenos)]
+
 ## 1.3.2
 
 `2020-06-19`

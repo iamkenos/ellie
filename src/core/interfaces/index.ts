@@ -1,11 +1,13 @@
 import { CoreOptions, Response, UrlOptions } from "request";
 import { ImageCompareContext } from "../enums";
 import { WdioCheckElementMethodOptions, WdioCheckFullPageMethodOptions, WdioCheckScreenMethodOptions } from "wdio-image-comparison-service";
+import { PreFilterFunction } from "deep-diff";
 
 export interface IBrowserCondition {
   name: string;
   evaluate(): IExpectedConditionResult;
 }
+
 export interface IElementCondition {
   name: string;
   evaluate(selector: string): IExpectedConditionResult;
@@ -19,6 +21,7 @@ export interface IHttpResponse {
 export interface IHttpRequest {
   options: CoreOptions & UrlOptions;
 }
+
 export interface IPageMeta {
   default: {
     url: string;
@@ -38,6 +41,7 @@ export interface IExpectedConditionResult {
   message: string;
   isSuccess: boolean;
 }
+
 export interface IImageCompare {
   context: ImageCompareContext;
   options?: WdioCheckElementMethodOptions | WdioCheckFullPageMethodOptions | WdioCheckScreenMethodOptions;
@@ -49,4 +53,12 @@ export interface IImageSave {
   fileName: string;
   path: string;
   devicePixelRatio: number;
+}
+
+export interface IJSONDiffOptions {
+  regex?: {
+    paths: string[],
+    expressions: string[]
+  };
+  prefilter?: PreFilterFunction;
 }

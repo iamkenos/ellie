@@ -1,5 +1,4 @@
 import { AssertionError } from "chai";
-import { PreFilterFunction } from "deep-diff";
 import { WdioCheckFullPageMethodOptions, WdioCheckScreenMethodOptions } from "wdio-image-comparison-service";
 
 import BrowserConditionsResult from "./browserConditionsResult";
@@ -25,7 +24,7 @@ import {
   UrlPathContains,
   UrlPathEquals
 } from "../conditions";
-import { IBrowserCondition, IHttpRequest } from "../../interfaces";
+import { IBrowserCondition, IHttpRequest, IJSONDiffOptions } from "../../interfaces";
 
 const WAIT_TIMEOUT: number = browser.config.waitforTimeout;
 
@@ -44,8 +43,8 @@ export default class BrowserConditions {
     this.result = new BrowserConditionsResult();
   }
 
-  public ajaxRequestsMatch(filename: string, preferred: boolean, prefilter: PreFilterFunction): BrowserConditions {
-    this.conditions.push(new AjaxRequestsMatch(filename, preferred, prefilter));
+  public ajaxRequestsMatch(filename: string, preferred: boolean, options: IJSONDiffOptions): BrowserConditions {
+    this.conditions.push(new AjaxRequestsMatch(filename, preferred, options));
     return this;
   }
 
@@ -85,8 +84,8 @@ export default class BrowserConditions {
   }
 
   public httpResponseMatch(
-    request: IHttpRequest, filename: string, preferred: boolean, prefilter: PreFilterFunction): BrowserConditions {
-    this.conditions.push(new HttpResponseMatch(request, filename, preferred, prefilter));
+    request: IHttpRequest, filename: string, preferred: boolean, options: IJSONDiffOptions): BrowserConditions {
+    this.conditions.push(new HttpResponseMatch(request, filename, preferred, options));
     return this;
   }
 

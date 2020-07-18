@@ -1,7 +1,8 @@
 import * as fs from "fs-extra";
 import * as path from "path";
+import * as jsonpath from "jsonpath";
 import { merge } from "lodash";
-import { diff, PreFilterFunction } from "deep-diff";
+import { diff } from "deep-diff";
 import { sync } from "syncrequest";
 import { URL } from "url";
 import { ImageCompareResult } from "webdriver-image-comparison";
@@ -10,7 +11,7 @@ import allure from "@wdio/allure-reporter";
 import logger from "../../logger";
 import { ImageCompareContext } from "../enums";
 import { IConfig } from "../../cli/interfaces";
-import { IHttpRequest, IHttpResponse, IImageCompare, IImageSave } from "../interfaces";
+import { IHttpRequest, IHttpResponse, IImageCompare, IImageSave, IJSONDiffOptions } from "../interfaces";
 import { inspect, readFileSync } from "../../cli/utils";
 import { DEFAULT } from "../../cli/config";
 
@@ -126,11 +127,52 @@ export function getPageElement(page: string, key: string): string {
   return page ? getPageProperty(page, "locators", key) : key;
 }
 
-export function getJSONDiff(type: keyof IConfig["comparable"], filename: string, toCompare: any, prefilter?: PreFilterFunction): string {
+export function getJSONDiff(type: keyof IConfig["comparable"], filename: string, toCompare: any, options?: IJSONDiffOptions): string {
   const comparable = (browser.config as any).comparable[type];
   const actFile = path.join(comparable.actualDir, filename) + ".json";
   const expFile = path.join(comparable.baselineDir, filename) + ".json";
   const difFile = path.join(comparable.diffDir, filename) + ".json";
+
+  const getMatchingJSONPaths = (expr: string[], object: object) => {
+    // Get all the matching stringified json paths from an object given a list of json paths
+    // see https://www.npmjs.com/package/jsonpath
+    return expr
+    // 2D array of element paths from comparable
+    // that matches the path expressions provided
+      .map(i => jsonpath.paths(object, i))
+    // Flatten the 2D array
+      .reduce((j, k) => j.concat(k))
+    // Stringify the each json path array
+    // e.g. ['$', 'store', 'book', 0, 'author'] to "$.store.book[0].author"
+      .map((h: string[]) => jsonpath.stringify(h));
+  };
+
+  const getDiff = (options?: IJSONDiffOptions) => {
+    const expected = JSON.parse(readFileSync(expFile));
+    const actual = JSON.parse(readFileSync(actFile));
+
+    if (!options) return diff(expected, actual);
+
+    if (options.regex) {
+      const paths = getMatchingJSONPaths(options.regex.paths, actual);
+      return diff(expected, actual, (filterPath, key) => {
+        const filter = jsonpath.stringify(["$"].concat(filterPath.concat(key)));
+        const index = paths.indexOf(filter);
+        let result = false;
+        // if filter is inside the paths array, get the expression on the same index
+        // and check that it matches the actual value; else let diff do it's thing
+        if (index >= 0) {
+          const pathValue = JSON.stringify(jsonpath.query(actual, filter)[0]);
+          const matchExpr = options.regex.expressions[index];
+          const matches = pathValue.match(matchExpr) || [];
+          result = matches.length > 0;
+        }
+        return result;
+      });
+    }
+
+    if (options.prefilter) return diff(expected, actual, options.prefilter);
+  };
 
   fs.outputFileSync(actFile, JSON.stringify(toCompare, null, 2));
 
@@ -140,7 +182,7 @@ export function getJSONDiff(type: keyof IConfig["comparable"], filename: string,
     allure.addAttachment("Actual:", readFileSync(actFile));
     allure.addAttachment("Expected:", readFileSync(expFile));
 
-    const differences = diff(JSON.parse(readFileSync(expFile)), JSON.parse(readFileSync(actFile)), prefilter);
+    const differences = getDiff(options);
     if (differences) {
       const diff = JSON.stringify(differences, null, 2);
       fs.outputFileSync(difFile, diff);

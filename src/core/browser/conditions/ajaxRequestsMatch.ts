@@ -1,7 +1,6 @@
-import { PreFilterFunction } from "deep-diff";
 import logger from "../../../logger";
 
-import { IBrowserCondition, IExpectedConditionResult } from "../../interfaces";
+import { IBrowserCondition, IExpectedConditionResult, IJSONDiffOptions } from "../../interfaces";
 import { getJSONDiff } from "../../utils";
 
 export default class AjaxRequestMatch implements IBrowserCondition {
@@ -11,13 +10,13 @@ export default class AjaxRequestMatch implements IBrowserCondition {
 
   private readonly preferred: boolean;
 
-  private readonly prefilter: any;
+  private readonly options: IJSONDiffOptions;
 
-  public constructor(filename: string, preferred: boolean, prefilter?: PreFilterFunction) {
+  public constructor(filename: string, preferred: boolean, options?: IJSONDiffOptions) {
     this.name = logger.getCaller(true);
     this.filename = filename;
     this.preferred = preferred;
-    this.prefilter = prefilter;
+    this.options = options;
   }
 
   public evaluate(): IExpectedConditionResult {
@@ -28,7 +27,7 @@ export default class AjaxRequestMatch implements IBrowserCondition {
     try {
       browser.pause(1000);
       requests = browser.getRequests().map((i: any) => { delete i.response.headers; return i; });
-      actual = getJSONDiff("ajaxRequest", this.filename, requests, this.prefilter);
+      actual = getJSONDiff("ajaxRequest", this.filename, requests, this.options);
       result = this.preferred ? !actual : !!actual;
     } catch (e) {
       actual = e.message;

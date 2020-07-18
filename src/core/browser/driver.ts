@@ -1,10 +1,9 @@
-import { PreFilterFunction } from "deep-diff";
 import { WdioCheckFullPageMethodOptions, WdioCheckScreenMethodOptions } from "wdio-image-comparison-service";
 
 import logger from "../../logger";
 import BrowserConditions from "./evaluation/browserConditions";
 import { WebElement } from "../elements";
-import { IHttpRequest, IHttpResponse } from "../interfaces";
+import { IHttpRequest, IHttpResponse, IJSONDiffOptions } from "../interfaces";
 import { sendSyncRequest } from "../utils";
 import { inspect } from "../../cli/utils";
 
@@ -172,10 +171,10 @@ export default abstract class Driver {
     browser.url(url);
   }
 
-  public static checkAjaxRequestsMatchRef(filename: string, preferred = true, prefilter?: PreFilterFunction): void {
-    logger.info(`File: ${filename} | Reverse: ${!preferred} | Prefilter: ${prefilter}`);
+  public static checkAjaxRequestsMatchRef(filename: string, preferred = true, options?: IJSONDiffOptions): void {
+    logger.info(`File: ${filename} | Reverse: ${!preferred} | Options: ${options}`);
     new BrowserConditions()
-      .ajaxRequestsMatch(filename, preferred, prefilter)
+      .ajaxRequestsMatch(filename, preferred, options)
       .runStrict();
   }
 
@@ -250,10 +249,10 @@ export default abstract class Driver {
   }
 
   public static checkHttpResponseMatchRef(
-    request: IHttpRequest, filename: string, preferred = true, prefilter?: PreFilterFunction): void {
-    logger.info(`Request: ${request.options} | File: ${filename} | Reverse: ${!preferred} | Filter: ${prefilter}`);
+    request: IHttpRequest, filename: string, preferred = true, options?: IJSONDiffOptions): void {
+    logger.info(`Request: ${request.options} | File: ${filename} | Reverse: ${!preferred} | Options: ${options}`);
     new BrowserConditions()
-      .httpResponseMatch(request, filename, preferred, prefilter)
+      .httpResponseMatch(request, filename, preferred, options)
       .runStrict();
   }
 

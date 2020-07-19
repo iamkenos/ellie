@@ -6,6 +6,13 @@
 
 _Note: Gaps between patch versions are faulty, broken or test releases._
 
+## 1.3.4
+
+`2020-07-19`
+
+- [aa48429](https://github.com//iamkenos/ellie/commit/aa48429) deps: move jsonpath types to devDependencies [[iamkenos](https://github.com/iamkenos)]
+- [4c26162](https://github.com//iamkenos/ellie/commit/4c26162) deps: audit fixes [[iamkenos](https://github.com/iamkenos)]
+
 ## 1.3.3
 
 `2020-07-18`

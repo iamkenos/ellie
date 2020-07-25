@@ -348,11 +348,12 @@ export const CONFIG_INQUIRY: IConfigProperty[] = CONFIG_PROPERTIES
 
 export const USAGE = `
 Usage:
-  ellie init                   Launches the configuration helper
-  ellie whistle                Generate sample files to get started with
-  ellie babygirl               Endure and survive
-  ellie [file]                 Launches the WebdriverIO test runner
-  ellie [file] [options]       Stdin overrides for certain config properties; See options list below
+  ellie init                        Launches the configuration helper
+  ellie whistle                     Generate sample files to get started with
+  ellie babygirl                    Endure and survive
+  ellie [file]                      Launches the WebdriverIO test runner by feeding the default wdio.conf.js file
+  ellie [file1] [file2]             Launches the WebdriverIO test runner by feeding the supplied secondary file
+  ellie [file1] [file2]? [options]  Stdin overrides for certain config properties; See options list below
 
 Complete list of properties:
 * Inquired when running the config helper

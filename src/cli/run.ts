@@ -21,6 +21,7 @@ export default (args: Arguments<any>): any => {
 
   const firstArg = args.argv._[0];
   const localConfigFile = join(process.cwd(), firstArg);
+  const extendedConfigFile = args.argv._[1] ? join(process.cwd(), args.argv._[1]) : false;
 
   // just because :P
   if (firstArg === "babygirl") {
@@ -47,7 +48,15 @@ export default (args: Arguments<any>): any => {
   // if the provided config file exists
   // then create the webdriverio config from it
   if (existsSync(localConfigFile)) {
-    return createWdioConfig(firstArg, overrides);
+    const config = createWdioConfig(firstArg, overrides);
+    // since the primary config is 'refreshed' everytime, you can use a secondary config
+    // extending from the primary that gets generated. this is for those who doesn't want
+    // to be restricted by the 'simpler' configurations offered by this abstraction
+    if (extendedConfigFile && existsSync(extendedConfigFile)) {
+      return extendedConfigFile;
+    } else {
+      return config;
+    }
   }
 
   // if the provided config file doesn't exist

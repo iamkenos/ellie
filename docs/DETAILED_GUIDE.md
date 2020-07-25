@@ -19,15 +19,16 @@ For simplicity, all the examples shown below will be the same ones you get from 
 
 Refer to the help menu for a quick overview of CLI usage and accepted commands
 
-`ellie --help`
+`npx ellie --help`
 
 ```txt
 Usage:
-  ellie init                   Launches the configuration helper
-  ellie whistle                Generate sample files to get started with
-  ellie babygirl               Endure and survive
-  ellie [file]                 Launches the WebdriverIO test runner
-  ellie [file] [options]       Stdin overrides for certain config properties; See options list below
+  ellie init                        Launches the configuration helper
+  ellie whistle                     Generate sample files to get started with
+  ellie babygirl                    Endure and survive
+  ellie [file]                      Launches the WebdriverIO test runner by feeding the default wdio.conf.js file
+  ellie [file1] [file2]             Launches the WebdriverIO test runner by feeding the supplied secondary file
+  ellie [file1] [file2]? [options]  Stdin overrides for certain config properties; See options list below
 
 Complete list of properties:
 * Inquired when running the config helper
@@ -76,23 +77,48 @@ The CLI tool supports a couple of commands, arguments, and options:
 
 - `init`:
 
-  - `$ ellie init`
+  - `$ npx ellie init`
   - launches an inquirer prompt that generates a default configuration file `ellie.conf.ts` based on the answers provided; the file will be on the same directory as where the command is executed
 
 - `whistle`:
 
-  - `$ ellie whistle`
+  - `$ npx ellie whistle`
   - generates sample files to get you started with; the files will be generated inside on a `samples` directory, relative to where the command is executed
 
 - `babygirl`:
-  - `$ ellie babygirl`
+
+  - `$ npx ellie babygirl`
   - to the edge of the universe and back, endure and survive; just because :)
 
 ### Arguments
 
 - `[file]`:
-  - `$ ellie ellie.conf.ts`
+
+  - `$ npx ellie ellie.conf.ts`
   - generates a `wdio.conf` file based on the contents parsed from the config file provided then starts the wdio test runner
+
+- `[file1] [file2]`:
+
+  - `$ npx ellie ellie.conf.ts overrides.conf.js`
+  - generates a `wdio.conf` file based on the contents parsed from the `file1` provided
+  - starts the wdio test runner by feeding in `file2` as the config to use
+  - `file2` is expected to extend from the generated base `wdio.conf` file and export a merged version of the `config` object
+  - this use case is suited if you feel restricted of all the other nifty features of wdio that isn't exposed by this abstraction
+
+  ```js
+  const base = require('./wdio.conf').config;
+  const overrides = {
+    // this hook isn't exposed
+    onRefresh: () => {
+      // do stuff here
+    }
+    // reporters are fixed to using junit and allure
+    // here's a sample override
+    reporters: [...base.reporters, 'dot']
+  };
+
+  exports.config = Object.assign({}, base, overrides);
+  ```
 
 ### Options
 

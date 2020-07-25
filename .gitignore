@@ -1,7 +1,7 @@
 *.log
-*.conf.js
 *.tgz
 
+wdio.conf.js
 demo/test/.reports
 demo/test/.comparable/**/actual
 demo/test/.comparable/**/diff

@@ -6,6 +6,14 @@
 
 _Note: Gaps between patch versions are faulty, broken or test releases._
 
+## 1.3.5
+
+`2020-07-25`
+
+- [fed1a75](https://github.com//iamkenos/ellie/commit/fed1a75) feat: override default config file used for the launcher [[iamkenos](https://github.com/iamkenos)]
+- [0809949](https://github.com//iamkenos/ellie/commit/0809949) test: update demo baseline snapshots [[iamkenos](https://github.com/iamkenos)]
+- [f0ca3b8](https://github.com//iamkenos/ellie/commit/f0ca3b8) refactor: help text updates [[iamkenos](https://github.com/iamkenos)]
+
 ## 1.3.4
 
 `2020-07-19`

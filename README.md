@@ -10,13 +10,13 @@
 
 ## About
 
-This is a thin wrapper around the popular [WebdriverIO](https://webdriver.io/) test automation framework.
+An abstraction of the popular [WebdriverIO](https://webdriver.io/) test automation framework.
 
 Key features:
 
 - write tests with [TypeScript](https://www.typescriptlang.org/docs/handbook/modules.html) and [Cucumber](https://cucumber.io/docs/guides/overview/)
 - cucumber steps that can be used out of the box
-- run tests synchronously and provide a presentable feedback
+- run tests synchronously and present results in [Allure](https://webdriver.io/docs/allure-reporter.html)
 - internal polling and retries when interacting with the browser and its elements
 
 Check out the [steps](./docs/SEEDED_STEPS.md) readily available for you to use and know more by going through the [detailed guide](./docs/DETAILED_GUIDE.md).
@@ -34,11 +34,11 @@ Check out the [steps](./docs/SEEDED_STEPS.md) readily available for you to use a
 
 2. Try it
 
-   `./node_mobules/.bin/ellie whistle`
+   `npx ellie whistle`
 
 3. Run it
 
-   `./node_mobules/.bin/ellie ./samples/ellie.conf.ts`
+   `npx ellie ./samples/ellie.conf.ts`
 
 ## Acknowledgements
 

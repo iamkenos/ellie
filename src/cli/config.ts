@@ -112,13 +112,13 @@ Configuration Helper
 export const CONFIG_HELPER_SUCCESS_MESSAGE = `
 Configuration file was created successfully!
 To run your tests, execute:
-$ ellie ${CONFIG_LOCAL_OUT_FILE}
+$ npx ellie ${CONFIG_LOCAL_OUT_FILE}
 `;
 
 export const SAMPLES_HELPER_SUCCESS_MESSAGE = `
 Sample files created successfully!
 To run your tests, execute:
-$ ellie .${SAMPLES_DIR}/${CONFIG_LOCAL_OUT_FILE}
+$ npx ellie .${SAMPLES_DIR}/${CONFIG_LOCAL_OUT_FILE}
 `;
 
 export const SAMPLES_HELPER_TS_CONFIG_EXISTS_MESSAGE = `

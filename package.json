@@ -3,7 +3,7 @@
   "version": "1.3.4",
   "license": "MIT",
   "author": "iamkenos",
-  "description": "This is a thin wrapper around the popular WebdriverIO test automation framework",
+  "description": "An abstraction of the popular WebdriverIO test automation framework",
   "main": "./build/index.js",
   "bin": {
     "ellie": "bin/ellie.js"

@@ -74,9 +74,8 @@ export default class WebElement {
 
   public moveAndClick(): void {
     logger.info(`Selector: ${this.selector}`);
-    const elem = this.existing$();
-    elem.moveTo();
-    elem.click();
+    this.moveTo();
+    this.existing$().click();
   }
 
   public moveAndDoubleClick(): void {
@@ -93,6 +92,7 @@ export default class WebElement {
       .runStrict()
       .getElement();
 
+    this.moveTo();
     this.existing$().dragAndDrop(dest, options);
   }
 
@@ -528,6 +528,7 @@ export default class WebElement {
 
   public moveTo(options?: WebdriverIO.MoveToOptions): void {
     logger.info(`Selector: ${this.selector} | Options: ${options}`);
+    this.existing$().scrollIntoView({ block: "center" });
     this.existing$().moveTo(options);
   }
 

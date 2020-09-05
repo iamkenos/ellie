@@ -6,8 +6,8 @@ export default (action: string, page: string, key: string): void => {
   const element = new WebElement(selector);
 
   if (action === "select") {
-    element.isSelected(false) && element.click();
+    element.isSelected(false) && element.moveAndClick();
   } else if (action === "deselect") {
-    element.isSelected() && element.click();
+    element.isSelected() && element.moveAndClick();
   }
 };

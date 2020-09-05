@@ -218,7 +218,7 @@ export function getImageFile(context: ImageCompareContext, filename: string, ele
 }
 
 export function getImageDiff(filename: string, compare: IImageCompare): string {
-  let result: number | ImageCompareResult;
+  let result: number | ImageCompareResult | any;
 
   const saved = getImageFile(compare.context, filename, compare.element);
   const comparable = (browser.config as any).comparable.imageCompare;
@@ -258,10 +258,9 @@ export function getImageDiff(filename: string, compare: IImageCompare): string {
     attachImage("Actual:", actFile);
     attachImage("Expected:", expFile);
 
-    // @ts-ignore
     if (result.misMatchPercentage) {
       attachImage("Differences:", difFile);
-      return `Image mismatch by ${result}%`;
+      return `Image mismatch by ${result.misMatchPercentage}%`;
     }
   }
 

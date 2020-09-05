@@ -6,6 +6,14 @@
 
 _Note: Gaps between patch versions are faulty, broken or test releases._
 
+## 1.3.6
+
+`2020-09-05`
+
+- [9d198aa](https://github.com//iamkenos/ellie/commit/9d198aa) test: ft adjustments [[iamkenos](https://github.com/iamkenos)]
+- [ea7eb4e](https://github.com//iamkenos/ellie/commit/ea7eb4e) fix: moveTo error move target ourof bounds if element isnt visible in viewport [[iamkenos](https://github.com/iamkenos)]
+- [a01accf](https://github.com//iamkenos/ellie/commit/a01accf) deps: npm update [[iamkenos](https://github.com/iamkenos)]
+
 ## 1.3.5
 
 `2020-07-25`

@@ -38,15 +38,15 @@ function preRelease(version = VERSIONS[0]) {
   const release = [releaseLogHeader, releaseVersion, releaseDate, releaseChanges, prevChanges];
 
   fs.outputFileSync(RELEASE_LOG_FILE, release.join('\n'));
-  return shell.exec(`git add . && npm version ${version} -f -m "release: %s"`);
+  return `git add . && npm version ${version} -f -m "release: %s"`;
 }
 
 function release() {
-  return shell.exec('npm publish');
+  return 'npm publish';
 }
 
 function postRelease() {
-  return shell.exec(`git push origin ${GIT_BRANCH} --tags`);
+  return `git push origin ${GIT_BRANCH} --tags`;
 }
 
 function printMarker(title) {
@@ -55,12 +55,13 @@ function printMarker(title) {
   console.log('--------------------------------')
 }
 
-function run(header, shellString) {
+function run(header, command) {
   printMarker(`Start: ${header}...`)
 
-  console.log(shellString.stdout.trim())
-  if(shellString.code !== 0) throw new Error(shellString.stderr.trim());
-  
+  const result = shell.exec(command);
+  console.log(result.stdout.trim())
+  if(result.code !== 0) throw new Error(result.stderr.trim());
+
   printMarker(`End: ${header}...`)
 }
 

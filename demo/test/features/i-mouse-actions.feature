@@ -86,7 +86,7 @@ Feature: I. Mouse Actions
 
   Scenario: Move to existing element
     When I move to the "#moveToElementBox" element
-    Then I expect the "#moveToElementBoxDest" element text to be "X: 379 | Y: 2844"
+    Then I expect the "#moveToElementBoxDest" element text to be "X: 380 | Y: 2844"
       But I move to the "h3=Move To" element
       And I move to the "#moveToElementBox" element with an offset of 5,10
     Then I expect the "#moveToElementBoxDest" element text to be "X: 317 | Y: 2831"

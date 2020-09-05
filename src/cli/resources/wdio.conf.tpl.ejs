@@ -5,6 +5,9 @@ const path = require('path');
 const { table, getBorderCharacters } = require('table');
 const { addAttachment } = require('@wdio/allure-reporter').default;
 
+const ALLURE_RAW_DIR = path.join(<%- JSON.stringify(answers.reportOutDir) %>, 'allure');
+const ALLURE_HTML_DIR = path.join(ALLURE_RAW_DIR, 'report');
+
 exports.config = {
   //
   // ====================
@@ -209,7 +212,8 @@ exports.config = {
         disableWebdriverStepsReporting: true,
         disableWebdriverScreenshotsReporting: false,
         useCucumberStepReporter: true,
-        outputDir: path.join(<%- JSON.stringify(answers.reportOutDir) %>, 'allure'),
+        outputDir: ALLURE_RAW_DIR,
+        htmlDir: ALLURE_HTML_DIR
       }
     ]
   ],
@@ -256,6 +260,7 @@ exports.config = {
   directory: <%- JSON.stringify(answers.directory) %>,
   locale: '<%- answers.locale %>',
   pages: [<%- answers.pages.map(i => JSON.stringify(i)) %>],
+  allureHtmlDir: ALLURE_HTML_DIR,
   //
   // =====
   // Hooks
@@ -421,8 +426,7 @@ exports.config = {
    * @param {<Object>} results object containing test results
    */
   onComplete: function(exitCode, config, capabilities, results) {
-    const allureOutputDir = path.join(<%- JSON.stringify(answers.reportOutDir) %>, 'allure');
-    allure(['-q', 'generate', allureOutputDir, '-c', '-o', path.join(allureOutputDir, 'report')]);
+    allure(['-q', 'generate', ALLURE_RAW_DIR, '-c', '-o', ALLURE_HTML_DIR]);
   },
   /**
   * Gets executed when a refresh happens.

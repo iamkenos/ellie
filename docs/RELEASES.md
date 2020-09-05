@@ -6,6 +6,14 @@
 
 _Note: Gaps between patch versions are faulty, broken or test releases._
 
+## 1.3.7
+
+`2020-09-05`
+
+- [c510124](https://github.com//iamkenos/ellie/commit/c510124) feat: show allure report open command on test finish [[iamkenos](https://github.com/iamkenos)]
+- [d53f86e](https://github.com//iamkenos/ellie/commit/d53f86e) chore: latest node lts 12.18.3 [[iamkenos](https://github.com/iamkenos)]
+- [4094828](https://github.com//iamkenos/ellie/commit/4094828) chore: release script update [[iamkenos](https://github.com/iamkenos)]
+
 ## 1.3.6
 
 `2020-09-05`

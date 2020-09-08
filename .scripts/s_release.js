@@ -55,10 +55,10 @@ function printMarker(title) {
   console.log('--------------------------------')
 }
 
-function run(header, command) {
+function run(header, command, options) {
   printMarker(`Start: ${header}...`)
 
-  const result = shell.exec(command);
+  const result = shell.exec(command, options);
   console.log(result.stdout.trim())
   if(result.code !== 0) throw new Error(result.stderr.trim());
 
@@ -66,6 +66,6 @@ function run(header, command) {
 }
 
 
-run('Changelog', preRelease(process.argv[2]));
-run('Publish', release());
+run('Changelog', preRelease(process.argv[2]), { silent: true });
+run('Publish', release(), { silent: true });
 run('Push', postRelease());

@@ -1,5 +1,4 @@
 import { driver } from "../browser";
-import { WebElement, WebElements } from "../elements";
 import { getPageObject } from "../utils";
 import { IPageMeta } from "../interfaces";
 
@@ -39,13 +38,5 @@ export default class BasePage {
 
   public checkUrl(reverse?: boolean): void {
     driver.checkUrlEquals(this.url, reverse);
-  }
-
-  public getElement(locator: string): WebElement {
-    return new WebElement(locator);
-  }
-
-  public getElements(locator: string): WebElements {
-    return new WebElements(locator);
   }
 }

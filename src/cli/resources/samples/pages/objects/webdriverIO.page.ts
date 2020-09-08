@@ -7,14 +7,14 @@ export default class WebdriverIOPage extends BasePage {
   }
 
   public projectTitle(): WebElement {
-    return this.getElement(this.locators["Project title"]);
+    return new WebElement(this.locators["Project title"]);
   }
 
   public getStarted(): WebElement {
-    return this.getElement(this.locators["Button: Get Started"]);
+    return new WebElement(this.locators["Button: Get Started"]);
   }
 
   public navBar(): WebElement {
-    return this.getElement(this.locators.navBar);
+    return new WebElement(this.locators.navBar);
   }
 }

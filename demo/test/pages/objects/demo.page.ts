@@ -7,10 +7,10 @@ export default class DemoPage extends BasePage {
   }
 
   public getNavigationItem(label: string): WebElement {
-    return this.getElement(this.locators.navigationItem.replace("##LABEL##", label));
+    return new WebElement(this.locators.navigationItem.replace("##LABEL##", label));
   }
 
   public getSectionHeader(label: string): WebElement {
-    return this.getElement(this.locators.sectionHeader.replace("##LABEL##", label));
+    return new WebElement(this.locators.sectionHeader.replace("##LABEL##", label));
   }
 }

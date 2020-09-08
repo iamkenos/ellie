@@ -1,5 +1,5 @@
 import { BasePage, WebElement } from "@iamkenos/ellie";
-import meta from "./webdriverIO.meta";
+import meta from "../meta/webdriverIO.meta";
 
 export default class WebdriverIOPage extends BasePage<typeof meta> {
   constructor() {

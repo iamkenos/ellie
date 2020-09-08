@@ -1,9 +1,9 @@
 import { BasePage, WebElement } from "@iamkenos/ellie";
-import webdriverIO from "../meta/webdriverIO.meta";
+import meta from "./webdriverIO.meta";
 
-export default class WebdriverIOPage extends BasePage {
+export default class WebdriverIOPage extends BasePage<typeof meta> {
   constructor() {
-    super(webdriverIO);
+    super(meta);
   }
 
   public projectTitle(): WebElement {

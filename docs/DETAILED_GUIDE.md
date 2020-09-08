@@ -436,11 +436,11 @@ _`webdriverIO.page.ts`_
 
 ```ts
 import { BasePage, WebElement } from "@iamkenos/ellie";
-import webdriverIO from "../meta/webdriverIO.meta";
+import meta from "./webdriverIO.meta";
 
-export default class WebdriverIOPage extends BasePage {
+export default class WebdriverIOPage extends BasePage<typeof meta> {
   constructor() {
-    super(webdriverIO);
+    super(meta);
   }
 
   public projectTitle(): WebElement {
@@ -472,15 +472,15 @@ A page object file should have the following parts:
 - use default import from the corresponding meta file
 
   ```ts
-  import webdriverIO from "../meta/webdriverIO.meta";
+  import meta from "../meta/webdriverIO.meta";
   ```
 
 ### Default class export
 
-- extend the imported `BasePage`
+- extend the imported `BasePage`, indicate the type argument simply as `typeof (your meta file)` which will help with typescript intellisense
 
   ```ts
-  export default class WebdriverIOPage extends BasePage {
+  export default class WebdriverIOPage extends BasePage<typeof meta> {
     ...
   }
   ```
@@ -491,13 +491,14 @@ A page object file should have the following parts:
 
   ```ts
   constructor() {
-    super(webdriverIO);
+    super(meta);
   }
   ```
 
 ### Element getters
 
 - to allow you to interact with said elements from another file
+- the use of `this.locators` is mainly for handling other locales
 
   ```ts
   public projectTitle(): WebElement {

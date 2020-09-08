@@ -1,9 +1,9 @@
 import { BasePage, WebElement } from "../../../../build";
-import demo from "../meta/demo.meta";
+import meta from "../meta/demo.meta";
 
-export default class DemoPage extends BasePage {
+export default class DemoPage extends BasePage<typeof meta> {
   constructor() {
-    super(demo);
+    super(meta);
   }
 
   public getNavigationItem(label: string): WebElement {

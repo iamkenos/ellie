@@ -3,6 +3,8 @@ import { ImageCompareContext } from "../enums";
 import { WdioCheckElementMethodOptions, WdioCheckFullPageMethodOptions, WdioCheckScreenMethodOptions } from "wdio-image-comparison-service";
 import { PreFilterFunction } from "deep-diff";
 
+export type UnionToIntersection<U> = (U extends any ? (k: U) => void : never) extends ((k: infer I) => void) ? I : never
+
 export interface IBrowserCondition {
   name: string;
   evaluate(): IExpectedConditionResult;
@@ -22,12 +24,11 @@ export interface IHttpRequest {
   options: CoreOptions & UrlOptions;
 }
 
+type TMeta = { url: string; title: string; locators: { [key: string]: string }, [key: string]: any }
+
 export interface IPageMeta {
-  default: {
-    url: string;
-    title: string;
-    locators: object;
-  };
+  default: TMeta,
+  [key: string]: Partial<TMeta>
 }
 
 export interface IClickOptions {

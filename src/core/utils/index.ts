@@ -11,7 +11,7 @@ import allure from "@wdio/allure-reporter";
 import logger from "../../logger";
 import { ImageCompareContext } from "../enums";
 import { IConfig } from "../../cli/interfaces";
-import { IHttpRequest, IHttpResponse, IImageCompare, IImageSave, IJSONDiffOptions, IPageMeta } from "../interfaces";
+import { IHttpRequest, IHttpResponse, IImageCompare, IImageSave, IJSONDiffOptions, IPageMeta, UnionToIntersection } from "../interfaces";
 import { inspect, readFileSync } from "../../cli/utils";
 import { DEFAULT } from "../../cli/config";
 
@@ -77,12 +77,13 @@ export function getIndexedSelector(selector: string, index: number): string {
   return `(${selector})[${index + 1}]`;
 }
 
-export function getPageObject<T extends IPageMeta>(meta: T, locale?: string): T {
+export function getPageObject<T extends IPageMeta>(meta: T, locale?: string):
+UnionToIntersection<T[keyof T]> & T[keyof T] {
   const loc = locale || (browser.config as any).locale;
-  const object = ({ default: merge({}, meta[DEFAULT.locale], meta[loc]) }) as T;
+  const object = merge({}, meta[DEFAULT.locale], meta[loc]);
   if (!meta[loc]) logger.warn(`Locale '${loc}' not found in page'`);
 
-  return object;
+  return object as UnionToIntersection<T[keyof T]> & T[keyof T];
 }
 
 export function getPageProperty(page: string, ...propTree: string[]): any {

@@ -48,6 +48,7 @@
     "no-eval": ["off"],
     "no-extra-semi": ["error"],
     "no-multi-spaces": ["error", { "ignoreEOLComments": true }],
+    "no-use-before-define": "off",
     "quotes": ["error", "double"],
     "semi": ["error", "always"],
     "sort-imports": ["error", { "ignoreCase": true, "ignoreDeclarationSort": true }],

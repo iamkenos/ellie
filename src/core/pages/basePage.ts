@@ -1,29 +1,25 @@
 import { driver } from "../browser";
 import { getPageObject } from "../utils";
-import { IPageMeta } from "../interfaces";
+import { IPageMeta, UnionToIntersection } from "../interfaces";
 
-export default class BasePage<T extends IPageMeta> {
-  protected properties: T;
+export default abstract class BasePage<T extends IPageMeta> {
+  protected properties: UnionToIntersection<T[keyof T]> & T[keyof T];
 
   protected url: string;
 
   protected title: string;
 
-  protected locators: T["default"]["locators"]
+  protected locators: UnionToIntersection<T[keyof T]["locators"]>;
 
   public constructor(meta: T, locale?: string) {
     this.properties = getPageObject(meta, locale);
-    this.url = this.properties.default.url;
-    this.title = this.properties.default.title;
-    this.locators = this.properties.default.locators;
+    this.url = this.properties.url;
+    this.title = this.properties.title;
+    this.locators = this.properties.locators as any;
   }
 
   public navigate(): void {
     driver.url(this.url);
-  }
-
-  public getProperties(): T {
-    return this.properties;
   }
 
   public getTitle(): string {

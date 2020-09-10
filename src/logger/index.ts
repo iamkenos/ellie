@@ -25,6 +25,7 @@ class Log {
     prefix.apply(this.logger, {
       template: "%t %l %n",
       timestampFormatter: (date) => chalk.gray(date.toISOString()),
+      // @ts-ignore
       levelFormatter: (level) => chalk[DEFAULT_LOG_COLORS[level]](level.toUpperCase()),
       nameFormatter: (name) => chalk.whiteBright(name)
     });

@@ -19,48 +19,56 @@
     <img class="xtnd-logo" src="favicon.png">
     <br />
 
-    <nav class="border fixed split-nav xtnd-no-select">
-      <div class="nav-brand">
-        <h3><a>Demo Page</a></h3>
-      </div>
-      <div class="collapsible">
-        <input id="collapsible1" type="checkbox" name="collapsible1">
-        <div class="collapsible-body">
-          <ul id="nav-items" class="inline">
-            <li>
-              <a data-target="#container" data-action='{"load": "#content1"}'>
-                I. Mouse Actions
-              </a>
-            </li>
-            <li>
-              <a data-target="#container" data-action='{"load": "#content2"}'>
-                II. Form Fields
-              </a>
-            </li>
-            <li>
-              <a data-target="#container" data-action='{"load": "#content3"}'>
-                III. Alerts
-              </a>
-            </li>
-            <li>
-              <a data-target="#container" data-action='{"load": "#content4"}'>
-                IV. Contexts
-              </a>
-            </li>
-            <li>
-              <a data-target="#container" data-action='{"load": "#content5"}'>
-                V. Delays
-              </a>
-            </li>
-            <li>
-              <a data-target="#container" data-action='{"load": "#content6"}'>
-                VI. Requests
-              </a>
-            </li>
-          </ul>
-        </div>
-      </div>
-    </nav>
+    <navigation-bar>
+
+      <nav class="border fixed split-nav xtnd-no-select">
+        <navigation-title>
+          <div class="nav-brand">
+            <h3><a>Demo Page</a></h3>
+          </div>
+        </navigation-title>
+
+        <navigation-items>
+          <div class="collapsible">
+            <input id="collapsible1" type="checkbox" name="collapsible1">
+            <div class="collapsible-body">
+              <ul id="nav-items" class="inline">
+                <li>
+                  <a data-target="#container" data-action='{"load": "#content1"}'>
+                    I. Mouse Actions
+                  </a>
+                </li>
+                <li>
+                  <a data-target="#container" data-action='{"load": "#content2"}'>
+                    II. Form Fields
+                  </a>
+                </li>
+                <li>
+                  <a data-target="#container" data-action='{"load": "#content3"}'>
+                    III. Alerts
+                  </a>
+                </li>
+                <li>
+                  <a data-target="#container" data-action='{"load": "#content4"}'>
+                    IV. Contexts
+                  </a>
+                </li>
+                <li>
+                  <a data-target="#container" data-action='{"load": "#content5"}'>
+                    V. Delays
+                  </a>
+                </li>
+                <li>
+                  <a data-target="#container" data-action='{"load": "#content6"}'>
+                    VI. Requests
+                  </a>
+                </li>
+              </ul>
+            </div>
+          </div>
+        </navigation-items>
+      </nav>
+    </navigation-bar>
 
     <div id="container">
       <div class="content" id="content1">

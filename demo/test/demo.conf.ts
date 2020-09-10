@@ -19,7 +19,7 @@ const config: IConfig = {
   },
   logLevel: "error",
   specs: ["./features/**/*.feature"],
-  steps: ["./steps/definitions/**/*.ts"],
+  steps: ["./steps/**/**/*.def.ts"],
   pages: ["./pages/**/*.meta.ts"],
   waitforTimeout: 8000
 };

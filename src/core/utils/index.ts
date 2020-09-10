@@ -11,7 +11,16 @@ import allure from "@wdio/allure-reporter";
 import logger from "../../logger";
 import { ImageCompareContext } from "../enums";
 import { IConfig } from "../../cli/interfaces";
-import { IHttpRequest, IHttpResponse, IImageCompare, IImageSave, IJSONDiffOptions, IPageMeta, UnionToIntersection } from "../interfaces";
+import {
+  IComponentMeta,
+  IHttpRequest,
+  IHttpResponse,
+  IImageCompare,
+  IImageSave,
+  IJSONDiffOptions,
+  IPageMeta,
+  UnionToIntersection
+} from "../interfaces";
 import { inspect, readFileSync } from "../../cli/utils";
 import { DEFAULT } from "../../cli/config";
 
@@ -77,7 +86,13 @@ export function getIndexedSelector(selector: string, index: number): string {
   return `(${selector})[${index + 1}]`;
 }
 
-export function getPageObject<T extends IPageMeta>(meta: T, locale?: string):
+export function mergeMeta
+<T extends IPageMeta | IComponentMeta, U, V, W, X, Y, Z>(m1: T, m2: U, m3?: V, m4?: W, m5?: X, m6?: Y, m7?: Z):
+T & U & V & W & X {
+  return merge({}, m1, m2, m3, m4, m5, m6, m7);
+}
+
+export function getPageObject<T extends IPageMeta | IComponentMeta>(meta: T, locale?: string):
 UnionToIntersection<T[keyof T]> & T[keyof T] {
   const loc = locale || (browser.config as any).locale;
   const object = merge({}, meta[DEFAULT.locale], meta[loc]);

@@ -1,13 +1,13 @@
-import { BasePage, WebElement } from "../../../../build";
-import meta from "../meta/demo.meta";
+import { BasePage, WebElement } from "../../../build";
+import NavigationBar from "../components/navigation-bar.component";
+import meta from "./demo.meta";
 
 export default class DemoPage extends BasePage<typeof meta> {
+  public navigationBar: NavigationBar
+
   constructor() {
     super(meta);
-  }
-
-  public getNavigationItem(label: string): WebElement {
-    return new WebElement(this.locators.navigationItem.replace("##LABEL##", label));
+    this.navigationBar = new NavigationBar();
   }
 
   public getSectionHeader(label: string): WebElement {

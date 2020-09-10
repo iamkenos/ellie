@@ -1,13 +1,13 @@
-import DemoPage from "../../pages/objects/demo.page";
+import DemoPage from "../pages/demo.page";
 
 const demoPage = new DemoPage();
 
 export function clickNavigationItem(label: string): void {
-  demoPage.getNavigationItem(label).jsClick();
+  demoPage.navigationBar.getNavigationItem(label).jsClick();
 }
 
 export function checkNavigationItemSelected(label: string, preferred: boolean): void {
-  demoPage.getNavigationItem(label).checkSelected(!preferred);
+  demoPage.navigationBar.getNavigationItem(label).checkSelected(!preferred);
 }
 
 export function checkSectionHeaderExists(label: string, preferred: boolean): void {

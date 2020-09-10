@@ -1,7 +1,7 @@
 {
   "cucumberautocomplete.steps": [
     "./src/core/steps/definitions/*.ts",
-    "./demo/test/steps/definitions/**/*.ts",
+    "./demo/test/steps/**/*.def.ts",
     "./src/cli/resources/samples/steps/definitions/*.ts"
   ],
   "cucumberautocomplete.formatConfOverride": { "And": 3, "But": 3 },

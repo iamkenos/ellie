@@ -31,6 +31,11 @@ export interface IPageMeta {
   [key: string]: Partial<TMeta>
 }
 
+export interface IComponentMeta {
+  default: Partial<TMeta>,
+  [key: string]: Partial<TMeta>,
+}
+
 export interface IClickOptions {
   button?: 0 | "left" | 1 | "middle" | 2 | "right";
   x?: number;

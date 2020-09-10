@@ -6,6 +6,17 @@
 
 _Note: Gaps between patch versions are faulty, broken or test releases._
 
+## 1.3.8
+
+`2020-09-10`
+
+- [4910a63](https://github.com//iamkenos/ellie/commit/4910a63) feat: support for web components [[iamkenos](https://github.com/iamkenos)]
+- [30f4726](https://github.com//iamkenos/ellie/commit/30f4726) refactor: major dependency updates and necessary retrofits [[iamkenos](https://github.com/iamkenos)]
+- [5d6048b](https://github.com//iamkenos/ellie/commit/5d6048b) fix: typo fixes [[iamkenos](https://github.com/iamkenos)]
+- [8c35329](https://github.com//iamkenos/ellie/commit/8c35329) feat: required type argument on base page to assist with intellisense [[iamkenos](https://github.com/iamkenos)]
+- [c8d45c8](https://github.com//iamkenos/ellie/commit/c8d45c8) refactor: remove redundant getElement method on base page [[iamkenos](https://github.com/iamkenos)]
+- [eef6f47](https://github.com//iamkenos/ellie/commit/eef6f47) chore: run command options on release script [[iamkenos](https://github.com/iamkenos)]
+
 ## 1.3.7
 
 `2020-09-05`

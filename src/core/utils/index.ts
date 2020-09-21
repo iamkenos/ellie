@@ -1,6 +1,6 @@
 import * as fs from "fs-extra";
 import * as path from "path";
-import * as jsonpath from "jsonpath";
+import jsonpath from "jsonpath";
 import { merge } from "lodash";
 import { diff } from "deep-diff";
 import { sync } from "syncrequest";

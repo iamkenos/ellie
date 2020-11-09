@@ -6,6 +6,7 @@ import CountEquals from "./countEquals";
 import CountGreaterThan from "./countGreaterThan";
 import CountLessThan from "./countLessThan";
 import CustomTruthy from "./customTruthy";
+import GoogleAnalyticsEntriesMatch from "./gaEntriesMatch";
 import HttpResponseMatch from "./httpResponseMatch";
 import ImageMatch from "./imageMatch";
 import ModalExists from "./modalExists";
@@ -27,6 +28,7 @@ export {
   CountGreaterThan,
   CountLessThan,
   CustomTruthy,
+  GoogleAnalyticsEntriesMatch,
   HttpResponseMatch,
   ImageMatch,
   ModalExists,

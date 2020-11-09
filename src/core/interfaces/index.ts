@@ -68,3 +68,30 @@ export interface IJSONDiffOptions {
   };
   prefilter?: PreFilterFunction;
 }
+
+export interface IBrowserPerformanceEntry {
+  cancelable?: boolean;
+  connectEnd?: number;
+  connectStart?: number;
+  decodedBodySize?: number;
+  domainLookupEnd?: number;
+  domainLookupStart?: number;
+  duration?: number;
+  encodedBodySize?: number;
+  entryType?: string;
+  fetchStart?: number;
+  initiatorType: "css" | "xmlhttprequest" | "img" | "navigation" | "link" | "script";
+  name: string;
+  nextHopProtocol?: string;
+  redirectEnd?: number;
+  redirectStart?: number;
+  requestStart?: number;
+  responseEnd?: number;
+  responseStart?: number;
+  secureConnectionStart?: number;
+  serverTiming?: number[];
+  startTime?: number;
+  transferSize?: number;
+  workerStart?: number;
+  workerTiming?: number[];
+}

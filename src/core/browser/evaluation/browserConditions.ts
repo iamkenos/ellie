@@ -12,6 +12,7 @@ import {
   CountGreaterThan,
   CountLessThan,
   CustomTruthy,
+  GoogleAnalyticsEntriesMatch,
   HttpResponseMatch,
   ImageMatch,
   ModalExists,
@@ -80,6 +81,12 @@ export default class BrowserConditions {
 
   public countLessThan(expected: number, preferred: boolean): BrowserConditions {
     this.conditions.push(new CountLessThan(expected, preferred));
+    return this;
+  }
+
+  public gaEntriesMatch(
+    filename: string, event: string, preferred: boolean, options: IJSONDiffOptions): BrowserConditions {
+    this.conditions.push(new GoogleAnalyticsEntriesMatch(filename, event, preferred, options));
     return this;
   }
 

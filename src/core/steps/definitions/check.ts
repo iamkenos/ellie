@@ -31,6 +31,7 @@ import windowCookieEquals from "../glue/check/windowCookieEquals";
 import windowCookieExists from "../glue/check/windowCookieExists";
 import windowCountEquals from "../glue/check/windowCountEquals";
 import windowCountGreaterLess from "../glue/check/windowCountGreaterLess";
+import windowGAEntriesMatch from "../glue/check/windowGAEntriesMatch";
 import windowHttpResponseMatch from "../glue/check/windowHttpResponseMatch";
 import windowImageMatch from "../glue/check/windowImageMatch";
 import windowModalExists from "../glue/check/windowModalExists";
@@ -216,6 +217,11 @@ Then(
 Then(
   /^I expect the (?:window|tab) count to( not)? be (greater|less) than "([^"]*)?"$/,
   windowCountGreaterLess
+);
+
+Then(
+  /^I expect the captured google analytics(?: event "([^"]*)?" )? to( not)? match the reference "([^"]*)?"$/,
+  windowGAEntriesMatch
 );
 
 Then(

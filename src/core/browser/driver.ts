@@ -248,6 +248,14 @@ export default abstract class Driver {
       .runStrict();
   }
 
+  public static checkGAEntriesMatchRef(
+    filename: string, event: string, preferred = true, options: IJSONDiffOptions = {}): void {
+    logger.info(`File: ${filename} | Event: ${event} | Reverse: ${!preferred} | Options: ${options}`);
+    new BrowserConditions()
+      .gaEntriesMatch(filename, event, preferred, options)
+      .runStrict();
+  }
+
   public static checkHttpResponseMatchRef(
     request: IHttpRequest, filename: string, preferred = true, options: IJSONDiffOptions = {}): void {
     logger.info(`Request: ${request.options} | File: ${filename} | Reverse: ${!preferred} | Options: ${options}`);

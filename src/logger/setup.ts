@@ -12,6 +12,7 @@ export default class Stack {
     try {
       Error.stackTraceLimit = STACK_TRACE_DEPTH * 2;
       Error.prepareStackTrace = (err, strackTraces): any => {
+        // eslint-disable-next-line
         if (err) {} // Workaround for ts6133 & eslint handle-callback-err
         return strackTraces;
       };

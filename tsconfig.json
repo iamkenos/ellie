@@ -8,6 +8,7 @@
     "module": "commonjs",
     "moduleResolution": "node",
     "removeComments": false,
+    "skipLibCheck": true,
     "sourceMap": true,
     "target": "ES5",
     "types": ["node", "@types/jest", "@wdio/sync", "wdio-intercept-service", "wdio-image-comparison-service"]

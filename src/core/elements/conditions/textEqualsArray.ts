@@ -20,7 +20,8 @@ export default class TextEqualsArray implements IElementCondition {
 
     try {
       actual = $$(selector).map(e => e.getText());
-      result = this.preferred ? JSON.stringify(actual) === JSON.stringify(this.expected)
+      result = this.preferred
+        ? JSON.stringify(actual) === JSON.stringify(this.expected)
         : JSON.stringify(actual) !== JSON.stringify(this.expected);
     } catch (e) {
       actual = e.message;

@@ -69,7 +69,7 @@ export default class WebElement {
   public focus(): void {
     logger.info(`Selector: ${this.selector}`);
     const elem = this.existing$();
-    browser.execute((elem) => elem.focus(), elem);
+    browser.execute((elem: WebElement) => elem.focus(), elem);
   }
 
   public moveAndClick(): void {
@@ -451,7 +451,8 @@ export default class WebElement {
       .runStrict();
   }
 
-  public isImageMatchRef(filename: string, preferred = true, options?: WdioCheckElementMethodOptions): boolean {
+  public isImageMatchRef(
+    filename: string, preferred = true, options: WdioCheckElementMethodOptions = undefined): boolean {
     logger.info(`Selector: ${this.selector} | File: ${filename} | Options: ${inspect(options)} | Reverse: ${!preferred}`);
     return new ElementConditions(this.existing$().selector)
       .imageMatch(filename, preferred, options)
@@ -459,7 +460,8 @@ export default class WebElement {
       .isSuccess();
   }
 
-  public checkImageMatchRef(filename: string, preferred = true, options?: WdioCheckElementMethodOptions): void {
+  public checkImageMatchRef(
+    filename: string, preferred = true, options: WdioCheckElementMethodOptions = undefined): void {
     logger.info(`Selector: ${this.selector} | File: ${filename} | Options: ${inspect(options)} | Reverse: ${!preferred}`);
     new ElementConditions(this.existing$().selector)
       .imageMatch(filename, preferred, options)

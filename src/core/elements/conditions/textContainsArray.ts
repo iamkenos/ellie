@@ -20,7 +20,8 @@ export default class TextContainsArray implements IElementCondition {
 
     try {
       actual = $$(selector).map(e => e.getText());
-      result = this.preferred ? this.expected.every(item => actual.includes(item))
+      result = this.preferred
+        ? this.expected.every(item => actual.includes(item))
         : !this.expected.every(item => actual.includes(item));
     } catch (e) {
       actual = e.message;

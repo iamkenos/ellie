@@ -171,7 +171,7 @@ export default abstract class Driver {
     browser.url(url);
   }
 
-  public static checkAjaxRequestsMatchRef(filename: string, preferred = true, options?: IJSONDiffOptions): void {
+  public static checkAjaxRequestsMatchRef(filename: string, preferred = true, options: IJSONDiffOptions = {}): void {
     logger.info(`File: ${filename} | Reverse: ${!preferred} | Options: ${options}`);
     new BrowserConditions()
       .ajaxRequestsMatch(filename, preferred, options)
@@ -249,7 +249,7 @@ export default abstract class Driver {
   }
 
   public static checkHttpResponseMatchRef(
-    request: IHttpRequest, filename: string, preferred = true, options?: IJSONDiffOptions): void {
+    request: IHttpRequest, filename: string, preferred = true, options: IJSONDiffOptions = {}): void {
     logger.info(`Request: ${request.options} | File: ${filename} | Reverse: ${!preferred} | Options: ${options}`);
     new BrowserConditions()
       .httpResponseMatch(request, filename, preferred, options)
@@ -258,7 +258,7 @@ export default abstract class Driver {
 
   public static checkImageMatchRef(
     context: string, filename: string, preferred = true,
-    options?: WdioCheckFullPageMethodOptions | WdioCheckScreenMethodOptions): void {
+    options: WdioCheckFullPageMethodOptions | WdioCheckScreenMethodOptions = undefined): void {
     logger.info(`Context: ${context} | File: ${filename} | Reverse: ${!preferred} | Options: ${options}`);
     new BrowserConditions()
       .imageMatch(context, filename, preferred, options)

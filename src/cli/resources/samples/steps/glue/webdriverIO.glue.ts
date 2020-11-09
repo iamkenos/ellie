@@ -19,8 +19,12 @@ export function checkProjectTitleText(preferred: boolean, value: string): void {
   // you can create anonymous functions that encloses a single function which
   // returns a truthy value. this is useful when you want to create custom assertions
   // and still make use of the framework's internal retry mechanism
-  const isProjectTitleTextEquals = (): boolean => wdioPage.projectTitle().isTextEquals(value, !preferred);
-  driver.checkCustomTruthy(isProjectTitleTextEquals);
+  const isProjectTitleTextEquals = (): boolean => {
+    const actual = wdioPage.projectTitle().getText();
+    const expected = value;
+    return actual === expected;
+  };
+  driver.checkCustomTruthy(isProjectTitleTextEquals, !preferred);
 
   // the check above is for illustration purposes and can be simplified by
   // using the statement below

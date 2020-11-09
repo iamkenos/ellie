@@ -7,24 +7,25 @@ export default class CustomTruthy implements IBrowserCondition {
 
   private readonly truthy: Function;
 
-  private readonly expected: boolean;
-
   private readonly preferred: boolean;
 
   public constructor(truthy: Function, preferred: boolean) {
     this.name = normalizeFunctionName(truthy.name) || logger.getCaller(true);
     this.truthy = truthy;
-    this.expected = preferred;
     this.preferred = preferred;
   }
 
   public evaluate(): IExpectedConditionResult {
-    let actual: boolean;
+    let returned: { actual: string, expected: string, result: boolean };
     let result: boolean;
+    let actual: string;
+    let expected: string;
 
     try {
-      actual = this.truthy();
-      result = this.preferred ? actual : !actual;
+      returned = this.truthy();
+      actual = returned.actual;
+      expected = returned.expected;
+      result = this.preferred ? returned.result : !returned.result;
     } catch (e) {
       actual = e.message;
       result = false;
@@ -36,7 +37,7 @@ export default class CustomTruthy implements IBrowserCondition {
   `
   Condition: ${this.preferred ? "" : "(Reversed) "}${this.name}
   Result: ${result ? "Success" : "Failed"}
-  Expected: ${this.expected}
+  Expected: ${expected}
   Actual: ${actual}
   `,
       isSuccess: result

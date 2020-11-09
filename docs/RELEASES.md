@@ -6,6 +6,16 @@
 
 _Note: Gaps between patch versions are faulty, broken or test releases._
 
+## 1.3.9
+
+`2020-11-09`
+
+- [8745fae](https://github.com//iamkenos/ellie/commit/8745fae) chore: lint fixes and test file updates [[iamkenos](https://github.com/iamkenos)]
+- [3da230a](https://github.com//iamkenos/ellie/commit/3da230a) deps: npm update [[iamkenos](https://github.com/iamkenos)]
+- [4e777af](https://github.com//iamkenos/ellie/commit/4e777af) feat: support actual and expected return properties on custom thruthy conditions [[iamkenos](https://github.com/iamkenos)]
+- [7e2dff8](https://github.com//iamkenos/ellie/commit/7e2dff8) test: add jest types on tsconfig [[iamkenos](https://github.com/iamkenos)]
+- [91d7b53](https://github.com//iamkenos/ellie/commit/91d7b53) fix: jsonpath import [[iamkenos](https://github.com/iamkenos)]
+
 ## 1.3.8
 
 `2020-09-10`

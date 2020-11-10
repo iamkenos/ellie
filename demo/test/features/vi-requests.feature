@@ -43,7 +43,8 @@ Feature: VI. Requests
     Then I expect the ajax requests to match the reference "06-requests/03-post-reqres-login"
 
   Scenario: Manipulate site cookies
-    When I set the "cookie-1" site cookie value to "value-1"
+    When I delete the site cookies
+      And I set the "cookie-1" site cookie value to "value-1"
       And I set the "cookie-2" site cookie value to "value-2"
       And I set the "cookie-3" site cookie value to "value-3"
       And I click the "#showCookiesBtn" button
@@ -70,3 +71,8 @@ Feature: VI. Requests
         "": ""
       }
       """
+
+  Scenario: Check google analytics tracking
+    When I start to intercept ajax requests
+      And I refresh the page
+    Then I expect the captured google analytics to match the reference "06-requests/05-ga-tracking"

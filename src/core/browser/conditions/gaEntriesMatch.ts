@@ -9,6 +9,8 @@ export default class GoogleAnalyticsEntriesMatch implements IBrowserCondition {
 
   private readonly url: string;
 
+  private readonly initiatorTypes: string[];
+
   private readonly filename: string;
 
   private readonly event: string;
@@ -20,6 +22,7 @@ export default class GoogleAnalyticsEntriesMatch implements IBrowserCondition {
   public constructor(filename: string, event: string, preferred: boolean, options: IJSONDiffOptions) {
     this.name = logger.getCaller(true);
     this.url = "www.google-analytics.com";
+    this.initiatorTypes = ["xmlhttprequest", "img", "beacon"];
     this.filename = filename;
     this.preferred = preferred;
     this.options = options;
@@ -29,10 +32,7 @@ export default class GoogleAnalyticsEntriesMatch implements IBrowserCondition {
 
   private filterGA(entries: IBrowserPerformanceEntry[]) {
     const filtered = entries
-      .filter(e =>
-        e.name.includes(this.url) &&
-        (e.initiatorType === "xmlhttprequest" || e.initiatorType === "img")
-      )
+      .filter(e => e.name.includes(this.url) && this.initiatorTypes.includes(e.initiatorType))
       .map(e => qs.parseUrl(e.name))
       .map((e: qs.ParsedUrl) => ({
         url: e.url,

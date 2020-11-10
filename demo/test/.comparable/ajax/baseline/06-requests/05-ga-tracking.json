@@ -1,0 +1,22 @@
+[
+  {
+    "url": "https://www.google-analytics.com/g/collect",
+    "query": {
+      "_p": "931153969",
+      "_s": "1",
+      "cid": "523365133.1604993693",
+      "dl": "http://localhost/",
+      "dr": "",
+      "dt": "Demo Page",
+      "en": "page_view",
+      "gtm": "2oeas1",
+      "sct": "1",
+      "seg": "1",
+      "sid": "1604993693",
+      "sr": "1680x1050",
+      "tid": "G-DGCWCSR9V1",
+      "ul": "en-us",
+      "v": "2"
+    }
+  }
+]

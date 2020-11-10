@@ -673,9 +673,17 @@
     Then I expect the window count to not be less than "2"
     ```
 
+- `Then I expect the captured google analytics(?: event "([^"]*)?" )? to( not)? match the reference "([^"]*)?"`
+
+  - assert that the captured google analytics tracking match a reference file, relative to the config file or not
+
+    ```gherkin
+    Then I expect the captured google analytics to match the reference "06-requests/05-ga-tracking"
+    ```
+
 - `Then I expect the response to the following request to( not)? match the reference "([^"]*)?":`
 
-  - assert that the response of a given http requsts match a reference file, relative to the config file or not
+  - assert that the response of a given http requests match a reference file, relative to the config file or not
 
     ```gherkin
     Then I expect the response to the following request to match the reference "06-requests/02-get-reqres-users":

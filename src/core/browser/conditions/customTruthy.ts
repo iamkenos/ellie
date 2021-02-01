@@ -1,5 +1,5 @@
 import logger from "../../../logger";
-import { IBrowserCondition, IExpectedConditionResult } from "../../interfaces";
+import { IBrowserCondition, ICustomTruthy, IExpectedConditionResult } from "../../interfaces";
 import { normalizeFunctionName } from "../../../logger/utils";
 
 export default class CustomTruthy implements IBrowserCondition {
@@ -16,7 +16,7 @@ export default class CustomTruthy implements IBrowserCondition {
   }
 
   public evaluate(): IExpectedConditionResult {
-    let returned: { actual: string, expected: string, result: boolean };
+    let returned: ICustomTruthy;
     let result: boolean;
     let actual: string;
     let expected: string;

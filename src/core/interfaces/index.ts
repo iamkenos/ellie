@@ -95,3 +95,9 @@ export interface IBrowserPerformanceEntry {
   workerStart?: number;
   workerTiming?: number[];
 }
+
+export interface ICustomTruthy {
+  actual: any,
+  expected: any,
+  result: boolean
+}

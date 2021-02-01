@@ -41,8 +41,10 @@ export const DEFAULT: IConfig = {
   specFileRetries: 0,
   specs: ["./features/**/*.feature"],
   steps: ["./steps/definitions/**/*.ts"],
-  stepTimeout: 30000,
   tags: "",
+  stepTimeout: 30000,
+  implicitTimeout: 0,
+  pageLoadimeout: 300000,
   waitforTimeout: 5000,
   hooks: {
     before: "",
@@ -325,6 +327,14 @@ const CONFIG_PROPERTIES: IConfigProperty[] = [
       type: "string",
       description: "Set the cucumber tag to look for in the specs"
     }
+  },
+  {
+    name: "implicitTimeout",
+    helptext: "Session implicit wait timeout; specifies the time to wait for the implicit element location strategy when locating elements"
+  },
+  {
+    name: "pageLoadimeout",
+    helptext: "Session page load timeout that specifies a time to wait for the page loading to complete"
   },
   {
     name: "waitforTimeout",

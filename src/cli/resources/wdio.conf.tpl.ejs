@@ -4,7 +4,9 @@ const fse = require('fs-extra');
 const path = require('path');
 const { table, getBorderCharacters } = require('table');
 const { addAttachment } = require('@wdio/allure-reporter').default;
-
+<% if(answers.browserstackLocal) { %>
+const browserstack = require('browserstack-local');
+<% } %>
 const ALLURE_RAW_DIR = path.join(<%- JSON.stringify(answers.reportOutDir) %>, 'allure');
 const ALLURE_HTML_DIR = path.join(ALLURE_RAW_DIR, 'report');
 
@@ -28,14 +30,6 @@ exports.config = {
   //
   user: '<%= answers.user %>',
   key: '<%= answers.key %>',
-  <% if(answers.browserstackLocal) { %>
-  browserstackLocal: true,
-  browserstackLocalForcedStop: true,
-  browserstackOpts: {
-    key: '<%= answers.key %>',
-    onlyAutomate: true,
-  },
-  <% } %>
   //
   // If you run your tests on SauceLabs you can specify the region you want to run your tests
   // in via the `region` property. Available short handles for regions are `us` (default) and `eu`.
@@ -95,11 +89,45 @@ exports.config = {
   // Sauce Labs platform configurator - a great tool to configure your capabilities:
   // https://docs.saucelabs.com/reference/platforms-configurator
   //
+  // or use BrowserStack's capabilities tool:
+  // https://www.browserstack.com/automate/capabilities?tag=selenium-4
+  //
   capabilities: [
     // maxInstances can get overwritten per capability. So if you have an in-house Selenium
     // grid with only 5 firefox instances available you can make sure that not more than
     // 5 instances get started at a time.
     <%- answers.debugEnabled ? JSON.stringify({ browserName: 'chrome' }) : answers.capabilities.map(e => JSON.stringify(e)) %>
+    // Sample capability for chrome
+    // {
+    //   // workaround for cert error when hitting the google analytics endpoint, preventing us from capturing GA calls
+    //   acceptInsecureCerts: true,
+    //   unhandledPromptBehavior: 'accept',
+    //   browserName: 'chrome',
+    //   'goog:chromeOptions': {
+    //     args: [
+    //       '--disable-popup-blocking',
+    //       '--disable-web-security',
+    //       '--ignore-certificate-errors',
+    //       '--incognito',
+    //       // see: https://stackoverflow.com/questions/44796194
+    //       '--window-size=1502,944',
+    //       '--headless'],
+    //     prefs: {
+    //       directory_upgrade: true,
+    //       prompt_for_download: false
+    //     }
+    //     // use in combination with `goog:loggingPrefs` and browser.getLogs() to enable browser logging for some detailed debugging action :P
+    //     // w3c: false,
+    //     // perfLoggingPrefs: {
+    //     //   traceCategories: 'browser,devtools.timeline,devtools',
+    //     //   enableNetwork: true
+    //     // }
+    //   }
+    //   // 'goog:loggingPrefs': {
+    //   //   browser: 'ALL',
+    //   //   performance: 'ALL'
+    //   // }
+    // }
     // Sample capability for firefox
     // {
     //   maxInstances: 10,
@@ -108,18 +136,19 @@ exports.config = {
     // }
     // Sample capability for BrowserStack
     // {
-    //   maxInstances: 5,
-    //   browserName: "chrome",
+    //   browserName: "Chrome",
+    //   browserVersion: "87",
+    //   "goog:chromeOptions": { args: ["--disable-web-security", "--incognito"] },
     //   "bstack:options": {
-    //     projectName: "project-name",
-    //     buildName: "build-name",
-    //     os: "Windows",
-    //     osVersion: "10",
+    //     projectName: "ellie",
+    //     buildName: "demo: browserstack tests",
+    //     os: "OS X",
+    //     osVersion: "Catalina",
+    //     local: "true",
+    //     seleniumVersion: "3.141.59",
+    //     seleniumLogs: "false",
     //     resolution: "1920x1080",
     //     timezone: "Singapore"
-    //   },
-    //   "goog:chromeOptions": {
-    //     args: ["--disable-web-security", "--incognito"]
     //   }
     // }
     // If outputDir is provided WebdriverIO can capture driver session logs
@@ -170,9 +199,18 @@ exports.config = {
   // Services take over a specific job you don't want to take care of. They enhance
   // your test setup with almost no effort. Unlike plugins, they don't add new
   // commands. Instead, they hook themselves up into the test process.
+  //
+  // If you're using the selenium-standalone service, you will need to provide certain arguments
+  // for the service to properly work with the browser you're trying to run your tests against.
+  // Here's an example of the options you can use when running on chrome:
+  //
+  // seleniumInstallArgs: { version: '3.141.59', drivers: { chrome: { version: '87.0.4280.88' } } }
+  //
+  // For a complete list of chrome driver versions:
+  // https://chromedriver.storage.googleapis.com/
   services: [
     'intercept',
-    <%- answers.browserstackEnabled ? 'browserstack' :
+    <%- answers.browserstackEnabled ? JSON.stringify('browserstack') :
     JSON.stringify(['selenium-standalone', { installArgs: answers.seleniumInstallArgs, args: answers.seleniumInstallArgs }]) %>,
     [
       'image-comparison',
@@ -282,6 +320,17 @@ exports.config = {
         fse.mkdirsSync(config.comparable[key].baselineDir)
       })
       fse.removeSync(<%- JSON.stringify(answers.reportOutDir) %>);
+
+      <% if(answers.browserstackLocal) { %>
+      return new Promise(function(resolve, reject){
+        exports.bslocal = new browserstack.Local();
+        exports.bslocal.start({'key': exports.config.key }, (err) => {
+          if(err) return reject(err);
+
+          resolve();
+        });
+      });
+      <% } %>
     } catch(e) {
       throw new Error(e);
     }
@@ -302,6 +351,14 @@ exports.config = {
    * @param {Array.<String>} specs List of spec file paths that are to be run
    */
   before: function (capabilities, specs) {
+    // see: https://webdriver.io/docs/timeouts.html#selenium-timeouts
+    browser.setTimeout({ pageLoad: <%= answers.pageLoadimeout %>,  implicit: <%= answers.implicitTimeout %> });
+    // allow download over headless chrome;
+    // see answer from `maveco69` on https://github.com/TheBrainFamily/chimpy/issues/108
+    // const downloads = path.join(browser.config.directory, browser.config.custom.downloadsDir);
+    // browser.sendCommand("Page.setDownloadBehavior", { behavior: "allow", downloadPath: downloads });
+    // fse.removeSync(downloads);
+    // fse.mkdirsSync(downloads);
     <% if (answers.hooks.before) { %>
     const hook = require('<%= answers.hooks.before %>').default;
     hook(capabilities, specs);
@@ -427,6 +484,9 @@ exports.config = {
    */
   onComplete: function(exitCode, config, capabilities, results) {
     allure(['-q', 'generate', ALLURE_RAW_DIR, '-c', '-o', ALLURE_HTML_DIR]);
+    <% if(answers.browserstackLocal) { %>
+    exports.bslocal.stop(() => {});
+    <% } %>
   },
   /**
   * Gets executed when a refresh happens.

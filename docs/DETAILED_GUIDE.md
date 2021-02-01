@@ -55,6 +55,9 @@ Complete list of properties:
   * steps                Array of globs pointing to your cucumber steps, relative to the config file
   stepTimeout            Default timeout for WebdriverIO to wait for a single test step to finish in milliseconds
   tags                   Only execute the features or scenarios with tags matching the expression
+  implicitTimeout        Session implicit wait timeout; specifies the time to wait for the implicit element location
+                         strategy when locating elements
+  pageLoadimeout         Session page load timeout that specifies a time to wait for the page loading to complete
   waitforTimeout         Default timeout for all browser 'waitFor' commands in milliseconds
 
 Options:
@@ -741,6 +744,13 @@ A step definition file should have the following parts:
 +--------------------------+------------------------------------------+-----------------------------------------------------------+
 | tags                     | ""                                       | Only execute the features or scenarios with tags          |
 |                          |                                          | matching the expression                                   |
++--------------------------+------------------------------------------+-----------------------------------------------------------+
+| implicitTimeout          | 0                                        | Session implicit wait timeout; specifies the time to wait |
+|                          |                                          | for the implicit element location strategy when           |
+|                          |                                          | locating elements                                         |
++--------------------------+------------------------------------------+-----------------------------------------------------------+
+| pageLoadimeout           | 300000                                   | Session page load timeout that specifies a time to wait   |
+|                          |                                          | for the page loading to complete                          |
 +--------------------------+------------------------------------------+-----------------------------------------------------------+
 | waitforTimeout           | 5000                                     | Default timeout for all browser                           |
 |                          |                                          | 'waitFor' commands in milliseconds                        |

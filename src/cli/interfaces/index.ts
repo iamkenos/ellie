@@ -67,8 +67,10 @@ export interface IConfig {
   specFileRetries?: number;
   specs?: string[];
   steps?: string[];
-  stepTimeout?: number;
   tags?: string;
+  stepTimeout?: number;
+  implicitTimeout?: number;
+  pageLoadimeout?: number;
   waitforTimeout?: number;
   hooks?: IHooks;
   custom?: object;

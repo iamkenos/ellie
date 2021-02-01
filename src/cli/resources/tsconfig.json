@@ -1,6 +1,6 @@
 {
   "compilerOptions": {
     "baseUrl": "./",
-    "types": ["node", "@wdio/sync"]
+    "types": ["node", "@wdio/sync", "@wdio/cucumber-framework", "wdio-intercept-service", "wdio-image-comparison-service"]
   }
 }

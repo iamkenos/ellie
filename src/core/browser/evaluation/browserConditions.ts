@@ -12,6 +12,7 @@ import {
   CountGreaterThan,
   CountLessThan,
   CustomTruthy,
+  DocumentReady,
   GoogleAnalyticsEntriesMatch,
   HttpResponseMatch,
   ImageMatch,
@@ -76,6 +77,11 @@ export default class BrowserConditions {
 
   public customTruthy(truthy: Function, preferred: boolean): BrowserConditions {
     this.conditions.push(new CustomTruthy(truthy, preferred));
+    return this;
+  }
+
+  public documentReady(preferred: boolean): BrowserConditions {
+    this.conditions.push(new DocumentReady(preferred));
     return this;
   }
 

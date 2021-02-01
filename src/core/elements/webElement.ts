@@ -96,6 +96,12 @@ export default class WebElement {
     this.existing$().dragAndDrop(dest, options);
   }
 
+  public executeFunction(funcName: string) {
+    logger.info(`Selector: ${this.selector} | Function: ${funcName}`);
+    const elem = this.existing$();
+    browser.execute(`arguments[0]['${funcName}']()`, elem);
+  }
+
   public getAttribute(key: string): string {
     logger.info(`Selector: ${this.selector} | Attribute: ${key}`);
     return this.existing$().getAttribute(key);

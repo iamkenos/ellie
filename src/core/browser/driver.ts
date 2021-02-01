@@ -44,6 +44,21 @@ export default abstract class Driver {
     }
   }
 
+  public static clickCoordinates(x = 0, y = 0, origin: "pointer" | "viewport" | WebdriverIO.Element = "pointer") {
+    // see https://github.com/jlipps/simple-wd-spec#perform-actions
+    browser.performActions([{
+      type: "pointer",
+      id: "mousepointer",
+      actions: [
+        { type: "pointerMove", duration: 0, origin: origin, x: x, y: y },
+        { type: "pointerDown", button: 0 },
+        { type: "pause", duration: 10 },
+        { type: "pointerUp", button: 0 }
+      ]
+    }]);
+    browser.releaseActions();
+  }
+
   public static focusLastWindow(): void {
     logger.info("NoArgs");
     const handles = browser.getWindowHandles();
@@ -138,6 +153,26 @@ export default abstract class Driver {
     });
   }
 
+  public static getLocalStorage(key: string): void {
+    logger.info(`Key: ${key}`);
+    browser.execute(function(key) { return this.localStorage.getItem(key); }, key);
+  }
+
+  public static setLocalStorage(key: string, value: string): void {
+    logger.info(`Key: ${key} | Value: ${value}`);
+    browser.execute(function(key, value) { this.localStorage.setItem(key, value); }, key, value);
+  }
+
+  public static getSessionStorage(key: string): void {
+    logger.info(`Key: ${key}`);
+    browser.execute(function(key) { return this.sessionStorage.getItem(key); }, key);
+  }
+
+  public static setSessionStorage(key: string, value: string): void {
+    logger.info(`Key: ${key} | Value: ${value}`);
+    browser.execute(function(key, value) { this.sessionStorage.setItem(key, value); }, key, value);
+  }
+
   public static setWindowSize(width: string, height: string): void {
     logger.info(`Width: ${width} | Height: ${height}`);
     browser.setWindowSize(
@@ -169,6 +204,13 @@ export default abstract class Driver {
   public static url(url: string): void {
     logger.info(url);
     browser.url(url);
+  }
+
+  public static checkPageIsReady(preferred = true): void {
+    logger.info(`Reverse: ${!preferred}`);
+    new BrowserConditions()
+      .documentReady(preferred)
+      .runStrict();
   }
 
   public static checkAjaxRequestsMatchRef(filename: string, preferred = true, options: IJSONDiffOptions = {}): void {

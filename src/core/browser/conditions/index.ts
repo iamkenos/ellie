@@ -6,6 +6,7 @@ import CountEquals from "./countEquals";
 import CountGreaterThan from "./countGreaterThan";
 import CountLessThan from "./countLessThan";
 import CustomTruthy from "./customTruthy";
+import DocumentReady from "./documentReady";
 import GoogleAnalyticsEntriesMatch from "./gaEntriesMatch";
 import HttpResponseMatch from "./httpResponseMatch";
 import ImageMatch from "./imageMatch";
@@ -28,6 +29,7 @@ export {
   CountGreaterThan,
   CountLessThan,
   CustomTruthy,
+  DocumentReady,
   GoogleAnalyticsEntriesMatch,
   HttpResponseMatch,
   ImageMatch,

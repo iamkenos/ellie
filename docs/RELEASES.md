@@ -6,6 +6,23 @@
 
 _Note: Gaps between patch versions are faulty, broken or test releases._
 
+## 1.4.0
+
+`2021-02-01`
+
+- [36d9c10](https://github.com//iamkenos/ellie/commit/36d9c10) chore: udpate release script [[iamkenos](https://github.com/iamkenos)]
+- [0837eed](https://github.com//iamkenos/ellie/commit/0837eed) docs: detailed usage update [[iamkenos](https://github.com/iamkenos)]
+- [c1641c5](https://github.com//iamkenos/ellie/commit/c1641c5) feat: add built-in step retries [[iamkenos](https://github.com/iamkenos)]
+- [e8603bb](https://github.com//iamkenos/ellie/commit/e8603bb) refactor: cli commands [[iamkenos](https://github.com/iamkenos)]
+- [f1e4032](https://github.com//iamkenos/ellie/commit/f1e4032) fix: custom truthy condition [[iamkenos](https://github.com/iamkenos)]
+- [48cf5e8](https://github.com//iamkenos/ellie/commit/48cf5e8) deps: udpate dependencies [[iamkenos](https://github.com/iamkenos)]
+- [a108e57](https://github.com//iamkenos/ellie/commit/a108e57) deps: update dev dependencies [[iamkenos](https://github.com/iamkenos)]
+- [c44aaee](https://github.com//iamkenos/ellie/commit/c44aaee) deps: version lock dependencies [[iamkenos](https://github.com/iamkenos)]
+- [a972694](https://github.com//iamkenos/ellie/commit/a972694) feat: support for session timeouts; fixes for browserstack local [[iamkenos](https://github.com/iamkenos)]
+- [4e4c4ed](https://github.com//iamkenos/ellie/commit/4e4c4ed) fix: allure attachment and log messages when skipping comparison [[iamkenos](https://github.com/iamkenos)]
+- [244084e](https://github.com//iamkenos/ellie/commit/244084e) chore: docs, fixes, and tests for ga tracking assertion [[iamkenos](https://github.com/iamkenos)]
+- [fbd7cc0](https://github.com//iamkenos/ellie/commit/fbd7cc0) feat: support google analytics assertion [[iamkenos](https://github.com/iamkenos)]
+
 ## 1.3.9
 
 `2020-11-09`

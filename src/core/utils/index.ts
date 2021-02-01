@@ -24,6 +24,8 @@ import {
 import { inspect, readFileSync } from "../../cli/utils";
 import { DEFAULT } from "../../cli/config";
 
+export const RETRY = { wrapperOptions: { retry: (browser.config as any).stepRetries } };
+
 export function getAbsoluteXPathScript(): string {
   return `function absoluteXPath(element) {
     const parent = null;

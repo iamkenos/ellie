@@ -1,4 +1,4 @@
-import WebdriverIOPage from "../../pages/objects/webdriverIO.page";
+import WebdriverIOPage from "./webdriverIO.page";
 import { driver, ICustomTruthy } from "@iamkenos/ellie";
 
 const wdioPage = new WebdriverIOPage();

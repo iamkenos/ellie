@@ -39,6 +39,7 @@ export const DEFAULT: IConfig = {
   reportOutDir: ".reports",
   seleniumInstallArgs: {},
   specFileRetries: 0,
+  stepRetries: 0,
   specs: ["./features/**/*.feature"],
   steps: ["./steps/definitions/**/*.ts"],
   tags: "",
@@ -291,6 +292,10 @@ const CONFIG_PROPERTIES: IConfigProperty[] = [
     helptext: "The number of times to retry the entire spec file when it fails as a whole"
   },
   {
+    name: "stepRetries",
+    helptext: "The number of times to retry a failing step"
+  },
+  {
     name: "specs",
     helptext: "Array of globs pointing to your cucumber tests, relative to the config file",
     overrideOption: {
@@ -330,7 +335,7 @@ const CONFIG_PROPERTIES: IConfigProperty[] = [
   },
   {
     name: "implicitTimeout",
-    helptext: "Session implicit wait timeout; specifies the time to wait for the implicit element location strategy when locating elements"
+    helptext: "Specifies the time to wait for the implicit element location strategy when locating elements"
   },
   {
     name: "pageLoadimeout",

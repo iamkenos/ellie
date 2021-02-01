@@ -51,12 +51,12 @@ Complete list of properties:
   reportOutDir           Directory to store the reports in, relative to the config file
   seleniumInstallArgs    The selenium standalone install and runtime arguments
   specFileRetries        The number of times to retry the entire spec file when it fails as a whole
+  stepRetries            The number of times to retry a failing step
   * specs                Array of globs pointing to your cucumber tests, relative to the config file
   * steps                Array of globs pointing to your cucumber steps, relative to the config file
   stepTimeout            Default timeout for WebdriverIO to wait for a single test step to finish in milliseconds
   tags                   Only execute the features or scenarios with tags matching the expression
-  implicitTimeout        Session implicit wait timeout; specifies the time to wait for the implicit element location
-                         strategy when locating elements
+  implicitTimeout        Specifies the time to wait for the implicit element location strategy when locating elements
   pageLoadimeout         Session page load timeout that specifies a time to wait for the page loading to complete
   waitforTimeout         Default timeout for all browser 'waitFor' commands in milliseconds
 
@@ -733,6 +733,8 @@ A step definition file should have the following parts:
 | specFileRetries          | 0                                        | The number of times to retry the entire spec file         |
 |                          |                                          | when it fails as a whole                                  |
 +--------------------------+------------------------------------------+-----------------------------------------------------------+
+| stepRetries              | 0                                        | The number of times to retry a failing step               |
++--------------------------+------------------------------------------+-----------------------------------------------------------+
 | specs                    | ["./features/**/*.feature"]              | Array of globs pointing to your cucumber tests,           |
 |                          |                                          | relative to the config file                               |
 +--------------------------+------------------------------------------+-----------------------------------------------------------+
@@ -745,9 +747,8 @@ A step definition file should have the following parts:
 | tags                     | ""                                       | Only execute the features or scenarios with tags          |
 |                          |                                          | matching the expression                                   |
 +--------------------------+------------------------------------------+-----------------------------------------------------------+
-| implicitTimeout          | 0                                        | Session implicit wait timeout; specifies the time to wait |
-|                          |                                          | for the implicit element location strategy when           |
-|                          |                                          | locating elements                                         |
+| implicitTimeout          | 0                                        | Specifies the time to wait for the implicit element       |
+|                          |                                          | location strategy when locating elements                  |
 +--------------------------+------------------------------------------+-----------------------------------------------------------+
 | pageLoadimeout           | 300000                                   | Session page load timeout that specifies a time to wait   |
 |                          |                                          | for the page loading to complete                          |

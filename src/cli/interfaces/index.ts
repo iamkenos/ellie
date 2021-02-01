@@ -65,6 +65,7 @@ export interface IConfig {
     drivers?: {}
   },
   specFileRetries?: number;
+  stepRetries?: number;
   specs?: string[];
   steps?: string[];
   tags?: string;

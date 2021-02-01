@@ -1,5 +1,6 @@
 import { Then } from "cucumber";
 
+import { RETRY } from "../../utils";
 import elemAttributeContains from "../glue/check/elemAttributeContains";
 import elemAttributeEquals from "../glue/check/elemAttributeEquals";
 import elemAttributeExists from "../glue/check/elemAttributeExists";
@@ -45,236 +46,236 @@ import windowUrlPathContains from "../glue/check/windowUrlPathContains";
 import windowUrlPathEquals from "../glue/check/windowUrlPathEquals";
 
 Then(
-  /^I expect the(?: "([^"]*)?" page's)? "([^"]*)?" (?:field|element) "([^"]*)?" attribute to( not)? contain "([^"]*)?"$/,
+  /^I expect the(?: "([^"]*)?" page's)? "([^"]*)?" (?:field|element) "([^"]*)?" attribute to( not)? contain "([^"]*)?"$/, RETRY,
   elemAttributeContains
 );
 
 Then(
-  /^I expect the(?: "([^"]*)?" page's)? "([^"]*)?" (?:field|element) "([^"]*)?" attribute to( not)? be "([^"]*)?"$/,
+  /^I expect the(?: "([^"]*)?" page's)? "([^"]*)?" (?:field|element) "([^"]*)?" attribute to( not)? be "([^"]*)?"$/, RETRY,
   elemAttributeEquals
 );
 
 Then(
-  /^I expect the(?: "([^"]*)?" page's)? "([^"]*)?" (?:field|element) "([^"]*)?" attribute to( not)? exist$/,
+  /^I expect the(?: "([^"]*)?" page's)? "([^"]*)?" (?:field|element) "([^"]*)?" attribute to( not)? exist$/, RETRY,
   elemAttributeExists
 );
 
 Then(
-  /^I expect the(?: "([^"]*)?" page's)? "([^"]*)?" element location at (x|y) axis to( not)? be ([\d+.?\d*]+)$/,
+  /^I expect the(?: "([^"]*)?" page's)? "([^"]*)?" element location at (x|y) axis to( not)? be ([\d+.?\d*]+)$/, RETRY,
   elemAxisLocationEquals
 );
 
 Then(
-  /^I expect the(?: "([^"]*)?" page's)? "([^"]*)?" element count to( not)? be "([^"]*)?"$/,
+  /^I expect the(?: "([^"]*)?" page's)? "([^"]*)?" element count to( not)? be "([^"]*)?"$/, RETRY,
   elemCountEquals
 );
 
 Then(
-  /^I expect the(?: "([^"]*)?" page's)? "([^"]*)?" element count to( not)? be (greater|less) than "([^"]*)?"$/,
+  /^I expect the(?: "([^"]*)?" page's)? "([^"]*)?" element count to( not)? be (greater|less) than "([^"]*)?"$/, RETRY,
   elemCountGreaterLess
 );
 
 Then(
-  /^I expect the(?: "([^"]*)?" page's)? "([^"]*)?" (?:field|element) "([^"]*)?" css property to( not)? exist$/,
+  /^I expect the(?: "([^"]*)?" page's)? "([^"]*)?" (?:field|element) "([^"]*)?" css property to( not)? exist$/, RETRY,
   elemCSSExists
 );
 
 Then(
-  /^I expect the(?: "([^"]*)?" page's)? "([^"]*)?" element to( not)? be displayed$/,
+  /^I expect the(?: "([^"]*)?" page's)? "([^"]*)?" element to( not)? be displayed$/, RETRY,
   elemDisplayed
 );
 
 Then(
-  /^I expect the(?: "([^"]*)?" page's)? "([^"]*)?" element to( not)? be displayed within the viewport$/,
+  /^I expect the(?: "([^"]*)?" page's)? "([^"]*)?" element to( not)? be displayed within the viewport$/, RETRY,
   elemDisplayedInViewport
 );
 
 Then(
-  /^I expect the(?: "([^"]*)?" page's)? "([^"]*)?" element to( not)? be enabled$/,
+  /^I expect the(?: "([^"]*)?" page's)? "([^"]*)?" element to( not)? be enabled$/, RETRY,
   elemEnabled
 );
 
 Then(
-  /^I expect the(?: "([^"]*)?" page's)? "([^"]*)?" element to( not)? exist$/,
+  /^I expect the(?: "([^"]*)?" page's)? "([^"]*)?" element to( not)? exist$/, RETRY,
   elemExists
 );
 
 Then(
-  /^I expect the(?: "([^"]*)?" page's)? "([^"]*)?" element to( not)? have focus$/,
+  /^I expect the(?: "([^"]*)?" page's)? "([^"]*)?" element to( not)? have focus$/, RETRY,
   elemFocused
 );
 
 Then(
-  /^I expect the(?: "([^"]*)?" page's)? "([^"]*)?" element image to( not)? match the reference "([^"]*)?"$/,
+  /^I expect the(?: "([^"]*)?" page's)? "([^"]*)?" element image to( not)? match the reference "([^"]*)?"$/, RETRY,
   elemImageMatch
 );
 
 Then(
-  /^I expect the(?: "([^"]*)?" page's)? "([^"]*)?" (?:element|option|check box|toggle item|radio button) to( not)? be (?:checked|selected)$/,
+  /^I expect the(?: "([^"]*)?" page's)? "([^"]*)?" (?:element|option|check box|toggle item|radio button) to( not)? be (?:checked|selected)$/, RETRY,
   elemSelected
 );
 
 Then(
-  /^I expect the option with (index|label|[^" ]*) "([^"]*)?" from the(?: "([^"]*)?" page's)? "([^"]*)?" dropdown to( not)? be selected$/,
+  /^I expect the option with (index|label|[^" ]*) "([^"]*)?" from the(?: "([^"]*)?" page's)? "([^"]*)?" dropdown to( not)? be selected$/, RETRY,
   elemSelectedDdlOption
 );
 
 Then(
-  /^I expect the(?: "([^"]*)?" page's)? "([^"]*)?" element to( not)? be ([\d]+)px broad and ([\d]+)px tall$/,
+  /^I expect the(?: "([^"]*)?" page's)? "([^"]*)?" element to( not)? be ([\d]+)px broad and ([\d]+)px tall$/, RETRY,
   elemSizeEquals
 );
 
 Then(
-  /^I expect the(?: "([^"]*)?" page's)? "([^"]*)?" element to( not)? be ([\d]+)px (broad|tall)$/,
+  /^I expect the(?: "([^"]*)?" page's)? "([^"]*)?" element to( not)? be ([\d]+)px (broad|tall)$/, RETRY,
   elemSizeSideEquals
 );
 
 Then(
-  /^I expect the(?: "([^"]*)?" page's)? "([^"]*)?" element text to( not)? contain "([^"]*)?"$/,
+  /^I expect the(?: "([^"]*)?" page's)? "([^"]*)?" element text to( not)? contain "([^"]*)?"$/, RETRY,
   elemTextContains
 );
 
 Then(
-  /^I expect the(?: "([^"]*)?" page's)? "([^"]*)?" element text to( not)? contain:$/,
+  /^I expect the(?: "([^"]*)?" page's)? "([^"]*)?" element text to( not)? contain:$/, RETRY,
   elemTextContains
 );
 
 Then(
-  /^I expect the(?: "([^"]*)?" page's)? "([^"]*)?" elements text array to( not)? contain:$/,
+  /^I expect the(?: "([^"]*)?" page's)? "([^"]*)?" elements text array to( not)? contain:$/, RETRY,
   elemTextContainsArray
 );
 
 Then(
-  /^I expect the(?: "([^"]*)?" page's)? "([^"]*)?" element text to( not)? be empty$/,
+  /^I expect the(?: "([^"]*)?" page's)? "([^"]*)?" element text to( not)? be empty$/, RETRY,
   elemTextEmpty
 );
 
 Then(
-  /^I expect the(?: "([^"]*)?" page's)? "([^"]*)?" element text to( not)? be "([^"]*)?"$/,
+  /^I expect the(?: "([^"]*)?" page's)? "([^"]*)?" element text to( not)? be "([^"]*)?"$/, RETRY,
   elemTextEquals
 );
 
 Then(
-  /^I expect the(?: "([^"]*)?" page's)? "([^"]*)?" element text to( not)? match:$/,
+  /^I expect the(?: "([^"]*)?" page's)? "([^"]*)?" element text to( not)? match:$/, RETRY,
   elemTextEquals
 );
 
 Then(
-  /^I expect the(?: "([^"]*)?" page's)? "([^"]*)?" elements text array to( not)? match:$/,
+  /^I expect the(?: "([^"]*)?" page's)? "([^"]*)?" elements text array to( not)? match:$/, RETRY,
   elemTextEqualsArray
 );
 
 Then(
-  /^I expect the(?: "([^"]*)?" page's)? "([^"]*)?" (?:field|element) value to( not)? contain "([^"]*)?"$/,
+  /^I expect the(?: "([^"]*)?" page's)? "([^"]*)?" (?:field|element) value to( not)? contain "([^"]*)?"$/, RETRY,
   elemValueContains
 );
 
 Then(
-  /^I expect the(?: "([^"]*)?" page's)? "([^"]*)?" (?:field|element) value to( not)? contain:$/,
+  /^I expect the(?: "([^"]*)?" page's)? "([^"]*)?" (?:field|element) value to( not)? contain:$/, RETRY,
   elemValueContains
 );
 
 Then(
-  /^I expect the(?: "([^"]*)?" page's)? "([^"]*)?" (?:field|element) value to( not)? be empty$/,
+  /^I expect the(?: "([^"]*)?" page's)? "([^"]*)?" (?:field|element) value to( not)? be empty$/, RETRY,
   elemValueEmpty
 );
 
 Then(
-  /^I expect the(?: "([^"]*)?" page's)? "([^"]*)?" (?:field|element) value to( not)? be "([^"]*)?"$/,
+  /^I expect the(?: "([^"]*)?" page's)? "([^"]*)?" (?:field|element) value to( not)? be "([^"]*)?"$/, RETRY,
   elemValueEquals
 );
 
 Then(
-  /^I expect the(?: "([^"]*)?" page's)? "([^"]*)?" (?:field|element) value to( not)? match:$/,
+  /^I expect the(?: "([^"]*)?" page's)? "([^"]*)?" (?:field|element) value to( not)? match:$/, RETRY,
   elemValueEquals
 );
 
 Then(
-  /^I expect the (?:ajax|xhr) requests to( not)? match the reference "([^"]*)?"$/,
+  /^I expect the (?:ajax|xhr) requests to( not)? match the reference "([^"]*)?"$/, RETRY,
   windowAjaxRequestsMatch
 );
 
 Then(
-  /^I expect the "([^"]*)?" site cookie value to( not)? contain "([^"]*)?"$/,
+  /^I expect the "([^"]*)?" site cookie value to( not)? contain "([^"]*)?"$/, RETRY,
   windowCookieContains
 );
 
 Then(
-  /^I expect the "([^"]*)?" site cookie value to( not)? be "([^"]*)?"$/,
+  /^I expect the "([^"]*)?" site cookie value to( not)? be "([^"]*)?"$/, RETRY,
   windowCookieEquals
 );
 
 Then(
-  /^I expect the "([^"]*)?" site cookie value to( not)? exist$/,
+  /^I expect the "([^"]*)?" site cookie value to( not)? exist$/, RETRY,
   windowCookieExists
 );
 
 Then(
-  /^I expect the (?:window|tab) count to( not)? be "([^"]*)?"$/,
+  /^I expect the (?:window|tab) count to( not)? be "([^"]*)?"$/, RETRY,
   windowCountEquals
 );
 
 Then(
-  /^I expect the (?:window|tab) count to( not)? be (greater|less) than "([^"]*)?"$/,
+  /^I expect the (?:window|tab) count to( not)? be (greater|less) than "([^"]*)?"$/, RETRY,
   windowCountGreaterLess
 );
 
 Then(
-  /^I expect the captured google analytics(?: event "([^"]*)?" )? to( not)? match the reference "([^"]*)?"$/,
+  /^I expect the captured google analytics(?: event "([^"]*)?" )? to( not)? match the reference "([^"]*)?"$/, RETRY,
   windowGAEntriesMatch
 );
 
 Then(
-  /^I expect the response to the following request to( not)? match the reference "([^"]*)?":$/,
+  /^I expect the response to the following request to( not)? match the reference "([^"]*)?":$/, RETRY,
   windowHttpResponseMatch
 );
 
 Then(
-  /^I expect the (viewport|page) image to( not)? match the reference "([^"]*)?"$/,
+  /^I expect the (viewport|page) image to( not)? match the reference "([^"]*)?"$/, RETRY,
   windowImageMatch
 );
 
 Then(
-  /^I expect (?:a|an) (?:alert|confirm box|prompt) to( not)? be opened$/,
+  /^I expect (?:a|an) (?:alert|confirm box|prompt) to( not)? be opened$/, RETRY,
   windowModalExists
 );
 
 Then(
-  /^I expect the (?:alert|confirm box|prompt) text to( not)? contain "([^"]*)?"$/,
+  /^I expect the (?:alert|confirm box|prompt) text to( not)? contain "([^"]*)?"$/, RETRY,
   windowModalTextContains
 );
 
 Then(
-  /^I expect the (?:alert|confirm box|prompt) text to( not)? be "([^"]*)?"$/,
+  /^I expect the (?:alert|confirm box|prompt) text to( not)? be "([^"]*)?"$/, RETRY,
   windowModalTextEquals
 );
 
 Then(
-  /^I expect the (?:window|page) title to( not)? contain (?:"([^"]*)?"|the "([^"]*)?" page's title)$/,
+  /^I expect the (?:window|page) title to( not)? contain (?:"([^"]*)?"|the "([^"]*)?" page's title)$/, RETRY,
   windowTitleContains
 );
 
 Then(
-  /^I expect the (?:window|page) title to( not)? (?:be|match) (?:"([^"]*)?"|the "([^"]*)?" page's title)$/,
+  /^I expect the (?:window|page) title to( not)? (?:be|match) (?:"([^"]*)?"|the "([^"]*)?" page's title)$/, RETRY,
   windowTitleEquals
 );
 
 Then(
-  /^I expect the url to( not)? contain (?:"([^"]*)?"|the "([^"]*)?" page's url)$/,
+  /^I expect the url to( not)? contain (?:"([^"]*)?"|the "([^"]*)?" page's url)$/, RETRY,
   windowUrlContains
 );
 
 Then(
-  /^I expect the url to( not)? (?:be|match) (?:"([^"]*)?"|the "([^"]*)?" page's url)$/,
+  /^I expect the url to( not)? (?:be|match) (?:"([^"]*)?"|the "([^"]*)?" page's url)$/, RETRY,
   windowUrlEquals
 );
 
 Then(
-  /^I expect the url path to( not)? contain "([^"]*)?"$/,
+  /^I expect the url path to( not)? contain "([^"]*)?"$/, RETRY,
   windowUrlPathContains
 );
 
 Then(
-  /^I expect the url path to( not)? be "([^"]*)?"$/,
+  /^I expect the url path to( not)? be "([^"]*)?"$/, RETRY,
   windowUrlPathEquals
 );

@@ -298,6 +298,7 @@ exports.config = {
   directory: <%- JSON.stringify(answers.directory) %>,
   locale: '<%- answers.locale %>',
   pages: [<%- answers.pages.map(i => JSON.stringify(i)) %>],
+  stepRetries: <%= answers.stepRetries %>,
   allureHtmlDir: ALLURE_HTML_DIR,
   //
   // =====

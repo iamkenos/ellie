@@ -46,7 +46,7 @@ function release() {
 }
 
 function postRelease() {
-  return `git push origin ${GIT_BRANCH} --tags`;
+  return `git push --set-upstream origin ${GIT_BRANCH} && git push origin $(git describe --abbrev=0)`;
 }
 
 function printMarker(title) {

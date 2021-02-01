@@ -4,8 +4,8 @@ import * as fs from "fs-extra";
 import * as inquirer from "inquirer";
 import * as path from "path";
 
-import logger from "../logger";
-import { LEVELS } from "../logger/config";
+import logger from "../../logger";
+import { LEVELS } from "../../logger/config";
 import {
   CONFIG_HELPER_INTRO,
   CONFIG_HELPER_SUCCESS_MESSAGE,
@@ -16,23 +16,17 @@ import {
   CONFIG_WDIO_TPL_FILE,
   CORE_STEP_DEFS_GLOB,
   DEFAULT,
-  PRETTIER_SETTINGS_FILE,
-  RESOURCES_DIR,
-  SAMPLES_DIR,
-  SAMPLES_HELPER_SUCCESS_MESSAGE,
-  SAMPLES_HELPER_TS_CONFIG_EXISTS_MESSAGE,
-  SAMPLES_TS_CONFIG_FILE
-} from "./config";
-import { inspect, readFileSync, resolveComparableOutDirs, resolveFiles } from "./utils";
-require("ts-node/register");
+  PRETTIER_SETTINGS_FILE
+} from "../config";
+import { inspect, readFileSync, resolveComparableOutDirs, resolveFiles } from "../utils";
 
 function createFromTemplate(source: any, templateFile: string, outputFile: string): string {
   logger.debug("createFromTemplate() %s", outputFile);
 
-  const fmt = readFileSync(path.join(__dirname, PRETTIER_SETTINGS_FILE));
+  const fmt = readFileSync(path.join(__dirname, "../", PRETTIER_SETTINGS_FILE));
   const renderedFmt = { ...JSON.parse(fmt), parser: "babel" };
 
-  const tpl = readFileSync(path.join(__dirname, templateFile));
+  const tpl = readFileSync(path.join(__dirname, "../", templateFile));
   const renderedTpl = ejs.render(tpl, { answers: source });
 
   if (fs.existsSync(outputFile)) {
@@ -45,28 +39,6 @@ function createFromTemplate(source: any, templateFile: string, outputFile: strin
 
   logger.debug("Finished!");
   return outputFile;
-}
-
-export function generateSamples(): void {
-  try {
-    const source = path.join(__dirname, RESOURCES_DIR, SAMPLES_DIR);
-    const target = path.join(process.cwd(), SAMPLES_DIR);
-
-    const tscSource = path.join(__dirname, RESOURCES_DIR, SAMPLES_TS_CONFIG_FILE);
-    const tscTarget = path.join(process.cwd(), SAMPLES_TS_CONFIG_FILE);
-
-    fs.copySync(source, target, { recursive: true });
-    if (fs.existsSync(tscTarget)) {
-      console.log(SAMPLES_HELPER_TS_CONFIG_EXISTS_MESSAGE.trim());
-      console.log(readFileSync(tscSource));
-    } else fs.copySync(tscSource, tscTarget, { overwrite: false });
-
-    console.log(SAMPLES_HELPER_SUCCESS_MESSAGE.trim());
-    process.exit(0);
-  } catch (error) {
-    logger.error(error);
-    throw new Error(error);
-  }
 }
 
 export async function createLocalConfig(): Promise<any> {

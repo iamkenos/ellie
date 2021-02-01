@@ -2,7 +2,7 @@ import chalk from "chalk";
 import loglevel from "loglevel";
 import prefix from "loglevel-plugin-prefix";
 
-import Stack from "./setup";
+import Stack from "./stack";
 import { DEFAULT_LEVEL, DEFAULT_LOG_COLORS, DEFAULT_NAME, LEVELS } from "./config";
 
 class Log {

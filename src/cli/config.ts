@@ -88,7 +88,7 @@ export const TLOU_QUOTES = {
   ]
 };
 
-export const CORE_STEP_DEFS_GLOB = "../core/steps/definitions/**/*.js";
+export const CORE_STEP_DEFS_GLOB = "../../core/steps/definitions/**/*.js";
 
 export const RESOURCES_DIR = "/resources";
 

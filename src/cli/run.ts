@@ -3,9 +3,12 @@ import { join } from "path";
 import { Arguments } from "yargs";
 
 import logger from "../logger";
-import { CONFIG_OPTIONS, TLOU_QUOTES } from "./config";
-import { createLocalConfig, createWdioConfig, generateSamples } from "./setup";
+import { CONFIG_OPTIONS } from "./config";
+import { endureAndSurvive } from "./commands/babygirl";
+import { createLocalConfig, createWdioConfig } from "./commands/init";
+import { generateSamples } from "./commands/whistle";
 import { inspect } from "./utils";
+require("ts-node/register");
 
 export default (args: Arguments<any>): any => {
   // show help and exit if there are no arguments provided
@@ -25,12 +28,7 @@ export default (args: Arguments<any>): any => {
 
   // just because :P
   if (firstArg === "babygirl") {
-    const toons = Object.keys(TLOU_QUOTES);
-    const toon = toons[Math.floor(Math.random() * toons.length)];
-    const quotes = TLOU_QUOTES[toon];
-    const quote = quotes[Math.floor(Math.random() * quotes.length)];
-    console.log(`\n${toon}: ${quote}\n`);
-    process.exit(0);
+    endureAndSurvive();
   }
 
   // if the first argument is "init"

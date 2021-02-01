@@ -439,7 +439,7 @@ _`webdriverIO.page.ts`_
 
 ```ts
 import { BasePage, WebElement } from "@iamkenos/ellie";
-import meta from "../meta/webdriverIO.meta";
+import meta from "./webdriverIO.meta";
 
 export default class WebdriverIOPage extends BasePage<typeof meta> {
   constructor() {
@@ -475,7 +475,7 @@ A page object file should have the following parts:
 - use default import from the corresponding meta file
 
   ```ts
-  import meta from "../meta/webdriverIO.meta";
+  import meta from "./webdriverIO.meta";
   ```
 
 ### Default class export
@@ -524,8 +524,8 @@ For better maintenance, separate your step definitions from the actual step impl
 _`webdriverIO.glue.ts`_
 
 ```ts
-import WebdriverIOPage from "../../pages/objects/webdriverIO.page";
-import { driver } from "@iamkenos/ellie";
+import WebdriverIOPage from "./webdriverIO.page";
+import { driver, ICustomTruthy } from "@iamkenos/ellie";
 
 const wdioPage = new WebdriverIOPage();
 
@@ -542,11 +542,19 @@ export function clickGetStarted(): void {
 }
 
 export function checkProjectTitleText(preferred: boolean, value: string): void {
-  // you can create anonymous functions that encloses a single function which
-  // returns a truthy value. this is useful when you want to create custom assertions
-  // and still make use of the framework's internal retry mechanism
-  const isProjectTitleTextEquals = (): boolean => wdioPage.projectTitle().isTextEquals(value, !preferred);
-  driver.checkCustomTruthy(isProjectTitleTextEquals);
+  // you can create anonymous functions assigned to a variable that returns
+  // a custom truthy object (see immported interface). this is useful when you
+  // want to create custom assertions and still make use of the framework's internal retry mechanism
+  const isProjectTitleTextEquals = (): ICustomTruthy => {
+    const actual = wdioPage.projectTitle().getText();
+    const expected = value;
+    return {
+      actual: actual,
+      expected: expected,
+      result: actual === expected
+    };
+  };
+  driver.checkCustomTruthy(isProjectTitleTextEquals, !preferred);
 
   // the check above is for illustration purposes and can be simplified by
   // using the statement below
@@ -565,7 +573,7 @@ A step glue file should have the following parts:
 - use default import from the corresponding page object file
 
   ```ts
-  import WebdriverIOPage from "../../pages/objects/webdriverIO.page";
+  import WebdriverIOPage from "./webdriverIO.page";
   ```
 
 ### Page object instance
@@ -598,17 +606,33 @@ _`webdriverIO.def.ts`_
 
 ```ts
 import { Then, When } from "cucumber";
-import * as webdrverIO from "../glue/webdriverIO.glue";
+import { RETRY } from "@iamkenos/ellie";
+import * as webdrverIO from "./webdriverIO.glue";
 
-When(/^I open the WebdriverIO page's url$/, webdrverIO.navigate);
+When(
+  /^I open the WebdriverIO page's url$/, RETRY,
+  webdrverIO.navigate
+);
 
-When(/^I click the WebdriverIO page's Get Started button$/, webdrverIO.clickGetStarted);
+When(
+  /^I click the WebdriverIO page's Get Started button$/, RETRY,
+  webdrverIO.clickGetStarted
+);
 
-Then(/^I expect the window title to( not)? match the WebdriverIO page's title$/, webdrverIO.checkTitle);
+Then(
+  /^I expect the window title to( not)? match the WebdriverIO page's title$/, RETRY,
+  webdrverIO.checkTitle
+);
 
-Then(/^I expect the WebdriverIO page's project title to( not)? be "([^"]*)?"$/, webdrverIO.checkProjectTitleText);
+Then(
+  /^I expect the WebdriverIO page's project title to( not)? be "([^"]*)?"$/, RETRY,
+  webdrverIO.checkProjectTitleText
+);
 
-Then(/^I expect the the WebdriverIO page's nav bar to( not)? be displayed$/, webdrverIO.checkNavBarDisplayed);
+Then(
+  /^I expect the the WebdriverIO page's nav bar to( not)? be displayed$/, RETRY,
+  webdrverIO.checkNavBarDisplayed
+);
 ```
 
 A step definition file should have the following parts:
@@ -621,12 +645,20 @@ A step definition file should have the following parts:
   import { Then, When } from "cucumber";
   ```
 
+### Step retry import
+
+- optional; use this with your step definition statements to utilize internal webdriverio cucumber step retries
+
+  ```ts
+  import { RETRY } from "@iamkenos/ellie";
+  ```
+
 ### Glue file import
 
 - use multi import to access all exports from the corresponding glue file
 
   ```ts
-  import * as webdrverIO from "../glue/webdriverIO.glue";
+  import * as webdrverIO from "./webdriverIO.glue";
   ```
 
 ### Step functions
@@ -637,7 +669,7 @@ A step definition file should have the following parts:
 
   ```ts
   When(
-    /^I click the WebdriverIO page's Get Started button$/,
+    /^I click the WebdriverIO page's Get Started button$/, RETRY,
     webdrverIO.clickGetStarted
   );
 
@@ -646,7 +678,7 @@ A step definition file should have the following parts:
   .
 
   Then(
-    /^I expect the the WebdriverIO page's nav bar to( not)? be displayed$/,
+    /^I expect the the WebdriverIO page's nav bar to( not)? be displayed$/, RETRY,
     webdrverIO.checkNavBarDisplayed
   );
   ```

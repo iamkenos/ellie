@@ -195,19 +195,21 @@ export function getJSONDiff(type: keyof IConfig["comparable"], filename: string,
   if (!comparable.skipCompare) {
     if (!fs.existsSync(expFile)) { return `Baseline JSON file "${expFile}" not found`; }
 
-    allure.addAttachment("Actual:", readFileSync(actFile));
-    allure.addAttachment("Expected:", readFileSync(expFile));
+    allure.addAttachment(`Actual: ${actFile}`, readFileSync(actFile));
+    allure.addAttachment(`Expected: ${expFile}`, readFileSync(expFile));
 
     const differences = getDiff(options);
     if (differences) {
       const diff = JSON.stringify(differences, null, 2);
       fs.outputFileSync(difFile, diff);
-      allure.addAttachment("Differences:", readFileSync(difFile));
+      allure.addAttachment(`Differences: ${difFile}`, readFileSync(difFile));
       return diff;
     }
+  } else {
+    logger.warn("Skipping comparison for ", actFile);
+    allure.addAttachment(`Actual: ${actFile}`, readFileSync(actFile));
+    return "";
   }
-
-  return "";
 }
 
 export function getImageFile(context: ImageCompareContext, filename: string, elem?: WebdriverIO.Element): IImageSave {
@@ -253,8 +255,8 @@ export function getImageDiff(filename: string, compare: IImageCompare): string {
     }
   };
 
-  if (!~~comparable.skipCompare) {
-    if (!fs.existsSync(expFile)) { return `Baseline image "${expFile}" not found`; }
+  if (!comparable.skipCompare) {
+    // if (!fs.existsSync(expFile)) { return `Baseline image file "${expFile}" not found`; }
 
     switch (compare.context) {
       case ImageCompareContext.VIEWPORT: {
@@ -271,16 +273,20 @@ export function getImageDiff(filename: string, compare: IImageCompare): string {
       }
     }
 
-    attachImage("Actual:", actFile);
-    attachImage("Expected:", expFile);
+    attachImage(`Actual: ${actFile}`, actFile);
+    attachImage(`Expected: ${expFile}`, expFile);
 
     if (result.misMatchPercentage) {
-      attachImage("Differences:", difFile);
+      attachImage(`Differences: ${difFile}`, difFile);
       return `Image mismatch by ${result.misMatchPercentage}%`;
     }
-  }
 
-  return "";
+    return "";
+  } else {
+    logger.warn("Skipping comparison for ", actFile);
+    attachImage(`Actual: ${actFile}`, actFile);
+    return "";
+  }
 }
 
 export function isJSON(str: string): boolean {

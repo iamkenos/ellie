@@ -18,6 +18,9 @@ const config: IConfig = {
     afterScenario: "./.hooks/afterScenario"
   },
   logLevel: "error",
+  // use a chrome driver version that fits your current browser version
+  // https://www.browserstack.com/automate/capabilities?tag=selenium-4
+  seleniumInstallArgs: { version: "3.141.59", drivers: { chrome: { version: "87.0.4280.88" } } },
   specs: ["./features/**/*.feature"],
   steps: ["./steps/**/**/*.def.ts"],
   pages: ["./pages/**/*.meta.ts"],

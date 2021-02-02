@@ -21,8 +21,6 @@ import {
 import { inspect, readFileSync, resolveComparableOutDirs, resolveFiles } from "../utils";
 
 function createFromTemplate(source: any, templateFile: string, outputFile: string): string {
-  logger.debug("createFromTemplate() %s", outputFile);
-
   const fmt = readFileSync(path.join(__dirname, "../", PRETTIER_SETTINGS_FILE));
   const renderedFmt = { ...JSON.parse(fmt), parser: "babel" };
 
@@ -68,8 +66,6 @@ export async function createLocalConfig(): Promise<any> {
 
 export function createWdioConfig(sourceFile: string, overrides: any): string {
   try {
-    logger.debug("createWdioConfig() %s", sourceFile);
-
     const configFile = path.join(process.cwd(), sourceFile);
     const configDir = path.dirname(configFile);
     const outputFile = path.join(configDir, CONFIG_WDIO_OUT_FILE);

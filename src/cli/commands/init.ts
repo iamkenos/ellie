@@ -19,6 +19,7 @@ import {
   PRETTIER_SETTINGS_FILE
 } from "../config";
 import { inspect, readFileSync, resolveComparableOutDirs, resolveFiles } from "../utils";
+import { IConfig } from "../interfaces";
 
 function createFromTemplate(source: any, templateFile: string, outputFile: string): string {
   const fmt = readFileSync(path.join(__dirname, "../", PRETTIER_SETTINGS_FILE));
@@ -51,7 +52,7 @@ export async function createLocalConfig(): Promise<any> {
       return answers;
     });
     const outputFile = path.join(process.cwd(), CONFIG_LOCAL_OUT_FILE);
-    const config = { ...DEFAULT, ...answers };
+    const config: IConfig = { ...DEFAULT, ...answers };
 
     createFromTemplate(config, CONFIG_LOCAL_TPL_FILE, outputFile);
 
@@ -69,10 +70,10 @@ export function createWdioConfig(sourceFile: string, overrides: any): string {
     const configFile = path.join(process.cwd(), sourceFile);
     const configDir = path.dirname(configFile);
     const outputFile = path.join(configDir, CONFIG_WDIO_OUT_FILE);
-    const config = { ...DEFAULT, ...require(configFile).default, ...overrides };
+    const config: IConfig = { ...DEFAULT, ...require(configFile).default, ...overrides };
 
     // soft check for logLevel to prevent wdio from dying
-    if (!LEVELS.includes(config.logLevel)) {
+    if (!LEVELS.includes((config.logLevel as string))) {
       logger.warn("Logging level %s isn't supported. Use any one of %s", config.logLevel, LEVELS);
       logger.info("Falling back to logging level [%s]...", DEFAULT.logLevel);
       config.logLevel = DEFAULT.logLevel;

@@ -33,7 +33,7 @@ export function resolveComparableOutDirs(directory: string, comparable: IConfig[
 }
 
 export function resolveFiles(baseDir: string, fileGlob: string[], isStrict = true): string[] {
-  const resolved: string[] = [];
+  const resolved = new Set<string>();
 
   fileGlob.filter(Boolean).forEach((i: string): void => {
     const filePath: string = path.resolve(baseDir, i);
@@ -42,14 +42,13 @@ export function resolveFiles(baseDir: string, fileGlob: string[], isStrict = tru
     if (files.length === 0) {
       logger.warn("No matches found for glob %s", filePath);
     } else {
-      files.forEach((i): number => resolved.push(path.resolve(i)));
+      files.forEach(i => resolved.add(path.resolve(i)));
     }
   });
 
-  if (resolved.length === 0 && isStrict) {
+  if (resolved.size === 0 && isStrict) {
     throw new Error("Unable to resolve any existing file from the given paths. See warnings.");
   }
 
-  // reduce to a unique set
-  return [...new Set(resolved)];
+  return [...resolved];
 }

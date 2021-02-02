@@ -1,11 +1,13 @@
 import { IConfig } from "../../build";
 import base from "./demo.conf";
+import dotenv from "dotenv";
+dotenv.config();
 
 const config: IConfig = Object.assign({}, base, {
   browserstackEnabled: true,
   browserstackLocal: true,
-  user: "user",
-  key: "key",
+  user: process.env.BROWSERSTACK_USER,
+  key: process.env.BROWSERSTACK_KEY,
   specs: ["./features/**/vi-*.feature"],
   capabilities: [
     {

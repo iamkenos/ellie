@@ -23,7 +23,6 @@
     "postbuild": "run-s postbuild:**",
     "postbuild:cp:resources": "copyfiles -u 1 \"./src/**/resources/**\" build",
     "postbuild:cp:prettierrc": "copyfiles \"./.prettierrc\" build/cli/resources",
-    "postbuild:prettier": "prettier --write \"./build/**/*.js\"",
     "demo:serve": "http-server ./demo/app -s",
     "demo:test": "./bin/ellie.js demo/test/demo.conf.ts demo/test/overrides.conf.js",
     "demo:test:bs": "./bin/ellie.js demo/test/demo.browserstack.conf.ts",

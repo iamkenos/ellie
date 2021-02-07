@@ -1,4 +1,4 @@
-import DemoPage from "../pages/demo.page";
+import DemoPage from "../demo/demo.page";
 
 const demoPage = new DemoPage();
 

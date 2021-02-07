@@ -21,6 +21,6 @@
       "wdio-image-comparison-service"
     ]
   },
-  "include": ["./src/**/*.ts"],
-  "exclude": ["node_modules", "build", "test", "bin", "src/cli/resources/samples"]
+  "include": ["./src/**/*.ts", "./demo/**/*.ts"],
+  "exclude": ["node_modules", "build", "test", "bin"]
 }

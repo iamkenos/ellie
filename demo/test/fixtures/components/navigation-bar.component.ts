@@ -1,5 +1,4 @@
-import { WebComponent, WebElement } from "../../../build";
-import { mergeMeta } from "../../../build/core/utils";
+import { mergeMeta, WebComponent, WebElement } from "@iamkenos/ellie";
 import navBar from "./navigation-bar.meta";
 import navItem from "./navigation-item.meta";
 import navTitle from "./navigation-title.meta";

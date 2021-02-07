@@ -1,4 +1,4 @@
-import { IConfig } from "../../build";
+import { IConfig } from "@iamkenos/ellie";
 import base from "./demo.conf";
 import dotenv from "dotenv";
 dotenv.config();

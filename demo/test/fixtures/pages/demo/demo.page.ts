@@ -1,5 +1,5 @@
-import { BasePage, WebElement } from "../../../build";
-import NavigationBar from "../components/navigation-bar.component";
+import { BasePage, WebElement } from "@iamkenos/ellie";
+import NavigationBar from "../../components/navigation-bar.component";
 import meta from "./demo.meta";
 
 export default class DemoPage extends BasePage<typeof meta> {

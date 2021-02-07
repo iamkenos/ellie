@@ -5,6 +5,17 @@
   "version": "0.2.0",
   "configurations": [
     {
+      "name": "ellie",
+      "type": "node",
+      "request": "launch",
+      "console": "integratedTerminal",
+      "cwd": "${workspaceFolder}",
+      "program": "${workspaceRoot}/bin/ellie.js",
+      "args": ["${input:command}", "${input:options}"],
+      "outFiles": ["${workspaceFolder}/build/**/*.js"],
+      "skipFiles": ["./node_modules/**/*.js"]
+    },
+    {
       "autoAttachChildProcesses": true,
       "name": "ellie @ spec",
       "type": "node",
@@ -30,6 +41,22 @@
       "port": 9222,
       "url": "http://localhost:8080",
       "webRoot": "${workspaceRoot}/demo/app"
+    }
+  ],
+  "inputs": [
+    {
+      "id": "command",
+      "type": "pickString",
+      "default": "",
+      "description": "What command would you like to debug?",
+      "options": ["demo/test/demo.conf.ts", "init", "whistle", "babygirl"]
+    },
+    {
+      "id": "options",
+      "type": "pickString",
+      "default": "",
+      "description": "Any additional arguments?",
+      "options": [""]
     }
   ]
 }

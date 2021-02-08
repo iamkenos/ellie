@@ -6,6 +6,19 @@
 
 _Note: Gaps between patch versions are faulty, broken or test releases._
 
+## 1.4.1
+
+`2021-02-08`
+
+- [88d138f](https://github.com//iamkenos/ellie/commit/88d138f) chore: update release script [[iamkenos](https://github.com/iamkenos)]
+- [8c53818](https://github.com//iamkenos/ellie/commit/8c53818) refactor: build and demo files [[iamkenos](https://github.com/iamkenos)]
+- [bb47c07](https://github.com//iamkenos/ellie/commit/bb47c07) refactor: launch configurations and resolve files [[iamkenos](https://github.com/iamkenos)]
+- [7c7579a](https://github.com//iamkenos/ellie/commit/7c7579a) chore: remove prettify on build files, this is messing source mapping [[iamkenos](https://github.com/iamkenos)]
+- [a8722d0](https://github.com//iamkenos/ellie/commit/a8722d0) refactor: type updates on init command [[iamkenos](https://github.com/iamkenos)]
+- [5c8ce6a](https://github.com//iamkenos/ellie/commit/5c8ce6a) refactor: logging cleanup [[iamkenos](https://github.com/iamkenos)]
+- [5905093](https://github.com//iamkenos/ellie/commit/5905093) test: support dotenv for bsconfig, include samples in test pack [[iamkenos](https://github.com/iamkenos)]
+- [c8606d4](https://github.com//iamkenos/ellie/commit/c8606d4) feat: additional browser and element commands [[iamkenos](https://github.com/iamkenos)]
+
 ## 1.4.0
 
 `2021-02-01`

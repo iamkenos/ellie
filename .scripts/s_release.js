@@ -4,15 +4,15 @@ const shell = require('shelljs');
 
 const GIT_SERVER = 'https://github.com/';
 const GIT_REPO = GIT_SERVER + '/iamkenos/ellie/';
-const GIT_BRANCH = shell.exec('git rev-parse --abbrev-ref HEAD', { silent: true }).stdout.trim();
 const LOG_FORMAT = `- [%h](${GIT_REPO}commit/%h) %s [[%an](${GIT_SERVER}%an)]`;
 const RELEASE_LOG_FILE = path.join(__dirname, '../docs/RELEASES.md');
 const VERSIONS = ['patch', 'minor', 'major'];
 const HASH_REX = /(?<hash>\[[\dA-z]+\])/
 
+const gitBranch = () => shell.exec('git rev-parse --abbrev-ref HEAD', { silent: true }).stdout.trim();
 const gitReset = () => shell.exec('git reset --hard', { silent: true });
 const gitCo = (br) => shell.exec(`git checkout -b ${br}`, { silent: true });
-const gitLog = () => shell.exec(`git log --pretty=format:"${LOG_FORMAT}" --graph --no-merges ${GIT_BRANCH}`, { silent: true }).stdout.split('\n');
+const gitLog = (br) => shell.exec(`git log --pretty=format:"${LOG_FORMAT}" --graph --no-merges ${br}`, { silent: true }).stdout.split('\n');
 
 function preRelease(version = VERSIONS[0]) {
   if (!VERSIONS.includes(version)) throw new Error('Invalid version arg: ' + version);
@@ -33,7 +33,8 @@ function preRelease(version = VERSIONS[0]) {
   const trimmedVersion = nextVersion.substring(1, nextVersion.indexOf('\n'));
   const releaseVersion = '## ' + trimmedVersion + '\n';
 
-  const log = gitReset() && gitCo(`release/${trimmedVersion}`) && gitLog();
+  const branch = gitCo(`release/${trimmedVersion}`) && gitBranch();
+  const log = gitReset() && gitLog(branch);
   const insertFrom = log.findIndex(msg => msg.includes(`release: ${prevVersion}`) || msg.includes(prevChangeLastHash));
   const releaseChanges = log.splice(0, insertFrom < 0 ? log.length : insertFrom)
     .map(msg => msg.substring(2))
@@ -50,7 +51,7 @@ function release() {
 }
 
 function postRelease() {
-  return `git push --set-upstream origin ${GIT_BRANCH} && git push origin $(git describe --abbrev=0)`;
+  return `git push --set-upstream origin ${gitBranch()} && git push origin $(git describe --abbrev=0)`;
 }
 
 function printMarker(title) {

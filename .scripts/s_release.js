@@ -8,9 +8,11 @@ const GIT_BRANCH = shell.exec('git rev-parse --abbrev-ref HEAD', { silent: true 
 const LOG_FORMAT = `- [%h](${GIT_REPO}commit/%h) %s [[%an](${GIT_SERVER}%an)]`;
 const RELEASE_LOG_FILE = path.join(__dirname, '../docs/RELEASES.md');
 const VERSIONS = ['patch', 'minor', 'major'];
+const HASH_REX = /(?<hash>\[[\dA-z]+\])/
 
 const gitReset = () => shell.exec('git reset --hard', { silent: true });
-const gitLog = () => shell.exec(`git log --pretty=format:"${LOG_FORMAT}" --graph ${GIT_BRANCH}`, { silent: true }).stdout.split('\n');
+const gitCo = (br) => shell.exec(`git checkout --b ${br}`, { silent: true });
+const gitLog = () => shell.exec(`git log --pretty=format:"${LOG_FORMAT}" --graph --no-merges ${GIT_BRANCH}`, { silent: true }).stdout.split('\n');
 
 function preRelease(version = VERSIONS[0]) {
   if (!VERSIONS.includes(version)) throw new Error('Invalid version arg: ' + version);
@@ -23,21 +25,23 @@ function preRelease(version = VERSIONS[0]) {
   const releaseLogContent = fs.readFileSync(RELEASE_LOG_FILE, 'utf8');
   const releaseLogHeader = releaseLogContent.split('\n').splice(0, 8).join('\n');
   const prevChanges = releaseLogContent.replace(releaseLogHeader, '').trimLeft();
+  const prevChangeLastHash = HASH_REX.exec(prevChanges) ? HASH_REX.exec(prevChanges).groups.hash : undefined
 
   const releaseDate = '`' + `${yyyy}-${mm}-${dd}` + '`' + '\n';
   const prevVersion = prevChanges.trim().substring(3, prevChanges.indexOf('\n'));
   const nextVersion = shell.exec(`npm --no-git-tag-version version ${version}`, { silent: true }).stdout;
-  const releaseVersion = '## ' + nextVersion.substring(1, nextVersion.indexOf('\n')) + '\n';
+  const trimmedVersion = nextVersion.substring(1, nextVersion.indexOf('\n'));
+  const releaseVersion = '## ' + trimmedVersion + '\n';
 
-  const log = gitReset() && gitLog();
-  const releaseChanges = log.splice(0, log.findIndex(msg => msg.includes(`release: ${prevVersion}`)))
+  const log = gitReset() && gitCo(`release/${trimmedVersion}`) && gitLog();
+  const insertFrom = log.findIndex(msg => msg.includes(`release: ${prevVersion}`) || msg.includes(prevChangeLastHash));
+  const releaseChanges = log.splice(0, insertFrom < 0 ? log.length : insertFrom)
     .map(msg => msg.substring(2))
     .join('\n')
     .concat('\n');
 
   const release = [releaseLogHeader, releaseVersion, releaseDate, releaseChanges, prevChanges];
-
-  fs.outputFileSync(RELEASE_LOG_FILE, release.join('\n'));
+  releaseChanges.trim() && fs.outputFileSync(RELEASE_LOG_FILE, release.join('\n'));
   return `git add . && npm version ${version} -f -m "release: %s"`;
 }
 
@@ -65,7 +69,8 @@ function run(header, command, options) {
   printMarker(`End: ${header}...`)
 }
 
-
+console.time();
 run('Changelog', preRelease(process.argv[2]), { silent: true });
 run('Publish', release(), { silent: true });
 run('Push', postRelease());
+console.timeEnd();

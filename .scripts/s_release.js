@@ -11,7 +11,7 @@ const VERSIONS = ['patch', 'minor', 'major'];
 const HASH_REX = /(?<hash>\[[\dA-z]+\])/
 
 const gitReset = () => shell.exec('git reset --hard', { silent: true });
-const gitCo = (br) => shell.exec(`git checkout --b ${br}`, { silent: true });
+const gitCo = (br) => shell.exec(`git checkout -b ${br}`, { silent: true });
 const gitLog = () => shell.exec(`git log --pretty=format:"${LOG_FORMAT}" --graph --no-merges ${GIT_BRANCH}`, { silent: true }).stdout.split('\n');
 
 function preRelease(version = VERSIONS[0]) {

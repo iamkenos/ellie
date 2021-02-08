@@ -6,6 +6,12 @@
 
 _Note: Gaps between patch versions are faulty, broken or test releases._
 
+## 1.4.2
+
+`2021-02-08`
+
+- [bf52d8a](https://github.com//iamkenos/ellie/commit/bf52d8a) fix: release script typo [[iamkenos](https://github.com/iamkenos)]
+
 ## 1.4.1
 
 `2021-02-08`

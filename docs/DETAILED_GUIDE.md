@@ -168,10 +168,10 @@ Feature: WebDriverIO
     # This is a comment below the scenario description
 
     When I open the url "https://webdriver.io/"
-    Then I expect the ".projectTitle" element text to be "WEBDRIVER I/O"
-      And I expect the page title to be "WebdriverIO · Next-gen browser and mobile automation test framework for Node.js"
+    Then I expect the ".hero__subtitle" element text to contain "Next-gen browser"
+      And I expect the page title to be "WebdriverIO · Next-gen browser and mobile automation test framework for Node.js | WebdriverIO"
     When I click the "//a[text()='Get Started']" element
-    Then I expect the "#docsNav" element to be displayed
+    Then I expect the ".navbar__items" element to be displayed
 
   Scenario: Page object model: meta style
     This is an example of writing tests using page object model.
@@ -179,7 +179,7 @@ Feature: WebDriverIO
     Use the optional page name parameter on applicable built-in steps to access the page meta properties
 
     When I open the "WebdriverIO" page's url
-    Then I expect the "WebdriverIO" page's "Project title" element text to be "WEBDRIVER I/O"
+    Then I expect the "WebdriverIO" page's "Project title" element text to contain "Next-gen browser"
       And I expect the window title to match the "WebdriverIO" page's title
     When I click the "WebdriverIO" page's "Button: Get Started" element
     Then I expect the "WebdriverIO" page's "navBar" element to be displayed
@@ -191,7 +191,7 @@ Feature: WebDriverIO
     This approach is more suitable for implementing custom and more complex steps.
 
     When I open the WebdriverIO page's url
-    Then I expect the WebdriverIO page's project title to be "WEBDRIVER I/O"
+    Then I expect the WebdriverIO page's project title to contain "Next-gen browser"
       And I expect the window title to match the WebdriverIO page's title
     When I click the WebdriverIO page's Get Started button
     Then I expect the the WebdriverIO page's nav bar to be displayed
@@ -241,10 +241,10 @@ To write a single test, you need the bare minimum parts of a feature file:
 
   ```gherkin
   When I open the url "https://webdriver.io/"
-  Then I expect the ".projectTitle" element text to be "WEBDRIVER I/O"
-    And I expect the page title to be "WebdriverIO · Next-gen browser and mobile automation test framework for Node.js"
+  Then I expect the ".hero__subtitle" element text to contain "Next-gen browser"
+    And I expect the page title to be "WebdriverIO · Next-gen browser and mobile automation test framework for Node.js | WebdriverIO"
   When I click the "//a[text()='Get Started']" element
-  Then I expect the "#docsNav" element to be displayed
+  Then I expect the ".navbar__items" element to be displayed
   ```
 
 - seeded step definitions are available [here](./SEEDED_STEPS.md)
@@ -309,14 +309,14 @@ _`webdriverIO.meta.ts`_
 export default {
   default: {
     url: "https://webdriver.io/",
-    title: "WebdriverIO · Next-gen browser and mobile automation test framework for Node.js",
+    title: "WebdriverIO · Next-gen browser and mobile automation test framework for Node.js | WebdriverIO",
     locators: {
       // locator keys can be enclosed in quotes
-      "Project title": ".projectTitle",
+      "Project title": ".hero__subtitle",
       "Button: Get Started": "//a[text()='Get Started']",
 
       // or directly as a property
-      navBar: "#docsNav"
+      navBar: ".navbar__items"
     }
   }
 };
@@ -358,14 +358,14 @@ A meta file should have the following parts:
   ```ts
   default: {
     url: "https://webdriver.io/",
-    title: "WebdriverIO · Next-gen browser and mobile automation test framework for Node.js",
+    title: "WebdriverIO · Next-gen browser and mobile automation test framework for Node.js | WebdriverIO",
     locators: {
       // locator keys can be enclosed in quotes
-      "Project title": ".projectTitle",
+      "Project title": ".hero__subtitle",
       "Button: Get Started": "//a[text()='Get Started']",
 
       // or directly as a property
-      navBar: "#docsNav"
+      navBar: ".navbar__items"
   }
   ```
 
@@ -375,14 +375,14 @@ It is also possible to add various locales which is specially useful for managin
 export default {
   default: {
     url: "https://webdriver.io/",
-    title: "WebdriverIO · Next-gen browser and mobile automation test framework for Node.js",
+    title: "WebdriverIO · Next-gen browser and mobile automation test framework for Node.js | WebdriverIO",
     locators: {
       // locator keys can be enclosed in quotes
-      "Project title": ".projectTitle",
+      "Project title": ".hero__subtitle",
       "Button: Get Started": "//a[text()='Get Started']",
 
       // or directly as a property
-      navBar: "#docsNav"
+      navBar: ".navbar__items"
     }
   },
   chinese: {
@@ -418,7 +418,7 @@ When I open the "WebdriverIO" page's url
 - this step will yield `https://webdriver.io/zh`
 
 ```gherkin
-Then I expect the "WebdriverIO" page's "Project title" element text to be "WEBDRIVER I/O"
+Then I expect the "WebdriverIO" page's "Project title" element text to contain "Next-gen browser"
 ```
 
 - since the `"Project title"` property is not defined in the `chinese` locale, the `default` value will be used
@@ -541,24 +541,24 @@ export function clickGetStarted(): void {
   wdioPage.getStarted().click();
 }
 
-export function checkProjectTitleText(preferred: boolean, value: string): void {
+export function checkProjectTitleTextContains(preferred: boolean, value: string): void {
   // you can create anonymous functions assigned to a variable that returns
   // a custom truthy object (see immported interface). this is useful when you
   // want to create custom assertions and still make use of the framework's internal retry mechanism
-  const isProjectTitleTextEquals = (): ICustomTruthy => {
+  const isProjectTitleTextContains = (): ICustomTruthy => {
     const actual = wdioPage.projectTitle().getText();
     const expected = value;
     return {
       actual: actual,
       expected: expected,
-      result: actual === expected
+      result: actual.includes(expected)
     };
   };
-  driver.checkCustomTruthy(isProjectTitleTextEquals, !preferred);
+  driver.checkCustomTruthy(isProjectTitleTextContains, !preferred);
 
   // the check above is for illustration purposes and can be simplified by
   // using the statement below
-  // wdioPage.projectTitle().checkTextEquals(value, !preferred);
+  // wdioPage.projectTitle().checkTextContains(value, !preferred);
 }
 
 export function checkNavBarDisplayed(preferred: boolean): void {
@@ -605,7 +605,7 @@ A step glue file should have the following parts:
 _`webdriverIO.def.ts`_
 
 ```ts
-import { Then, When } from "cucumber";
+import { Then, When } from "@cucumber/cucumber";
 import { RETRY } from "@iamkenos/ellie";
 import * as webdrverIO from "./webdriverIO.glue";
 
@@ -625,8 +625,8 @@ Then(
 );
 
 Then(
-  /^I expect the WebdriverIO page's project title to( not)? be "([^"]*)?"$/, RETRY,
-  webdrverIO.checkProjectTitleText
+  /^I expect the WebdriverIO page's project title to( not)? contain "([^"]*)?"$/, RETRY,
+  webdrverIO.checkProjectTitleTextContains
 );
 
 Then(
@@ -642,7 +642,7 @@ A step definition file should have the following parts:
 - use member imports to take just what you need to
 
   ```ts
-  import { Then, When } from "cucumber";
+  import { Then, When } from "@cucumber/cucumber";
   ```
 
 ### Step retry import

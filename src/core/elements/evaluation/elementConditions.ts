@@ -1,5 +1,6 @@
 import { AssertionError } from "chai";
 import { WdioCheckElementMethodOptions } from "wdio-image-comparison-service";
+import { Selector } from "webdriverio/build";
 
 import logger from "../../../logger";
 import ElementConditionsResult from "./elementConditionsResult";
@@ -31,7 +32,7 @@ import {
   ValueEmpty,
   ValueEquals
 } from "../conditions";
-import { IElementCondition } from "../../interfaces";
+import { IElementCondition, TElementLocation } from "../../interfaces";
 
 const WAIT_TIMEOUT: number = browser.config.waitforTimeout;
 
@@ -42,9 +43,9 @@ export default class ElementConditions {
 
   private readonly result: ElementConditionsResult;
 
-  private readonly selector: string;
+  private readonly selector: Selector;
 
-  public constructor(selector: string, name? : string) {
+  public constructor(selector: Selector, name? : string) {
     this.conditions = [];
     this.name = name || logger.getCaller();
     this.result = new ElementConditionsResult(selector);
@@ -56,7 +57,7 @@ export default class ElementConditions {
     return this;
   }
 
-  public axisLocationEquals(axis: WebdriverIO.LocationParam, expected: number, preferred: boolean): ElementConditions {
+  public axisLocationEquals(axis: TElementLocation, expected: number, preferred: boolean): ElementConditions {
     this.conditions.push(new AxisLocationEquals(axis, expected, preferred));
     return this;
   }

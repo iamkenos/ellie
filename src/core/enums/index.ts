@@ -4,3 +4,7 @@ export enum ImageCompareContext {
   VIEWPORT,
   PAGE
 }
+
+export const MimeType = {
+  TEXT_PLAIN: "text/plain"
+};

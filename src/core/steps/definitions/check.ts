@@ -1,4 +1,4 @@
-import { Then } from "cucumber";
+import { Then } from "@cucumber/cucumber";
 
 import { RETRY } from "../../utils";
 import elemAttributeContains from "../glue/check/elemAttributeContains";

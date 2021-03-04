@@ -1,8 +1,9 @@
+import { ClickOptions, DragAndDropOptions, MoveToOptions, ParsedCSSValue, TouchActions } from "webdriverio/build";
 import { WdioCheckElementMethodOptions } from "wdio-image-comparison-service";
 
 import logger from "../../logger";
 import ElementConditions from "./evaluation/elementConditions";
-import { IClickOptions } from "../interfaces";
+import { TElementLocation } from "../interfaces";
 import { getAbsoluteXPathScript, getIndexedSelector } from "../utils";
 import { inspect } from "../../cli/utils";
 
@@ -37,7 +38,7 @@ export default class WebElement {
 
   public child$$(xpath: string): WebElement[] {
     const parentSelector = this.child$(xpath).selector;
-    return $$(parentSelector).map((elem, index) => new WebElement(getIndexedSelector(elem.selector, index)));
+    return $$(parentSelector).map((elem, index) => new WebElement(getIndexedSelector(elem.selector as string, index)));
   }
 
   public addValue(value: string | number | boolean | object | any[]): void {
@@ -56,7 +57,7 @@ export default class WebElement {
     browser.execute("arguments[0].click();", elem);
   }
 
-  public click(options?: IClickOptions): void {
+  public click(options?: ClickOptions): void {
     logger.info(`Selector: ${this.selector}${options ? " | Options: " + inspect(options) : ""}`);
     this.existing$().click(options);
   }
@@ -69,7 +70,7 @@ export default class WebElement {
   public focus(): void {
     logger.info(`Selector: ${this.selector}`);
     const elem = this.existing$();
-    browser.execute((elem: WebElement) => elem.focus(), elem);
+    browser.execute((elem: any) => elem.focus(), elem);
   }
 
   public moveAndClick(): void {
@@ -85,7 +86,7 @@ export default class WebElement {
     elem.doubleClick();
   }
 
-  public dragAndDrop(target: string, options?: WebdriverIO.DragAndDropOptions): void {
+  public dragAndDrop(target: string, options?: DragAndDropOptions): void {
     logger.info(`Selector: ${this.selector}`);
     const dest = new ElementConditions(target)
       .existing(true)
@@ -156,7 +157,7 @@ export default class WebElement {
       .runStrict();
   }
 
-  public isAxisLocationEquals(axis: WebdriverIO.LocationParam, expected: number, preferred = true): boolean {
+  public isAxisLocationEquals(axis: TElementLocation, expected: number, preferred = true): boolean {
     logger.info(`Selector: ${this.selector} | Axis: ${axis} | Expected: ${expected} | Reverse: ${!preferred}`);
     return new ElementConditions(this.existing$().selector)
       .axisLocationEquals(axis, expected, preferred)
@@ -164,14 +165,14 @@ export default class WebElement {
       .isSuccess();
   }
 
-  public checkAxisLocationEquals(axis: WebdriverIO.LocationParam, expected: number, preferred = true): void {
+  public checkAxisLocationEquals(axis: TElementLocation, expected: number, preferred = true): void {
     logger.info(`Selector: ${this.selector} | Axis: ${axis} | Expected: ${expected} | Reverse: ${!preferred}`);
     new ElementConditions(this.existing$().selector)
       .axisLocationEquals(axis, expected, preferred)
       .runStrict();
   }
 
-  public getCSSProperty(key: string): WebdriverIO.CSSProperty {
+  public getCSSProperty(key: string): ParsedCSSValue {
     logger.info(`Selector: ${this.selector} | Property: ${key}`);
     return this.existing$().getCSSProperty(key);
   }
@@ -196,7 +197,7 @@ export default class WebElement {
     return this.existing$().getHTML(isSelfIncluded);
   }
 
-  public getLocation(): WebdriverIO.LocationReturn {
+  public getLocation(): number | { x: number; y: number; } {
     logger.info(`Selector: ${this.selector}`);
     return this.existing$().getLocation();
   }
@@ -206,7 +207,7 @@ export default class WebElement {
     return this.existing$().getProperty(key);
   }
 
-  public getSize(): WebdriverIO.SizeReturn {
+  public getSize(): number | { width: number | undefined; height: number | undefined; } | undefined {
     logger.info(`Selector: ${this.selector}`);
     return this.existing$().getSize();
   }
@@ -534,7 +535,7 @@ export default class WebElement {
       .runStrict();
   }
 
-  public moveTo(options?: WebdriverIO.MoveToOptions): void {
+  public moveTo(options?: MoveToOptions): void {
     logger.info(`Selector: ${this.selector} | Options: ${options}`);
     this.existing$().scrollIntoView({ block: "center" });
     this.existing$().moveTo(options);
@@ -560,20 +561,20 @@ export default class WebElement {
     this.existing$().selectByVisibleText(text);
   }
 
-  public setValue(value: string | number | boolean | object | any[]): void {
+  public setValue(value: string): void {
     logger.info(`Selector: ${this.selector} | Value: ${value}`);
     this.existing$().setValue(value);
   }
 
-  public shadow$$(selector: string | Function): WebdriverIO.Element[] {
+  public shadow$$(selector: string): WebdriverIO.Element[] {
     return this.existing$().shadow$$(selector);
   }
 
-  public shadow$(selector: string | Function): WebdriverIO.Element {
+  public shadow$(selector: string): WebdriverIO.Element {
     return this.existing$().shadow$(selector);
   }
 
-  public touchAction(action: WebdriverIO.TouchActions): void {
-    this.existing$().setValue(action);
+  public touchAction(action: TouchActions): void {
+    this.existing$().touchAction(action);
   }
 }

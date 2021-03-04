@@ -1,4 +1,4 @@
-import { Then, When } from "cucumber";
+import { Then, When } from "@cucumber/cucumber";
 import * as demo from "./demo.glue";
 
 When(

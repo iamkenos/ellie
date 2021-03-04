@@ -1,3 +1,5 @@
+import { Capabilities } from "@wdio/types";
+
 import * as fs from "fs-extra";
 import * as path from "path";
 import jsonpath from "jsonpath";
@@ -9,7 +11,7 @@ import { ImageCompareResult } from "webdriver-image-comparison";
 import allure from "@wdio/allure-reporter";
 
 import logger from "../../logger";
-import { ImageCompareContext } from "../enums";
+import { ImageCompareContext, MimeType } from "../enums";
 import { IConfig } from "../../cli/interfaces";
 import {
   IComponentMeta,
@@ -197,28 +199,29 @@ export function getJSONDiff(type: keyof IConfig["comparable"], filename: string,
   if (!comparable.skipCompare) {
     if (!fs.existsSync(expFile)) { return `Baseline JSON file "${expFile}" not found`; }
 
-    allure.addAttachment(`Actual: ${actFile}`, readFileSync(actFile));
-    allure.addAttachment(`Expected: ${expFile}`, readFileSync(expFile));
+    allure.addAttachment(`Actual: ${actFile}`, readFileSync(actFile), MimeType.TEXT_PLAIN);
+    allure.addAttachment(`Expected: ${expFile}`, readFileSync(expFile), MimeType.TEXT_PLAIN);
 
     const differences = getDiff(options);
     if (differences) {
       const diff = JSON.stringify(differences, null, 2);
       fs.outputFileSync(difFile, diff);
-      allure.addAttachment(`Differences: ${difFile}`, readFileSync(difFile));
+      allure.addAttachment(`Differences: ${difFile}`, readFileSync(difFile), MimeType.TEXT_PLAIN);
       return diff;
     }
   } else {
     logger.warn("Skipping comparison for ", actFile);
-    allure.addAttachment(`Actual: ${actFile}`, readFileSync(actFile));
+    allure.addAttachment(`Actual: ${actFile}`, readFileSync(actFile), MimeType.TEXT_PLAIN);
     return "";
   }
 }
 
 export function getImageFile(context: ImageCompareContext, filename: string, elem?: WebdriverIO.Element): IImageSave {
-  const platform = (browser.capabilities.platformName || browser.capabilities.platform).slice(0, 3).toLowerCase();
-  const brName = browser.capabilities.browserName.toLowerCase();
-  const brVersion = browser.capabilities.version || browser.capabilities.browserVersion;
-  const dvName = (browser.capabilities as any).deviceModel || browser.capabilities.deviceName;
+  const capabilities = browser.capabilities as Capabilities.DesiredCapabilities;
+  const platform = (capabilities.platformName || capabilities.platform).slice(0, 3).toLowerCase();
+  const brName = capabilities.browserName.toLowerCase();
+  const brVersion = capabilities.version || capabilities.browserVersion;
+  const dvName = capabilities.deviceName;
 
   // Assumes the browser is used in a device if browser version is undefined
   const subDirectory = `${brName}_${brVersion ? `v${parseInt(brVersion, 10)}` : `${dvName.toLowerCase()}`}`;
@@ -309,6 +312,6 @@ export function sendSyncRequest(request: IHttpRequest): IHttpResponse {
     throw new Error(`Error encountered when sending the request: ${inspect(rs.error)}`);
   }
 
-  allure.addAttachment("Request: ", JSON.stringify(rs.response.request, null, 2));
+  allure.addAttachment("Request: ", JSON.stringify(rs.response.request, null, 2), MimeType.TEXT_PLAIN);
   return rs;
 }

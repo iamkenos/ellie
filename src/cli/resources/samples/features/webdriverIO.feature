@@ -26,10 +26,10 @@ Feature: WebDriverIO
     # This is a comment below the scenario description
 
     When I open the url "https://webdriver.io/"
-    Then I expect the ".projectTitle" element text to be "WEBDRIVER I/O"
-      And I expect the page title to be "WebdriverIO · Next-gen browser and mobile automation test framework for Node.js"
+    Then I expect the ".hero__subtitle" element text to contain "Next-gen browser"
+      And I expect the page title to be "WebdriverIO · Next-gen browser and mobile automation test framework for Node.js | WebdriverIO"
     When I click the "//a[text()='Get Started']" element
-    Then I expect the "#docsNav" element to be displayed
+    Then I expect the ".navbar__items" element to be displayed
 
   Scenario: Page object model: meta style
     This is an example of writing tests using page object model.
@@ -37,7 +37,7 @@ Feature: WebDriverIO
     Use the optional page name parameter on applicable built-in steps to access the page meta properties
 
     When I open the "WebdriverIO" page's url
-    Then I expect the "WebdriverIO" page's "Project title" element text to be "WEBDRIVER I/O"
+    Then I expect the "WebdriverIO" page's "Project title" element text to contain "Next-gen browser"
       And I expect the window title to match the "WebdriverIO" page's title
     When I click the "WebdriverIO" page's "Button: Get Started" element
     Then I expect the "WebdriverIO" page's "navBar" element to be displayed
@@ -49,7 +49,7 @@ Feature: WebDriverIO
     This approach is more suitable for implementing custom and more complex steps.
 
     When I open the WebdriverIO page's url
-    Then I expect the WebdriverIO page's project title to be "WEBDRIVER I/O"
+    Then I expect the WebdriverIO page's project title to contain "Next-gen browser"
       And I expect the window title to match the WebdriverIO page's title
     When I click the WebdriverIO page's Get Started button
     Then I expect the the WebdriverIO page's nav bar to be displayed

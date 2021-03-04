@@ -1,3 +1,4 @@
+import { NewWindowOptions } from "webdriverio/build";
 import { WdioCheckFullPageMethodOptions, WdioCheckScreenMethodOptions } from "wdio-image-comparison-service";
 
 import logger from "../../logger";
@@ -100,7 +101,7 @@ export default abstract class Driver {
     browser.maximizeWindow();
   }
 
-  public static newWindow(url: string, options?: WebdriverIO.NewWindowOptions): void {
+  public static newWindow(url: string, options?: NewWindowOptions): void {
     logger.info(`URL: ${url} | Options: ${options}`);
     browser.newWindow(url, options);
   }

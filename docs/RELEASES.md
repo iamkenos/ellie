@@ -6,6 +6,13 @@
 
 _Note: Gaps between patch versions are faulty, broken or test releases._
 
+## 2.0.0
+
+`2021-03-05`
+
+- [e4348be](https://github.com//iamkenos/ellie/commit/e4348be) refactor: wdio7 upgrade [[iamkenos](https://github.com/iamkenos)]
+- [447b8f6](https://github.com//iamkenos/ellie/commit/447b8f6) fix: moar release script fixes [[iamkenos](https://github.com/iamkenos)]
+
 ## 1.4.2
 
 `2021-02-08`

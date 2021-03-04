@@ -1,4 +1,4 @@
-import { Then, When } from "cucumber";
+import { Then, When } from "@cucumber/cucumber";
 import { RETRY } from "@iamkenos/ellie";
 import * as webdrverIO from "./webdriverIO.glue";
 
@@ -18,8 +18,8 @@ Then(
 );
 
 Then(
-  /^I expect the WebdriverIO page's project title to( not)? be "([^"]*)?"$/, RETRY,
-  webdrverIO.checkProjectTitleText
+  /^I expect the WebdriverIO page's project title to( not)? contain "([^"]*)?"$/, RETRY,
+  webdrverIO.checkProjectTitleTextContains
 );
 
 Then(

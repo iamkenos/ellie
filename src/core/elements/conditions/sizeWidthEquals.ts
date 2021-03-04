@@ -19,7 +19,7 @@ export default class SizeWidthEquals implements IElementCondition {
     let result: boolean;
 
     try {
-      const size = $(selector).getSize();
+      const size = $(selector).getSize() as { width: number; height: number; };
       actual = `${size.width}px`;
       result = this.preferred ? actual === this.expected : actual !== this.expected;
     } catch (e) {

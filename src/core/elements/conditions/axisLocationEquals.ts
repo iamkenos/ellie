@@ -1,16 +1,16 @@
+import { DragAndDropCoordinate } from "webdriverio/build";
 import logger from "../../../logger";
-import { IElementCondition, IExpectedConditionResult } from "../../interfaces";
-
+import { IElementCondition, IExpectedConditionResult, TElementLocation } from "../../interfaces";
 export default class AxisLocationEquals implements IElementCondition {
   readonly name: string;
 
-  private readonly axis: WebdriverIO.LocationParam;
+  private readonly axis: TElementLocation;
 
   private readonly expected: number;
 
   private readonly preferred: boolean;
 
-  public constructor(axis: WebdriverIO.LocationParam, expected: number, preferred: boolean) {
+  public constructor(axis: TElementLocation, expected: number, preferred: boolean) {
     this.name = logger.getCaller(true);
     this.axis = axis;
     this.expected = expected;
@@ -18,7 +18,7 @@ export default class AxisLocationEquals implements IElementCondition {
   }
 
   public evaluate(selector: string): IExpectedConditionResult {
-    let actual: number;
+    let actual: number | DragAndDropCoordinate;
     let result: boolean;
 
     try {

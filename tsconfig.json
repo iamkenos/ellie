@@ -11,11 +11,11 @@
     "removeComments": false,
     "skipLibCheck": true,
     "sourceMap": true,
-    "target": "ES5",
+    "target": "es2019",
     "types": [
       "node",
       "@types/jest",
-      "@wdio/sync",
+      "webdriverio/sync",
       "@wdio/cucumber-framework",
       "wdio-intercept-service",
       "wdio-image-comparison-service"

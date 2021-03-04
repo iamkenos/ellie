@@ -22,7 +22,8 @@ export default class CSSPropertyExists implements IElementCondition {
     let result: boolean;
 
     try {
-      actual = !!$(selector).getCSSProperty(this.cssProperty);
+      const prop = $(selector).getCSSProperty(this.cssProperty);
+      actual = prop.value !== "" && prop.parsed !== {};
       result = actual === this.expected;
     } catch (e) {
       actual = e.message;

@@ -1,11 +1,12 @@
+import { Selector } from "webdriverio/build";
 import { IExpectedConditionResult } from "../../interfaces";
 
 export default class ElementConditionsResult {
   private results: Map<string, IExpectedConditionResult>;
 
-  private readonly selector: string;
+  private readonly selector: Selector;
 
-  public constructor(selector: string) {
+  public constructor(selector: Selector) {
     this.results = new Map();
     this.selector = selector;
   }

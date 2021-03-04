@@ -13,7 +13,7 @@ export default class WebElements {
   public toArray(): WebElement[] {
     logger.info(`Selector: ${this.selector}`);
     return $$(this.selector).map((elem, index) =>
-      new WebElement(getIndexedSelector(elem.selector, index)));
+      new WebElement(getIndexedSelector(elem.selector as string, index)));
   }
 
   public getElementMatchingAttribute(key: string, value: string): WebElement {

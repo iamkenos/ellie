@@ -1,9 +1,12 @@
+import { Selector } from "webdriverio/build";
 import { CoreOptions, Response, UrlOptions } from "request";
 import { ImageCompareContext } from "../enums";
 import { WdioCheckElementMethodOptions, WdioCheckFullPageMethodOptions, WdioCheckScreenMethodOptions } from "wdio-image-comparison-service";
 import { PreFilterFunction } from "deep-diff";
 
 export type UnionToIntersection<U> = (U extends any ? (k: U) => void : never) extends ((k: infer I) => void) ? I : never
+
+export type TElementLocation = "x" | "y"
 
 export interface IBrowserCondition {
   name: string;
@@ -12,7 +15,7 @@ export interface IBrowserCondition {
 
 export interface IElementCondition {
   name: string;
-  evaluate(selector: string): IExpectedConditionResult;
+  evaluate(selector: Selector): IExpectedConditionResult;
 }
 
 export interface IHttpResponse {
@@ -34,12 +37,6 @@ export interface IPageMeta {
 export interface IComponentMeta {
   default: Partial<TMeta>,
   [key: string]: Partial<TMeta>,
-}
-
-export interface IClickOptions {
-  button?: 0 | "left" | 1 | "middle" | 2 | "right";
-  x?: number;
-  y?: number;
 }
 
 export interface IExpectedConditionResult {

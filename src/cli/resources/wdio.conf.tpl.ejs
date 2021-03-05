@@ -135,19 +135,19 @@ exports.config = {
     // }
     // Sample capability for BrowserStack
     // {
-    //   browserName: "Chrome",
-    //   browserVersion: "87",
-    //   "goog:chromeOptions": { args: ["--disable-web-security", "--incognito"] },
-    //   "bstack:options": {
-    //     projectName: "ellie",
-    //     buildName: "demo: browserstack tests",
-    //     os: "OS X",
-    //     osVersion: "Catalina",
-    //     local: "true",
-    //     seleniumVersion: "3.141.59",
-    //     seleniumLogs: "false",
-    //     resolution: "1920x1080",
-    //     timezone: "Singapore"
+    //   browserName: 'Chrome',
+    //   browserVersion: '87',
+    //   'goog:chromeOptions': { args: ['--disable-web-security', '--incognito'] },
+    //   'bstack:options': {
+    //     projectName: 'ellie',
+    //     buildName: 'demo: browserstack tests',
+    //     os: 'OS X',
+    //     osVersion: 'Catalina',
+    //     local: 'true',
+    //     seleniumVersion: '3.141.59',
+    //     seleniumLogs: 'false',
+    //     resolution: '1920x1080',
+    //     timezone: 'Singapore'
     //   }
     // }
     // If outputDir is provided WebdriverIO can capture driver session logs
@@ -259,7 +259,7 @@ exports.config = {
     require: [
       <%- answers.steps.map(i => JSON.stringify(i)) %>
     ],
-    // <string[]> ("extension:module") require files with the given EXTENSION after requiring MODULE (repeatable)
+    // <string[]> ('extension:module') require files with the given EXTENSION after requiring MODULE (repeatable)
     requireModule: [ 'tsconfig-paths/register' ],
     // <boolean> show full backtrace for errors
     backtrace: false,
@@ -360,12 +360,14 @@ exports.config = {
    * @param {Array.<String>} specs List of spec file paths that are to be run
    */
   before: function (capabilities, specs) {
+    require('tsconfig-paths/register');
+
     // see: https://webdriver.io/docs/timeouts.html#selenium-timeouts
     browser.setTimeout({ pageLoad: <%= answers.pageLoadimeout %>,  implicit: <%= answers.implicitTimeout %> });
     // allow download over headless chrome;
     // see answer from `maveco69` on https://github.com/TheBrainFamily/chimpy/issues/108
     // const downloads = path.join(browser.config.directory, browser.config.custom.downloadsDir);
-    // browser.sendCommand("Page.setDownloadBehavior", { behavior: "allow", downloadPath: downloads });
+    // browser.sendCommand('Page.setDownloadBehavior', { behavior: 'allow', downloadPath: downloads });
     // fse.removeSync(downloads);
     // fse.mkdirsSync(downloads);
     <% if (answers.hooks.before) { %>

@@ -6,6 +6,15 @@
 
 _Note: Gaps between patch versions are faulty, broken or test releases._
 
+## 2.0.1
+
+`2021-03-05`
+
+- [7beaeaa](https://github.com//iamkenos/ellie/commit/7beaeaa) fix: husky5 migration [[iamkenos](https://github.com/iamkenos)]
+- [d3fc0cc](https://github.com//iamkenos/ellie/commit/d3fc0cc) fix: typedefs on tsconfig template and some fixes on wdio conf template [[iamkenos](https://github.com/iamkenos)]
+- [7baac13](https://github.com//iamkenos/ellie/commit/7baac13) test: some more ut prepwork [[iamkenos](https://github.com/iamkenos)]
+- [4555505](https://github.com//iamkenos/ellie/commit/4555505) deps: patch updates [[iamkenos](https://github.com/iamkenos)]
+
 ## 2.0.0
 
 `2021-03-05`

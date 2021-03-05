@@ -1,6 +1,6 @@
 {
   "name": "@iamkenos/ellie",
-  "version": "2.0.0",
+  "version": "2.0.1",
   "license": "MIT",
   "author": "iamkenos",
   "description": "An abstraction of the popular WebdriverIO test automation framework",

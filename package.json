@@ -34,7 +34,8 @@
     "test:demo:bs": "start-test demo:serve 8080 demo:test:bs",
     "test:samples": "./bin/ellie.js src/cli/resources/samples/ellie.conf.ts",
     "test:unit": "jest --config .jestrc.json --coverage",
-    "release": "npm run build && node ./.scripts/s_release.js"
+    "release": "npm run build && node ./.scripts/s_release.js",
+    "prepare": "husky install"
   },
   "dependencies": {
     "@wdio/allure-reporter": "7.0.7",

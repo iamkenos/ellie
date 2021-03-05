@@ -1,2 +1,2 @@
-import * as rimraf from "rimraf";
-rimraf.sync("./test/.coverage");
+import { sync } from "rimraf";
+sync("./test/.coverage");

@@ -105,6 +105,6 @@
     "shelljs": "0.8.4",
     "shx": "0.3.3",
     "start-server-and-test": "1.12.0",
-    "ts-jest": "26.5.3"
+    "ts-jest": "26.5.5"
   }
 }

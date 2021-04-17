@@ -1,4 +1,4 @@
-import { Selector } from "webdriverio/build";
+import { Selector } from "webdriverio";
 import { IExpectedConditionResult } from "../../interfaces";
 
 export default class ElementConditionsResult {
@@ -19,17 +19,16 @@ export default class ElementConditionsResult {
     return Array.from(this.results.values()).every(result => result.isSuccess && true);
   }
 
-  public getErrorMessage(expression: string, timeout: number): string {
+  public getErrorMessage(expression: string, timeout: number, e: Error): string {
     const results = Array.from(this.results.values());
     const success = results.filter(result => result.isSuccess === true).length;
     const total = results.length;
-
     return `
   Element expected conditions not met after waiting for ${timeout}ms
   Expression: ${expression}
   Selector: ${this.selector}
   Evaluation Summary: ${success}/${total}
-  ${results.map(result => result.message).join("------------------------------")}`;
+  ${total === 0 ? e.message : results.map(result => result.message).join("------------------------------")}`;
   }
 
   public getElement(): WebdriverIO.Element {

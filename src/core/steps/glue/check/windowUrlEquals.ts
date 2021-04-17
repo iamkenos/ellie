@@ -1,10 +1,12 @@
 import { driver } from "../../../browser";
-import { getPageUrl } from "../../../utils";
+import { getMetaUrl } from "../../../utils";
 
 export default (preferred: string, expected: string, page: string): void => {
   if (expected) {
     driver.checkUrlEquals(expected, !preferred);
+  } else if (page) {
+    driver.checkUrlEquals(getMetaUrl(page), !preferred);
   } else {
-    driver.checkUrlEquals(getPageUrl(page), !preferred);
+    driver.checkUrlEquals(browser.config.baseUrl!, !preferred);
   }
 };

@@ -6,6 +6,7 @@ import logger from "../logger";
 import { CONFIG_OPTIONS } from "./config";
 import { endureAndSurvive } from "./commands/babygirl";
 import { createLocalConfig, createWdioConfig } from "./commands/init";
+import { allure } from "./commands/report";
 import { generateSamples } from "./commands/whistle";
 import { inspect } from "./utils";
 require("ts-node/register");
@@ -35,6 +36,12 @@ export default (args: Arguments<any>): any => {
   // then run the config helper
   if (firstArg === "init") {
     return createLocalConfig();
+  }
+
+  // if the first argument is "report"
+  // then launch the allure reporter
+  if (firstArg === "report") {
+    return allure();
   }
 
   // if the first argument is "whistle"

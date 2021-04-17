@@ -1,5 +1,7 @@
-import { logger } from "@iamkenos/ellie";
-
 export default (): void => {
-  logger.setLevel(browser.config.logLevel);
+  console.log(`
+  --------------------------------------------------------------------------
+  ---- you can use hooks like this
+  --------------------------------------------------------------------------
+  `);
 };

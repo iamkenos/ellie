@@ -14,7 +14,7 @@ export default class ImageMatch implements IElementCondition {
 
   private readonly preferred: boolean;
 
-  private readonly options: WdioCheckElementMethodOptions;
+  private readonly options: WdioCheckElementMethodOptions | undefined;
 
   public constructor(filename: string, preferred: boolean, options?: WdioCheckElementMethodOptions) {
     this.name = logger.getCaller(true);

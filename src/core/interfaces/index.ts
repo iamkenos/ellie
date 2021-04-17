@@ -1,4 +1,4 @@
-import { Selector } from "webdriverio/build";
+import { Selector } from "webdriverio";
 import { CoreOptions, Response, UrlOptions } from "request";
 import { ImageCompareContext } from "../enums";
 import { WdioCheckElementMethodOptions, WdioCheckFullPageMethodOptions, WdioCheckScreenMethodOptions } from "wdio-image-comparison-service";
@@ -6,7 +6,11 @@ import { PreFilterFunction } from "deep-diff";
 
 export type UnionToIntersection<U> = (U extends any ? (k: U) => void : never) extends ((k: infer I) => void) ? I : never
 
-export type TElementLocation = "x" | "y"
+export type TElementCoordinates = "x" | "y"
+
+export type TElementSize = { width?: number; height?: number; }
+
+export type TElementLocation = { x: number; y: number; }
 
 export interface IBrowserCondition {
   name: string;
@@ -27,16 +31,18 @@ export interface IHttpRequest {
   options: CoreOptions & UrlOptions;
 }
 
-type TMeta = { url: string; title: string; locators: { [key: string]: string }, [key: string]: any }
+type TPageMetaProps = { url: string; title: string; locators: { [key: string]: string }, [key: string]: any }
+
+type TComponentMetaProps = { locators: { [key: string]: string }, [key: string]: any }
 
 export interface IPageMeta {
-  default: TMeta,
-  [key: string]: Partial<TMeta>
+  default: TPageMetaProps,
+  [key: string]: Partial<TPageMetaProps>
 }
 
 export interface IComponentMeta {
-  default: Partial<TMeta>,
-  [key: string]: Partial<TMeta>,
+  default: TComponentMetaProps,
+  [key: string]: TComponentMetaProps,
 }
 
 export interface IExpectedConditionResult {

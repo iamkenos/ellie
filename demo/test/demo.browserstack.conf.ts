@@ -3,7 +3,7 @@ import base from "./demo.conf";
 import dotenv from "dotenv";
 dotenv.config();
 
-const config: IConfig = Object.assign({}, base, {
+const config: Partial<IConfig> = Object.assign({}, base, {
   browserstackEnabled: true,
   browserstackLocal: true,
   user: process.env.BROWSERSTACK_USER,

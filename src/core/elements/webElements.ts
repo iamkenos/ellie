@@ -1,7 +1,7 @@
 import logger from "../../logger";
 import WebElement from "./webElement";
 import ElementConditions from "./evaluation/elementConditions";
-import { getIndexedSelector } from "../utils";
+import SelectorBuilder from "./selectorBuilder";
 
 export default class WebElements {
   public selector: string;
@@ -13,7 +13,7 @@ export default class WebElements {
   public toArray(): WebElement[] {
     logger.info(`Selector: ${this.selector}`);
     return $$(this.selector).map((elem, index) =>
-      new WebElement(getIndexedSelector(elem.selector as string, index)));
+      new WebElement(new SelectorBuilder(elem.selector as string).build(index + 1)));
   }
 
   public getElementMatchingAttribute(key: string, value: string): WebElement {
@@ -32,6 +32,26 @@ export default class WebElements {
 
     if (!element) {
       throw new Error(`WebElement matching the text "${text}" not found on ${this.selector}`);
+    }
+    return element;
+  }
+
+  public getElementContainingAttribute(key: string, value: string): WebElement {
+    logger.info(`Selector: ${this.selector} | Attribute: ${key} | Value: ${value}`);
+    const element = this.toArray().find(elem => elem.getAttribute(key).includes(value));
+
+    if (!element) {
+      throw new Error(`WebElement containing the attribute "${key}" as "${value}" not found on ${this.selector}`);
+    }
+    return element;
+  }
+
+  public getElementContainingText(text: string): WebElement {
+    logger.info(`Selector: ${this.selector} | Text: ${text}`);
+    const element = this.toArray().find(elem => elem.getText().includes(text));
+
+    if (!element) {
+      throw new Error(`WebElement containing the text "${text}" not found on ${this.selector}`);
     }
     return element;
   }

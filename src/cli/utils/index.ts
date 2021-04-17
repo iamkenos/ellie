@@ -36,7 +36,7 @@ export function resolveFiles(baseDir: string, fileGlob: string[], isStrict = tru
   const resolved = new Set<string>();
 
   fileGlob.filter(Boolean).forEach((i: string): void => {
-    const filePath: string = path.resolve(path.join(baseDir, i));
+    const filePath: string = path.isAbsolute(i) ? i : path.resolve(path.join(baseDir, i));
     const files: string[] = glob.sync(filePath);
 
     if (files.length === 0) {

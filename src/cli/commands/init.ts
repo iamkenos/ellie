@@ -5,6 +5,7 @@ import * as inquirer from "inquirer";
 import * as path from "path";
 
 import logger from "../../logger";
+import { merge } from "lodash";
 import { LEVELS } from "../../logger/config";
 import {
   CONFIG_HELPER_INTRO,
@@ -23,7 +24,7 @@ import { IConfig } from "../interfaces";
 
 function createFromTemplate(source: any, templateFile: string, outputFile: string): string {
   const fmt = readFileSync(path.join(__dirname, "../", PRETTIER_SETTINGS_FILE));
-  const renderedFmt = { ...JSON.parse(fmt), parser: "babel" };
+  const renderedFmt = { ...JSON.parse(fmt), singleQuotes: true, parser: "babel" };
 
   const tpl = readFileSync(path.join(__dirname, "../", templateFile));
   const renderedTpl = ejs.render(tpl, { answers: source });
@@ -45,6 +46,7 @@ export async function createLocalConfig(): Promise<any> {
     console.log(CONFIG_HELPER_INTRO.trim());
 
     const answers = await inquirer.prompt(CONFIG_INQUIRY).then(answers => {
+      // @ts-ignore
       if (answers.browserstackEnabled === false) { delete DEFAULT.user; delete DEFAULT.key; }
       answers.pages = answers.pages.split(",");
       answers.specs = answers.specs.split(",");
@@ -59,9 +61,9 @@ export async function createLocalConfig(): Promise<any> {
     console.log(CONFIG_HELPER_SUCCESS_MESSAGE.trim());
 
     process.exit(0);
-  } catch (error) {
-    logger.error(error);
-    throw new Error(error);
+  } catch (e) {
+    logger.error(e);
+    throw new Error(e);
   }
 }
 
@@ -83,10 +85,15 @@ export function createWdioConfig(sourceFile: string, overrides: any): string {
     const parsed = {
       ...config,
       directory: configDir,
-      comparable: resolveComparableOutDirs(configDir, { ...DEFAULT.comparable, ...config.comparable }),
-      pages: resolveFiles(configDir, config.pages, false),
+      comparable: resolveComparableOutDirs(configDir, merge({}, DEFAULT.comparable, config.comparable)),
+      meta: [
+        ...resolveFiles(configDir, config.meta, false)
+      ],
       specs: resolveFiles(configDir, config.specs),
-      steps: [...resolveFiles(__dirname, [CORE_STEP_DEFS_GLOB]), ...resolveFiles(configDir, config.steps, false)],
+      steps: [
+        ...resolveFiles(__dirname, [CORE_STEP_DEFS_GLOB]),
+        ...resolveFiles(configDir, config.steps, false)
+      ],
       reportOutDir: path.join(configDir, config.reportOutDir)
     };
 
@@ -96,8 +103,8 @@ export function createWdioConfig(sourceFile: string, overrides: any): string {
     logger.debug("Parsed config:\n%s", inspect(parsed));
 
     return wdioFile;
-  } catch (error) {
-    logger.error(error);
-    throw new Error(error);
+  } catch (e) {
+    logger.error(e);
+    throw new Error(e);
   }
 }

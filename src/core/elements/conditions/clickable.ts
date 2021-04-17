@@ -1,26 +1,26 @@
 import logger from "../../../logger";
 import { IElementCondition, IExpectedConditionResult } from "../../interfaces";
 
-export default class ValueEquals implements IElementCondition {
+export default class Clickable implements IElementCondition {
   readonly name: string;
 
-  private readonly expected: string;
+  private readonly expected: boolean;
 
   private readonly preferred: boolean;
 
-  public constructor(expected: string, preferred: boolean) {
+  public constructor(preferred: boolean) {
     this.name = logger.getCaller(true);
-    this.expected = expected || "";
+    this.expected = preferred;
     this.preferred = preferred;
   }
 
   public evaluate(selector: string): IExpectedConditionResult {
-    let actual: string;
+    let actual: boolean;
     let result: boolean;
 
     try {
-      actual = $(selector).getValue();
-      result = this.preferred ? actual === this.expected : actual !== this.expected;
+      actual = $(selector).isClickable();
+      result = actual === this.expected;
     } catch (e) {
       actual = e.message;
       result = false;

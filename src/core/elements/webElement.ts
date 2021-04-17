@@ -1,17 +1,93 @@
-import { ClickOptions, DragAndDropOptions, MoveToOptions, ParsedCSSValue, TouchActions } from "webdriverio/build";
-import { WdioCheckElementMethodOptions } from "wdio-image-comparison-service";
+import { ClickOptions, DragAndDropOptions, MoveToOptions, ParsedCSSValue, TouchActions } from "webdriverio";
+import { WdioCheckElementMethodOptions as ElementImageCheckOptions } from "wdio-image-comparison-service";
 
 import logger from "../../logger";
 import ElementConditions from "./evaluation/elementConditions";
-import { TElementLocation } from "../interfaces";
-import { getAbsoluteXPathScript, getIndexedSelector } from "../utils";
+import SelectorBuilder from "./selectorBuilder";
+import { TElementCoordinates, TElementLocation, TElementSize } from "../interfaces";
+import { JS_ELEM_EXEC_FUNC, JS_ELEM_SET_ATTRIB, JS_GET_ABSOLUTE_XPATH, JS_GET_PROP, JS_MOUSE_CLICK } from "../browser/scripts";
 import { inspect } from "../../cli/utils";
 
 export default class WebElement {
+  public readonly parent: string;
   public selector: string;
 
   public constructor(selector: string) {
     this.selector = selector;
+    this.parent = "";
+  }
+
+  public getPrevious<T extends WebElement>(levels? :number, Sub?: new (parent: string) => T): T {
+    const selector = new SelectorBuilder(this.selector).previous(levels).build();
+    const instance = Sub ? new Sub(this.parent) : new WebElement(selector);
+    instance.selector = selector;
+    return instance as T;
+  }
+
+  public getNext<T extends WebElement>(levels? :number, tag?: string, Sub?: new (parent: string) => T): T {
+    const selector = new SelectorBuilder(this.selector).next(levels, tag).build();
+    const instance = Sub ? new Sub(this.parent) : new WebElement(selector);
+    instance.selector = selector;
+    return instance as T;
+  }
+
+  public getByIndex<T extends WebElement>(index = 1, Sub?: new (parent: string) => T): T {
+    const selector = new SelectorBuilder(this.selector).build(index);
+    const instance = Sub ? new Sub(this.parent) : new WebElement(selector);
+    instance.selector = selector;
+    return instance as T;
+  }
+
+  public getByExactAttribute<T extends WebElement>(key: string, value: string, Sub?: new (parent: string) => T): T {
+    const selector = new SelectorBuilder(this.selector).attributeEquals(key, value).build();
+    const instance = Sub ? new Sub(this.parent) : new WebElement(selector);
+    instance.selector = selector;
+    return instance as T;
+  }
+
+  public getByExactLabel<T extends WebElement>(value:string, Sub?: new (parent: string) => T): T {
+    return this.getByExactAttribute("label", value, Sub);
+  }
+
+  public getByName<T extends WebElement>(value:string, Sub?: new (parent: string) => T): T {
+    return this.getByExactAttribute("name", value, Sub);
+  }
+
+  public getById<T extends WebElement>(value:string, Sub?: new (parent: string) => T): T {
+    return this.getByExactAttribute("id", value, Sub);
+  }
+
+  public getByExactText<T extends WebElement>(value:string, Sub?: new (parent: string) => T): T {
+    const selector = new SelectorBuilder(this.selector).textEquals(value).build();
+    const instance = Sub ? new Sub(this.parent) : new WebElement(selector);
+    instance.selector = selector;
+    return instance as T;
+  }
+
+  public getByDescendantExactText<T extends WebElement>(value:string, Sub?: new (parent: string) => T): T {
+    const selector = new SelectorBuilder(this.selector).descendantOrSelf().textEquals(value).build();
+    const instance = Sub ? new Sub(this.parent) : new WebElement(selector);
+    // @ts-ignore
+    if (Sub) instance.selector = new SelectorBuilder(selector).ancestorOrSelf(instance.tag).build();
+    return instance as T;
+  }
+
+  public getByDescendantPartialText<T extends WebElement>(value:string, Sub?: new (parent: string) => T): T {
+    const selector = new SelectorBuilder(this.selector).descendantOrSelf().textContains(value).build();
+    const instance = Sub ? new Sub(this.parent) : new WebElement(selector);
+    // @ts-ignore
+    if (Sub) instance.selector = new SelectorBuilder(selector).ancestorOrSelf(instance.tag).build();
+    return instance as T;
+  }
+
+  public getByPartialClass<T extends WebElement>(values: string[], Sub?: new (parent: string) => T) {
+    const classes = values.filter(Boolean);
+    let builder = new SelectorBuilder(this.selector);
+    classes.forEach(c => (builder = builder.attributeContains("class", c)));
+    const selector = builder.build();
+    const instance = Sub ? new Sub(this.parent) : new WebElement(selector);
+    instance.selector = selector;
+    return instance as T;
   }
 
   public existing$(): WebdriverIO.Element {
@@ -31,14 +107,23 @@ export default class WebElement {
 
   public child$(xpath: string): WebElement {
     const parent = this.existing$();
-    const parentSelector = browser.execute(getAbsoluteXPathScript(), parent);
+    const parentSelector = browser.execute(JS_GET_ABSOLUTE_XPATH, parent);
     const childSelector = parentSelector + xpath;
     return new WebElement(childSelector);
   }
 
   public child$$(xpath: string): WebElement[] {
     const parentSelector = this.child$(xpath).selector;
-    return $$(parentSelector).map((elem, index) => new WebElement(getIndexedSelector(elem.selector as string, index)));
+    return $$(parentSelector).map((elem, index) =>
+      new WebElement(new SelectorBuilder(elem.selector as string).build(index + 1)));
+  }
+
+  public sendKeys(value: string[]): void {
+    logger.info(`Selector: ${this.selector} | Value: ${value}`);
+    this.focus();
+    browser.pause(200);
+    browser.keys(value);
+    browser.pause(200);
   }
 
   public addValue(value: string | number | boolean | object | any[]): void {
@@ -54,7 +139,23 @@ export default class WebElement {
   public jsClick(): void {
     logger.info(`Selector: ${this.selector}`);
     const elem = this.existing$();
-    browser.execute("arguments[0].click();", elem);
+    browser.execute(JS_MOUSE_CLICK, elem);
+  }
+
+  public clickUntil(condition: ElementConditions, options?: ClickOptions): void {
+    logger.info(`Selector: ${this.selector}${options ? " | Options: " + inspect(options) : ""}`);
+    const action = () => this.click(options);
+
+    condition.name = `${logger.getCaller(true, 1)} - ${condition.name}`;
+    condition.runStrict(action);
+  }
+
+  public jsClickUntil(condition: ElementConditions): void {
+    logger.info(`Selector: ${this.selector}`);
+    const action = () => this.jsClick();
+
+    condition.name = `${logger.getCaller(true, 1)} - ${condition.name}`;
+    condition.runStrict(action);
   }
 
   public click(options?: ClickOptions): void {
@@ -86,21 +187,28 @@ export default class WebElement {
     elem.doubleClick();
   }
 
-  public dragAndDrop(target: string, options?: DragAndDropOptions): void {
+  public dragAndDrop(target: string | TElementLocation, options?: DragAndDropOptions): void {
     logger.info(`Selector: ${this.selector}`);
-    const dest = new ElementConditions(target)
-      .existing(true)
-      .runStrict()
-      .getElement();
+    const dest = typeof target === "string"
+      ? new ElementConditions(target)
+        .existing(true)
+        .runStrict()
+        .getElement()
+      : target;
 
-    this.moveTo();
+    typeof target === "string" && this.moveTo();
     this.existing$().dragAndDrop(dest, options);
   }
 
-  public executeFunction(funcName: string) {
+  public executeFunction(funcName: string, await = false) {
     logger.info(`Selector: ${this.selector} | Function: ${funcName}`);
     const elem = this.existing$();
-    browser.execute(`arguments[0]['${funcName}']()`, elem);
+    return browser.execute(JS_ELEM_EXEC_FUNC(funcName, await), elem);
+  }
+
+  public getProp(prop: string): string {
+    logger.info(`Selector: ${this.selector} | Property: ${prop}`);
+    return browser.execute(JS_GET_PROP, this.existing$(), prop);
   }
 
   public getAttribute(key: string): string {
@@ -157,7 +265,7 @@ export default class WebElement {
       .runStrict();
   }
 
-  public isAxisLocationEquals(axis: TElementLocation, expected: number, preferred = true): boolean {
+  public isAxisLocationEquals(axis: TElementCoordinates, expected: number, preferred = true): boolean {
     logger.info(`Selector: ${this.selector} | Axis: ${axis} | Expected: ${expected} | Reverse: ${!preferred}`);
     return new ElementConditions(this.existing$().selector)
       .axisLocationEquals(axis, expected, preferred)
@@ -165,7 +273,7 @@ export default class WebElement {
       .isSuccess();
   }
 
-  public checkAxisLocationEquals(axis: TElementLocation, expected: number, preferred = true): void {
+  public checkAxisLocationEquals(axis: TElementCoordinates, expected: number, preferred = true): void {
     logger.info(`Selector: ${this.selector} | Axis: ${axis} | Expected: ${expected} | Reverse: ${!preferred}`);
     new ElementConditions(this.existing$().selector)
       .axisLocationEquals(axis, expected, preferred)
@@ -197,19 +305,19 @@ export default class WebElement {
     return this.existing$().getHTML(isSelfIncluded);
   }
 
-  public getLocation(): number | { x: number; y: number; } {
+  public getLocation(): TElementLocation {
     logger.info(`Selector: ${this.selector}`);
-    return this.existing$().getLocation();
+    return this.existing$().getLocation() as TElementLocation;
   }
 
-  public getProperty(key: string): object | string | boolean | number {
+  public getProperty(key: string) {
     logger.info(`Selector: ${this.selector} | Property: ${key}`);
     return this.existing$().getProperty(key);
   }
 
-  public getSize(): number | { width: number | undefined; height: number | undefined; } | undefined {
+  public getSize(): TElementSize {
     logger.info(`Selector: ${this.selector}`);
-    return this.existing$().getSize();
+    return this.existing$().getSize() as TElementSize;
   }
 
   public getTagName(): string {
@@ -432,7 +540,7 @@ export default class WebElement {
     logger.info(`Selector: ${this.selector} | Reverse: ${!preferred}`);
     return new ElementConditions(this.selector)
       .existing(preferred)
-      .run(timeout)
+      .run(undefined, timeout)
       .isSuccess();
   }
 
@@ -459,8 +567,15 @@ export default class WebElement {
   }
 
   public isImageMatchRef(
-    filename: string, preferred = true, options: WdioCheckElementMethodOptions = undefined): boolean {
+    filename: string, preferred = true, options?: ElementImageCheckOptions, hook: "move" | "scroll" | "none" = "move"): boolean {
     logger.info(`Selector: ${this.selector} | File: ${filename} | Options: ${inspect(options)} | Reverse: ${!preferred}`);
+
+    if (hook === "move") {
+      this.moveTo();
+    } else if (hook === "scroll") {
+      this.scrollIntoView();
+    }
+
     return new ElementConditions(this.existing$().selector)
       .imageMatch(filename, preferred, options)
       .run()
@@ -468,8 +583,15 @@ export default class WebElement {
   }
 
   public checkImageMatchRef(
-    filename: string, preferred = true, options: WdioCheckElementMethodOptions = undefined): void {
+    filename: string, preferred = true, options?: ElementImageCheckOptions, hook: "move" | "scroll" | "none" = "move"): void {
     logger.info(`Selector: ${this.selector} | File: ${filename} | Options: ${inspect(options)} | Reverse: ${!preferred}`);
+
+    if (hook === "move") {
+      this.moveTo();
+    } else if (hook === "scroll") {
+      this.scrollIntoView();
+    }
+
     new ElementConditions(this.existing$().selector)
       .imageMatch(filename, preferred, options)
       .runStrict();
@@ -564,6 +686,12 @@ export default class WebElement {
   public setValue(value: string): void {
     logger.info(`Selector: ${this.selector} | Value: ${value}`);
     this.existing$().setValue(value);
+  }
+
+  public setAttribute(key: string, value: string): void {
+    logger.info(`Selector: ${this.selector} | Attribute: ${key} | Value: ${value}`);
+    const elem = this.existing$();
+    browser.execute(JS_ELEM_SET_ATTRIB(key, value), elem);
   }
 
   public shadow$$(selector: string): WebdriverIO.Element[] {

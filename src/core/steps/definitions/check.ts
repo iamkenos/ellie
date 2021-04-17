@@ -261,12 +261,12 @@ Then(
 );
 
 Then(
-  /^I expect the url to( not)? contain (?:"([^"]*)?"|the "([^"]*)?" page's url)$/, RETRY,
+  /^I expect the url to( not)? contain (?:"([^"]*)?"|the "([^"]*)?" page's url|the base url)$/, RETRY,
   windowUrlContains
 );
 
 Then(
-  /^I expect the url to( not)? (?:be|match) (?:"([^"]*)?"|the "([^"]*)?" page's url)$/, RETRY,
+  /^I expect the url to( not)? (?:be|match) (?:"([^"]*)?"|the "([^"]*)?" page's url|the base url)$/, RETRY,
   windowUrlEquals
 );
 

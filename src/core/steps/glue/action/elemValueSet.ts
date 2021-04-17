@@ -1,8 +1,8 @@
 import { WebElement } from "../../../elements";
-import { getPageElement } from "../../../utils";
+import { getMetaElement } from "../../../utils";
 
 export default (action: string, value: string, page: string, key: string): void => {
-  const selector = getPageElement(page, key);
+  const selector = getMetaElement(page, key);
   const element = new WebElement(selector);
 
   if (action === "type") {

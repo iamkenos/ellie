@@ -1,3 +1,6 @@
+import { homedir } from "os";
+import { join } from "path";
+
 import { DEFAULT_LEVEL, LEVELS } from "../logger/config";
 import { IConfig, IConfigProperty } from "./interfaces";
 
@@ -33,15 +36,15 @@ export const DEFAULT: IConfig = {
   locale: "default",
   logLevel: DEFAULT_LEVEL,
   maxInstances: 5,
-  pages: ["./pages/**/*.meta.ts"],
+  meta: ["./fixtures/**/*.meta.ts"],
   browserstackEnabled: false,
   browserstackLocal: false,
   reportOutDir: ".reports",
-  seleniumInstallArgs: {},
+  seleniumInstallArgs: { drivers: { chrome: { version: "89.0.4389.23" } } },
   specFileRetries: 0,
   stepRetries: 0,
   specs: ["./features/**/*.feature"],
-  steps: ["./steps/definitions/**/*.ts"],
+  steps: ["./fixtures/**/*.def.ts"],
   tags: "",
   stepTimeout: 30000,
   implicitTimeout: 0,
@@ -88,6 +91,8 @@ export const TLOU_QUOTES = {
     "You're treading on some mighty thin ice here."
   ]
 };
+
+export const LOCAL_DATA_DIR = join(homedir(), ".ellie");
 
 export const CORE_STEP_DEFS_GLOB = "../../core/steps/definitions/**/*.js";
 
@@ -189,7 +194,7 @@ const CONFIG_PROPERTIES: IConfigProperty[] = [
   },
   {
     name: "locale",
-    helptext: "Locale to use when looking for elements in your page meta files"
+    helptext: "Locale to use when looking for elements in your meta files"
   },
   {
     name: "maxInstances",
@@ -207,13 +212,13 @@ const CONFIG_PROPERTIES: IConfigProperty[] = [
     }
   },
   {
-    name: "pages",
-    helptext: "Array of globs pointing to your page meta, relative to the config file",
+    name: "meta",
+    helptext: "Array of globs pointing to your meta files, relative to the config file",
     inquiredOption: {
       enabled: true,
       type: "input",
-      message: "Where are your page meta located?",
-      default: DEFAULT.pages.join(",")
+      message: "Where are your meta files located?",
+      default: DEFAULT.meta.join(",")
     }
   },
   {
@@ -363,12 +368,13 @@ export const CONFIG_INQUIRY: IConfigProperty[] = CONFIG_PROPERTIES
 
 export const USAGE = `
 Usage:
-  ellie init                        Launches the configuration helper
-  ellie whistle                     Generate sample files to get started with
-  ellie babygirl                    Endure and survive
-  ellie [file]                      Launches the WebdriverIO test runner by feeding the default wdio.conf.js file
-  ellie [file1] [file2]             Launches the WebdriverIO test runner by feeding the supplied secondary file
-  ellie [file1] [file2]? [options]  Stdin overrides for certain config properties; See options list below
+  npx ellie init                        Launches the configuration helper
+  npx ellie whistle                     Generate sample files to get started with
+  npx ellie babygirl                    Endure and survive
+  npx ellie report                      Launches the allure reporter; takes the data from the latest test run
+  npx ellie [file]                      Launches the WebdriverIO test runner by feeding the default wdio.conf.js file
+  npx ellie [file1] [file2]             Launches the WebdriverIO test runner by feeding the overrides js file
+  npx ellie [file1] [file2]? [options]  Stdin overrides for certain config properties; See options list below
 
 Complete list of properties:
 * Inquired when running the config helper

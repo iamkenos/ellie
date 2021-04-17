@@ -3,6 +3,7 @@ import qs from "query-string";
 import logger from "../../../logger";
 import { IBrowserCondition, IBrowserPerformanceEntry, IExpectedConditionResult, IJSONDiffOptions } from "../../interfaces";
 import { getJSONDiff } from "../../utils";
+import { JS_WINDOW_GET_ENTRIES } from "../scripts";
 
 export default class GoogleAnalyticsEntriesMatch implements IBrowserCondition {
   readonly name: string;
@@ -50,7 +51,7 @@ export default class GoogleAnalyticsEntriesMatch implements IBrowserCondition {
     let actual: string;
 
     try {
-      entries = this.filterGA(browser.execute("return window.performance.getEntries()"));
+      entries = this.filterGA(browser.execute(JS_WINDOW_GET_ENTRIES));
       actual = getJSONDiff("ajaxRequest", this.filename, entries, this.options);
       result = this.preferred ? !actual : !!actual;
     } catch (e) {

@@ -28,8 +28,8 @@ export function generateSamples(): void {
 
     console.log(SAMPLES_HELPER_SUCCESS_MESSAGE.trim());
     process.exit(0);
-  } catch (error) {
-    logger.error(error);
-    throw new Error(error);
+  } catch (e) {
+    logger.error(e);
+    throw new Error(e);
   }
 }

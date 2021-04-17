@@ -1,12 +1,13 @@
-import { NewWindowOptions } from "webdriverio/build";
+import { NewWindowOptions } from "webdriverio";
 import { WdioCheckFullPageMethodOptions, WdioCheckScreenMethodOptions } from "wdio-image-comparison-service";
 
 import logger from "../../logger";
 import BrowserConditions from "./evaluation/browserConditions";
 import { WebElement } from "../elements";
-import { IHttpRequest, IHttpResponse, IJSONDiffOptions } from "../interfaces";
+import { IHttpRequest, IHttpResponse, IJSONDiffOptions, TElementLocation } from "../interfaces";
 import { sendSyncRequest } from "../utils";
 import { inspect } from "../../cli/utils";
+import { JS_WINDOW_SCROLL_TO_BOTTOM } from "./scripts";
 
 export default abstract class Driver {
   public static acceptAlert(): void {
@@ -54,6 +55,20 @@ export default abstract class Driver {
         { type: "pointerMove", duration: 0, origin: origin, x: x, y: y },
         { type: "pointerDown", button: 0 },
         { type: "pause", duration: 10 },
+        { type: "pointerUp", button: 0 }
+      ]
+    }]);
+    browser.releaseActions();
+  }
+
+  public static dragRelativeToPointer(dest: TElementLocation, dragDuration = 500) {
+    browser.performActions([{
+      type: "pointer",
+      id: "mousepointer",
+      actions: [
+        { type: "pointerDown", button: 0 },
+        { type: "pause", duration: 10 },
+        { type: "pointerMove", dragDuration, origin: "pointer", x: dest.x, y: dest.y },
         { type: "pointerUp", button: 0 }
       ]
     }]);
@@ -143,7 +158,7 @@ export default abstract class Driver {
 
   public static scrollToBottom(): void {
     logger.info("NoArgs");
-    browser.execute("window.scrollTo(0, document.body.scrollHeight)");
+    browser.execute(JS_WINDOW_SCROLL_TO_BOTTOM);
   }
 
   public static setCookie(key: string, value: string): void {
@@ -156,22 +171,22 @@ export default abstract class Driver {
 
   public static getLocalStorage(key: string): void {
     logger.info(`Key: ${key}`);
-    browser.execute(function(key) { return this.localStorage.getItem(key); }, key);
+    browser.execute(function(this: any, key) { return this.localStorage.getItem(key); }, key);
   }
 
   public static setLocalStorage(key: string, value: string): void {
     logger.info(`Key: ${key} | Value: ${value}`);
-    browser.execute(function(key, value) { this.localStorage.setItem(key, value); }, key, value);
+    browser.execute(function(this: any, key, value) { this.localStorage.setItem(key, value); }, key, value);
   }
 
   public static getSessionStorage(key: string): void {
     logger.info(`Key: ${key}`);
-    browser.execute(function(key) { return this.sessionStorage.getItem(key); }, key);
+    browser.execute(function(this: any, key) { return this.sessionStorage.getItem(key); }, key);
   }
 
   public static setSessionStorage(key: string, value: string): void {
     logger.info(`Key: ${key} | Value: ${value}`);
-    browser.execute(function(key, value) { this.sessionStorage.setItem(key, value); }, key, value);
+    browser.execute(function(this: any, key, value) { this.sessionStorage.setItem(key, value); }, key, value);
   }
 
   public static setWindowSize(width: string, height: string): void {
@@ -309,7 +324,7 @@ export default abstract class Driver {
 
   public static checkImageMatchRef(
     context: string, filename: string, preferred = true,
-    options: WdioCheckFullPageMethodOptions | WdioCheckScreenMethodOptions = undefined): void {
+    options?: WdioCheckFullPageMethodOptions | WdioCheckScreenMethodOptions): void {
     logger.info(`Context: ${context} | File: ${filename} | Reverse: ${!preferred} | Options: ${options}`);
     new BrowserConditions()
       .imageMatch(context, filename, preferred, options)

@@ -1,5 +1,5 @@
 import { IConfig } from "@iamkenos/ellie";
 
-const config: IConfig = <%- JSON.stringify(answers) %>;
+const config: Partial<IConfig> = <%- JSON.stringify(answers) %>;
 
 export default config;

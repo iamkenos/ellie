@@ -14,12 +14,13 @@ export default class ImageMatch implements IBrowserCondition {
 
   private readonly preferred: boolean;
 
-  private readonly options: WdioCheckScreenMethodOptions;
+  private readonly options: WdioCheckScreenMethodOptions | undefined;
 
   public constructor(
     context: string, filename: string, preferred: boolean,
     options?: WdioCheckFullPageMethodOptions | WdioCheckScreenMethodOptions) {
     this.name = logger.getCaller(true);
+    // @ts-ignore
     this.context = ImageCompareContext[context.toUpperCase()];
     this.filename = filename;
     this.preferred = preferred;

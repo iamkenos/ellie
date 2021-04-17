@@ -2,6 +2,7 @@ import AttributeContains from "./attributeContains";
 import AttributeEquals from "./attributeEquals";
 import AttributeExists from "./attributeExists";
 import AxisLocationEquals from "./axisLocationEquals";
+import Clickable from "./clickable";
 import CountEquals from "./countEquals";
 import CountGreaterThan from "./countGreaterThan";
 import CountLessThan from "./countLessThan";
@@ -30,6 +31,7 @@ export {
   AttributeEquals,
   AttributeExists,
   AxisLocationEquals,
+  Clickable,
   CountEquals,
   CountGreaterThan,
   CountLessThan,

@@ -1,23 +1,27 @@
 import { IConfig } from "@iamkenos/ellie";
 
-const config: IConfig = {
+const config: Partial<IConfig> = {
   capabilities: [
     {
       browserName: "chrome",
-      "goog:chromeOptions": { args: ["--disable-web-security", "--incognito"] }
+      "goog:chromeOptions": {
+        args: [
+          "--disable-gpu",
+          "--disable-web-security",
+          "--window-size=1920,1080",
+          // you can uncomment this option to run tests in headless mode
+          // "--headless",
+          "--incognito"
+        ]
+      }
     }
   ],
-  // use a chrome driver version that fits your current browser version
-  // https://www.browserstack.com/automate/capabilities?tag=selenium-4
-  seleniumInstallArgs: { version: "3.141.59", drivers: { chrome: { version: "88.0.4324.27" } } },
+  seleniumInstallArgs: { drivers: { chrome: { version: "89.0.4389.23" } } },
   logLevel: "error",
-  pages: ["./fixtures/**/*.meta.ts"],
+  meta: ["./fixtures/**/*.meta.ts"],
   specs: ["./features/**/*.feature"],
   steps: ["./fixtures/**/*.def.ts"],
-  hooks: {
-    before: "./fixtures/hooks/before",
-    afterScenario: "./fixtures/hooks/afterScenario"
-  }
+  hooks: { before: "./fixtures/hooks/before" }
 };
 
 export default config;

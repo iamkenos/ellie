@@ -12,6 +12,8 @@ import elemSelect from "../glue/action/elemSelect";
 import elemValueClear from "../glue/action/elemValueClear";
 import elemValueSet from "../glue/action/elemValueSet";
 import elemValueSetMultiLine from "../glue/action/elemValueSetMultiLine";
+import utilSetCurrentMeta from "../glue/action/utilSetCurrentMeta";
+import utilSetCurrentMetaChild from "../glue/action/utilSetCurrentMetaChild";
 import windowAjaxIntercept from "../glue/action/windowAjaxIntercept";
 import windowChildrenClose from "../glue/action/windowChildrenClose";
 import windowCookieDelete from "../glue/action/windowCookieDelete";
@@ -87,6 +89,16 @@ When(
 When(
   /^I (type|append) a multi-line value on the(?: "([^"]*)?" page's)? "([^"]*)?" (?:field|element):$/, RETRY,
   elemValueSetMultiLine
+);
+
+When(
+  /^I (land on|start using|stop using) the "([^"]*)?" (?:page|component|widget)$/, RETRY,
+  utilSetCurrentMeta
+);
+
+When(
+  /^I (start using|stop using) the (?:page|component|widget)'s "([^"]*)?" child element$/, RETRY,
+  utilSetCurrentMetaChild
 );
 
 When(

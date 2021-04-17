@@ -15,7 +15,7 @@ export default class BrowserConditionsResult {
     return Array.from(this.results.values()).every(result => result.isSuccess && true);
   }
 
-  public getErrorMessage(expression: string, conditions: IBrowserCondition[], timeout: number): string {
+  public getErrorMessage(expression: string, conditions: IBrowserCondition[], timeout: number, e: Error): string {
     const results = Array.from(this.results.values());
     const success = results.filter(result => result.isSuccess === true).length;
     const total = conditions.length;
@@ -25,6 +25,6 @@ export default class BrowserConditionsResult {
   Expression: ${expression}
   Session: ${browser.sessionId}
   Evaluation Summary: ${success}/${total}
-  ${results.map(result => result.message).join("------------------------------")}`;
+  ${total === 0 ? e.message : results.map(result => result.message).join("------------------------------")}`;
   }
 }

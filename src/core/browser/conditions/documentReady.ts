@@ -1,5 +1,6 @@
 import logger from "../../../logger";
 import { IBrowserCondition, IExpectedConditionResult } from "../../interfaces";
+import { JS_IS_DOC_READY } from "../scripts";
 
 export default class DocumentReady implements IBrowserCondition {
   readonly name: string;
@@ -19,7 +20,7 @@ export default class DocumentReady implements IBrowserCondition {
     let result: boolean;
 
     try {
-      actual = browser.execute("return document.readyState");
+      actual = browser.execute(JS_IS_DOC_READY);
       result = this.preferred ? actual === this.expected : actual !== this.expected;
     } catch (e) {
       actual = e.message;

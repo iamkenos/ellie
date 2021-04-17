@@ -10,8 +10,9 @@
     "paths": { "@iamkenos/ellie": ["build/index"] },
     "removeComments": false,
     "skipLibCheck": true,
+    "strict": true,
     "sourceMap": true,
-    "target": "es2019",
+    "target": "ES5",
     "types": [
       "node",
       "@types/jest",

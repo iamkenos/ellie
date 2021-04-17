@@ -10,7 +10,7 @@ export default class AjaxRequestMatch implements IBrowserCondition {
 
   private readonly preferred: boolean;
 
-  private readonly options: IJSONDiffOptions;
+  private readonly options: IJSONDiffOptions | undefined;
 
   public constructor(filename: string, preferred: boolean, options?: IJSONDiffOptions) {
     this.name = logger.getCaller(true);

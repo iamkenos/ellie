@@ -28,6 +28,7 @@ export default class CustomTruthy implements IBrowserCondition {
       result = this.preferred ? returned.result : !returned.result;
     } catch (e) {
       actual = e.message;
+      expected = e.message;
       result = false;
     }
 

@@ -1,5 +1,5 @@
 import { driver } from "../browser";
-import { getPageObject } from "../utils";
+import { getMetaObject } from "../utils";
 import { IPageMeta, UnionToIntersection } from "../interfaces";
 
 export default abstract class BasePage<T extends IPageMeta> {
@@ -12,9 +12,9 @@ export default abstract class BasePage<T extends IPageMeta> {
   protected locators: UnionToIntersection<T[keyof T]["locators"]>;
 
   public constructor(meta: T, locale?: string) {
-    this.properties = getPageObject(meta, locale);
-    this.url = this.properties.url;
-    this.title = this.properties.title;
+    this.properties = getMetaObject(meta, locale);
+    this.url = this.properties.url || "";
+    this.title = this.properties.title || "";
     this.locators = this.properties.locators as any;
   }
 

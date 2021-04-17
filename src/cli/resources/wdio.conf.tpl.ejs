@@ -233,6 +233,12 @@ exports.config = {
   // The number of times to retry the entire specfile when it fails as a whole
   specFileRetries: <%= answers.specFileRetries %>,
   //
+  // Delay in seconds between the spec file retry attempts
+  specFileRetriesDelay: 0,
+  //
+  // Retried specfiles are inserted at the beginning of the queue and retried immediately
+  specFileRetriesDeferred: false,
+  //
   // Test reporter for stdout.
   reporters: [
     'spec',
@@ -284,7 +290,7 @@ exports.config = {
     // <string> (expression) only execute the features or scenarios with tags matching the expression
     tagExpression: '<%= answers.tags %>',
     // <number> timeout for step definitions
-    timeout: <%= answers.debugEnabled ? (24 * 60 * 60 * 1000) : answers.stepTimeout %>,
+    timeout: <%= answers.debugEnabled ? (24 * 60 * 60 * 1000) : (answers.stepTimeout * (answers.stepRetries || 1)) %>,
   },
   //
   // ==============
@@ -294,7 +300,7 @@ exports.config = {
   custom: <%- JSON.stringify(answers.custom) %>,
   directory: <%- JSON.stringify(answers.directory) %>,
   locale: '<%- answers.locale %>',
-  pages: [<%- answers.pages.map(i => JSON.stringify(i)) %>],
+  meta: [<%- answers.meta.map(i => JSON.stringify(i)) %>],
   stepRetries: <%= answers.stepRetries %>,
   allureHtmlDir: ALLURE_HTML_DIR,
   //
@@ -362,6 +368,8 @@ exports.config = {
   before: function (capabilities, specs) {
     require('tsconfig-paths/register');
 
+    const { logger } = require('@iamkenos/ellie');
+    logger.setLevel('<%= answers.logLevel %>');
     // see: https://webdriver.io/docs/timeouts.html#selenium-timeouts
     browser.setTimeout({ pageLoad: <%= answers.pageLoadimeout %>,  implicit: <%= answers.implicitTimeout %> });
     // allow download over headless chrome;
@@ -404,17 +412,18 @@ exports.config = {
    * Runs before a Cucumber step
    */
   beforeStep: function (step, context) {
-    const stepArg = step.argument;
+    const { argument } = step;
     const data = [];
 
-    if(stepArg) {
-      if(stepArg.type === 'DataTable') {
-        stepArg.rows.forEach(row => {
-          data.push(row.cells.map(cell => cell.value));
+    if (argument) {
+      const { dataTable, docString } = argument;
+      if (dataTable) {
+        dataTable.rows.forEach((row) => {
+          data.push(row.cells.map((cell) => cell.value));
         });
-        addAttachment('DataTable', table(data, { border: getBorderCharacters('norc') }), 'text/plain');
-      } else if (stepArg.type === 'DocString') {
-        addAttachment('DocString', stepArg.content, 'text/plain');
+        addAttachment("DataTable", table(data, { border: getBorderCharacters("norc") }), "text/plain");
+      } else if (docString) {
+        addAttachment("DocString", docString.content, "text/plain");
       }
     }
 
@@ -444,6 +453,9 @@ exports.config = {
     const hook = require('<%= answers.hooks.afterScenario %>').default;
     hook(world);
     <% } %>
+    browser.deleteCookies();
+    browser.config.currentMeta = undefined;
+    browser.config.currentMetaChild = undefined;
   },
   /**
    * Runs after a Cucumber feature

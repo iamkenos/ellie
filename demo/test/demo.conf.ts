@@ -1,6 +1,6 @@
 import { IConfig } from "@iamkenos/ellie";
 
-const config: IConfig = {
+const config: Partial<IConfig> = {
   baseUrl: "http://localhost:8080",
   capabilities: [
     {
@@ -9,21 +9,23 @@ const config: IConfig = {
     }
   ],
   comparable: {
-    ajaxRequest: { outputDir: ".comparable/ajax", skipCompare: false },
-    httpResponse: { outputDir: ".comparable/http", skipCompare: false },
-    imageCompare: { outputDir: ".comparable/image", skipCompare: false }
-  },
-  hooks: {
-    before: "./fixtures/hooks/before",
-    afterScenario: "./fixtures/hooks/afterScenario"
+    ajaxRequest: { skipCompare: false },
+    httpResponse: { skipCompare: false },
+    imageCompare: {
+      skipCompare: false,
+      overridePlatform: false,
+      overrideVersion: true,
+      options: {
+        scaleImagesToSameSize: true,
+        saveAboveTolerance: 0.9
+      }
+    }
   },
   logLevel: "error",
-  // use a chrome driver version that fits your current browser version
-  // https://www.browserstack.com/automate/capabilities?tag=selenium-4
-  seleniumInstallArgs: { version: "3.141.59", drivers: { chrome: { version: "88.0.4324.27" } } },
+  seleniumInstallArgs: { drivers: { chrome: { version: "89.0.4389.23" } } },
   specs: ["./features/**/*.feature"],
   steps: ["./fixtures/**/**/*.def.ts"],
-  pages: ["./fixtures/**/*.meta.ts"],
+  meta: ["./fixtures/**/*.meta.ts"],
   waitforTimeout: 8000
 };
 

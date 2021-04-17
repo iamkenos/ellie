@@ -1,13 +1,23 @@
-import { driver } from "./browser";
+import { BrowserConditions, driver } from "./browser";
 import { BasePage } from "./pages";
-import { WebComponent, WebElement, WebElements } from "./elements";
-import { RETRY } from "./utils";
+import { ICustomTruthy } from "./interfaces";
+import { ElementConditions, SelectorBuilder, WebComponent, WebElement, WebElements } from "./elements";
+import { getDataTableRows, getMetaElement, getMetaProperty, mergeMeta, RETRY, transformToken } from "./utils";
 
 export {
+  BrowserConditions,
   driver,
   BasePage,
+  ElementConditions,
+  SelectorBuilder,
   WebComponent,
   WebElement,
   WebElements,
-  RETRY
+  RETRY,
+  ICustomTruthy,
+  getDataTableRows,
+  getMetaElement,
+  getMetaProperty,
+  mergeMeta,
+  transformToken
 };

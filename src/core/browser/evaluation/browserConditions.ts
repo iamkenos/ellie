@@ -1,4 +1,4 @@
-import { AssertionError } from "chai";
+import { ExpectedConditionsError } from "../../../exceptions";
 import { WdioCheckFullPageMethodOptions, WdioCheckScreenMethodOptions } from "wdio-image-comparison-service";
 
 import BrowserConditionsResult from "./browserConditionsResult";
@@ -28,16 +28,15 @@ import {
 } from "../conditions";
 import { IBrowserCondition, IHttpRequest, IJSONDiffOptions } from "../../interfaces";
 
+// @ts-ignore
 const WAIT_TIMEOUT: number = browser.config.waitforTimeout;
 
 export default class BrowserConditions {
   private readonly conditions: IBrowserCondition[];
 
-  private readonly name: string;
-
   private readonly result: BrowserConditionsResult;
 
-  private readonly selector: string;
+  public readonly name: string;
 
   public constructor(name? : string) {
     this.conditions = [];
@@ -175,11 +174,14 @@ export default class BrowserConditions {
           this.result.isSuccess() || logger.debug("Retrying...");
           return this.result.isSuccess();
         },
-        { timeout }
+        {
+          timeout: timeout,
+          interval: 1000
+        }
       );
       return this.result;
     } catch (e) {
-      throw new AssertionError(this.result.getErrorMessage(this.name, this.conditions, timeout));
+      throw new ExpectedConditionsError(this.result.getErrorMessage(this.name, this.conditions, timeout, e));
     }
   }
 }

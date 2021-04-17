@@ -1,6 +1,6 @@
-import { AssertionError } from "chai";
+import { ExpectedConditionsError } from "../../../exceptions";
 import { WdioCheckElementMethodOptions } from "wdio-image-comparison-service";
-import { Selector } from "webdriverio/build";
+import { Selector } from "webdriverio";
 
 import logger from "../../../logger";
 import ElementConditionsResult from "./elementConditionsResult";
@@ -9,6 +9,7 @@ import {
   AttributeEquals,
   AttributeExists,
   AxisLocationEquals,
+  Clickable,
   CountEquals,
   CountGreaterThan,
   CountLessThan,
@@ -32,18 +33,21 @@ import {
   ValueEmpty,
   ValueEquals
 } from "../conditions";
-import { IElementCondition, TElementLocation } from "../../interfaces";
+import { IElementCondition, TElementCoordinates } from "../../interfaces";
 
+// @ts-ignore
 const WAIT_TIMEOUT: number = browser.config.waitforTimeout;
 
 export default class ElementConditions {
   private readonly conditions: IElementCondition[];
 
-  private readonly name: string;
-
   private readonly result: ElementConditionsResult;
 
   private readonly selector: Selector;
+
+  public name: string;
+
+  public timeout?: number;
 
   public constructor(selector: Selector, name? : string) {
     this.conditions = [];
@@ -52,12 +56,17 @@ export default class ElementConditions {
     this.selector = selector;
   }
 
+  public setTimeout(timeout: number) {
+    this.timeout = timeout;
+    return this;
+  }
+
   public attributeContains(attribute: string, expected: string, preferred: boolean): ElementConditions {
     this.conditions.push(new AttributeContains(attribute, expected, preferred));
     return this;
   }
 
-  public axisLocationEquals(axis: TElementLocation, expected: number, preferred: boolean): ElementConditions {
+  public axisLocationEquals(axis: TElementCoordinates, expected: number, preferred: boolean): ElementConditions {
     this.conditions.push(new AxisLocationEquals(axis, expected, preferred));
     return this;
   }
@@ -69,6 +78,11 @@ export default class ElementConditions {
 
   public attributeEquals(attribute: string, expected: string, preferred: boolean): ElementConditions {
     this.conditions.push(new AttributeEquals(attribute, expected, preferred));
+    return this;
+  }
+
+  public clickable(preferred: boolean): ElementConditions {
+    this.conditions.push(new Clickable(preferred));
     return this;
   }
 
@@ -182,20 +196,25 @@ export default class ElementConditions {
     return this;
   }
 
-  public run(timeout: number = WAIT_TIMEOUT): ElementConditionsResult {
+  public run(action?: Function, timeout?: number): ElementConditionsResult {
     try {
-      return this.runStrict(timeout);
+      return this.runStrict(action, timeout);
     } catch (e) {
       logger.warn(e.message);
       return this.result;
     }
   }
 
-  public runStrict(timeout: number = WAIT_TIMEOUT): ElementConditionsResult {
+  public runStrict(action?: Function, timeout?: number): ElementConditionsResult {
+    timeout = timeout || this.timeout || WAIT_TIMEOUT;
     try {
       logger.debug("Evaluating %s...", this.name);
       browser.waitUntil(
         (): boolean => {
+          // optional action to perform while retrying, useful for cases like click until something is met
+          // the action function here is supposed to be an anonymous function assigned to a variable
+          // e.g const action = () => { element.click() }
+          action !== undefined && action();
           this.conditions.forEach(condition => {
             const evaluation = condition.evaluate(this.selector);
             this.result.setResult(evaluation.name, evaluation);
@@ -203,11 +222,14 @@ export default class ElementConditions {
           this.result.isSuccess() || logger.debug("Retrying...");
           return this.result.isSuccess();
         },
-        { timeout }
+        {
+          timeout: timeout,
+          interval: 1000
+        }
       );
       return this.result;
     } catch (e) {
-      throw new AssertionError(this.result.getErrorMessage(this.name, timeout));
+      throw new ExpectedConditionsError(this.result.getErrorMessage(this.name, timeout, e));
     }
   }
 }

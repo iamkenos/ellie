@@ -6,6 +6,12 @@
 
 _Note: Gaps between patch versions are faulty, broken or test releases._
 
+## 2.0.2
+
+`2021-04-18`
+
+- [3e78eeb](https://github.com//iamkenos/ellie/commit/3e78eeb) refactor: typings and ts srict [[iamkenos](https://github.com/iamkenos)]
+
 ## 2.0.1
 
 `2021-03-05`

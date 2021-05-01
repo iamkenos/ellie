@@ -48,7 +48,8 @@ export async function createLocalConfig(): Promise<any> {
     const answers = await inquirer.prompt(CONFIG_INQUIRY).then(answers => {
       // @ts-ignore
       if (answers.browserstackEnabled === false) { delete DEFAULT.user; delete DEFAULT.key; }
-      answers.pages = answers.pages.split(",");
+      answers.maxInstances = parseInt(answers.maxInstances);
+      answers.meta = answers.meta.split(",");
       answers.specs = answers.specs.split(",");
       answers.steps = answers.steps.split(",");
       return answers;

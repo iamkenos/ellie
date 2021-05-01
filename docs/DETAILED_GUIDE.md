@@ -286,7 +286,7 @@ export default {
 
 From here, call the binary and provide the path to your configuration file
 
-`$ ellie ellie.conf.ts`
+`$ npx ellie ellie.conf.ts`
 
 ## Page object model
 
@@ -609,30 +609,19 @@ import { Then, When } from "@cucumber/cucumber";
 import { RETRY } from "@iamkenos/ellie";
 import * as webdrverIO from "./webdriverIO.glue";
 
-When(
-  /^I open the WebdriverIO page's url$/, RETRY,
-  webdrverIO.navigate
-);
+When(/^I open the WebdriverIO page's url$/, RETRY, webdrverIO.navigate);
 
-When(
-  /^I click the WebdriverIO page's Get Started button$/, RETRY,
-  webdrverIO.clickGetStarted
-);
+When(/^I click the WebdriverIO page's Get Started button$/, RETRY, webdrverIO.clickGetStarted);
+
+Then(/^I expect the window title to( not)? match the WebdriverIO page's title$/, RETRY, webdrverIO.checkTitle);
 
 Then(
-  /^I expect the window title to( not)? match the WebdriverIO page's title$/, RETRY,
-  webdrverIO.checkTitle
-);
-
-Then(
-  /^I expect the WebdriverIO page's project title to( not)? contain "([^"]*)?"$/, RETRY,
+  /^I expect the WebdriverIO page's project title to( not)? contain "([^"]*)?"$/,
+  RETRY,
   webdrverIO.checkProjectTitleTextContains
 );
 
-Then(
-  /^I expect the the WebdriverIO page's nav bar to( not)? be displayed$/, RETRY,
-  webdrverIO.checkNavBarDisplayed
-);
+Then(/^I expect the the WebdriverIO page's nav bar to( not)? be displayed$/, RETRY, webdrverIO.checkNavBarDisplayed);
 ```
 
 A step definition file should have the following parts:
@@ -796,7 +785,7 @@ Certain configuration properties can be overriden from the command line by passi
 
 For instance, to run a single feature file and set the logging level to debug:
 
-`ellie ellie.conf.ts --specs ./path/to/feature/file.feature --l debug`
+`npx ellie ellie.conf.ts --specs ./path/to/feature/file.feature --l debug`
 
 | Key          | Alias | Description                                            |
 | ------------ | ----- | ------------------------------------------------------ |
@@ -826,4 +815,4 @@ export default config;
 
 From here you can run the tests as you would have done with any other config file:
 
-`ellie ellie.component.conf.ts`
+`npx ellie ellie.component.conf.ts`

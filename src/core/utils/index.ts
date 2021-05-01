@@ -117,8 +117,9 @@ export function getMetaTitle(meta: string): string {
 }
 
 export function getMetaElement(meta: string, key: string): string {
-  const currMeta = meta || (browser.config as any).currentMeta;
-  const currElem = key || (browser.config as any).currentMetaChild;
+  const { config }: any = browser;
+  const currMeta = meta || config.currentMeta;
+  const currElem = key || config.currentMetaChild;
   const stitch = (m: string, l: string, e: string) => {
     const delimiter = /-->>/;
     const matches = e.split(delimiter).filter(Boolean); // additional `filter` to remove empty values

@@ -37,7 +37,7 @@
     "test:samples": "./bin/ellie.js src/cli/resources/samples/ellie.conf.ts",
     "test:unit": "jest --config .jestrc.json --coverage",
     "release": "npm run build && node ./.scripts/s_release.js",
-    "prepare": "husky install"
+    "prepare": "husky install && npm run build"
   },
   "dependencies": {
     "@types/luxon": "1.26.2",

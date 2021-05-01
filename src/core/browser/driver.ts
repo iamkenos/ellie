@@ -169,9 +169,9 @@ export default abstract class Driver {
     });
   }
 
-  public static getLocalStorage(key: string): void {
+  public static getLocalStorage(key: string): any {
     logger.info(`Key: ${key}`);
-    browser.execute(function(this: any, key) { return this.localStorage.getItem(key); }, key);
+    return browser.execute(function(this: any, key) { return this.localStorage.getItem(key); }, key);
   }
 
   public static setLocalStorage(key: string, value: string): void {
@@ -179,9 +179,9 @@ export default abstract class Driver {
     browser.execute(function(this: any, key, value) { this.localStorage.setItem(key, value); }, key, value);
   }
 
-  public static getSessionStorage(key: string): void {
+  public static getSessionStorage(key: string): any {
     logger.info(`Key: ${key}`);
-    browser.execute(function(this: any, key) { return this.sessionStorage.getItem(key); }, key);
+    return browser.execute(function(this: any, key) { return this.sessionStorage.getItem(key); }, key);
   }
 
   public static setSessionStorage(key: string, value: string): void {

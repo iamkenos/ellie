@@ -29,6 +29,11 @@ export default class SelectorBuilder {
     return this;
   }
 
+  public position(position: number): SelectorBuilder {
+    this.conditionals.push(`[position()=${position}]`);
+    return this;
+  }
+
   public previous(levels = 1): SelectorBuilder {
     this.conditionals.push("/..".repeat(levels));
     return this;

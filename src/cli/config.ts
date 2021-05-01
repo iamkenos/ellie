@@ -208,6 +208,12 @@ const CONFIG_PROPERTIES: IConfigProperty[] = [
       enabled: true,
       type: "input",
       message: "How many concurrent features would you like running during the test?",
+      validate: (input: any) => {
+        if (isNaN(input) || input < 1) {
+          return "This property is required, and should be a number greater than 0";
+        }
+        return true;
+      },
       default: DEFAULT.maxInstances
     }
   },

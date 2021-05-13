@@ -127,7 +127,7 @@ When(
 );
 
 When(
-  /^I press the "([^"]*)?" key$/, RETRY,
+  /^I press the "([^"]*)?" key(?: (\d+) times)?$/, RETRY,
   windowKeyPress
 );
 

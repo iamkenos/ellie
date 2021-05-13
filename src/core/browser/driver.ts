@@ -232,6 +232,7 @@ export default abstract class Driver {
   public static checkAjaxRequestsMatchRef(filename: string, preferred = true, options: IJSONDiffOptions = {}): void {
     logger.info(`File: ${filename} | Reverse: ${!preferred} | Options: ${options}`);
     new BrowserConditions()
+      .documentReady(true)
       .ajaxRequestsMatch(filename, preferred, options)
       .runStrict();
   }
@@ -310,6 +311,7 @@ export default abstract class Driver {
     filename: string, event: string, preferred = true, options: IJSONDiffOptions = {}): void {
     logger.info(`File: ${filename} | Event: ${event} | Reverse: ${!preferred} | Options: ${options}`);
     new BrowserConditions()
+      .documentReady(true)
       .gaEntriesMatch(filename, event, preferred, options)
       .runStrict();
   }

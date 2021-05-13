@@ -15,7 +15,7 @@ Feature: VI. Requests
       """
 
   Scenario: Send HTTP requests to a completely external url
-    Then I expect the response to the following request to match the reference "06-requests/02-get-reqres-users":
+    Then I expect the response to the following request to not match the reference "06-requests/02-get-reqres-users":
       """
       {
         "url": "https://reqres.in/api/users",
@@ -75,4 +75,4 @@ Feature: VI. Requests
   Scenario: Check google analytics tracking
     When I start to intercept ajax requests
       And I refresh the page
-    Then I expect the captured google analytics to match the reference "06-requests/05-ga-tracking"
+    Then I expect the captured google analytics to not match the reference "06-requests/05-ga-tracking"

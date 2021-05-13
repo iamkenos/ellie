@@ -24,6 +24,9 @@ import {
   SizeEquals,
   SizeHeightEquals,
   SizeWidthEquals,
+  StylePropContains,
+  StylePropEquals,
+  StylePropExists,
   TextContains,
   TextContainsArray,
   TextEmpty,
@@ -153,6 +156,21 @@ export default class ElementConditions {
 
   public sizeWidthEquals(expected: number, preferred: boolean): ElementConditions {
     this.conditions.push(new SizeWidthEquals(expected, preferred));
+    return this;
+  }
+
+  public stylePropContains(prop: string, expected: string, preferred: boolean): ElementConditions {
+    this.conditions.push(new StylePropContains(prop, expected, preferred));
+    return this;
+  }
+
+  public stylePropEquals(prop: string, expected: string, preferred: boolean): ElementConditions {
+    this.conditions.push(new StylePropEquals(prop, expected, preferred));
+    return this;
+  }
+
+  public stylePropExists(prop: string, preferred: boolean): ElementConditions {
+    this.conditions.push(new StylePropExists(prop, preferred));
     return this;
   }
 

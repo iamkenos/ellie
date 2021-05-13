@@ -67,6 +67,22 @@ export function getDataTableRows(table: DataTable, column?: number | "all") {
   }
 }
 
+export function getDataTableHashes(table: DataTable, toLower = true) {
+  const lowercaseKeys = <T>(object: { [key: string]: T }): { [key: string]: T } => {
+    const result: { [key: string]: T } = {};
+    for (const [key, value] of Object.entries(object)) {
+      result[key.toLowerCase()] = value;
+    }
+    return result;
+  };
+
+  if (toLower) {
+    return table.hashes().map(hash => lowercaseKeys(hash));
+  } else {
+    return table.hashes();
+  }
+}
+
 export function getMetaObject<T extends IPageMeta | IComponentMeta>(meta: T, locale?: string):
 UnionToIntersection<T[keyof T]> & T[keyof T] {
   const loc = locale || (browser.config as any).locale;
@@ -121,11 +137,16 @@ export function getMetaElement(meta: string, key: string): string {
   const currMeta = meta || config.currentMeta;
   const currElem = key || config.currentMetaChild;
   const stitch = (m: string, l: string, e: string) => {
-    const delimiter = /-->>/;
-    const matches = e.split(delimiter).filter(Boolean); // additional `filter` to remove empty values
-    if (matches && matches.length > 1) {
-      return matches.map(e => getMetaProperty(m, l, e)).join("");
-    } else {
+    try {
+      const delimiter = /-->>/;
+      const matches = e.split(delimiter).filter(Boolean); // additional `filter` to remove empty values
+      if (matches && matches.length > 1) {
+        return matches.map(e => getMetaProperty(m, l, e)).join("");
+      } else {
+        return getMetaProperty(m, l, e);
+      }
+    } catch (e) {
+      logger.warn(e.message);
       return getMetaProperty(m, l, e);
     }
   };
@@ -139,6 +160,7 @@ export function getJSONDiff(type: keyof IConfig["comparable"], filename: string,
   const actFile = path.join(comparable.actualDir, filename) + ".json";
   const expFile = path.join(comparable.baselineDir, filename) + ".json";
   const difFile = path.join(comparable.diffDir, filename) + ".json";
+  options = options && Object.keys(options).length > 0 ? options : undefined;
 
   const getMatchingJSONPaths = (expr: string[], object: object) => {
     // Get all the matching stringified json paths from an object given a list of json paths
@@ -193,7 +215,7 @@ export function getJSONDiff(type: keyof IConfig["comparable"], filename: string,
     const differences = getDiff(options);
     if (differences) {
       result = JSON.stringify(differences, null, 2);
-      fs.outputFileSync(difFile, diff);
+      fs.outputFileSync(difFile, result);
       allure.addAttachment(`Differences: ${difFile}`, readFileSync(difFile), MimeType.TEXT_PLAIN);
     }
   } else {
@@ -334,4 +356,12 @@ export function transformToken(token: string) {
     }
   }
   return token;
+}
+
+export function stringToObject(toParse: string, entrySeparator = ";", kvpSeparator = ":"): any {
+  return toParse.split(entrySeparator)
+    .reduce((i, j) => {
+      const kvp = j.split(kvpSeparator).map(i => i.trim());
+      return { ...i, [kvp[0]]: kvp[1] };
+    }, {});
 }

@@ -265,6 +265,55 @@ export default class WebElement {
       .runStrict();
   }
 
+  public isStylePropContaining(key: string, value: string, preferred = true): boolean {
+    logger.info(`Selector: ${this.selector} | StyleProp: ${key} | Value: ${value} | Reverse: ${!preferred}`);
+    return new ElementConditions(this.existing$().selector)
+      .stylePropExists(key, true)
+      .stylePropContains(key, value, preferred)
+      .run()
+      .isSuccess();
+  }
+
+  public isStylePropEquals(key: string, value: string, preferred = true): boolean {
+    logger.info(`Selector: ${this.selector} | StyleProp: ${key} | Value: ${value} | Reverse: ${!preferred}`);
+    return new ElementConditions(this.existing$().selector)
+      .stylePropExists(key, true)
+      .stylePropEquals(key, value, preferred)
+      .run()
+      .isSuccess();
+  }
+
+  public isStylePropExisting(key: string, preferred = true): boolean {
+    logger.info(`Selector: ${this.selector} | StyleProp: ${key} | Reverse: ${!preferred}`);
+    return new ElementConditions(this.existing$().selector)
+      .stylePropExists(key, preferred)
+      .run()
+      .isSuccess();
+  }
+
+  public checkStylePropContains(key: string, value: string, preferred = true): void {
+    logger.info(`Selector: ${this.selector} | StyleProp: ${key} | Value: ${value} | Reverse: ${!preferred}`);
+    new ElementConditions(this.existing$().selector)
+      .stylePropExists(key, true)
+      .stylePropContains(key, value, preferred)
+      .runStrict();
+  }
+
+  public checkStylePropEquals(key: string, value: string, preferred = true): void {
+    logger.info(`Selector: ${this.selector} | StyleProp: ${key} | Value: ${value} | Reverse: ${!preferred}`);
+    new ElementConditions(this.existing$().selector)
+      .stylePropExists(key, true)
+      .stylePropEquals(key, value, preferred)
+      .runStrict();
+  }
+
+  public checkStylePropExisting(key: string, preferred = true): void {
+    logger.info(`Selector: ${this.selector} | StyleProp: ${key} | Reverse: ${!preferred}`);
+    new ElementConditions(this.existing$().selector)
+      .stylePropExists(key, preferred)
+      .runStrict();
+  }
+
   public isAxisLocationEquals(axis: TElementCoordinates, expected: number, preferred = true): boolean {
     logger.info(`Selector: ${this.selector} | Axis: ${axis} | Expected: ${expected} | Reverse: ${!preferred}`);
     return new ElementConditions(this.existing$().selector)

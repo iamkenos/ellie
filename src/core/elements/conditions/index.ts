@@ -17,6 +17,9 @@ import Selected from "./selected";
 import SizeEquals from "./sizeEquals";
 import SizeHeightEquals from "./sizeHeightEquals";
 import SizeWidthEquals from "./sizeWidthEquals";
+import StylePropContains from "./stylePropContains";
+import StylePropEquals from "./stylePropEquals";
+import StylePropExists from "./stylePropExists";
 import TextContains from "./textContains";
 import TextContainsArray from "./textContainsArray";
 import TextEmpty from "./textEmpty";
@@ -46,6 +49,9 @@ export {
   SizeEquals,
   SizeHeightEquals,
   SizeWidthEquals,
+  StylePropContains,
+  StylePropEquals,
+  StylePropExists,
   TextContains,
   TextContainsArray,
   TextEquals,

@@ -25,6 +25,7 @@ const config: Partial<IConfig> = {
   seleniumInstallArgs: { drivers: { chrome: { version: "89.0.4389.23" } } },
   specs: ["./features/**/*.feature"],
   steps: ["./fixtures/**/**/*.def.ts"],
+  stepRetries: 3,
   meta: ["./fixtures/**/*.meta.ts"],
   waitforTimeout: 8000
 };

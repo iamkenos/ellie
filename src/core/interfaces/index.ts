@@ -2,6 +2,7 @@ import { Selector } from "webdriverio";
 import { CoreOptions, Response, UrlOptions } from "request";
 import { ImageCompareContext } from "../enums";
 import { WdioCheckElementMethodOptions, WdioCheckFullPageMethodOptions, WdioCheckScreenMethodOptions } from "wdio-image-comparison-service";
+import { ScreenshotOutput } from "webdriver-image-comparison/build/helpers/afterScreenshot.interfaces";
 import { PreFilterFunction } from "deep-diff";
 
 export type UnionToIntersection<U> = (U extends any ? (k: U) => void : never) extends ((k: infer I) => void) ? I : never
@@ -57,11 +58,8 @@ export interface IImageCompare {
   element?: WebdriverIO.Element;
 }
 
-export interface IImageSave {
+export interface IImageSave extends ScreenshotOutput {
   parsedName: string;
-  fileName: string;
-  path: string;
-  devicePixelRatio: number;
 }
 
 export interface IJSONDiffOptions {

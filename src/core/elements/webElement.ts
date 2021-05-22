@@ -1,4 +1,5 @@
 import { ClickOptions, DragAndDropOptions, MoveToOptions, ParsedCSSValue, TouchActions } from "webdriverio";
+import { Value } from "webdriverio/build/commands/element/addValue";
 import { WdioCheckElementMethodOptions as ElementImageCheckOptions } from "wdio-image-comparison-service";
 
 import logger from "../../logger";
@@ -126,7 +127,7 @@ export default class WebElement {
     browser.pause(200);
   }
 
-  public addValue(value: string | number | boolean | object | any[]): void {
+  public addValue(value: Value | Value[]): void {
     logger.info(`Selector: ${this.selector} | Value: ${value}`);
     this.existing$().addValue(value);
   }

@@ -10,6 +10,7 @@ import { diff } from "deep-diff";
 import { sync } from "syncrequest";
 import { URL } from "url";
 import { ImageCompareResult } from "webdriver-image-comparison";
+import { ScreenshotOutput } from "webdriver-image-comparison/build/helpers/afterScreenshot.interfaces";
 import allure from "@wdio/allure-reporter";
 
 import logger from "../../logger";
@@ -246,14 +247,14 @@ export function getImageFile(
 
   switch (context) {
     case ImageCompareContext.VIEWPORT: {
-      return { parsedName: file, ...browser.saveScreen(file, options) };
+      return { parsedName: file, ...browser.saveScreen(file, options) as ScreenshotOutput };
     }
     case ImageCompareContext.ELEMENT: {
       if (!elem) throw new Error("Element cannot be undefined");
-      return { parsedName: file, ...browser.saveElement(elem, file, options) };
+      return { parsedName: file, ...browser.saveElement(elem, file, options) as ScreenshotOutput };
     }
     case ImageCompareContext.PAGE: {
-      return { parsedName: file, ...browser.saveFullPageScreen(file, options) };
+      return { parsedName: file, ...browser.saveFullPageScreen(file, options) as ScreenshotOutput };
     }
   }
 }

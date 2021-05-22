@@ -225,7 +225,9 @@ export function getJSONDiff(type: keyof IConfig["comparable"], filename: string,
   return result;
 }
 
-export function getImageFile(context: ImageCompareContext, filename: string, elem?: WebdriverIO.Element): IImageSave {
+export function getImageFile(
+  context: ImageCompareContext, filename: string,
+  elem?: WebdriverIO.Element, options?: IImageCompare["options"]): IImageSave {
   const undef = "undefined";
   const caps = browser.capabilities as Capabilities.DesiredCapabilities;
   const comparable = (browser.config as IConfig).comparable.imageCompare;
@@ -244,14 +246,14 @@ export function getImageFile(context: ImageCompareContext, filename: string, ele
 
   switch (context) {
     case ImageCompareContext.VIEWPORT: {
-      return { parsedName: file, ...browser.saveScreen(file) };
+      return { parsedName: file, ...browser.saveScreen(file, options) };
     }
     case ImageCompareContext.ELEMENT: {
       if (!elem) throw new Error("Element cannot be undefined");
-      return { parsedName: file, ...browser.saveElement(elem, file) };
+      return { parsedName: file, ...browser.saveElement(elem, file, options) };
     }
     case ImageCompareContext.PAGE: {
-      return { parsedName: file, ...browser.saveFullPageScreen(file) };
+      return { parsedName: file, ...browser.saveFullPageScreen(file, options) };
     }
   }
 }
@@ -266,7 +268,7 @@ export function getImageDiff(filename: string, compare: IImageCompare): string {
   const expFile = path.join(comparable.baselineDir!, saved.fileName);
   const difFile = path.join(comparable.diffDir!, saved.fileName);
   const attachImage = (title: string, file: string): void =>
-    allure.addAttachment(title, Buffer.from(fs.readFileSync(file) as any, "base64"), "image/png");
+    allure.addAttachment(title, Buffer.from(fs.readFileSync(file) as any, "base64"), MimeType.IMG_PNG);
 
   // Always ignore anti-aliasing and return all compare data
   compare.options = {
@@ -311,7 +313,7 @@ export function getImageDiff(filename: string, compare: IImageCompare): string {
   } else {
     logger.warn("Skipping comparison for ", actFile);
     browser.pause(2000);
-    getImageFile(compare.context, filename, compare.element);
+    getImageFile(compare.context, filename, compare.element, compare.options);
     attachImage(`Actual: ${actFile}`, actFile);
     return "";
   }

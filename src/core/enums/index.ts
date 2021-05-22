@@ -6,5 +6,6 @@ export enum ImageCompareContext {
 }
 
 export const MimeType = {
-  TEXT_PLAIN: "text/plain"
+  TEXT_PLAIN: "text/plain",
+  IMG_PNG: "image/png"
 };

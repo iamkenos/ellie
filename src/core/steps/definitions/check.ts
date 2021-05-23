@@ -27,6 +27,7 @@ import elemValueContains from "../glue/check/elemValueContains";
 import elemValueEmpty from "../glue/check/elemValueEmpty";
 import elemValueEquals from "../glue/check/elemValueEquals";
 import windowAjaxRequestsMatch from "../glue/check/windowAjaxRequestsMatch";
+import windowAjaxRequestsMatchExp from "../glue/check/windowAjaxRequestsMatchExp";
 import windowCookieContains from "../glue/check/windowCookieContains";
 import windowCookieEquals from "../glue/check/windowCookieEquals";
 import windowCookieExists from "../glue/check/windowCookieExists";
@@ -193,6 +194,11 @@ Then(
 Then(
   /^I expect the (?:ajax|xhr) requests to( not)? match the reference "([^"]*)?"$/, RETRY,
   windowAjaxRequestsMatch
+);
+
+Then(
+  /^I expect the (?:ajax|xhr) requests to( not)? match the reference "([^"]*)?" with expressions:$/, RETRY,
+  windowAjaxRequestsMatchExp
 );
 
 Then(

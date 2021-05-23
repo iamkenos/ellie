@@ -2,6 +2,6 @@
   {
     "url": "https://reqres.in/api/login",
     "method": "POST",
-    "body": "email=eve.holt%40reqres.in&password=cityslicka"
+    "body": ""
   }
 ]

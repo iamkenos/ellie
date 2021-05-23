@@ -42,6 +42,14 @@ Feature: VI. Requests
       And I click the "#ajaxSubmitBtn" button
     Then I expect the ajax requests to match the reference "06-requests/03-post-reqres-login"
 
+  Scenario: Intercept AJAX requests sent on button click and match dynamically
+    When I start to intercept ajax requests
+      And I click the "#ajaxSubmitBtn" button
+    Then I expect the ajax requests to match the reference "06-requests/04-post-reqres-login" with expressions:
+      | JSON Path   | Expression |
+      | $[0].method | POST       |
+      | $[0].body   | ^.+$       |
+
   Scenario: Manipulate site cookies
     When I delete the site cookies
       And I set the "cookie-1" site cookie value to "value-1"

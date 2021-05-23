@@ -1,4 +1,4 @@
-# Seeded Steps
+# Common Steps
 
 ➤ [Home](../README.md)
 
@@ -112,6 +112,28 @@
       appended
       on [fmTextarea]...
       """
+    ```
+
+- `When I (land on|start using|stop using) the "([^"]*)?" (?:page|component|widget)`
+
+  - utility step to set or unset a browser scope meta key `currentMeta`, useful for writing less verbose steps
+  - automatically invalidated at the end of a scenario run e.g. `afterScenario` hook
+
+    ```gherkin
+    When I land on the "demo" page
+    When I start using the "custom" component
+    When I stop using the "demo" page
+    ```
+
+- `When I (start using|stop using) the (?:page|component|widget)'s "([^"]*)?" child element`
+
+  - utility step to set or unset a browser scope meta key `currentMetaChild`, useful for writing less verbose steps
+  - automatically invalidated at the end of a scenario run e.g. `afterScenario` hook
+
+    ```gherkin
+    When I land on the "demo" page
+    When I start using the "custom" component
+    When I start using the "custom" component
     ```
 
 - `When I start to intercept (?:ajax|xhr) requests`
@@ -802,7 +824,7 @@
     Then I expect the page title to not match the "iFrame" page's title
     ```
 
-- `Then I expect the url to( not)? contain (?:"([^"]*)?"|the "([^"]*)?" page's url)`
+- `Then I expect the url to( not)? contain (?:"([^"]*)?"|the "([^"]*)?" page's url|the base url)`
 
   - assert that the window url contains a given value or not
 
@@ -813,7 +835,7 @@
     Then I expect the url to not contain the "iFrame" page's title
     ```
 
-- `Then I expect the url to( not)? (?:be|match) (?:"([^"]*)?"|the "([^"]*)?" page's url)`
+- `Then I expect the url to( not)? (?:be|match) (?:"([^"]*)?"|the "([^"]*)?" page's url|the base url)`
 
   - assert that the window url matches a given value or not
 

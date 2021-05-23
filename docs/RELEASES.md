@@ -6,6 +6,19 @@
 
 _Note: Gaps between patch versions are faulty, broken or test releases._
 
+## 2.0.3
+
+`2021-05-23`
+
+- [1eb1088](https://github.com//iamkenos/ellie/commit/1eb1088) test: UTs for logger and exception modules [[iamkenos](https://github.com/iamkenos)]
+- [38c818c](https://github.com//iamkenos/ellie/commit/38c818c) feat: href assertion [[iamkenos](https://github.com/iamkenos)]
+- [2e50cec](https://github.com//iamkenos/ellie/commit/2e50cec) feat: clean up xhr matching and provide dynamic matching step [[iamkenos](https://github.com/iamkenos)]
+- [289f221](https://github.com//iamkenos/ellie/commit/289f221) chore: dependency updates [[iamkenos](https://github.com/iamkenos)]
+- [4278814](https://github.com//iamkenos/ellie/commit/4278814) fix: save image options [[iamkenos](https://github.com/iamkenos)]
+- [4ffbee0](https://github.com//iamkenos/ellie/commit/4ffbee0) fix: tests and json diff fixes [[iamkenos](https://github.com/iamkenos)]
+- [af7455e](https://github.com//iamkenos/ellie/commit/af7455e) fix: various bug fixes on core and cli modules [[iamkenos](https://github.com/iamkenos)]
+- [b95b1f5](https://github.com//iamkenos/ellie/commit/b95b1f5) deps: audit fixes [[iamkenos](https://github.com/iamkenos)]
+
 ## 2.0.2
 
 `2021-04-18`

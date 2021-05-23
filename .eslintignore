@@ -1,3 +1,4 @@
 bin/
 build/
 wdio.conf.js
+test/**/*.snap.ts

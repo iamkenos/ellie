@@ -7,7 +7,7 @@ import { DEFAULT_LEVEL, DEFAULT_LOG_COLORS, DEFAULT_NAME, LEVELS } from "./confi
 
 class Log {
   private static instance: Log;
-  private logger: loglevel.Logger;
+  public logger: loglevel.Logger;
   public getCaller: Function;
   public getCallerFile: Function;
 

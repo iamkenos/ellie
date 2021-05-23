@@ -21,6 +21,13 @@ textarea:focus {
   border-color: #41403e;
 }
 
+a:link,
+a:visited,
+a:hover,
+a:active {
+  color: #41403e;
+}
+
 .xtnd-row {
   padding-top: 5px;
 }

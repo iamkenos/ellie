@@ -13,6 +13,9 @@ import elemDisplayedInViewport from "../glue/check/elemDisplayedInViewport";
 import elemEnabled from "../glue/check/elemEnabled";
 import elemExists from "../glue/check/elemExists";
 import elemFocused from "../glue/check/elemFocused";
+import elemHrefOpensOn from "../glue/check/elemHrefOpensOn";
+import elemHrefOpensOnFrame from "../glue/check/elemHrefOpensOnFrame";
+import elemHrefPointsTo from "../glue/check/elemHrefPointsTo";
 import elemImageMatch from "../glue/check/elemImageMatch";
 import elemSelected from "../glue/check/elemSelected";
 import elemSelectedDdlOption from "../glue/check/elemSelectedDdlOption";
@@ -104,6 +107,21 @@ Then(
 Then(
   /^I expect the(?: "([^"]*)?" page's)? "([^"]*)?" element to( not)? have focus$/, RETRY,
   elemFocused
+);
+
+Then(
+  /^I expect the(?: "([^"]*)?" page's)? "([^"]*)?" (link|link text) to( not)? open (?:on (?:a|the)? )?(new window|same frame|parent frame|top frame|without a target)$/, RETRY,
+  elemHrefOpensOn
+);
+
+Then(
+  /^I expect the(?: "([^"]*)?" page's)? "([^"]*)?" (link|link text) to( not)? open on a named frame "([^"]*)?"$/, RETRY,
+  elemHrefOpensOnFrame
+);
+
+Then(
+  /^I expect the(?: "([^"]*)?" page's)? "([^"]*)?" (link|link text) to( not)? point (?:to (?:a|an)? |to )?(?:(path|section|absolute url|mail|tel)? )?"([^"]*)?"$/, RETRY,
+  elemHrefPointsTo
 );
 
 Then(

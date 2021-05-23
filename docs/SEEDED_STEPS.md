@@ -405,6 +405,39 @@
     Then I expect the "#keyPressDest" element to not have focus
     ```
 
+- `I expect the(?: "([^"]*)?" page's)? "([^"]*)?" (link|link text) to( not)? open (?:on (?:a|the)? )?(new window|same frame|parent frame|top frame|without a target)`
+
+  - assert that a link opens on a specific target or not
+
+    ```gherkin
+    Then I expect the "#changeTxtDest" link text to open on a new window
+    Then I expect the "#changeTxtBtnLink2" link to open on the same frame
+    Then I expect the "#changeTxtBtnLink3" link to open on the parent frame
+    Then I expect the "#changeTxtBtnLink4" link to open on the top frame
+    Then I expect the "#changeTxtBtnLink6" link to open without a target
+    ```
+
+- `I expect the(?: "([^"]*)?" page's)? "([^"]*)?" (link|link text) to( not)? open on a named frame "([^"]*)?"`
+
+  - assert that a link opens on a specific named frame or not
+
+    ```gherkin
+    Then I expect the "#changeTxtBtnLink5" link to open on a named frame "framename"
+    ```
+
+- `I expect the(?: "([^"]*)?" page's)? "([^"]*)?" (link|link text) to( not)? point (?:to (?:a|an)? |to )?(?:(path|section|absolute url|mail|tel)? )?"([^"]*)?"`
+
+  - assert that a link points to either a path, url, protocol, script or not
+
+    ```gherkin
+    Then I expect the "#changeTxtDest" link text to point to a path "/internal/path"
+    Then I expect the "#changeTxtBtnLink2" link to point to a section "#content1"
+    Then I expect the "#changeTxtBtnLink3" link to point to a mail "someone@example.com"
+    Then I expect the "#changeTxtBtnLink4" link to point to a tel "+4733378901"
+    Then I expect the "#changeTxtBtnLink5" link to point to an absolute url "https://otherdomain.com/external/path"
+    Then I expect the "#changeTxtBtnLink6" link to point to "javascript:alert('Hello World!');"
+    ```
+
 - `Then I expect the(?: "([^"]*)?" page's)? "([^"]*)?" element image to( not)? match the reference "([^"]*)?"`
 
   - assert that an element matches a reference image, relative to the config file or not

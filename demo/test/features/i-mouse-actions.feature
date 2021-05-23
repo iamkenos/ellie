@@ -23,6 +23,18 @@ Feature: I. Mouse Actions
     Then I expect the "#changeTxtDest" element text to not contain "[changeTxtBtn]"
       And I expect the "#changeTxtDest" element text to not be "This text is changed by [changeTxtBtn]..."
       And I expect the "#changeTxtDest" element text to be empty
+    Then I expect the "#changeTxtDest" link text to open on a new window
+      And I expect the "#changeTxtDest" link text to point to a path "/internal/path"
+      And I expect the "#changeTxtBtnLink2" link to open on the same frame
+      And I expect the "#changeTxtBtnLink2" link to point to a section "#content1"
+      And I expect the "#changeTxtBtnLink3" link to open on the parent frame
+      And I expect the "#changeTxtBtnLink3" link to point to a mail "someone@example.com"
+      And I expect the "#changeTxtBtnLink4" link to open on the top frame
+      And I expect the "#changeTxtBtnLink4" link to point to a tel "+4733378901"
+      And I expect the "#changeTxtBtnLink5" link to open on a named frame "framename"
+      And I expect the "#changeTxtBtnLink5" link to point to an absolute url "https://otherdomain.com/external/path"
+      And I expect the "#changeTxtBtnLink6" link to open without a target
+      And I expect the "#changeTxtBtnLink6" link to point to "javascript:alert('Hello World!');"
 
   Scenario: Change element value on button middle click
     When I middle click the "#changeValBtn" button

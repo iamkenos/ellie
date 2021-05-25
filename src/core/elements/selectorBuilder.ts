@@ -3,6 +3,8 @@ import { Selector } from "webdriverio";
 export default class SelectorBuilder {
   private readonly ANY = "*";
 
+  private readonly ESCAPE_PATTERN = /'/g;
+
   private readonly conditionals: string[];
 
   private readonly selector: Selector;
@@ -18,6 +20,23 @@ export default class SelectorBuilder {
 
   private unslash(string: string): string {
     return string.replace(/^\/+/, "");
+  }
+
+  private xpathConcat(string: string): string {
+    if (string.match(this.ESCAPE_PATTERN)) {
+    // handle special cases where string passed contains either a ' or "
+      const sqIndices: any[] = Array.from(string.matchAll(this.ESCAPE_PATTERN))
+        .map(i => i.index).concat(string.length) || [];
+      const parts: string[] = [];
+      let start = 0;
+      sqIndices.forEach((i) => {
+        const prev = string.substring(start, i).replace(this.ESCAPE_PATTERN, "");
+        const next = string[i];
+        parts.push(prev ? `'${prev}'` : "", next ? `"${next}"` : "");
+        start = i;
+      });
+      return `concat(${parts.filter(Boolean).join()})`;
+    } else return `'${string}'`;
   }
 
   private index(selector: string, index: number): string {
@@ -89,23 +108,31 @@ export default class SelectorBuilder {
     return this;
   }
 
+  public classOrTagContains(value: string, preferred?: boolean): SelectorBuilder {
+    this.conditionals.push(this.wrap(`contains(@class,${value}) or contains(name(),${value})`, preferred));
+    return this;
+  }
+
   public classEquals(value: string, preferred?: boolean): SelectorBuilder {
     this.attributeEquals("class", value, preferred);
     return this;
   }
 
   public textContains(value: string, preferred?: boolean): SelectorBuilder {
-    this.conditionals.push(this.wrap(`contains(text(),'${value}') or text()[contains(.,'${value}')]`, preferred));
+    value = this.xpathConcat(value);
+    this.conditionals.push(this.wrap(`contains(text(),${value}) or text()[contains(.,${value})]`, preferred));
     return this;
   }
 
   public textEquals(value: string, preferred?: boolean): SelectorBuilder {
-    this.conditionals.push(this.wrap(`text()='${value}'`, preferred));
+    value = this.xpathConcat(value);
+    this.conditionals.push(this.wrap(`text()=${value}`, preferred));
     return this;
   }
 
   public innerHtmlContains(value: string, preferred?: boolean): SelectorBuilder {
-    this.conditionals.push(this.wrap(`contains(.,'${value}')`, preferred));
+    value = this.xpathConcat(value);
+    this.conditionals.push(this.wrap(`contains(.,${value})`, preferred));
     return this;
   }
 

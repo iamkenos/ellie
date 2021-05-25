@@ -9,12 +9,15 @@ export default abstract class WebComponent<T extends IComponentMeta> extends Web
 
   public readonly tag: keyof UnionToIntersection<T[keyof T]["locators"]>;
 
+  public readonly nodename: string;
+
   public readonly parent: string;
 
   public constructor(tag: keyof UnionToIntersection<T[keyof T]["locators"]>, meta: T, parent = "", locale?: string) {
     super(parent);
     this.parent = parent;
     this.tag = (getMetaObject(meta, locale).locators as any)[tag];
+    this.nodename = tag as string;
     this.properties = getMetaObject(meta, locale);
     this.locators = this.properties.locators as any;
     this.selector = this.selector + this.tag;

@@ -1,3 +1,4 @@
+@test
 Feature: I. Mouse Actions
 
   Background:

@@ -37,22 +37,27 @@ import windowUrlOpen from "../glue/action/windowUrlOpen";
 import windowUrlOpenNew from "../glue/action/windowUrlOpenNew";
 
 When(
-  /^I (?:(double|script|middle|right) )?click the(?: "([^"]*)?" page's)? "([^"]*)?" (link|button|element)(?: again)?$/, RETRY,
+  "I {click} the{opt-page} {locator} {webelement}", RETRY,
   elemClick
 );
 
 When(
-  /^I drag the(?: "([^"]*)?" page's)? "([^"]*)?" element to the "([^"]*)?" element$/, RETRY,
+  "I {click} the{opt-page} {locator} {webelement} again", RETRY,
+  elemClick
+);
+
+When(
+  "I drag the{opt-page} {locator} field/element to the {locator} field/element", RETRY,
   elemDragAndDrop
 );
 
 When(
-  /^I upload the "([^"]*)?" file to the(?: "([^"]*)?" page's)? "([^"]*)?" (?:field|element)$/, RETRY,
+  "I upload the {transforming-string} file to the{opt-page} {locator} field/element", RETRY,
   elemFileUpload
 );
 
 When(
-  /^I focus on the(?: "([^"]*)?" page's)? "([^"]*)?" (?:field|element)$/, RETRY,
+  "I focus on the{opt-page} {locator} field/element", RETRY,
   elemFocus
 );
 

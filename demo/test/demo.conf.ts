@@ -22,7 +22,7 @@ const config: Partial<IConfig> = {
     }
   },
   logLevel: "error",
-  seleniumInstallArgs: { drivers: { chrome: { version: "89.0.4389.23" } } },
+  seleniumInstallArgs: { drivers: { chrome: { version: "latest" } } },
   specs: ["./features/**/*.feature"],
   steps: ["./fixtures/**/**/*.def.ts"],
   stepRetries: 3,

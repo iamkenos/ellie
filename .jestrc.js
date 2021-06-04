@@ -20,5 +20,6 @@ module.exports = {
   setupFilesAfterEnv: ['<rootDir>/test/setup.ts'],
   silent: true,
   /** changes default snapshot folder from `___snapshots___` to same folder as spec */
-  snapshotResolver: './.jest-snapshot-resolver.js'
+  snapshotResolver: './.jest-snapshot-resolver.js',
+  verbose: true
 };

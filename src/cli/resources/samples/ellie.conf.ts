@@ -16,7 +16,7 @@ const config: Partial<IConfig> = {
       }
     }
   ],
-  seleniumInstallArgs: { drivers: { chrome: { version: "89.0.4389.23" } } },
+  seleniumInstallArgs: { drivers: { chrome: { version: "latest" } } },
   logLevel: "error",
   meta: ["./fixtures/**/*.meta.ts"],
   specs: ["./features/**/*.feature"],

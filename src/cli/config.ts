@@ -40,7 +40,7 @@ export const DEFAULT: IConfig = {
   browserstackEnabled: false,
   browserstackLocal: false,
   reportOutDir: ".reports",
-  seleniumInstallArgs: { drivers: { chrome: { version: "89.0.4389.23" } } },
+  seleniumInstallArgs: { drivers: { chrome: { version: "latest" } } },
   specFileRetries: 0,
   stepRetries: 0,
   specs: ["./features/**/*.feature"],

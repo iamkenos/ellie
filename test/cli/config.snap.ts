@@ -74,7 +74,7 @@ Object {
   "seleniumInstallArgs": Object {
     "drivers": Object {
       "chrome": Object {
-        "version": "89.0.4389.23",
+        "version": "latest",
       },
     },
   },

@@ -14,7 +14,7 @@ export default (
   switch (protocol) {
     case "path":
     case "section": {
-      element.checkAttributeEquals(attribute, new URL(expected, driver.config.baseUrl).href, !preferred);
+      element.checkAttributeEquals(attribute, expected, !preferred);
       break;
     }
     case "mail": {

@@ -5,6 +5,7 @@ const config: Partial<IConfig> = {
   capabilities: [
     {
       browserName: "chrome",
+      unhandledPromptBehavior: "ignore",
       "goog:chromeOptions": { args: ["--disable-web-security", "--incognito", "--headless"] }
     }
   ],

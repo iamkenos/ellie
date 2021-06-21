@@ -4,11 +4,11 @@ describe("logger/stack", () => {
   const foobar = (normalize: boolean) => Stack.getCaller(normalize, 1);
 
   it("should be able to get the calling function name", () => {
-    expect(Stack.getCaller()).toEqual("asyncJestTest()");
+    expect(Stack.getCaller()).toEqual("completed()");
   });
 
   it("should be able to get the normalized calling function name", () => {
-    expect(Stack.getCaller(true)).toEqual("Async Jest Test");
+    expect(Stack.getCaller(true)).toEqual("Completed");
   });
 
   it("should be able to get the calling function name by providing a stack level", () => {
@@ -16,6 +16,6 @@ describe("logger/stack", () => {
   });
 
   it("should be able to get the calling file", () => {
-    expect(Stack.getCallerFile()).toEqual("build/jasmineAsyncInstall/asyncJestTest():");
+    expect(Stack.getCallerFile()).toEqual("build/utils/completed():");
   });
 });

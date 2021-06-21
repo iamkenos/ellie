@@ -6,6 +6,21 @@
 
 _Note: Gaps between patch versions are faulty, broken or test releases._
 
+## 2.0.4
+
+`2021-06-21`
+
+- [1a3eb93](https://github.com//iamkenos/ellie/commit/1a3eb93) test: update demo test config [[iamkenos](https://github.com/iamkenos)]
+- [2832096](https://github.com//iamkenos/ellie/commit/2832096) chore: update commit lint format [[iamkenos](https://github.com/iamkenos)]
+- [99d8b15](https://github.com//iamkenos/ellie/commit/99d8b15) test: UT updates [[iamkenos](https://github.com/iamkenos)]
+- [c08b466](https://github.com//iamkenos/ellie/commit/c08b466) deps: dependency housekeeping and audit fixes [[iamkenos](https://github.com/iamkenos)]
+- [077bd23](https://github.com//iamkenos/ellie/commit/077bd23) feat: prefix on date token [[iamkenos](https://github.com/iamkenos)]
+- [6a3b5a5](https://github.com//iamkenos/ellie/commit/6a3b5a5) fix: elemHrefPointsTo assert step [[iamkenos](https://github.com/iamkenos)]
+- [989bea3](https://github.com//iamkenos/ellie/commit/989bea3) chore: update default chromedriver to use latest [[iamkenos](https://github.com/iamkenos)]
+- [3a6135a](https://github.com//iamkenos/ellie/commit/3a6135a) feat: selectorbuilder updates [[iamkenos](https://github.com/iamkenos)]
+- [d85a5d9](https://github.com//iamkenos/ellie/commit/d85a5d9) test: report command UTs [[iamkenos](https://github.com/iamkenos)]
+- [afccde4](https://github.com//iamkenos/ellie/commit/afccde4) docs: update steps md [[iamkenos](https://github.com/iamkenos)]
+
 ## 2.0.3
 
 `2021-05-23`

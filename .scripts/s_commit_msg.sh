@@ -2,13 +2,13 @@
 REPO_DIR=$(git rev-parse --show-toplevel)
 RED=$'\e[1;31m'
 RESET=$'\e[0m'
-FORMAT="^(chore|deps|docs|feat|fix|perf|refactor|style|test|release):[[:space:]].+$"
+FORMAT="^(chore|deps|docs|feat|fix|perf|refactor|style|test|release)(\(.+\))?:[[:space:]].+$"
 MESSAGE=$(cat $REPO_DIR/$1)
 
 if [[ ! $MESSAGE =~ $FORMAT ]];
   then
     echo "${RED}The commmit message should follow the format:"
-    echo "[type]: description"
+    echo "[type](optional scope): description"
     echo ""
     echo "[type]:"
     echo " - chore    : changes to auxillary tools"

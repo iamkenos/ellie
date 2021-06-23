@@ -1,3 +1,4 @@
+import { PreFilterFunction } from "deep-diff";
 import { LogLevelDesc } from "loglevel";
 import { ChoiceCollection, Question, QuestionMap } from "inquirer";
 import { WdioCheckElementMethodOptions, WdioCheckFullPageMethodOptions, WdioCheckScreenMethodOptions } from "wdio-image-comparison-service";
@@ -17,6 +18,7 @@ interface IInquiredOption extends Question {
   default: Question["default"];
   choices?: ChoiceCollection;
   when?: (answers: any) => boolean | Promise<boolean>;
+  validate?: (input: any, answers?: any) => boolean | string | Promise<boolean>;
 }
 
 export interface IComparable {
@@ -39,6 +41,27 @@ interface IComparableImage extends IComparable {
   overrideVersion?: boolean;
   /** Global options to use when comparing images */
   options?: WdioCheckElementMethodOptions | WdioCheckFullPageMethodOptions | WdioCheckScreenMethodOptions;
+}
+export interface IJSONDiffOptions {
+  /** Conditional diffing based on [jsonpath](https://www.npmjs.com/package/jsonpath) and regex  */
+  regex?: {
+    paths: string[],
+    expressions: string[]
+  };
+  /** Same as `deep-diff`'s [prefilter](https://www.npmjs.com/package/deep-diff#pre-filtering-object-properties) function */
+  prefilter?: PreFilterFunction;
+  /** Whether to apply sort before diffing */
+  sort?: boolean;
+}
+
+interface IComparableHTTPResponse extends IComparable {
+  /** Global options to use when comparing http response json files */
+  options?: Omit<IJSONDiffOptions, "sort">
+}
+
+interface IComparableXHR extends IComparable {
+  /** Global options to use when comparing xhr json file */
+  options?: IJSONDiffOptions
 }
 
 interface IHooks {
@@ -97,9 +120,9 @@ export interface IConfig {
   /** Object containing properties of comparable files. See defaults for more info. */
   comparable: {
     /** Settings used for comparing intercepted XHRs  */
-    ajaxRequest: IComparable;
+    ajaxRequest: IComparableXHR;
     /** Settings used for comparing http responses  */
-    httpResponse: IComparable;
+    httpResponse: IComparableHTTPResponse;
     /** Settings used for comparing images */
     imageCompare: IComparableImage;
   };

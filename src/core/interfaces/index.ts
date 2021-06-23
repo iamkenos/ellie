@@ -3,7 +3,8 @@ import { CoreOptions, Response, UrlOptions } from "request";
 import { ImageCompareContext } from "../enums";
 import { WdioCheckElementMethodOptions, WdioCheckFullPageMethodOptions, WdioCheckScreenMethodOptions } from "wdio-image-comparison-service";
 import { ScreenshotOutput } from "webdriver-image-comparison/build/helpers/afterScreenshot.interfaces";
-import { PreFilterFunction } from "deep-diff";
+
+export { IJSONDiffOptions } from "../../cli/interfaces";
 
 export type UnionToIntersection<U> = (U extends any ? (k: U) => void : never) extends ((k: infer I) => void) ? I : never
 
@@ -32,9 +33,15 @@ export interface IHttpRequest {
   options: CoreOptions & UrlOptions;
 }
 
-type TPageMetaProps = { url: string; title: string; locators: { [key: string]: string }, [key: string]: any }
+type TPageMetaProps = {
+  url: string;
+  title: string;
+  locators: { [key: string]: string };
+  labels?: { [key: string]: string };
+  [key: string]: any;
+};
 
-type TComponentMetaProps = { locators: { [key: string]: string }, [key: string]: any }
+type TComponentMetaProps = { locators: { [key: string]: string }; [key: string]: any }
 
 export interface IPageMeta {
   default: TPageMetaProps,
@@ -60,14 +67,6 @@ export interface IImageCompare {
 
 export interface IImageSave extends ScreenshotOutput {
   parsedName: string;
-}
-
-export interface IJSONDiffOptions {
-  regex?: {
-    paths: string[],
-    expressions: string[]
-  };
-  prefilter?: PreFilterFunction;
 }
 
 export interface IBrowserPerformanceEntry {

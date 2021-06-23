@@ -9,12 +9,15 @@ export default abstract class BasePage<T extends IPageMeta> {
 
   protected title: string;
 
+  protected labels: UnionToIntersection<T[keyof T]["labels"]>;
+
   protected locators: UnionToIntersection<T[keyof T]["locators"]>;
 
   public constructor(meta: T, locale?: string) {
     this.properties = getMetaObject(meta, locale);
     this.url = this.properties.url || "";
     this.title = this.properties.title || "";
+    this.labels = this.properties.labels as any;
     this.locators = this.properties.locators as any;
   }
 

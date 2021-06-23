@@ -4,7 +4,7 @@ import * as fs from "fs-extra";
 import * as path from "path";
 import { DataTable } from "@cucumber/cucumber";
 import jsonpath, { PathComponent } from "jsonpath";
-import { merge } from "lodash";
+import { merge, orderBy } from "lodash";
 import { DateTime } from "luxon";
 import { diff } from "deep-diff";
 import { sync } from "syncrequest";
@@ -135,6 +135,11 @@ export function getMetaTitle(meta: string): string {
   return getMetaProperty(currMeta, "title");
 }
 
+export function getMetaLabels(meta: string): string {
+  const currMeta = meta || (browser.config as any).currentMeta;
+  return getMetaProperty(currMeta, "labels");
+}
+
 export function getMetaElement(meta: string, key: string): string {
   const { config }: any = browser;
   const currMeta = meta || config.currentMeta;
@@ -157,12 +162,16 @@ export function getMetaElement(meta: string, key: string): string {
   return currMeta ? stitch(currMeta, "locators", currElem) : currElem;
 }
 
-export function getJSONDiff(type: keyof IConfig["comparable"], filename: string, toCompare: any, options?: IJSONDiffOptions): string {
+export function getJSONDiff(
+  type: Exclude<keyof IConfig["comparable"], "imageCompare">, filename: string,
+  toCompare: any, options?: IJSONDiffOptions): string {
   let result = "";
-  const comparable = (browser.config as any).comparable[type];
-  const actFile = path.join(comparable.actualDir, filename) + ".json";
-  const expFile = path.join(comparable.baselineDir, filename) + ".json";
-  const difFile = path.join(comparable.diffDir, filename) + ".json";
+  const config = browser.config as IConfig;
+  const comparable = config.comparable[type];
+  const actFile = path.join(comparable.actualDir!, filename) + ".json";
+  const expFile = path.join(comparable.baselineDir!, filename) + ".json";
+  const difFile = path.join(comparable.diffDir!, filename) + ".json";
+  options = merge({}, comparable.options, options);
   options = options && Object.keys(options).length > 0 ? options : undefined;
 
   const getMatchingJSONPaths = (expr: string[], object: object) => {
@@ -180,31 +189,40 @@ export function getJSONDiff(type: keyof IConfig["comparable"], filename: string,
   };
 
   const getDiff = (options?: IJSONDiffOptions) => {
-    const expected = JSON.parse(readFileSync(expFile));
-    const actual = JSON.parse(readFileSync(actFile));
+    let expected = JSON.parse(readFileSync(expFile));
+    let actual = JSON.parse(readFileSync(actFile));
 
-    if (!options) return diff(expected, actual);
+    if (options) {
+      const { regex, sort, prefilter } = options;
+      // only applicable for xhr comparables
+      if (sort) {
+        const KEY = "url";
+        actual = orderBy(actual, [KEY]);
+        expected = orderBy(expected, [KEY]);
+      }
 
-    const { regex } = options;
-    if (regex) {
-      const paths = getMatchingJSONPaths(regex.paths, actual);
-      return diff(expected, actual, (filterPath, key) => {
-        const filter = jsonpath.stringify(["$"].concat(filterPath.concat(key)));
-        const index = paths.indexOf(filter);
-        let result = false;
-        // if filter is inside the paths array, get the expression on the same index
-        // and check that it matches the actual value; else let diff do it's thing
-        if (index >= 0) {
-          const pathValue = JSON.stringify(jsonpath.query(actual, filter)[0]);
-          const matchExpr = regex.expressions[index];
-          const matches = pathValue.match(matchExpr) || [];
-          result = matches.length > 0;
-        }
-        return result;
-      });
+      if (regex) {
+        const paths = getMatchingJSONPaths(regex.paths, actual);
+        return diff(expected, actual, (filterPath, key) => {
+          const filter = jsonpath.stringify(["$"].concat(filterPath.concat(key)));
+          const index = paths.indexOf(filter);
+          let result = false;
+          // if filter is inside the paths array, get the expression on the same index
+          // and check that it matches the actual value; else let diff do it's thing
+          if (index >= 0) {
+            const pathValue = JSON.stringify(jsonpath.query(actual, filter)[0]);
+            const matchExpr = regex.expressions[index];
+            const matches = pathValue.match(matchExpr) || [];
+            result = matches.length > 0;
+          }
+          return result;
+        });
+      }
+
+      if (prefilter) return diff(expected, actual, options.prefilter);
     }
 
-    if (options.prefilter) return diff(expected, actual, options.prefilter);
+    return diff(expected, actual);
   };
 
   fs.outputFileSync(actFile, JSON.stringify(toCompare, null, 2));
@@ -363,8 +381,45 @@ export function transformToken(token: string) {
   return token;
 }
 
+/**
+ * Transform a string into another value by taking the value from a meta file `labels[label]` property.
+ * Relies on the config's `locale` property.
+ *
+ * Given:
+ * ```
+ * // home-page.meta.ts
+ * export default {
+ *   default: {
+ *     ...
+ *   },
+ *   zh: {
+ *     labels: {
+ *       "Submit": "提交"
+ *     }
+ *   }
+ * };
+ * ```
+ * When: config `locale` property is `"zh"`
+ *
+ * Then:
+ * ```
+ * localizeLabel("home-page", "Submit");          ------> "提交"
+ * localizeLabel("home-page", "Foobar");          ------> "Foobar"
+ * ```
+ * @param meta the meta file name
+ * @param label the label key
+ * @returns either the transformed value or the original `label` value as a fallback
+ */
+export function localizeLabel(meta: string, label: string) {
+  try {
+    return getMetaLabels(meta)[label as any];
+  } catch (e) {
+    return label;
+  }
+}
+
 export function stringToObject(toParse: string, entrySeparator = ";", kvpSeparator = ":"): any {
-  return toParse.split(entrySeparator)
+  return (toParse || "").split(entrySeparator)
     .reduce((i, j) => {
       const kvp = j.split(kvpSeparator).map(i => i.trim());
       return { ...i, [kvp[0]]: kvp[1] };

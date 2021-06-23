@@ -1,7 +1,8 @@
 import { WebElement, WebElements } from "../../../elements";
-import { getMetaElement } from "../../../utils";
+import { getMetaElement, localizeLabel, transformToken } from "../../../utils";
 
 export default (context: string, value: string, page: string, key: string, preferred: string): void => {
+  value = transformToken(localizeLabel(page, value));
   const selector = getMetaElement(page, key);
   const element = new WebElement(selector);
   const options = new WebElements(element.child$("//option").selector);

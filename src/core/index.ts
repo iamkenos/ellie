@@ -1,23 +1,18 @@
-import { BrowserConditions, driver } from "./browser";
-import { BasePage } from "./pages";
-import { ICustomTruthy } from "./interfaces";
-import { ElementConditions, SelectorBuilder, WebComponent, WebElement, WebElements } from "./elements";
-import { getDataTableRows, getMetaElement, getMetaProperty, mergeMeta, RETRY, transformToken } from "./utils";
-
+export { ElementConditions, SelectorBuilder, WebComponent, WebElement, WebElements } from "./elements";
+export { ICustomTruthy } from "./interfaces";
+export { BasePage } from "./pages";
+export { BrowserConditions, driver } from "./browser";
 export {
-  BrowserConditions,
-  driver,
-  BasePage,
-  ElementConditions,
-  SelectorBuilder,
-  WebComponent,
-  WebElement,
-  WebElements,
-  RETRY,
-  ICustomTruthy,
+  getDataTableHashes,
   getDataTableRows,
   getMetaElement,
   getMetaProperty,
+  getMetaLabels,
+  getMetaUrl,
+  getMetaTitle,
+  getMetaObject,
+  localizeLabel,
   mergeMeta,
-  transformToken
-};
+  transformToken,
+  RETRY
+} from "./utils";

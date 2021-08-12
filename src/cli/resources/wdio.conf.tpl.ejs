@@ -435,23 +435,23 @@ exports.config = {
   /**
    * Runs after a Cucumber step
    */
-  afterStep: function (step, context, { error, result, duration, passed, retries }) {
-    if (error !== undefined) {
+  afterStep: function (step, context, result) {
+    if (result.error) {
       browser.takeScreenshot();
     }
 
     <% if (answers.hooks.afterStep) { %>
     const hook = require('<%= answers.hooks.afterStep %>').default;
-    hook(step, context, { error, result, duration, passed, retries });
+    hook(step, context, result);
     <% } %>
   },
   /**
    * Runs after a Cucumber scenario
    */
-  afterScenario: function (world) {
+  afterScenario: function (world, result) {
     <% if (answers.hooks.afterScenario) { %>
     const hook = require('<%= answers.hooks.afterScenario %>').default;
-    hook(world);
+    hook(world, result);
     <% } %>
     browser.deleteCookies();
     browser.config.currentMeta = undefined;

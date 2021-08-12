@@ -1,7 +1,6 @@
 const allure = require('allure-commandline');
 const fse = require('fs-extra');
 const path = require('path');
-const { table, getBorderCharacters } = require('table');
 const { addAttachment } = require('@wdio/allure-reporter').default;
 <% if(answers.browserstackLocal) { %>
 const browserstack = require('browserstack-local');
@@ -416,13 +415,8 @@ exports.config = {
     const data = [];
 
     if (argument) {
-      const { dataTable, docString } = argument;
-      if (dataTable) {
-        dataTable.rows.forEach((row) => {
-          data.push(row.cells.map((cell) => cell.value));
-        });
-        addAttachment("DataTable", table(data, { border: getBorderCharacters("norc") }), "text/plain");
-      } else if (docString) {
+      const { docString } = argument;
+      if (docString) {
         addAttachment("DocString", docString.content, "text/plain");
       }
     }
